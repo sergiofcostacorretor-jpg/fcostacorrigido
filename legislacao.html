@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legislação Imobiliária | FCosta Corretor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --azul:#003da5;
+  --azul-escuro:#002580;
+  --azul-claro:#e8f0ff;
+  --vermelho:#dc1c2d;
+  --vermelho-escuro:#b01420;
+  --branco:#ffffff;
+  --cinza-claro:#f4f6fa;
+  --cinza-meio:#888;
+  --cinza-escuro:#2a2a2a;
+  --preto:#0d1829;
+  --borda:#e2e8f0;
+  --gold:#C9A84C;
+  --sombra:0 4px 24px rgba(0,61,165,0.10);
+  --verde:#16a34a;
+  --laranja:#e65100;
+  --roxo:#7c3aed;
+  --teal:#0891b2;
+  --rosa:#db2777;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--cinza-claro);color:var(--cinza-escuro);overflow-x:hidden;}
+
+/* HEADER */
+.header{background:var(--azul);padding:0;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,61,165,0.3);}
+.header-inner{max-width:100%;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;}
+.logo-area{display:flex;align-items:center;gap:12px;}
+.logo-img{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);object-fit:cover;}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:1.1rem;color:white;font-weight:700;line-height:1.1;}
+.logo-text span{font-size:0.65rem;color:rgba(255,255,255,0.65);letter-spacing:1.5px;text-transform:uppercase;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.creci-badge{font-size:0.65rem;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.creci-badge strong{color:white;}
+.back-btn{text-decoration:none;color:rgba(255,255,255,0.85);font-size:0.82rem;font-weight:600;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);padding:7px 14px;border-radius:8px;transition:all 0.2s;white-space:nowrap;}
+.back-btn:hover{background:rgba(255,255,255,0.22);color:white;}
+@media(max-width:600px){.creci-badge{display:none;}.logo-text span{display:none;}}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--azul-escuro) 0%,var(--azul) 60%,#1a4fc7 100%);padding:48px 20px 52px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-60px;width:240px;height:240px;border-radius:50%;background:rgba(220,28,45,0.08);pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:6px 16px;border-radius:30px;font-size:0.75rem;color:rgba(255,255,255,0.9);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,2.8rem);color:white;font-weight:900;line-height:1.15;margin-bottom:12px;}
+.hero h1 span{color:#ffd166;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;max-width:560px;margin:0 auto 32px;line-height:1.7;}
+
+/* SEARCH */
+.search-wrap{max-width:640px;margin:0 auto;position:relative;}
+.search-input{width:100%;background:white;border:2px solid rgba(255,255,255,0.3);border-radius:50px;padding:14px 120px 14px 48px;color:var(--cinza-escuro);font-family:'DM Sans',sans-serif;font-size:0.92rem;outline:none;transition:all 0.3s;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
+.search-input::placeholder{color:var(--cinza-meio);}
+.search-input:focus{border-color:var(--vermelho);box-shadow:0 4px 20px rgba(220,28,45,0.2);}
+.search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--cinza-meio);font-size:1rem;pointer-events:none;}
+.search-btn{position:absolute;right:5px;top:50%;transform:translateY(-50%);background:var(--vermelho);border:none;border-radius:40px;padding:9px 20px;color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+.search-btn:hover{background:var(--vermelho-escuro);transform:translateY(-50%) scale(1.03);}
+.search-hints{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.hint-tag{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px;font-size:0.73rem;color:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.2s;}
+.hint-tag:hover{background:rgba(255,255,255,0.22);color:white;}
+
+/* STATS */
+.stats-bar{background:white;border-bottom:2px solid var(--borda);padding:16px 20px;}
+.stats-inner{max-width:1280px;margin:0 auto;display:flex;gap:28px;justify-content:center;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--azul);font-weight:800;}
+.stat-label{font-size:0.68rem;color:var(--cinza-meio);text-transform:uppercase;letter-spacing:1px;}
+
+/* FILTERS */
+.filters-section{max-width:1280px;margin:0 auto;padding:28px 20px 12px;}
+.filters-title{font-size:0.72rem;color:var(--cinza-meio);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;font-weight:600;}
+.filter-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{padding:7px 16px;border-radius:30px;border:1.5px solid var(--borda);font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s;background:white;color:var(--cinza-meio);}
+.filter-btn:hover{border-color:var(--azul);color:var(--azul);}
+.filter-btn.active{color:white;border-color:transparent;}
+.filter-btn[data-cat="all"].active{background:var(--azul);}
+.filter-btn[data-cat="constituicao"].active{background:#1a56db;}
+.filter-btn[data-cat="civil"].active{background:var(--verde);}
+.filter-btn[data-cat="consumidor"].active{background:var(--laranja);}
+.filter-btn[data-cat="creci"].active{background:var(--roxo);}
+.filter-btn[data-cat="cofeci"].active{background:var(--vermelho);}
+.filter-btn[data-cat="locacao"].active{background:var(--teal);}
+.filter-btn[data-cat="registros"].active{background:var(--rosa);}
+.filter-btn[data-cat="condominio"].active{background:#f59e0b;}
+.filter-btn[data-cat="sfi"].active{background:#64748b;}
+.filter-btn[data-cat="avaliacao"].active{background:var(--gold);}
+.filter-btn[data-cat="urbanismo"].active{background:#059669;}
+
+/* RESULTS */
+.results-info{max-width:1280px;margin:0 auto;padding:10px 20px;font-size:0.8rem;color:var(--cinza-meio);}
+.results-info strong{color:var(--azul);}
+
+/* GRID */
+.grid{max-width:1280px;margin:0 auto;padding:8px 20px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:8px 14px 60px;}}
+
+/* CARD */
+.card{background:white;border:1.5px solid var(--borda);border-radius:14px;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;cursor:default;animation:fadeIn 0.35s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,61,165,0.12);border-color:rgba(0,61,165,0.25);}
+.card-header{padding:16px 18px 12px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid var(--cinza-claro);}
+.card-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;}
+.card-meta{flex:1;min-width:0;}
+.card-code{font-size:0.68rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.card-tag{font-size:0.6rem;padding:2px 8px;border-radius:10px;font-weight:700;color:white;white-space:nowrap;}
+.card-title{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--preto);font-weight:700;line-height:1.3;}
+.card-body{padding:12px 18px 8px;}
+.card-desc{font-size:0.82rem;color:var(--cinza-meio);line-height:1.65;margin-bottom:8px;}
+.articles-list{display:none;margin-top:10px;border-top:1px solid var(--borda);padding-top:10px;}
+.articles-list.open{display:block;}
+.article-item{padding:8px 11px;border-radius:8px;margin-bottom:6px;background:var(--cinza-claro);border-left:3px solid var(--borda);transition:background 0.2s;}
+.article-item:hover{background:var(--azul-claro);}
+.article-num{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;}
+.article-text{font-size:0.77rem;color:var(--cinza-meio);line-height:1.55;}
+.card-footer{padding:8px 18px 14px;display:flex;align-items:center;justify-content:space-between;}
+.expand-btn{font-size:0.76rem;color:var(--azul);background:var(--azul-claro);border:1.5px solid rgba(0,61,165,0.15);padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all 0.2s;}
+.expand-btn:hover{background:var(--azul);color:white;border-color:var(--azul);}
+.article-count{font-size:0.7rem;color:var(--cinza-meio);}
+
+/* No results */
+.no-results{grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--cinza-meio);}
+.no-results .icon{font-size:3rem;margin-bottom:12px;}
+.no-results h3{color:var(--cinza-escuro);margin-bottom:8px;font-family:'Playfair Display',serif;}
+
+/* FOOTER */
+.footer{background:var(--preto);padding:28px 20px;text-align:center;}
+.footer p{font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.8;}
+.footer a{color:var(--gold);text-decoration:none;}
+.footer .disclaimer{max-width:680px;margin:10px auto 0;font-size:0.7rem;color:rgba(255,255,255,0.3);font-style:italic;}
+
+/* Cores por categoria */
+.cat-constituicao .card-icon{background:#dbeafe;} .cat-constituicao .card-code{color:#1a56db;} .cat-constituicao .card-tag{background:#1a56db;} .cat-constituicao .article-num{color:#1a56db;} .cat-constituicao .article-item{border-left-color:#1a56db;}
+.cat-civil .card-icon{background:#dcfce7;} .cat-civil .card-code{color:var(--verde);} .cat-civil .card-tag{background:var(--verde);} .cat-civil .article-num{color:var(--verde);} .cat-civil .article-item{border-left-color:var(--verde);}
+.cat-consumidor .card-icon{background:#fff3e0;} .cat-consumidor .card-code{color:var(--laranja);} .cat-consumidor .card-tag{background:var(--laranja);} .cat-consumidor .article-num{color:var(--laranja);} .cat-consumidor .article-item{border-left-color:var(--laranja);}
+.cat-creci .card-icon{background:#f3e8ff;} .cat-creci .card-code{color:var(--roxo);} .cat-creci .card-tag{background:var(--roxo);} .cat-creci .article-num{color:var(--roxo);} .cat-creci .article-item{border-left-color:var(--roxo);}
+.cat-cofeci .card-icon{background:#ffe4e6;} .cat-cofeci .card-code{color:var(--vermelho);} .cat-cofeci .card-tag{background:var(--vermelho);} .cat-cofeci .article-num{color:var(--vermelho);} .cat-cofeci .article-item{border-left-color:var(--vermelho);}
+.cat-locacao .card-icon{background:#e0f7fa;} .cat-locacao .card-code{color:var(--teal);} .cat-locacao .card-tag{background:var(--teal);} .cat-locacao .article-num{color:var(--teal);} .cat-locacao .article-item{border-left-color:var(--teal);}
+.cat-registros .card-icon{background:#fce7f3;} .cat-registros .card-code{color:var(--rosa);} .cat-registros .card-tag{background:var(--rosa);} .cat-registros .article-num{color:var(--rosa);} .cat-registros .article-item{border-left-color:var(--rosa);}
+.cat-condominio .card-icon{background:#fff8e1;} .cat-condominio .card-code{color:#f59e0b;} .cat-condominio .card-tag{background:#f59e0b;} .cat-condominio .article-num{color:#f59e0b;} .cat-condominio .article-item{border-left-color:#f59e0b;}
+.cat-sfi .card-icon{background:#f1f5f9;} .cat-sfi .card-code{color:#64748b;} .cat-sfi .card-tag{background:#64748b;} .cat-sfi .article-num{color:#64748b;} .cat-sfi .article-item{border-left-color:#64748b;}
+.cat-avaliacao .card-icon{background:#fef9ec;} .cat-avaliacao .card-code{color:var(--gold);} .cat-avaliacao .card-tag{background:var(--gold);} .cat-avaliacao .article-num{color:var(--gold);} .cat-avaliacao .article-item{border-left-color:var(--gold);}
+.cat-urbanismo .card-icon{background:#d1fae5;} .cat-urbanismo .card-code{color:#059669;} .cat-urbanismo .card-tag{background:#059669;} .cat-urbanismo .article-num{color:#059669;} .cat-urbanismo .article-item{border-left-color:#059669;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta" class="logo-img">
+      <div class="logo-text">
+        <h1>FCosta Corretor</h1>
+        <span>Zona Leste · Itaim Paulista</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="creci-badge">CRECI-SP <strong>294791-F</strong> | CNAI <strong>52708</strong></div>
+      <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag"><i class="fas fa-balance-scale"></i> &nbsp;Base Legal Completa 2026</div>
+  <h1>Legislação <span>Imobiliária</span><br>Brasileira</h1>
+  <p>Toda a legislação que rege o mercado imobiliário: Constituição Federal, Código Civil, CDC, CRECI, COFECI, avaliações, urbanismo e muito mais — atualizado 2026.</p>
+  <div class="search-wrap">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" class="search-input" id="searchInput" placeholder="Buscar lei, artigo, assunto..." oninput="performSearch()">
+    <button class="search-btn" onclick="performSearch()">Buscar</button>
+  </div>
+  <div class="search-hints">
+    <span class="hint-tag" onclick="setSearch('locação')">Locação</span>
+    <span class="hint-tag" onclick="setSearch('compra e venda')">Compra e Venda</span>
+    <span class="hint-tag" onclick="setSearch('condomínio')">Condomínio</span>
+    <span class="hint-tag" onclick="setSearch('corretagem')">Corretagem</span>
+    <span class="hint-tag" onclick="setSearch('avaliação')">Avaliação</span>
+    <span class="hint-tag" onclick="setSearch('registro')">Registro</span>
+    <span class="hint-tag" onclick="setSearch('FGTS')">FGTS</span>
+    <span class="hint-tag" onclick="setSearch('usucapião')">Usucapião</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">15</div><div class="stat-label">Legislações</div></div>
+    <div class="stat-item"><div class="stat-num">110+</div><div class="stat-label">Artigos Detalhados</div></div>
+    <div class="stat-item"><div class="stat-num">2026</div><div class="stat-label">Atualizado</div></div>
+    <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">Categorias</div></div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filters-title">Filtrar por categoria</div>
+  <div class="filter-btns">
+    <button class="filter-btn active" data-cat="all" onclick="filterCat('all',this)">📋 Todas</button>
+    <button class="filter-btn" data-cat="constituicao" onclick="filterCat('constituicao',this)">🏛️ Constituição</button>
+    <button class="filter-btn" data-cat="civil" onclick="filterCat('civil',this)">📘 Código Civil</button>
+    <button class="filter-btn" data-cat="consumidor" onclick="filterCat('consumidor',this)">🛡️ Cód. Consumidor</button>
+    <button class="filter-btn" data-cat="locacao" onclick="filterCat('locacao',this)">🔑 Inquilinato</button>
+    <button class="filter-btn" data-cat="creci" onclick="filterCat('creci',this)">🏅 CRECI</button>
+    <button class="filter-btn" data-cat="cofeci" onclick="filterCat('cofeci',this)">⚖️ COFECI</button>
+    <button class="filter-btn" data-cat="avaliacao" onclick="filterCat('avaliacao',this)">📐 Avaliações</button>
+    <button class="filter-btn" data-cat="condominio" onclick="filterCat('condominio',this)">🏢 Condomínios</button>
+    <button class="filter-btn" data-cat="registros" onclick="filterCat('registros',this)">📜 Registros</button>
+    <button class="filter-btn" data-cat="sfi" onclick="filterCat('sfi',this)">🏦 SFI / SFH</button>
+    <button class="filter-btn" data-cat="urbanismo" onclick="filterCat('urbanismo',this)">🌆 Urbanismo</button>
+  </div>
+</div>
+
+<div class="results-info" id="resultsInfo">Exibindo <strong id="resultCount">15</strong> legislações</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<footer class="footer">
+  <p>
+    <strong style="color:var(--gold)">FCosta Corretor</strong> — Imóveis na Zona Leste de SP e Itaim Paulista<br>
+    <a href="tel:5511993509109">📱 (11) 99350-9109</a> &nbsp;|&nbsp;
+    <a href="https://fcostacorretor.com">🌐 fcostacorretor.com</a> &nbsp;|&nbsp;
+    CRECI-SP 294791-F | CNAI 52708
+  </p>
+  <p class="disclaimer">Esta página tem caráter informativo. Para orientação jurídica específica, consulte um advogado especializado em direito imobiliário. Legislação sujeita a alterações — última revisão: jan/2026.</p>
+</footer>
+
+<script>
+const DATA = [
+  /* ─── 1. CONSTITUIÇÃO FEDERAL ─── */
+  {
+    id:1, cat:"constituicao", icon:"🏛️",
+    code:"CF/1988", tag:"Constituição Federal",
+    title:"Constituição Federal – Direito à Propriedade e Moradia",
+    desc:"A Carta Magna garante o direito fundamental à propriedade, à moradia digna, estabelece a função social da propriedade urbana e rural, e define os instrumentos da política urbana. É a base de toda a legislação imobiliária brasileira.",
+    articles:[
+      {num:"Art. 5º, XXII",text:"É garantido o direito de propriedade."},
+      {num:"Art. 5º, XXIII",text:"A propriedade atenderá a sua função social."},
+      {num:"Art. 5º, XXVI",text:"A pequena propriedade rural, assim definida em lei, desde que trabalhada pela família, não será objeto de penhora para pagamento de débitos decorrentes de sua atividade produtiva."},
+      {num:"Art. 6º",text:"São direitos sociais a educação, a saúde, a alimentação, o trabalho, a moradia, o transporte, o lazer, a segurança, a previdência social, a proteção à maternidade e à infância, a assistência aos desamparados, na forma desta Constituição."},
+      {num:"Art. 182",text:"A política de desenvolvimento urbano, executada pelo Poder Público municipal, tem por objetivo ordenar o pleno desenvolvimento das funções sociais da cidade e garantir o bem-estar de seus habitantes."},
+      {num:"Art. 182, §2º",text:"A propriedade urbana cumpre sua função social quando atende às exigências fundamentais de ordenação da cidade expressas no plano diretor."},
+      {num:"Art. 183",text:"Aquele que possuir como sua área urbana de até duzentos e cinquenta metros quadrados, por cinco anos, ininterruptamente e sem oposição, utilizando-a para sua moradia ou de sua família, adquirir-lhe-á o domínio, desde que não seja proprietário de outro imóvel urbano ou rural."},
+      {num:"Art. 184",text:"Compete à União desapropriar por interesse social, para fins de reforma agrária, o imóvel rural que não esteja cumprindo sua função social."},
+      {num:"Art. 191",text:"Aquele que, não sendo proprietário de imóvel rural ou urbano, possua como seu, por dez anos ininterruptos, sem oposição, área de terra, em zona rural, não superior a cinquenta hectares, tornando-a produtiva por seu trabalho ou de sua família, tendo nela sua moradia, adquirir-lhe-á a propriedade."},
+    ],
+    keywords:"propriedade função social urbana usucapião moradia plano diretor desapropriação reforma agrária"
+  },
+  /* ─── 2. CÓDIGO CIVIL ─── */
+  {
+    id:2, cat:"civil", icon:"📘",
+    code:"CC – Lei 10.406/2002", tag:"Código Civil",
+    title:"Código Civil – Direito das Coisas e Contratos Imobiliários",
+    desc:"O Código Civil regulamenta a posse, propriedade, direitos reais, contratos imobiliários (compra e venda, doação, permuta), hipoteca, promessa de compra e venda, usucapião, corretagem e todos os negócios jurídicos sobre imóveis.",
+    articles:[
+      {num:"Art. 1.196",text:"Considera-se possuidor todo aquele que tem de fato o exercício, pleno ou não, de algum dos poderes inerentes à propriedade."},
+      {num:"Art. 1.228",text:"O proprietário tem a faculdade de usar, gozar e dispor da coisa, e o direito de reavê-la do poder de quem quer que injustamente a possua ou detenha."},
+      {num:"Art. 1.238",text:"Aquele que, por quinze anos, sem interrupção, nem oposição, possuir como seu um imóvel, adquire-lhe a propriedade, independentemente de título e boa-fé. O prazo reduz-se a dez anos se o possuidor houver estabelecido no imóvel a sua moradia habitual, ou nele realizado obras ou serviços de caráter produtivo."},
+      {num:"Art. 1.239",text:"Aquele que, não sendo proprietário de imóvel rural ou urbano, possua como sua, por cinco anos ininterruptos, sem oposição, área de terra em zona rural não superior a cinquenta hectares, tornando-a produtiva por seu trabalho ou de sua família, tendo nela sua moradia, adquirir-lhe-á a propriedade."},
+      {num:"Art. 1.240",text:"Aquele que possuir, como sua, área urbana de até duzentos e cinquenta metros quadrados, por cinco anos ininterruptamente e sem oposição, utilizando-a para sua moradia ou de sua família, adquirir-lhe-á o domínio, desde que não seja proprietário de outro imóvel urbano ou rural."},
+      {num:"Art. 481",text:"Pelo contrato de compra e venda, um dos contratantes se obriga a transferir o domínio de certa coisa, e o outro, a pagar-lhe certo preço em dinheiro."},
+      {num:"Art. 497",text:"Sob pena de nulidade, não podem ser comprados, ainda que em hasta pública: pelos tutores, curadores, testamenteiros e administradores, os bens confiados à sua guarda ou administração."},
+      {num:"Art. 538",text:"Considera-se doação o contrato em que uma pessoa, por liberalidade, transfere do seu patrimônio bens ou vantagens para o de outra."},
+      {num:"Art. 722",text:"Pelo contrato de corretagem, uma pessoa, não ligada a outra em virtude de mandato, de prestação de serviços ou por qualquer relação de dependência, obriga-se a obter para a segunda um ou mais negócios, conforme as instruções recebidas."},
+      {num:"Art. 723",text:"O corretor é obrigado a executar a mediação com diligência e prudência, e a prestar ao cliente, espontaneamente, todas as informações sobre o andamento do negócio."},
+      {num:"Art. 724",text:"A remuneração do corretor, se não estiver fixada em lei, nem ajustada entre as partes, será arbitrada segundo a natureza do negócio e os usos locais."},
+      {num:"Art. 725",text:"A remuneração é devida ao corretor uma vez que tenha conseguido o resultado previsto no contrato de mediação, ou ainda que este não se efetive em virtude de arrependimento das partes."},
+      {num:"Art. 1.473",text:"Podem ser objeto de hipoteca: os imóveis e os acessórios dos imóveis conjuntamente com eles; o domínio direto; as estradas de ferro; os recursos naturais do solo."},
+      {num:"Art. 1.647",text:"Ressalvado o disposto no art. 1.648, nenhum dos cônjuges pode, sem autorização do outro, alienar ou gravar de ônus real os bens imóveis."},
+    ],
+    keywords:"posse propriedade usucapião compra venda corretagem hipoteca doação contratos direito real cônjuge outorga"
+  },
+  /* ─── 3. CÓDIGO DO CONSUMIDOR ─── */
+  {
+    id:3, cat:"consumidor", icon:"🛡️",
+    code:"CDC – Lei 8.078/1990", tag:"Código do Consumidor",
+    title:"Código de Defesa do Consumidor – Imóveis e Incorporações",
+    desc:"O CDC aplica-se nas relações entre compradores de imóveis e incorporadoras/construtoras, protegendo o consumidor em contratos de compra e venda, financiamentos, propaganda enganosa, vícios de construção e atrasos de entrega.",
+    articles:[
+      {num:"Art. 2º",text:"Consumidor é toda pessoa física ou jurídica que adquire ou utiliza produto ou serviço como destinatário final."},
+      {num:"Art. 6º, III",text:"São direitos básicos do consumidor: a informação adequada e clara sobre os diferentes produtos e serviços, com especificação correta de quantidade, características, composição, qualidade, tributos incidentes e preço."},
+      {num:"Art. 18",text:"Os fornecedores de produtos de consumo duráveis ou não duráveis respondem solidariamente pelos vícios de qualidade ou quantidade que os tornem impróprios ou inadequados ao consumo a que se destinam."},
+      {num:"Art. 20",text:"O fornecedor de serviços responde pelos vícios de qualidade que os tornem impróprios ao consumo ou lhes diminuam o valor. O consumidor pode exigir: a reexecução dos serviços, sem custo adicional; a restituição imediata da quantia paga; o abatimento proporcional do preço."},
+      {num:"Art. 27",text:"Prescreve em cinco anos a pretensão à reparação pelos danos causados por fato do produto ou do serviço, iniciando-se a contagem do prazo a partir do conhecimento do dano e de sua autoria."},
+      {num:"Art. 37",text:"É proibida toda publicidade enganosa ou abusiva. É enganosa qualquer modalidade de informação ou comunicação de caráter publicitário, inteira ou parcialmente falsa."},
+      {num:"Art. 51, IV",text:"São nulas de pleno direito as cláusulas contratuais que estabeleçam obrigações consideradas iníquas, abusivas, que coloquem o consumidor em desvantagem exagerada."},
+      {num:"Súmula 543/STJ",text:"Na hipótese de resolução de contrato de promessa de compra e venda de imóvel submetido ao CDC, deve ocorrer a imediata restituição das parcelas pagas pelo promitente comprador — integralmente, em caso de culpa exclusiva do promitente vendedor/construtor, ou parcialmente, caso tenha sido o comprador quem deu causa ao desfazimento."},
+    ],
+    keywords:"consumidor imóvel construtora incorporadora vício construção publicidade enganosa contrato atraso entrega distrato"
+  },
+  /* ─── 4. LEI DO INQUILINATO ─── */
+  {
+    id:4, cat:"locacao", icon:"🔑",
+    code:"Lei 8.245/1991", tag:"Lei do Inquilinato",
+    title:"Lei do Inquilinato – Locações Urbanas",
+    desc:"Regula as locações de imóveis urbanos residenciais e comerciais, disciplinando direitos e deveres de locador e locatário, garantias locatícias, prazos, reajustes por índices (IGP-M, IPCA), rescisão, despejo e benfeitorias.",
+    articles:[
+      {num:"Art. 2º",text:"Havendo mais de um locador ou mais de um locatário, entende-se que são solidários se o contrário não se estipulou."},
+      {num:"Art. 4º",text:"Durante o prazo estipulado para a duração do contrato, não poderá o locador reaver o imóvel alugado. O locatário, todavia, poderá devolvê-lo, pagando a multa pactuada, proporcional ao período de cumprimento do contrato."},
+      {num:"Art. 17",text:"É livre a convenção do aluguel, vedada a sua estipulação em moeda estrangeira e a sua vinculação à variação cambial ou ao salário mínimo."},
+      {num:"Art. 18",text:"É lícito às partes fixar, de comum acordo, novo valor para o aluguel, bem como inserir ou modificar cláusula de reajuste."},
+      {num:"Art. 22",text:"O locador é obrigado a: entregar ao locatário o imóvel alugado em estado de servir ao uso a que se destina; garantir, durante o tempo da locação, o uso pacífico do imóvel locado; manter em boa condição as instalações hidráulicas, elétricas, sanitárias e de gás."},
+      {num:"Art. 23",text:"O locatário é obrigado a: pagar pontualmente o aluguel e os encargos da locação; utilizar o imóvel para o uso convencionado; restituir o imóvel no estado em que o recebeu; não modificar a forma interna ou externa do imóvel sem consentimento prévio e por escrito do locador."},
+      {num:"Art. 37",text:"No contrato de locação, pode o locador exigir as seguintes garantias: caução; fiança; seguro de fiança locatícia; cessão fiduciária de quotas de fundo de investimento. É vedada, sob pena de nulidade, mais de uma das modalidades de garantia num mesmo contrato."},
+      {num:"Art. 46",text:"Nas locações ajustadas por escrito e por prazo igual ou superior a trinta meses, a resolução do contrato ocorrerá findo o prazo estipulado, independentemente de notificação ou aviso."},
+      {num:"Art. 51",text:"Nas locações de imóveis destinados ao comércio, o locatário terá direito à renovação do contrato, por igual prazo, desde que o contrato tenha sido celebrado por escrito e com prazo determinado, o prazo mínimo de cinco anos e o locatário esteja explorando o mesmo ramo há pelo menos três anos."},
+      {num:"Art. 68 (Ação de Despejo)",text:"Na ação de despejo, o locatário poderá evitar a resolução da locação e o despejo, executando as obrigações contratuais em atraso, dentro do prazo fixado pelo juiz, acrescidas de multa de 10% do débito apurado."},
+    ],
+    keywords:"aluguel locação inquilino locador fiança caução despejo renovação rescisão reajuste IGP-M IPCA benfeitorias"
+  },
+  /* ─── 5. CRECI ─── */
+  {
+    id:5, cat:"creci", icon:"🏅",
+    code:"Lei 6.530/1978 + Decreto 81.871/1978", tag:"CRECI",
+    title:"Profissão de Corretor de Imóveis – CRECI",
+    desc:"Regulamenta a profissão de corretor de imóveis, define as atribuições dos CRECIs Regionais (fiscalização, emissão de carteiras, registro), estabelece os requisitos para exercício da profissão e as penalidades disciplinares.",
+    articles:[
+      {num:"Art. 2º (Lei 6.530)",text:"O exercício da profissão de Corretor de Imóveis será permitido ao possuidor de título de Técnico em Transações Imobiliárias, inscrito no CRECI da jurisdição."},
+      {num:"Art. 3º (Lei 6.530)",text:"Compete ao Corretor de Imóveis exercer a intermediação na compra, venda, permuta e locação de imóveis, podendo, ainda, opinar quanto à comercialização imobiliária."},
+      {num:"Art. 20 (Lei 6.530)",text:"Compete ao CRECI: fiscalizar a atividade profissional do Corretor de Imóveis; expedir carteiras profissionais e cédulas de identidade profissional; organizar e manter o registro dos profissionais inscritos."},
+      {num:"Art. 21 (Lei 6.530)",text:"São infrações disciplinares: exercer a profissão sem prévia inscrição; violar o sigilo profissional; praticar, no exercício da profissão, atos que a lei define como crime; prejudicar por dolo ou culpa grave os interesses que lhe foram confiados."},
+      {num:"Tabela CRECI-SP (Res. 62/1996)",text:"A comissão do corretor nas operações de compra e venda varia de 6% a 8% sobre o valor da transação. Nas locações residenciais, equivale a 1 mês de aluguel para contratos de até 12 meses; 50% para contratos acima de 12 meses."},
+      {num:"Resolução COFECI 327/1992",text:"É obrigatório o uso da carteira profissional do CRECI em todos os atos da profissão. A afixação do número de inscrição no CRECI é exigida em toda publicidade, papelaria e anúncios de imóveis."},
+      {num:"CNAI – Cadastro Nacional",text:"O Cadastro Nacional de Avaliadores Imobiliários (CNAI) é obrigatório para corretores que emitem laudos e pareceres técnicos de avaliação. Exige curso específico aprovado pelo COFECI."},
+    ],
+    keywords:"corretor imóveis CRECI carteira profissional habilitação inscrição fiscalização comissão corretagem CNAI avaliador"
+  },
+  /* ─── 6. COFECI ─── */
+  {
+    id:6, cat:"cofeci", icon:"⚖️",
+    code:"Lei 6.530/1978 + Resoluções COFECI", tag:"COFECI",
+    title:"COFECI – Conselho Federal e Código de Ética",
+    desc:"O COFECI (Conselho Federal de Corretores de Imóveis) é o órgão nacional regulador da profissão. Estabelece normas éticas, fixa anuidades, aprova tabelas de honorários, regula o CNAI e disciplina a publicidade imobiliária.",
+    articles:[
+      {num:"Art. 17 (Lei 6.530)",text:"Compete ao COFECI: dispor sobre ética profissional; fixar as multas e anuidades devidas pelos inscritos; homologar, suprir ou anular atos dos CRECIs; baixar normas de publicidade imobiliária."},
+      {num:"Res. COFECI 1.336/2014 – Código de Ética",text:"Aprova o Código de Ética dos Corretores de Imóveis. O corretor deve agir com lealdade, probidade e honestidade. É vedado captar imóveis com subtração de cliente de outro profissional ou cometer fraudes em avaliações."},
+      {num:"Art. 4º – Código de Ética",text:"São deveres do corretor: zelar pela sua capacidade técnica; orientar o cliente sobre todos os aspectos jurídicos e técnicos do negócio; apresentar ao cliente proposta que consulte os legítimos interesses das partes."},
+      {num:"Art. 6º – Código de Ética",text:"É vedado ao corretor: celebrar acordo ou participar de negócios com intenção de prejudicar o cliente; praticar ato de concorrência desleal ou utilizar meios publicitários enganosos para captar clientela."},
+      {num:"Res. COFECI 1.364/2016 – Publicidade",text:"A publicidade de imóveis deve conter obrigatoriamente: nome do corretor ou imobiliária, número de inscrição no CRECI, todas as informações relevantes do imóvel, sem omissão de dados que possam induzir o consumidor em erro."},
+      {num:"Res. COFECI 1.426/2022 – Exclusividade",text:"O contrato de exclusividade de corretagem deve ser firmado por escrito, com prazo determinado, e não pode estabelecer prazo superior a 180 dias renováveis. O corretor com exclusividade faz jus à comissão mesmo que o negócio seja realizado diretamente pelo proprietário."},
+      {num:"Res. COFECI 1.178/2020 – EAD",text:"Regulamenta a educação continuada dos corretores. Para renovação de inscrição, é exigido comprovante de atividade no mercado ou participação em cursos de atualização reconhecidos pelo COFECI/CRECI."},
+    ],
+    keywords:"COFECI conselho federal ética publicidade exclusividade honorários normas regulamento corretores"
+  },
+  /* ─── 7. AVALIAÇÕES IMOBILIÁRIAS ─── */
+  {
+    id:7, cat:"avaliacao", icon:"📐",
+    code:"NBR 14.653 ABNT + Res. COFECI CNAI", tag:"Avaliações Imobiliárias",
+    title:"Normas de Avaliação Imobiliária – NBR 14.653 e CNAI",
+    desc:"A NBR 14.653 da ABNT é a norma técnica brasileira que padroniza as avaliações de bens imóveis. O CNAI (Cadastro Nacional de Avaliadores Imobiliários) habilita corretores a emitir laudos de avaliação (PTAM) com validade legal.",
+    articles:[
+      {num:"NBR 14.653-1 (Procedimentos Gerais)",text:"Define os conceitos fundamentais de avaliação, terminologia, classificação dos métodos avaliatórios e o processo de engenharia de avaliações. Todo imóvel deve ser avaliado por profissional habilitado."},
+      {num:"NBR 14.653-2 (Imóveis Urbanos)",text:"Regulamenta especificamente a avaliação de imóveis urbanos, estabelecendo os métodos comparativo direto de dados de mercado, evolutivo, involutivo e de renda para determinação do valor de mercado."},
+      {num:"NBR 14.653-3 (Imóveis Rurais)",text:"Define os procedimentos para avaliação de imóveis rurais, incluindo terras, benfeitorias, culturas, máquinas e equipamentos inerentes ao bem rural."},
+      {num:"PTAM – Parecer Técnico",text:"O Parecer Técnico de Avaliação Mercadológica (PTAM) é o documento emitido por corretor inscrito no CNAI. Tem validade como prova em processos judiciais, inventários, partilhas, financiamentos e declarações patrimoniais."},
+      {num:"CNAI – Habilitação",text:"Para emitir PTAMs, o corretor deve ser inscrito no CNAI, com curso de avaliação aprovado pelo COFECI (mínimo 180 horas). A inscrição no CNAI é pessoal, intransferível e tem validade enquanto a inscrição no CRECI estiver ativa."},
+      {num:"Método Comparativo (Principal)",text:"O método mais utilizado para imóveis urbanos. Consiste em pesquisar imóveis semelhantes (oferta ou transações) na mesma região, aplicar fatores de homogeneização (área, padrão construtivo, localização, estado de conservação) e determinar o valor de mercado."},
+      {num:"Laudo de Avaliação x PTAM",text:"O Laudo de Avaliação Imobiliária é elaborado por engenheiro civil credenciado (IBAPE/CREA). O PTAM é elaborado por corretor de imóveis credenciado no CNAI/COFECI. Ambos têm validade jurídica, mas são utilizados em contextos diferentes."},
+    ],
+    keywords:"avaliação imobiliária NBR 14653 PTAM CNAI laudo valor mercado método comparativo corretor avaliador"
+  },
+  /* ─── 8. CONDOMÍNIOS ─── */
+  {
+    id:8, cat:"condominio", icon:"🏢",
+    code:"Lei 4.591/1964 + Lei 4.864/1965 + CC/2002", tag:"Condomínios",
+    title:"Condomínios e Incorporações Imobiliárias",
+    desc:"Regula os condomínios em edificações e as incorporações imobiliárias. Disciplina a constituição do condomínio, taxa condominial, assembleia, convenção, regimento interno, responsabilidades do incorporador e o patrimônio de afetação.",
+    articles:[
+      {num:"Art. 1.331 (CC)",text:"Pode haver, em edificações, partes que são propriedade exclusiva, e partes que são propriedade comum dos condôminos."},
+      {num:"Art. 1.335 (CC)",text:"São direitos do condômino: usar, fruir e livremente dispor das suas unidades; usar das partes comuns; votar nas deliberações da assembleia e delas participar, estando quite."},
+      {num:"Art. 1.336 (CC)",text:"São deveres do condômino: contribuir para as despesas do condomínio na proporção das suas frações ideais; não realizar obras que comprometam a segurança da edificação; não alterar a forma e a cor da fachada."},
+      {num:"Art. 1.337 (CC)",text:"O condômino que não cumpre reiteradamente com os seus deveres perante o condomínio poderá, por deliberação de três quartos dos condôminos restantes, ser constrangido a pagar multa correspondente ao décuplo do valor da cota condominial."},
+      {num:"Art. 1.348 (CC)",text:"Compete ao síndico: convocar a assembleia dos condôminos; representar, ativa e passivamente, o condomínio; diligenciar a conservação e a guarda das partes comuns e zelar pela prestação dos serviços que interessem aos possuidores."},
+      {num:"Art. 31-A (Lei 4.591) – Patrimônio de Afetação",text:"A critério do incorporador, a incorporação poderá ser submetida ao regime de afetação, pelo qual o terreno e as acessões objeto de incorporação imobiliária constituem patrimônio de afetação, destinado à consecução da incorporação."},
+      {num:"Lei 14.382/2022 – SERP",text:"Moderniza os registros de condomínios, permitindo assembleias e deliberações por meios eletrônicos, com validade jurídica plena, facilitando a gestão condominial à distância."},
+    ],
+    keywords:"condomínio síndico assembleia taxa condominial incorporação fração ideal convenção vagas garagem patrimônio afetação"
+  },
+  /* ─── 9. REGISTROS PÚBLICOS ─── */
+  {
+    id:9, cat:"registros", icon:"📜",
+    code:"Lei 6.015/1973 + Lei 13.097/2015 + Lei 14.382/2022", tag:"Registros Públicos",
+    title:"Lei de Registros Públicos e Cartório Digital",
+    desc:"Disciplina o registro de imóveis no Brasil, tornando oponíveis a terceiros os atos de transferência e constituição de direitos reais. A Lei 13.097/2015 estabelece a concentração na matrícula. A Lei 14.382/2022 institui o SERP eletrônico.",
+    articles:[
+      {num:"Art. 167, I (Lei 6.015)",text:"No Registro de Imóveis serão feitos o registro de: compra e venda pura e condicional; penhora, arresto ou sequestro de imóveis; hipoteca legal, judiciária e convencional; alienação fiduciária."},
+      {num:"Art. 172 (Lei 6.015)",text:"No Registro de Imóveis serão feitos, nos termos desta Lei, o registro e a averbação dos títulos ou atos constitutivos, declaratórios, translativos e extintivos de direitos reais sobre imóveis."},
+      {num:"Art. 176 (Lei 6.015)",text:"O Livro nº 2 – Registro Geral – será destinado à matrícula dos imóveis e ao registro ou averbação dos atos relacionados. A matrícula é única e individual por imóvel."},
+      {num:"Art. 54 (Lei 13.097/2015) – Concentração na Matrícula",text:"Os negócios jurídicos que tenham por fim constituir, transferir ou modificar direitos reais sobre imóveis são eficazes em relação a atos jurídicos precedentes nas hipóteses em que não tenham sido registrados ou averbados na matrícula do imóvel."},
+      {num:"Art. 1º (Lei 14.382/2022) – SERP",text:"Fica instituído o Sistema Eletrônico dos Registros Públicos (SERP), com o objetivo de integrar os serviços de registros públicos e garantir autenticidade, segurança e eficácia das informações."},
+      {num:"Art. 8º (Lei 14.382/2022)",text:"Os atos notariais e de registro poderão ser praticados por meio eletrônico, com a utilização de certificados digitais e assinaturas eletrônicas qualificadas (ICP-Brasil)."},
+      {num:"Certidão de Ônus Reais",text:"Documento emitido pelo Cartório de Registro de Imóveis que informa todos os ônus, gravames, penhoras, hipotecas e restrições que pesam sobre o imóvel. Essencial antes de qualquer transação imobiliária."},
+    ],
+    keywords:"registro matrícula cartório imóvel escritura averbação certidão transferência propriedade SERP eletrônico"
+  },
+  /* ─── 10. SFI / SFH ─── */
+  {
+    id:10, cat:"sfi", icon:"🏦",
+    code:"Lei 9.514/1997 + Lei 4.380/1964 + Lei 11.977/2009", tag:"SFI / SFH",
+    title:"Sistema Financeiro Imobiliário e Habitacional – MCMV",
+    desc:"Regulamenta o SFI e o SFH, incluindo alienação fiduciária, financiamento habitacional (FGTS/SBPE), Minha Casa Minha Vida, CRI, LCI e os mecanismos de consolidação da propriedade em caso de inadimplência.",
+    articles:[
+      {num:"Art. 22 (Lei 9.514/1997) – Alienação Fiduciária",text:"A alienação fiduciária é o negócio jurídico pelo qual o devedor (fiduciante), com escopo de garantia, contrata a transferência ao credor (fiduciário) da propriedade resolúvel de coisa imóvel."},
+      {num:"Art. 26 (Lei 9.514/1997)",text:"Vencida e não paga a dívida e constituído em mora o fiduciante, consolidar-se-á a propriedade do imóvel em nome do fiduciário. O devedor tem 15 dias para purgar a mora."},
+      {num:"Art. 27 (Lei 9.514/1997)",text:"Consolidada a propriedade, o fiduciário no prazo de 30 dias promoverá público leilão para alienação do imóvel. Se o valor do leilão superar a dívida, o saldo é devolvido ao fiduciante."},
+      {num:"Art. 8º (Lei 4.380/1964) – SFH",text:"É instituído o Sistema Financeiro da Habitação, destinado a facilitar e promover a construção e a aquisição da casa própria, especialmente pelas classes de menor renda da população."},
+      {num:"Lei 14.620/2023 – MCMV Reformulado",text:"Reformula o Programa Minha Casa, Minha Vida, ampliando as faixas de renda para Faixa 1 (até R$ 2.640), Faixa 2 (até R$ 4.400) e Faixa 3 (até R$ 8.000), com subsídios progressivos e uso do FGTS."},
+      {num:"FGTS – Lei 8.036/1990",text:"O Fundo de Garantia do Tempo de Serviço pode ser utilizado na compra da casa própria (residencial e novo/usado), amortização ou quitação de financiamento habitacional pelo SFH. Exige 3 anos de carteira assinada."},
+      {num:"LCI – Lei 12.846/2013",text:"A Letra de Crédito Imobiliário (LCI) é um título de crédito emitido por instituições financeiras lastreado em créditos imobiliários, isento de Imposto de Renda para pessoa física."},
+    ],
+    keywords:"alienação fiduciária financiamento habitação FGTS SBPE Minha Casa Minha Vida CRI LCI SFI SFH inadimplência leilão"
+  },
+  /* ─── 11. URBANISMO / ESTATUTO DA CIDADE ─── */
+  {
+    id:11, cat:"urbanismo", icon:"🌆",
+    code:"Lei 10.257/2001 (Estatuto da Cidade) + Lei 6.766/1979", tag:"Urbanismo",
+    title:"Estatuto da Cidade e Parcelamento do Solo Urbano",
+    desc:"O Estatuto da Cidade regulamenta a política urbana, instrumentos como o Plano Diretor, IPTU progressivo, direito de preempção e outorga onerosa. A Lei 6.766/1979 regula o parcelamento e loteamento do solo urbano.",
+    articles:[
+      {num:"Art. 1º (Lei 10.257/2001)",text:"Na execução da política urbana, tanto pela União quanto pelos Municípios, serão observadas as diretrizes gerais fixadas nesta Lei, denominada Estatuto da Cidade."},
+      {num:"Art. 2º (Estatuto da Cidade)",text:"A política urbana tem por objetivo ordenar o pleno desenvolvimento das funções sociais da cidade e da propriedade urbana, mediante diretrizes: garantia do direito a cidades sustentáveis, gestão democrática, cooperação entre governos e planejamento."},
+      {num:"Art. 5º – IPTU Progressivo",text:"Lei municipal específica para área incluída no plano diretor poderá determinar o parcelamento, edificação ou utilização compulsórios do solo urbano não edificado, subutilizado ou não utilizado. O descumprimento sujeita o proprietário ao IPTU progressivo no tempo."},
+      {num:"Art. 9º – Usucapião Especial Urbana",text:"Aquele que possuir como sua área ou edificação urbana de até duzentos e cinquenta metros quadrados, por cinco anos, ininterruptamente e sem oposição, utilizando-a para sua moradia ou de sua família, adquirir-lhe-á o domínio."},
+      {num:"Art. 25 – Direito de Preempção",text:"O direito de preempção confere ao Poder Público municipal preferência para aquisição de imóvel urbano objeto de alienação onerosa entre particulares, em áreas delimitadas pelo Plano Diretor."},
+      {num:"Art. 2º (Lei 6.766/1979) – Loteamento",text:"O parcelamento do solo urbano poderá ser feito mediante loteamento ou desmembramento, observadas as disposições desta Lei e as das legislações estaduais e municipais pertinentes."},
+      {num:"Art. 37 (Lei 6.766/1979)",text:"É vedado vender ou prometer vender parcela de loteamento ou desmembramento não registrado. O parcelador responde pelos prejuízos causados aos adquirentes."},
+    ],
+    keywords:"urbanismo estatuto cidade plano diretor IPTU progressivo loteamento parcelamento solo usucapião preempção"
+  },
+  /* ─── 12. IMPOSTO DE RENDA / TRIBUTAÇÃO IMOBILIÁRIA ─── */
+  {
+    id:12, cat:"civil", icon:"💰",
+    code:"Lei 7.713/1988 + IN RFB 84/2001 + Lei 14.973/2024", tag:"Tributação",
+    title:"Tributação Imobiliária – ITBI, ITCMD, Ganho de Capital e IR",
+    desc:"Regulamentação dos tributos incidentes nas transações imobiliárias: ITBI (transmissão), ITCMD (herança/doação), Imposto de Renda sobre ganho de capital na venda de imóveis, e a atualização do valor de imóveis pela Lei 14.973/2024.",
+    articles:[
+      {num:"ITBI – Art. 156, II (CF/1988)",text:"Compete aos Municípios instituir imposto sobre a transmissão inter vivos, a qualquer título, por ato oneroso, de bens imóveis. A alíquota em São Paulo é de 3% sobre o valor venal ou de mercado, o que for maior."},
+      {num:"ITCMD – Art. 155, I (CF/1988)",text:"Compete aos Estados instituir imposto sobre transmissão causa mortis e doação, de quaisquer bens ou direitos. Em SP, a alíquota é de 4% sobre bens imóveis transmitidos por herança ou doação."},
+      {num:"Ganho de Capital – Lei 7.713/1988",text:"A venda de imóvel gera ganho de capital tributável pelo IR (15% a 22,5% sobre o lucro), exceto: imóvel residencial com reinvestimento em outro imóvel em 180 dias; único imóvel vendido por até R$ 440.000; imóvel com valor de venda até R$ 35.000."},
+      {num:"Lei 14.973/2024 – Atualização de Imóveis",text:"Permite que pessoas físicas atualizem o valor de custo de imóveis declarados no IR para o valor de mercado, com alíquota reduzida de 4% sobre a diferença (até 31/12/2024). Imóveis atualizados ficam isentos de ganho de capital se alienados após 15 anos."},
+      {num:"Isenção Único Imóvel",text:"Está isento de IR sobre ganho de capital o contribuinte que vender o único imóvel que possua, por valor não superior a R$ 440.000, desde que não tenha realizado outra venda de imóvel nos últimos cinco anos."},
+    ],
+    keywords:"ITBI ITCMD imposto renda ganho capital imóvel tributação herança doação isenção atualização"
+  },
+  /* ─── 13. LOCAÇÃO POR TEMPORADA / AIRBNB ─── */
+  {
+    id:13, cat:"locacao", icon:"🏖️",
+    code:"Lei 8.245/1991 Arts. 48-50 + Marco Legal STJ 2023", tag:"Locação por Temporada",
+    title:"Locação por Temporada e Plataformas Digitais (Airbnb)",
+    desc:"Regulamentação das locações por temporada (até 90 dias) e o marco jurídico das hospedagens por plataformas digitais como Airbnb e Booking. O STJ definiu que locações habituais por plataformas são hotelaria, não locação residencial.",
+    articles:[
+      {num:"Art. 48 (Lei 8.245/1991)",text:"Considera-se locação para temporada aquela destinada à residência temporária do locatário, para prática de lazer, realização de cursos, tratamento de saúde, feitura de obras em seu imóvel, e outros fatos que decorrem tão somente de determinado tempo."},
+      {num:"Art. 49 (Lei 8.245/1991)",text:"O locador poderá receber de uma só vez e antecipadamente os aluguéis e encargos, bem como exigir qualquer das modalidades de garantia previstas no art. 37 para contratos de temporada."},
+      {num:"Art. 50 (Lei 8.245/1991)",text:"Findo o prazo ajustado, se o locatário permanecer no imóvel sem oposição do locador por mais de trinta dias, presumir-se-á prorrogada a locação por tempo indeterminado."},
+      {num:"STJ – REsp 1.819.075 (2023)",text:"A hospedagem habitual e remunerada por plataformas digitais (Airbnb) em condomínio residencial pode ser proibida pela convenção condominial, pois se equipara a atividade hoteleira, não a locação residencial protegida pela Lei 8.245/1991."},
+      {num:"ISS – Airbnb (LC 157/2016)",text:"A exploração de imóvel via plataformas de hospedagem habitual está sujeita ao ISS municipal e pode exigir cadastro como prestador de serviços de hospedagem, conforme legislação do município."},
+    ],
+    keywords:"Airbnb temporada hospedagem plataforma digital condomínio locação curta duração ISS"
+  },
+  /* ─── 14. DISTRATO IMOBILIÁRIO ─── */
+  {
+    id:14, cat:"consumidor", icon:"📄",
+    code:"Lei 13.786/2018 (Lei do Distrato)", tag:"Distrato Imobiliário",
+    title:"Lei do Distrato Imobiliário – Rescisão de Contratos",
+    desc:"Regulamenta as consequências jurídicas do desfazimento de contratos de promessa de compra e venda de imóveis urbanos na planta, estabelecendo percentuais de retenção, prazos de devolução e a cláusula de arrependimento.",
+    articles:[
+      {num:"Art. 67-A (Lei 4.591 c/c Lei 13.786/2018)",text:"Em caso de desfazimento do contrato celebrado exclusivamente com o incorporador, mediante distrato ou resolução por inadimplemento absoluto de obrigação do adquirente, este fará jus à restituição das quantias pagas sob pena de enriquecimento ilícito do vendedor."},
+      {num:"Retenção Máxima – Incorporações",text:"O incorporador poderá reter até 25% das quantias pagas pelo adquirente no caso de distrato. Se o imóvel estiver sujeito ao regime de patrimônio de afetação, a retenção pode ser de até 50%."},
+      {num:"Prazo de Devolução",text:"Os valores a serem devolvidos devem ser pagos em parcela única, no prazo de 180 dias contado da data do desfazimento do contrato. Se o empreendimento ainda não tiver sido concluído, o prazo é de 30 dias após a expedição do Habite-se."},
+      {num:"Quadro Resumo Obrigatório",text:"Os contratos de compra de imóvel na planta devem conter quadro-resumo com: preço total e parcelamento; taxa de corretagem e a quem é devida; prazo de entrega e consequências do atraso; índice de reajuste; condições e prazos de desistência."},
+      {num:"Tolerância de Atraso – 180 dias",text:"A lei reconhece prazo de tolerância de 180 dias para atraso na entrega de imóveis. Findo esse prazo, o adquirente pode resolver o contrato com devolução integral dos valores ou exigir indenização pela mora."},
+    ],
+    keywords:"distrato rescisão contrato planta imóvel na planta devolução retenção atraso entrega incorporadora"
+  },
+  /* ─── 15. REGULARIZAÇÃO FUNDIÁRIA ─── */
+  {
+    id:15, cat:"urbanismo", icon:"🏘️",
+    code:"Lei 13.465/2017 (Reurb)", tag:"Regularização Fundiária",
+    title:"Regularização Fundiária Urbana – REURB",
+    desc:"A Lei 13.465/2017 instituiu a Regularização Fundiária Urbana (Reurb), criando instrumentos para regularizar imóveis informais e loteamentos irregulares, viabilizando a emissão de escrituras e registros para moradores em áreas irregulares.",
+    articles:[
+      {num:"Art. 9º (Lei 13.465/2017)",text:"Ficam instituídas no território nacional normas gerais e procedimentos aplicáveis à Regularização Fundiária Urbana (Reurb), a qual abrange medidas jurídicas, urbanísticas, ambientais e sociais destinadas à incorporação dos núcleos urbanos informais ao ordenamento territorial urbano."},
+      {num:"Reurb-S (Social)",text:"Destinada a núcleos urbanos informais ocupados predominantemente por população de baixa renda. O poder público arca com os custos de regularização. Beneficia moradores de áreas de risco, favelas e loteamentos irregulares."},
+      {num:"Reurb-E (Específica)",text:"Destinada a núcleos urbanos informais ocupados por população não qualificada como de baixa renda. Os custos da regularização ficam a cargo dos próprios beneficiários ou do empreendedor."},
+      {num:"Legitimação Fundiária",text:"Instrumento pelo qual o poder público, através de ato de assentamento cadastral, confere o direito real de propriedade ao ocupante de imóvel localizado em núcleo urbano informal consolidado."},
+      {num:"CRF – Certidão de Regularização Fundiária",text:"Após aprovação do projeto de regularização, o município emite a CRF, que é o título que permite o registro do parcelamento no Cartório de Registro de Imóveis e a emissão de matrículas individuais para cada lote/unidade."},
+    ],
+    keywords:"regularização fundiária Reurb loteamento irregular usucapião social escritura matrícula favela imóvel informal"
+  },
+];
+
+let currentCat="all", currentSearch="";
+
+function renderCards(list){
+  const grid=document.getElementById('cardsGrid');
+  document.getElementById('resultCount').textContent=list.length;
+  if(list.length===0){
+    grid.innerHTML=`<div class="no-results"><div class="icon">⚖️</div><h3>Nenhuma legislação encontrada</h3><p>Tente outros termos ou remova o filtro.</p></div>`;
+    return;
+  }
+  grid.innerHTML=list.map((item,i)=>`
+    <div class="card cat-${item.cat}" style="animation-delay:${i*0.04}s">
+      <div class="card-header">
+        <div class="card-icon">${item.icon}</div>
+        <div class="card-meta">
+          <div class="card-code">${item.code} <span class="card-tag">${item.tag}</span></div>
+          <div class="card-title">${item.title}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">${item.desc}</div>
+        <div class="articles-list" id="art-${item.id}">
+          ${item.articles.map(a=>`
+            <div class="article-item">
+              <div class="article-num">${a.num}</div>
+              <div class="article-text">${a.text}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="expand-btn" onclick="toggleArticles(${item.id},this)">Ver artigos ▾</button>
+        <span class="article-count">${item.articles.length} artigo${item.articles.length!==1?'s':''}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleArticles(id,btn){
+  const el=document.getElementById('art-'+id);
+  el.classList.toggle('open');
+  btn.textContent=el.classList.contains('open')?'Ocultar ▴':'Ver artigos ▾';
+}
+
+function filterCat(cat,el){
+  currentCat=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function performSearch(){
+  currentSearch=document.getElementById('searchInput').value.toLowerCase();
+  applyFilters();
+}
+
+function setSearch(term){
+  document.getElementById('searchInput').value=term;
+  currentSearch=term.toLowerCase();
+  currentCat="all";
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  applyFilters();
+}
+
+function applyFilters(){
+  let list=DATA;
+  if(currentCat!=="all")list=list.filter(i=>i.cat===currentCat);
+  if(currentSearch){
+    list=list.filter(i=>
+      i.title.toLowerCase().includes(currentSearch)||
+      i.desc.toLowerCase().includes(currentSearch)||
+      i.code.toLowerCase().includes(currentSearch)||
+      i.keywords.toLowerCase().includes(currentSearch)||
+      i.articles.some(a=>a.text.toLowerCase().includes(currentSearch)||a.num.toLowerCase().includes(currentSearch))
+    );
+  }
+  renderCards(list);
+}
+
+renderCards(DATA);
+</script>
+</body>
+</html>

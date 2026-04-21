@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perícia Judicial Imobiliária</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #1a7fc4;
+    --sky-light: #e6f3fb;
+    --sky-mid: #4da6e0;
+    --sky-dark: #0d5a8f;
+    --sky-deep: #073a60;
+    --sky-pale: #c8e8f8;
+    --cloud: #f0f8ff;
+    --text: #0d2a40;
+    --text-mid: #2c5f85;
+    --text-soft: #6a9dbf;
+    --white: #ffffff;
+    --accent: #e8a020;
+    --accent-light: #fef3df;
+    --border: rgba(26,127,196,0.18);
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --green: #1a7a4a;
+    --green-light: #e8f7ef;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: linear-gradient(160deg, #ddeef9 0%, #f0f8ff 40%, #e8f4fb 100%);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--sky-deep) 0%, var(--sky-dark) 55%, #1569a8 100%);
+    color: #fff;
+    padding: 64px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -80px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .hero-inner { max-width: 920px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 20px;
+    padding: 5px 18px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    color: rgba(255,255,255,0.9);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.18;
+    margin-bottom: 18px;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--sky-pale); }
+  .hero p {
+    font-size: 1.08rem;
+    color: rgba(255,255,255,0.80);
+    max-width: 660px;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+  .hero-badge {
+    background: rgba(255,255,255,0.11);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 6px 15px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.88);
+    font-weight: 400;
+  }
+
+  /* MAIN */
+  .main { max-width: 920px; margin: 0 auto; padding: 52px 24px 88px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--sky-dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 30px;
+    background: var(--sky);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-sub {
+    color: var(--text-soft);
+    font-size: 0.94rem;
+    margin-bottom: 30px;
+    margin-left: 16px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .card:hover { box-shadow: 0 4px 24px rgba(26,127,196,0.10); }
+  .card-accent { border-left: 4px solid var(--sky); border-radius: 0 14px 14px 0; background: var(--cloud); }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem;
+    color: var(--sky-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .card p, .card li { font-size: 0.94rem; color: var(--text); line-height: 1.78; }
+  .card ul { margin-left: 18px; margin-top: 8px; }
+  .card li { margin-bottom: 6px; }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px; margin-bottom: 20px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
+
+  /* FORMULA */
+  .formula {
+    background: var(--sky-light);
+    border: 1px solid var(--sky-pale);
+    border-radius: 10px;
+    padding: 16px 22px;
+    margin: 14px 0;
+    font-family: 'Georgia', serif;
+    font-size: 1.02rem;
+    color: var(--sky-deep);
+    text-align: center;
+  }
+  .formula small {
+    display: block;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.77rem;
+    color: var(--text-soft);
+    margin-top: 7px;
+    font-style: italic;
+    letter-spacing: 0;
+  }
+
+  /* TABLES */
+  .tbl-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  thead tr { background: var(--sky-dark); color: #fff; }
+  thead th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 0.88rem; }
+  tbody tr:nth-child(even) { background: var(--sky-light); }
+  tbody td { padding: 10px 16px; color: var(--text); border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; margin-bottom: 24px; }
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.93rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body h4 { font-weight: 600; font-size: 0.98rem; color: var(--sky-dark); margin-bottom: 5px; }
+  .step-body p { font-size: 0.9rem; color: var(--text); line-height: 1.72; }
+  .step-body ul { margin-left: 16px; margin-top: 6px; }
+  .step-body li { font-size: 0.88rem; color: var(--text); margin-bottom: 4px; }
+
+  /* ACCORDION */
+  details { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; transition: box-shadow 0.2s; }
+  details:hover { box-shadow: 0 2px 16px rgba(26,127,196,0.08); }
+  summary {
+    padding: 17px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--sky-dark);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font-size: 1.25rem; color: var(--sky-mid); font-weight: 300; }
+  details[open] summary::after { content: '−'; }
+  details[open] summary { border-bottom: 1px solid var(--border); }
+  .details-body { padding: 20px 26px; font-size: 0.93rem; color: var(--text); line-height: 1.78; }
+  .details-body ul { margin-left: 18px; margin-top: 8px; }
+  .details-body li { margin-bottom: 6px; }
+  .details-body p { margin-bottom: 10px; }
+  .details-body p:last-child { margin-bottom: 0; }
+
+  /* BADGES */
+  .norma-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #5a3800;
+    border-radius: 6px;
+    padding: 3px 11px;
+    font-size: 0.77rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .lei-badge {
+    display: inline-block;
+    background: var(--sky-light);
+    color: var(--sky-dark);
+    border: 1px solid var(--sky-pale);
+    border-radius: 6px;
+    padding: 3px 11px;
+    font-size: 0.77rem;
+    font-weight: 700;
+    margin: 0 4px 4px 0;
+  }
+
+  /* HIGHLIGHT */
+  .highlight {
+    background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .highlight h3 { font-family: 'Playfair Display', serif; font-size: 1.12rem; color: rgba(255,255,255,0.95); margin-bottom: 10px; }
+  .highlight p, .highlight li { font-size: 0.93rem; color: rgba(255,255,255,0.84); line-height: 1.78; }
+  .highlight ul { margin-left: 18px; margin-top: 8px; }
+  .highlight li { margin-bottom: 5px; }
+
+  /* ALERT BOXES */
+  .alert {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 0.92rem;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    line-height: 1.7;
+  }
+  .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .alert-warn { background: var(--accent-light); border: 1px solid #f5d080; color: #5a3800; }
+  .alert-danger { background: var(--red-light); border: 1px solid #f5b8b3; color: var(--red); }
+  .alert-success { background: var(--green-light); border: 1px solid #a8dfc0; color: var(--green); }
+  .alert-info { background: var(--sky-light); border: 1px solid var(--sky-pale); color: var(--sky-deep); }
+
+  /* MINI CARDS */
+  .mini-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .mini-card h4 {
+    font-weight: 600;
+    font-size: 0.96rem;
+    color: var(--sky-dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mini-card h4 .icon { font-size: 1rem; }
+  .mini-card p, .mini-card li { font-size: 0.88rem; color: var(--text); line-height: 1.72; }
+  .mini-card ul { margin-left: 14px; margin-top: 6px; }
+  .mini-card li { margin-bottom: 4px; }
+
+  /* TIMELINE */
+  .timeline { margin-bottom: 24px; }
+  .tl-item {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 42px;
+    bottom: -2px;
+    width: 2px;
+    background: var(--sky-pale);
+  }
+  .tl-dot {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--sky-light);
+    border: 2px solid var(--sky);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--sky-dark);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .tl-body { padding-bottom: 28px; flex: 1; }
+  .tl-body h4 { font-weight: 600; font-size: 0.97rem; color: var(--sky-dark); margin-bottom: 4px; margin-top: 8px; }
+  .tl-body p { font-size: 0.88rem; color: var(--text); line-height: 1.7; }
+
+  /* STAT CHIPS */
+  .stat-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+  .stat-chip {
+    background: var(--sky-light);
+    border: 1px solid var(--sky-pale);
+    border-radius: 40px;
+    padding: 7px 18px;
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: var(--sky-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stat-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); flex-shrink: 0; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 46px 0; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--sky-deep);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 30px 24px;
+    font-size: 0.82rem;
+    line-height: 1.85;
+  }
+  .footer strong { color: rgba(255,255,255,0.95); }
+
+  @media (max-width: 620px) {
+    .hero { padding: 40px 20px 44px; }
+    .main { padding: 32px 16px 64px; }
+    .card { padding: 20px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .highlight { padding: 20px; }
+    .tl-item:not(:last-child)::before { left: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">CPC · Lei 13.105/2015 · NBR 14.653 · ABNT</div>
+    <h1>Perícia Judicial<br><span>Imobiliária</span></h1>
+    <p>Fundamentos legais, metodologia, deveres do perito, elaboração do laudo e atuação no processo civil — tudo o que o profissional precisa saber para atuar com rigor e segurança jurídica.</p>
+    <div class="hero-badges">
+      <div class="hero-badge">Perito Nomeado</div>
+      <div class="hero-badge">Assistente Técnico</div>
+      <div class="hero-badge">Laudo Pericial</div>
+      <div class="hero-badge">Quesitos</div>
+      <div class="hero-badge">Avaliação Judicial</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 1. CONCEITO -->
+  <div class="section-title">O que é a Perícia Judicial Imobiliária</div>
+  <p class="section-sub">Definição, natureza jurídica e finalidade no processo</p>
+
+  <div class="card">
+    <p>A <strong>perícia judicial imobiliária</strong> é o meio de prova técnico-científico pelo qual o juiz, ao reconhecer que a controvérsia exige conhecimento especializado além do jurídico, determina a realização de exame, vistoria ou avaliação por um profissional habilitado — o <strong>perito</strong> —, cujas conclusões são formalizadas no <em>laudo pericial</em>.</p>
+    <p style="margin-top:12px;">Tem natureza de <strong>prova judicial</strong> e está disciplinada nos arts. 156 a 184 do Código de Processo Civil (Lei 13.105/2015). O laudo não vincula o juiz, que pode adotar ou afastar suas conclusões, desde que fundamente a decisão.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card card-accent">
+      <h3>Finalidades principais</h3>
+      <ul>
+        <li>Determinação do valor de mercado de imóvel (desapropriação, partilha, usucapião, indenização)</li>
+        <li>Apuração de vícios construtivos, danos e benfeitorias</li>
+        <li>Avaliação de fundo de comércio e ponto comercial</li>
+        <li>Demarcação de limites, confrontações e metragem</li>
+        <li>Cálculo de aluguéis e revisão locatícia</li>
+        <li>Perícia em incorporações e condomínios</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <h3>Tipos de perícia</h3>
+      <ul>
+        <li><strong>Avaliação:</strong> estimativa de valor de mercado do imóvel</li>
+        <li><strong>Vistoria:</strong> verificação do estado e das características do bem</li>
+        <li><strong>Exame:</strong> análise de documentos, projetos e registros</li>
+        <li><strong>Arbitramento:</strong> determinação de valor pelo árbitro/perito</li>
+        <li><strong>Arbitral:</strong> em câmaras de mediação e arbitragem</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2. BASE LEGAL -->
+  <div class="section-title">Base Legal e Normas Aplicáveis</div>
+  <p class="section-sub">Legislação e normas técnicas que regem a atividade pericial</p>
+
+  <div class="stat-row">
+    <div class="stat-chip"><div class="dot"></div>CPC — Lei 13.105/2015 (arts. 156–184)</div>
+    <div class="stat-chip"><div class="dot"></div>ABNT NBR 14.653-1 e 14.653-2</div>
+    <div class="stat-chip"><div class="dot"></div>Lei 5.194/1966 — Sistema CONFEA/CREA</div>
+    <div class="stat-chip"><div class="dot"></div>Lei 6.530/1978 — Sistema COFECI/CRECI</div>
+    <div class="stat-chip"><div class="dot"></div>Decreto-Lei 3.365/1941 — Desapropriações</div>
+    <div class="stat-chip"><div class="dot"></div>Lei 8.245/1991 — Locações</div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Dispositivo Legal</th><th>Conteúdo</th><th>Relevância Pericial</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CPC, art. 156</strong></td>
+          <td>Nomeação do perito pelo juiz</td>
+          <td>Disciplina habilitação, impedimentos, compromisso</td>
+        </tr>
+        <tr>
+          <td><strong>CPC, arts. 465–480</strong></td>
+          <td>Procedimento da prova pericial</td>
+          <td>Prazos, quesitos, esclarecimentos, substituição</td>
+        </tr>
+        <tr>
+          <td><strong>CPC, art. 473</strong></td>
+          <td>Conteúdo do laudo pericial</td>
+          <td>Elementos obrigatórios do laudo</td>
+        </tr>
+        <tr>
+          <td><strong>NBR 14.653-1</strong></td>
+          <td>Procedimentos gerais de avaliação</td>
+          <td>Metodologia, graus de fundamentação e precisão</td>
+        </tr>
+        <tr>
+          <td><strong>NBR 14.653-2</strong></td>
+          <td>Avaliação de imóveis urbanos</td>
+          <td>Critérios técnicos, amostragem, regressão</td>
+        </tr>
+        <tr>
+          <td><strong>Dec.-Lei 3.365/1941</strong></td>
+          <td>Desapropriação por utilidade pública</td>
+          <td>Base legal para avaliação judicial de imóvel expropriado</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="alert-icon">ℹ</div>
+    <div>O perito deve conhecer não apenas a técnica avaliativa, mas o rito processual. Prazos perdidos e laudos incompletos podem gerar responsabilidade civil e disciplinar, além de prejudicar a parte que depende da prova.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3. PERITO E ASSISTENTE TÉCNICO -->
+  <div class="section-title">Perito Nomeado e Assistente Técnico</div>
+  <p class="section-sub">Funções, diferenças e deveres de cada figura processual</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Perito do Juízo (Perito Nomeado)</h3>
+      <ul>
+        <li>Nomeado pelo juiz de ofício, inscrito em cadastro do tribunal (CPC, art. 156, §1º)</li>
+        <li>Atua com <strong>imparcialidade e independência</strong> — dever de neutralidade técnica</li>
+        <li>Sujeito aos mesmos impedimentos e suspeições do juiz</li>
+        <li>Presta compromisso de bem e fielmente desempenhar o encargo</li>
+        <li>Pode ser substituído por descumprimento de prazo ou inidoneidade</li>
+        <li>Recebe honorários fixados pelo juiz, pagos pela parte sucumbente ou pelo fundo</li>
+        <li>Responde civil e criminalmente por falsa perícia (CP, art. 342)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Assistente Técnico (AT)</h3>
+      <ul>
+        <li>Indicado por cada parte — não precisa de habilitação em cadastro judicial</li>
+        <li>Representa <strong>os interesses técnicos da parte</strong> — não é imparcial</li>
+        <li>Acompanha e fiscaliza os trabalhos do perito nomeado</li>
+        <li>Apresenta <em>pareceres técnicos</em> (não laudos) divergentes ou complementares</li>
+        <li>Pode formular quesitos suplementares após o laudo</li>
+        <li>Não está sujeito às causas de impedimento do perito do juízo</li>
+        <li>Seus honorários são ajustados diretamente com a parte contratante</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <div class="alert-icon">⚠</div>
+    <div><strong>Importante:</strong> O assistente técnico não substitui o perito do juízo. O parecer do AT é meio de prova complementar — o laudo pericial é o documento central da prova técnica.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. HABILITAÇÃO PROFISSIONAL -->
+  <div class="section-title">Habilitação Profissional do Perito</div>
+  <p class="section-sub">Quem pode atuar como perito judicial imobiliário no Brasil</p>
+
+  <div class="card">
+    <p>O CPC exige que o perito tenha <strong>nível superior</strong> e seja inscrito em entidade profissional competente (art. 156, §1º). Para perícias imobiliárias, são habilitados:</p>
+  </div>
+
+  <div class="grid3">
+    <div class="mini-card">
+      <h4><span class="icon">🏗</span>Engenheiro Civil</h4>
+      <p>CREA ativo. Habilitado para avaliações, vistorias, laudos de vícios construtivos, fundações, estruturas.</p>
+    </div>
+    <div class="mini-card">
+      <h4><span class="icon">🏙</span>Arquiteto e Urbanista</h4>
+      <td>CAU ativo. Habilitado para avaliações, adequação arquitetônica, projetos e uso do solo.</td>
+    </div>
+    <div class="mini-card">
+      <h4><span class="icon">🏡</span>Corretor de Imóveis</h4>
+      <p>CRECI ativo + CNAI. A Lei 6.530/1978 e o Decreto 81.871/1978 autorizam laudos de avaliação mercadológica (PTAM).</p>
+    </div>
+    <div class="mini-card">
+      <h4><span class="icon">📐</span>Engenheiro de Avaliações</h4>
+      <p>Especialização reconhecida pelo IBAPE. Atua em avaliações complexas, desapropriações e grandes projetos.</p>
+    </div>
+    <div class="mini-card">
+      <h4><span class="icon">🌾</span>Engenheiro Agrônomo</h4>
+      <p>CREA ativo. Habilitado para perícias em imóveis rurais, lavouras, benfeitorias rurais e produtividade.</p>
+    </div>
+    <div class="mini-card">
+      <h4><span class="icon">📋</span>Especialista em Geotecnia</h4>
+      <p>Para perícias envolvendo terrenos, contenções, encostas, contaminação do solo e fundações.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="alert-icon">ℹ</div>
+    <div>Para o corretor de imóveis, o CNAI (Cadastro Nacional de Avaliadores Imobiliários — COFECI) é o registro que formaliza a habilitação para emissão de laudos de avaliação. O PTAM (Parecer Técnico de Avaliação Mercadológica) é o documento técnico correspondente.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5. RITO PROCESSUAL -->
+  <div class="section-title">Rito Processual da Prova Pericial</div>
+  <p class="section-sub">Etapas do procedimento conforme o CPC 2015 — da nomeação ao laudo</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">1</div>
+      <div class="tl-body">
+        <h4>Determinação da prova pericial pelo juiz</h4>
+        <p>O juiz reconhece a necessidade de prova técnica e determina a realização da perícia, nomeando o perito e fixando prazo para indicação de assistentes técnicos e formulação de quesitos pelas partes (CPC, art. 465).</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">2</div>
+      <div class="tl-body">
+        <h4>Indicação de assistentes técnicos e quesitos</h4>
+        <p>Autor e réu têm 15 dias para indicar seus assistentes técnicos e formular quesitos ao perito (perguntas técnicas cuja resposta integrará o laudo). Os quesitos devem ser pertinentes ao objeto da lide.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">3</div>
+      <div class="tl-body">
+        <h4>Aceitação e compromisso do perito</h4>
+        <p>O perito aceita formalmente o encargo, declara inexistência de impedimento ou suspeição e compromete-se a cumprir o prazo fixado. Pode recusar por motivo legítimo (CPC, art. 157).</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">4</div>
+      <div class="tl-body">
+        <h4>Vistoria e coleta de dados</h4>
+        <p>O perito realiza a vistoria ao imóvel, preferencialmente com a presença dos assistentes técnicos e das partes (mediante intimação). Coleta dados do mercado, documentos, fotografias e demais evidências.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">5</div>
+      <div class="tl-body">
+        <h4>Elaboração e entrega do laudo</h4>
+        <p>O laudo é elaborado conforme as exigências do CPC (art. 473) e da NBR 14.653, protocolado nos autos dentro do prazo. Deve conter exposição do objeto, análise técnica, respostas aos quesitos e conclusão fundamentada.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">6</div>
+      <div class="tl-body">
+        <h4>Pareceres dos assistentes técnicos</h4>
+        <p>Após a juntada do laudo, as partes têm 15 dias para apresentar os pareceres dos assistentes técnicos, concordando, divergindo ou complementando as conclusões do perito nomeado (CPC, art. 477).</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">7</div>
+      <div class="tl-body">
+        <h4>Esclarecimentos e audiência</h4>
+        <p>O juiz pode determinar esclarecimentos por escrito ou convocar o perito para audiência de instrução. As partes também podem solicitar esclarecimentos, que devem ser respondidos em prazo fixado (CPC, art. 477, §3º).</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">8</div>
+      <div class="tl-body">
+        <h4>Valoração da prova pelo juiz</h4>
+        <p>O juiz aprecia livremente o laudo (princípio do livre convencimento motivado), podendo adotar, afastar parcialmente ou rejeitar as conclusões periciais. A rejeição deve ser expressamente fundamentada na sentença.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6. LAUDO PERICIAL -->
+  <div class="section-title">Estrutura do Laudo Pericial Imobiliário</div>
+  <p class="section-sub">Elementos obrigatórios e boas práticas de redação técnica</p>
+
+  <div class="card">
+    <div class="norma-badge">CPC art. 473 + NBR 14.653</div>
+    <p>O laudo é o principal produto do trabalho pericial. Deve ser redigido em linguagem técnica acessível, estruturado de forma lógica, com fundamentação que permita a qualquer profissional da área reproduzir o raciocínio e as conclusões do perito.</p>
+  </div>
+
+  <details>
+    <summary>1. Identificação e Preâmbulo</summary>
+    <div class="details-body">
+      <p>Dados do processo, vara, comarca, juiz, número dos autos, qualificação das partes, tipo de ação. Identificação completa do perito (nome, registro profissional, número do CREA/CRECI/CAU, CNAI), data de nomeação e compromisso.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>2. Objeto e Finalidade da Perícia</summary>
+    <div class="details-body">
+      <p>Descrição precisa do que foi determinado peritar: avaliação de valor de mercado, vistoria para apuração de danos, demarcação, apuração de aluguéis, etc. Transcrição dos quesitos de cada parte e do juiz, com a indicação de onde cada um será respondido no laudo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>3. Descrição do Imóvel Avaliando</summary>
+    <div class="details-body">
+      <p>Caracterização completa do bem:</p>
+      <ul>
+        <li><strong>Localização:</strong> endereço, bairro, município, coordenadas geográficas</li>
+        <li><strong>Documentação:</strong> matrícula, área registrada, confrontações, transcrição do RGI</li>
+        <li><strong>Características físicas:</strong> área de terreno e construção, tipologia, padrão construtivo, estado de conservação, idade aparente</li>
+        <li><strong>Zoneamento e uso do solo:</strong> parâmetros urbanísticos (taxa de ocupação, coeficiente de aproveitamento, recuos)</li>
+        <li><strong>Infraestrutura:</strong> serviços urbanos disponíveis, acessos, transporte</li>
+        <li>Registro fotográfico — fotos com data e identificação do elemento fotografado</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>4. Metodologia e Método Avaliatório Adotado</summary>
+    <div class="details-body">
+      <p>Justificativa técnica da escolha do método, conforme a NBR 14.653. Cada método tem campo de aplicação específico:</p>
+      <ul>
+        <li><strong>Método Comparativo Direto:</strong> imóveis em mercado ativo com dados disponíveis</li>
+        <li><strong>Método da Renda:</strong> imóveis locados ou com potencial locativo (capitalização da renda)</li>
+        <li><strong>Método Evolutivo:</strong> valor do terreno + custo de reprodução depreciado das benfeitorias</li>
+        <li><strong>Método Involutivo:</strong> VGV potencial menos custos e lucro do empreendedor</li>
+        <li><strong>Método do Custo (CUB):</strong> custo de reprodução, especialmente em benfeitorias</li>
+      </ul>
+      <p>Descrever a pesquisa de mercado, fontes dos dados, critérios de seleção dos comparáveis, tratamento estatístico e grau de fundamentação alcançado.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>5. Pesquisa de Mercado e Dados Amostrais</summary>
+    <div class="details-body">
+      <p>Apresentar planilha com todos os dados pesquisados: endereço ou referência do comparável, fonte (anúncio, matrícula, transação), data, área, características relevantes e preço unitário (R$/m²). Indicar os dados descartados e o motivo da exclusão.</p>
+      <p>Incluir mapa ou croqui com a localização dos comparáveis e do avaliando, evidenciando a área de influência da pesquisa.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>6. Tratamento Estatístico e Modelagem</summary>
+    <div class="details-body">
+      <p>Para avaliações por inferência estatística, apresentar:</p>
+      <ul>
+        <li>Estatística descritiva da amostra (média, desvio padrão, CV, mínimo, máximo)</li>
+        <li>Modelo de regressão especificado e resultados: coeficientes, erros padrão, p-valores</li>
+        <li>Testes de qualidade: R², F, t, análise de resíduos, normalidade</li>
+        <li>Grau de fundamentação e precisão alcançados conforme NBR 14.653</li>
+        <li>Estimativa pontual e intervalo de confiança de 80% (campo de arbítrio)</li>
+      </ul>
+      <p>Todos os cálculos devem ser transparentes e reproduzíveis — anexar planilhas se necessário.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>7. Valor de Mercado e Conclusão</summary>
+    <div class="details-body">
+      <p>Apresentar o valor unitário estimado (R$/m²), o valor total do imóvel, o campo de arbítrio e o valor adotado pelo perito com justificativa técnica. Indicar data de referência da avaliação (data da vistoria ou data de ajuizamento, conforme determinação judicial).</p>
+      <p>A conclusão deve ser clara, objetiva e sem ambiguidades. Evitar ressalvas que comprometam a utilidade do laudo sem amparo técnico sólido.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>8. Respostas aos Quesitos</summary>
+    <div class="details-body">
+      <p>Responder individualmente, numericamente e em ordem, a cada quesito formulado pelo juiz, pelo autor e pelo réu. As respostas devem ser:</p>
+      <ul>
+        <li>Diretas e objetivas, sem evasão técnica injustificada</li>
+        <li>Tecnicamente fundamentadas (remeter ao corpo do laudo quando necessário)</li>
+        <li>Isentas — o perito não deve responder quesitos favorecendo uma das partes</li>
+        <li>Explícitas quando a resposta requerer cálculo ou dados adicionais</li>
+      </ul>
+      <p>Se um quesito for impossível de responder (por insuficiência de dados, inadequação técnica ou extrapolação do objeto da perícia), o perito deve informar e justificar.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>9. Documentos e Anexos</summary>
+    <div class="details-body">
+      <ul>
+        <li>Certidão de matrícula do imóvel (atualizada)</li>
+        <li>Planta baixa / projeto aprovado (se existente)</li>
+        <li>Planilha de pesquisa de mercado com fontes</li>
+        <li>Relatório estatístico / output da regressão</li>
+        <li>Registro fotográfico completo, com datas</li>
+        <li>Mapas, croquis e plantas de localização</li>
+        <li>Cálculos de depreciação, CUB, custo de reprodução</li>
+        <li>Curriculum vitae e registros profissionais do perito</li>
+        <li>Tabela de honorários periciais (se solicitado pelo juízo)</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="divider"></div>
+
+  <!-- 7. MÉTODOS DE AVALIAÇÃO JUDICIAL -->
+  <div class="section-title">Métodos de Avaliação na Perícia Judicial</div>
+  <p class="section-sub">Aplicação de cada método conforme o tipo de ação e o bem avaliando</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Método</th>
+          <th>Base</th>
+          <th>Tipo de Ação Frequente</th>
+          <th>Quando Usar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Comparativo Direto</strong></td>
+          <td>Mercado de dados</td>
+          <td>Desapropriação, partilha, usucapião, indenização</td>
+          <td>Mercado ativo com dados disponíveis para comparação</td>
+        </tr>
+        <tr>
+          <td><strong>Renda</strong></td>
+          <td>Capitalização da renda</td>
+          <td>Revisão de aluguel, apuração de lucros cessantes</td>
+          <td>Imóveis com potencial locativo ou geração de renda</td>
+        </tr>
+        <tr>
+          <td><strong>Evolutivo</strong></td>
+          <td>Terreno + custo depreciado</td>
+          <td>Perícias de danos, benfeitorias, incorporações</td>
+          <td>Quando não há dados de mercado suficientes</td>
+        </tr>
+        <tr>
+          <td><strong>Involutivo</strong></td>
+          <td>VGV – custos – lucro</td>
+          <td>Desapropriação de glebas, terrenos com potencial</td>
+          <td>Terreno com melhor uso como empreendimento</td>
+        </tr>
+        <tr>
+          <td><strong>Custo (CUB/SINAPI)</strong></td>
+          <td>Custo de reprodução</td>
+          <td>Indenização de benfeitorias, vícios construtivos</td>
+          <td>Avaliação isolada das edificações/benfeitorias</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8. TIPOS DE AÇÃO -->
+  <div class="section-title">Perícia nas Principais Ações Imobiliárias</div>
+  <p class="section-sub">O papel e o foco da perícia em cada tipo de demanda judicial</p>
+
+  <details>
+    <summary>Desapropriação (utilidade pública / interesse social)</summary>
+    <div class="details-body">
+      <p>Ação em que o poder público retira a propriedade do particular, mediante justa indenização. A perícia é a prova central da ação.</p>
+      <ul>
+        <li>Valor da terra nua + benfeitorias + danos emergentes (área remanescente, acesso prejudicado)</li>
+        <li>Data de referência: normalmente a data da imissão na posse ou do laudo</li>
+        <li>Juros compensatórios (12% a.a. sobre a diferença entre o depósito e o valor fixado)</li>
+        <li>Juros moratórios (SELIC ou 6% a.a., conforme lei) sobre o valor final</li>
+        <li>Base legal: Decreto-Lei 3.365/1941 e Súmulas 12, 69 e 113 do STJ</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ação de Usucapião</summary>
+    <div class="details-body">
+      <p>O perito é convocado para avaliar o imóvel (para cálculo de custas e impostos) e, principalmente, para identificar e demarcar os limites do bem, confrontações e área efetivamente ocupada.</p>
+      <ul>
+        <li>Elaboração de planta e memorial descritivo da área usucapienda</li>
+        <li>Identificação de confrontantes e ausência de sobreposição com imóveis contíguos</li>
+        <li>Avaliação de mercado para fins de registro</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Dissolução de Sociedade e Partilha de Bens</summary>
+    <div class="details-body">
+      <p>Ações de divórcio, inventário ou dissolução de sociedade empresária frequentemente incluem imóveis a partilhar. A perícia determina o valor atualizado dos bens para equilíbrio dos quinhões.</p>
+      <ul>
+        <li>Avaliação de cada imóvel na data mais próxima da partilha</li>
+        <li>Benfeitorias introduzidas por um dos cônjuges/sócios podem ser objeto de apuração separada</li>
+        <li>Necessidade de identificar o regime de bens e o momento de aquisição</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ação Revisional de Aluguel (Lei 8.245/1991)</summary>
+    <div class="details-body">
+      <p>Locador ou locatário pode pedir a revisão judicial do aluguel após 3 anos de contrato. O perito apura o valor locativo de mercado na data do pedido.</p>
+      <ul>
+        <li>Pesquisa de aluguéis de imóveis comparáveis (mesma tipologia, padrão, localização)</li>
+        <li>Método da renda: calcular a taxa de rentabilidade praticada no mercado e aplicar ao valor do imóvel</li>
+        <li>Considerar: estado de conservação, equipamentos incluídos, benfeitorias do locatário</li>
+        <li>Data de referência: data do ajuizamento ou data da vistoria, conforme determinação judicial</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ação de Indenização por Danos em Imóvel</summary>
+    <div class="details-body">
+      <p>Inclui danos causados por obras vizinhas, infiltrações, vícios construtivos, acidentes e eventos de força maior. A perícia apura a origem do dano, a extensão e o custo de reparação.</p>
+      <ul>
+        <li>Identificação e nexo causal: o perito deve estabelecer a relação entre o agente causador e o dano</li>
+        <li>Orçamento de recuperação: custo de mão de obra + materiais (SINAPI, TCPO, cotações de mercado)</li>
+        <li>Depreciação pelo dano: eventual redução do valor de mercado além do custo de reparo</li>
+        <li>Danos emergentes e lucros cessantes (se o imóvel estava locado ou em uso comercial)</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Incorporação Imobiliária e Vícios de Construção</summary>
+    <div class="details-body">
+      <p>Ações contra incorporadoras por atraso na entrega, vícios construtivos ou diferença de metragem (PROCON, CDC, Lei 4.591/1964).</p>
+      <ul>
+        <li>Medição efetiva das áreas: confrontar com o contrato e com o projeto aprovado</li>
+        <li>Vistoria de vícios: infiltrações, fissuras, recalques, falhas em instalações</li>
+        <li>Custo de reparação e prazo de obra</li>
+        <li>Avaliação da unidade autônoma para cálculo de danos</li>
+        <li>Art. 618 CC/2002: responsabilidade do empreiteiro por solidez e segurança por 5 anos</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="divider"></div>
+
+  <!-- 9. HONORÁRIOS PERICIAIS -->
+  <div class="section-title">Honorários Periciais</div>
+  <p class="section-sub">Como são calculados, fixados e pagos os honorários do perito</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Fixação dos honorários</h3>
+      <p>O perito apresenta proposta de honorários ao ser nomeado. O juiz os fixa por despacho, levando em conta:</p>
+      <ul>
+        <li>Complexidade da perícia e tempo estimado</li>
+        <li>Nível de especialização exigido</li>
+        <li>Número de imóveis / comparáveis a vistorar</li>
+        <li>Tabelas de honorários do IBAPE e conselhos profissionais</li>
+        <li>Valor da causa</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Pagamento e adiantamento</h3>
+      <ul>
+        <li>A parte que requereu a prova deve depositar os honorários em juízo antes da realização da perícia (CPC, art. 95)</li>
+        <li>Se a perícia for determinada de ofício, o adiantamento é rateado entre as partes</li>
+        <li>Beneficiário da justiça gratuita: honorários pagos pelo Estado (Fundo de Custeio da Perícia)</li>
+        <li>Ao final, o sucumbente arca com os custos periciais como verba sucumbencial</li>
+        <li>O perito pode recusar o encargo se os honorários não forem depositados</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Faixa de Valor do Imóvel</th><th>Referência de Honorários (IBAPE-SP)</th><th>Observação</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Até R$ 500.000</td><td>1,0% a 2,0% do valor avaliado</td><td>Mínimo de 3 h/t profissional</td></tr>
+        <tr><td>R$ 500.001 a R$ 2.000.000</td><td>0,5% a 1,0% do valor avaliado</td><td>Considerar deslocamento e pesquisa</td></tr>
+        <tr><td>R$ 2.000.001 a R$ 10.000.000</td><td>0,25% a 0,5% do valor avaliado</td><td>Negociação caso a caso</td></tr>
+        <tr><td>Acima de R$ 10.000.000</td><td>A critério — proposta justificada</td><td>Esclarecimentos adicionais cobrados à parte</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-warn">
+    <div class="alert-icon">⚠</div>
+    <div>As tabelas acima são referências orientativas do IBAPE-SP. Cada tribunal e cada processo têm suas peculiaridades. O perito deve sempre submeter proposta fundamentada ao juiz.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 10. RESPONSABILIDADES E ÉTICA -->
+  <div class="section-title">Responsabilidades e Ética Pericial</div>
+  <p class="section-sub">Deveres, vedações e consequências do descumprimento</p>
+
+  <div class="grid2">
+    <div class="alert alert-success" style="border-radius:14px; padding:22px 26px;">
+      <div class="alert-icon">✔</div>
+      <div>
+        <strong style="display:block;margin-bottom:8px;font-size:0.97rem;">Deveres do perito</strong>
+        <ul style="margin-left:16px;font-size:0.9rem;line-height:1.75;">
+          <li>Agir com imparcialidade, independência e lealdade à verdade</li>
+          <li>Cumprir rigorosamente os prazos fixados pelo juízo</li>
+          <li>Comunicar impedimento ou suspeição imediatamente</li>
+          <li>Manter sigilo sobre informações obtidas no processo</li>
+          <li>Atender às solicitações de esclarecimentos do juiz e das partes</li>
+          <li>Declinar o encargo quando não tiver competência técnica específica</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert-danger" style="border-radius:14px; padding:22px 26px;">
+      <div class="alert-icon">✖</div>
+      <div>
+        <strong style="display:block;margin-bottom:8px;font-size:0.97rem;">Vedações ao perito</strong>
+        <ul style="margin-left:16px;font-size:0.9rem;line-height:1.75;">
+          <li>Receber instruções ou vantagens das partes fora dos autos</li>
+          <li>Ultrapassar os limites do objeto da perícia determinado pelo juiz</li>
+          <li>Emitir conclusões sem base técnica ou omitir fatos relevantes</li>
+          <li>Delegar integralmente a terceiros a elaboração do laudo</li>
+          <li>Atuar quando houver relação de interesse com qualquer das partes</li>
+          <li>Assumir posição de defensor de uma das partes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Consequências do descumprimento</h3>
+    <ul>
+      <li><strong>Civil:</strong> indenização por perdas e danos causados às partes ou ao processo (CPC, art. 158)</li>
+      <li><strong>Criminal:</strong> falsa perícia — CP, art. 342, pena de 2 a 6 anos de reclusão + multa, aplicável mesmo a quem não presta compromisso</li>
+      <li><strong>Administrativa/disciplinar:</strong> exclusão do cadastro de peritos do tribunal; processo disciplinar no conselho profissional (CREA, CRECI, CAU)</li>
+      <li><strong>Processual:</strong> substituição imediata pelo juiz e responsabilidade pelo pagamento das despesas do atraso</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 11. DICAS PRÁTICAS -->
+  <div class="highlight">
+    <h3>⚡ Boas Práticas para o Perito Imobiliário</h3>
+    <ul>
+      <li>Protocole o laudo ANTES do prazo — prazos periciais são fatais e atrasos geram multa e substituição</li>
+      <li>Fotografe tudo durante a vistoria, com data/hora nas imagens; documente cada elemento relevante</li>
+      <li>Sempre notifique os assistentes técnicos das partes sobre a data e hora da vistoria, por escrito</li>
+      <li>Não emita conclusões fora do objeto da perícia — extrapolar o mandato compromete a isenção e a validade do laudo</li>
+      <li>Separe claramente o corpo do laudo (descrição, metodologia, cálculos) das respostas aos quesitos</li>
+      <li>Se precisar de prazo adicional, peça formalmente ao juízo ANTES do vencimento, com justificativa técnica</li>
+      <li>Guarde cópia de toda a documentação e do laudo por no mínimo 5 anos após o trânsito em julgado</li>
+      <li>Em desapropriações, atenção à Súmula 618 do STF: a indenização inclui cobertura vegetal separada se houver</li>
+      <li>Quesitos impertinentes devem ser respondidos com breve justificativa técnica da impossibilidade — nunca ignorados</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 12. REFERÊNCIAS -->
+  <div class="section-title">Referências Normativas e Bibliográficas</div>
+  <p class="section-sub">Fontes essenciais para o perito judicial imobiliário</p>
+
+  <div class="card">
+    <div style="margin-bottom:14px;">
+      <div class="lei-badge">Legislação</div>
+    </div>
+    <ul>
+      <li><strong>CPC — Lei 13.105/2015</strong> — Arts. 156 a 184 (do perito) e 465 a 480 (prova pericial)</li>
+      <li><strong>Decreto-Lei 3.365/1941</strong> — Desapropriação por utilidade pública</li>
+      <li><strong>Lei 8.245/1991</strong> — Lei do Inquilinato (ação revisional de aluguel)</li>
+      <li><strong>Lei 4.591/1964</strong> — Incorporações imobiliárias</li>
+      <li><strong>Código Civil — Lei 10.406/2002</strong> — Arts. 618, 1.238 e ss. (usucapião, responsabilidade construtiva)</li>
+      <li><strong>Lei 5.194/1966</strong> — Regulamentação da profissão de engenheiro e arquiteto</li>
+      <li><strong>Lei 6.530/1978</strong> — Regulamentação da profissão de corretor de imóveis</li>
+    </ul>
+    <div style="margin-top:20px;margin-bottom:14px;">
+      <div class="lei-badge">Normas Técnicas e Bibliografia</div>
+    </div>
+    <ul>
+      <li><strong>ABNT NBR 14.653-1:2019</strong> — Avaliação de bens: Procedimentos gerais</li>
+      <li><strong>ABNT NBR 14.653-2:2011</strong> — Avaliação de bens: Imóveis urbanos</li>
+      <li><strong>ABNT NBR 14.653-3</strong> — Avaliação de bens: Imóveis rurais</li>
+      <li>DANTAS, Rubens Alves. <em>Engenharia de Avaliações: Uma Introdução à Metodologia Científica.</em> PINI, 1998.</li>
+      <li>MOREIRA, Alberto Lélio. <em>Princípios de Engenharia de Avaliações.</em> 5ª ed. PINI, 2001.</li>
+      <li>CABRAL, Plínio. <em>A Nova Lei da Desapropriação.</em> Sagra, 2001.</li>
+      <li>IBAPE-SP. <em>Norma para Avaliação de Imóveis Urbanos e Rurais.</em> Instituto Brasileiro de Avaliações e Perícias de São Paulo.</li>
+      <li>FIKER, José. <em>Perícia Judicial para Engenheiros e Arquitetos.</em> PINI, 2010.</li>
+      <li>THEODORO JR., Humberto. <em>Curso de Direito Processual Civil — Vol. I.</em> Forense, 2022.</li>
+    </ul>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  <strong>Perícia Judicial Imobiliária</strong><br>
+  Material de referência técnica e jurídica · CPC 2015 · ABNT NBR 14.653 · Uso profissional<br>
+  <span style="font-size:0.74rem;opacity:0.55;">Este conteúdo tem finalidade educacional e não substitui a consulta à legislação vigente nem ao assessoramento jurídico especializado.</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">FCosta — Imóvel</title>
+  <meta name="description" id="page-desc" content="FCosta Corretor e Avaliador Imobiliário — Zona Leste de SP. CRECI-SP 294791-F | CNAI 52708"/>
+  <meta property="og:title" id="og-title" content="FCosta — Imóvel"/>
+  <meta property="og:description" id="og-desc" content="Imóvel na Zona Leste de SP"/>
+  <meta property="og:image" id="og-img" content="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png"/>
+  <meta property="og:url" id="og-url" content="https://fcostacorretor.com/imovel"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" id="canonical" href="https://fcostacorretor.com/imovel"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <style>
+    :root{
+      --azul:#3B9BD6;--escuro:#1E3A5F;--claro:#5BB8F5;
+      --branco:#FFFFFF;--fundo:#F4F8FC;--texto:#1A2A3A;--sec:#4A6070;
+      --borda:#D0E4F0;--verde:#25D366;--dourado:#C9A84C;--ouro:#FFD700;
+      --fonte:'Poppins',sans-serif;--titulo:'Playfair Display',serif;
+      --sombra:0 4px 24px rgba(30,58,95,.12);--sombra2:0 8px 40px rgba(30,58,95,.18);
+      --tr:.25s ease;--radius:14px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fonte);background:var(--fundo);color:var(--texto);-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    img{max-width:100%;display:block;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+    #nav-mini{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);border-bottom:1px solid var(--borda);box-shadow:none;transition:box-shadow var(--tr);}
+    #nav-mini.sc{box-shadow:var(--sombra);}
+    .nav-mini-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .nav-logo-mini{display:flex;align-items:center;gap:10px;}
+    .nav-logo-mini img{height:48px;width:auto;object-fit:contain;}
+    .nav-logo-mini-txt span:first-child{display:block;font-family:var(--titulo);font-size:.9rem;font-weight:700;color:var(--escuro);}
+    .nav-logo-mini-txt span:last-child{display:block;font-size:.55rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--azul);}
+    .nav-bread{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--sec);flex:1;padding:0 16px;overflow:hidden;}
+    .nav-bread a{color:var(--azul);white-space:nowrap;}
+    .nav-bread span{color:var(--borda);}
+    .nav-bread-atual{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--texto);}
+    .nav-mini-wa{display:flex;align-items:center;gap:7px;background:var(--verde);color:#fff;font-size:.74rem;font-weight:700;padding:8px 15px;border-radius:50px;white-space:nowrap;transition:opacity var(--tr);flex-shrink:0;}
+    .nav-mini-wa:hover{opacity:.88;}
+    .btn-voltar{display:flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;color:var(--escuro);background:var(--fundo);border:1.5px solid var(--borda);padding:7px 14px;border-radius:50px;transition:all var(--tr);white-space:nowrap;flex-shrink:0;}
+    .btn-voltar:hover{background:var(--escuro);color:#fff;border-color:var(--escuro);}
+    @media(max-width:680px){.nav-bread{display:none;}}
+    @media(max-width:480px){.nav-logo-mini-txt{display:none;}.nav-mini-wa span{display:none;}}
+
+    #page-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:14px;color:var(--sec);}
+    .spinner{width:36px;height:36px;border:3px solid var(--borda);border-top-color:var(--azul);border-radius:50%;animation:spin .8s linear infinite;}
+    #page-erro{display:none;text-align:center;padding:80px 20px;}
+    #page-erro h2{font-family:var(--titulo);font-size:1.6rem;color:var(--escuro);margin-bottom:12px;}
+
+    #imovel-page{display:none;animation:fadeUp .35s ease;}
+    .im-container{max-width:1140px;margin:0 auto;padding:28px 20px 60px;}
+
+    .breadcrumb{display:flex;align-items:center;gap:7px;font-size:.68rem;color:var(--sec);margin-bottom:20px;flex-wrap:wrap;}
+    .breadcrumb a{color:var(--azul);}
+    .breadcrumb a:hover{text-decoration:underline;}
+    .breadcrumb .sep{color:var(--borda);}
+
+    .im-layout{display:grid;grid-template-columns:1.45fr 1fr;gap:28px;align-items:start;margin-bottom:44px;}
+    .gal-col{}
+    .gal-main{border-radius:var(--radius);overflow:hidden;background:var(--fundo);position:relative;height:420px;cursor:zoom-in;box-shadow:var(--sombra);}
+    .gal-main img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+    .gal-main:hover img{transform:scale(1.02);}
+    .gal-main-ph{display:flex;align-items:center;justify-content:center;height:100%;font-size:5rem;opacity:.15;}
+    .gal-badge{position:absolute;top:14px;left:14px;font-size:.62rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:50px;z-index:2;}
+    .bv{background:var(--azul);color:#fff;}.ba{background:var(--dourado);color:#1A2A3A;}.bl{background:#2E7D32;color:#fff;}.bp{background:#7B1FA2;color:#fff;}.bx{background:#757575;color:#fff;}
+    .gal-cod{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.55);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:50px;z-index:2;}
+    .gal-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.48);color:#fff;font-size:.58rem;padding:5px 14px;border-radius:50px;z-index:2;white-space:nowrap;pointer-events:none;}
+    .gal-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:none;width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;z-index:3;box-shadow:0 2px 10px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;color:var(--escuro);transition:all var(--tr);}
+    .gal-nav:hover{background:var(--escuro);color:#fff;}
+    .gal-prev{left:12px;}.gal-next{right:12px;}
+    .gal-fcount{position:absolute;bottom:14px;right:14px;background:rgba(0,0,0,.5);color:#fff;font-size:.6rem;padding:3px 9px;border-radius:50px;z-index:2;}
+    .gal-thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding:2px 0;scrollbar-width:thin;scrollbar-color:var(--borda) transparent;}
+    .gal-thumbs::-webkit-scrollbar{height:4px;}
+    .gal-thumbs::-webkit-scrollbar-thumb{background:var(--borda);border-radius:2px;}
+    .gth{width:74px;height:56px;object-fit:cover;border-radius:8px;cursor:pointer;flex-shrink:0;opacity:.55;border:2.5px solid transparent;transition:all var(--tr);}
+    .gth.on{opacity:1;border-color:var(--azul);}
+    .gth:hover{opacity:.85;}
+    .gal-btn-full{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--escuro);color:#fff;font-size:.76rem;font-weight:700;padding:11px;border-radius:10px;border:none;cursor:pointer;width:100%;margin-top:10px;transition:opacity var(--tr);}
+    .gal-btn-full:hover{opacity:.88;}
+    .det-extra{margin-top:24px;display:flex;flex-direction:column;gap:20px;}
+    .det-sec{background:#fff;border-radius:var(--radius);border:1.5px solid var(--borda);padding:20px 22px;}
+    .det-sec-titulo{font-family:var(--titulo);font-size:1.05rem;font-weight:700;color:var(--escuro);margin-bottom:12px;padding-bottom:10px;border-bottom:1.5px solid var(--borda);display:flex;align-items:center;gap:8px;}
+    .det-sec-desc{font-size:.82rem;color:var(--sec);line-height:1.8;}
+    .det-tags{display:flex;flex-wrap:wrap;gap:7px;}
+    .det-tag{background:#EBF5FF;color:var(--escuro);font-size:.7rem;font-weight:600;padding:5px 12px;border-radius:50px;}
+    .mapa-wrap{width:100%;height:260px;border-radius:10px;overflow:hidden;border:1.5px solid var(--borda);background:var(--fundo);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--sec);font-size:.8rem;}
+    .mapa-wrap iframe{width:100%;height:100%;border:none;}
+
+    /* ✅ AVISO LEGAL */
+    .aviso-legal{background:#FFF8E7;border:1.5px solid #F0C040;border-left:4px solid #C9A84C;border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:11px;}
+    .aviso-legal-ic{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+    .aviso-legal-txt{font-size:.72rem;color:#5a4000;line-height:1.75;}
+    .aviso-legal-txt strong{display:block;font-size:.74rem;color:#3d2c00;margin-bottom:3px;font-weight:700;}
+
+    .det-panel{position:sticky;top:80px;}
+    .det-card{background:#fff;border-radius:var(--radius);border:1.5px solid var(--borda);padding:22px 24px;box-shadow:var(--sombra);}
+    .det-cod{font-size:.66rem;font-weight:800;color:var(--azul);letter-spacing:1.5px;margin-bottom:5px;}
+    .det-titulo{font-family:var(--titulo);font-size:1.45rem;font-weight:900;color:var(--texto);line-height:1.2;margin-bottom:6px;}
+    .det-local{font-size:.74rem;color:var(--sec);margin-bottom:14px;display:flex;align-items:flex-start;gap:5px;}
+    .det-preco-wrap{margin-bottom:14px;}
+    .det-preco-label{font-size:.62rem;font-weight:700;color:var(--sec);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+    .det-preco{font-family:var(--titulo);font-size:2rem;font-weight:900;color:var(--escuro);}
+    .det-div{height:1px;background:var(--borda);margin:16px 0;}
+    .det-chars{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+    .det-char{background:var(--fundo);border:1.5px solid var(--borda);border-radius:11px;padding:12px 13px;display:flex;align-items:center;gap:9px;transition:border-color var(--tr);}
+    .det-char:hover{border-color:var(--azul);}
+    .det-char-ic{font-size:1.3rem;flex-shrink:0;}
+    .det-char-val{font-size:.84rem;font-weight:700;color:var(--texto);line-height:1.2;}
+    .det-char-lbl{font-size:.6rem;color:var(--sec);}
+    .det-btns{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;}
+    .det-bwa{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--verde);color:#fff;font-weight:700;font-size:.86rem;padding:14px;border-radius:12px;transition:opacity var(--tr);}
+    .det-bwa:hover{opacity:.88;}
+    .det-bwa svg{width:18px;height:18px;flex-shrink:0;}
+    .det-btel{display:flex;align-items:center;justify-content:center;gap:7px;background:#EBF5FF;color:var(--escuro);font-weight:700;font-size:.82rem;padding:12px;border-radius:12px;transition:background var(--tr);}
+    .det-btel:hover{background:#d0e8ff;}
+    .det-bcompartilhar{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--fundo);border:1.5px solid var(--borda);color:var(--sec);font-weight:600;font-size:.78rem;padding:10px;border-radius:12px;cursor:pointer;border:none;transition:all var(--tr);width:100%;}
+    .det-bcompartilhar:hover{background:var(--borda);}
+    .det-corretor{background:var(--fundo);border:1.5px solid var(--borda);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-top:14px;}
+    .det-corretor-foto{width:44px;height:44px;border-radius:50%;background:var(--escuro);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .det-corretor-nome{font-weight:700;font-size:.84rem;color:var(--texto);}
+    .det-corretor-creci{font-size:.6rem;color:var(--sec);}
+    .sim-sec{margin-top:44px;}
+    .sim-titulo{font-family:var(--titulo);font-size:1.3rem;font-weight:700;color:var(--escuro);margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--borda);display:flex;align-items:center;gap:9px;}
+    .sim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+    .sim-card{background:#fff;border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--borda);cursor:pointer;transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);}
+    .sim-card:hover{transform:translateY(-5px);box-shadow:var(--sombra2);border-color:var(--azul);}
+    .sim-foto{height:160px;background:var(--fundo);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+    .sim-foto img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+    .sim-card:hover .sim-foto img{transform:scale(1.06);}
+    .sim-foto-ph{font-size:2.5rem;opacity:.18;}
+    .sim-badge{position:absolute;top:8px;left:8px;font-size:.54rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:50px;z-index:2;}
+    .sim-cod{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:.52rem;font-weight:700;padding:2px 7px;border-radius:50px;z-index:2;}
+    .sim-body{padding:13px 15px 15px;}
+    .sim-tipo{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado);margin-bottom:4px;}
+    .sim-nome{font-family:var(--titulo);font-size:.9rem;font-weight:700;color:var(--texto);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .sim-local{font-size:.68rem;color:var(--sec);margin-bottom:7px;}
+    .sim-preco{font-family:var(--titulo);font-size:.95rem;font-weight:900;color:var(--escuro);}
+    #lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;flex-direction:column;align-items:center;justify-content:center;padding:14px;}
+    #lb.on{display:flex;}
+    .lb-close{position:fixed;top:14px;right:18px;background:rgba(255,255,255,.12);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background var(--tr);}
+    .lb-close:hover{background:rgba(255,255,255,.25);}
+    .lb-wrap{position:relative;max-width:980px;width:100%;display:flex;align-items:center;justify-content:center;}
+    #lb-img{max-height:72vh;max-width:100%;border-radius:10px;object-fit:contain;transition:opacity .18s ease;}
+    .lb-arr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;width:46px;height:46px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--tr);}
+    .lb-arr:hover{background:rgba(255,255,255,.25);}
+    .lb-prev{left:-23px;}.lb-next{right:-23px;}
+    .lb-thumbs{display:flex;gap:7px;margin-top:14px;overflow-x:auto;max-width:980px;padding:2px 0;}
+    .lb-thumbs::-webkit-scrollbar{height:3px;}
+    .lb-thumbs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px;}
+    .lb-th{width:60px;height:46px;object-fit:cover;border-radius:7px;cursor:pointer;flex-shrink:0;opacity:.5;border:2px solid transparent;transition:all var(--tr);}
+    .lb-th.on{opacity:1;border-color:var(--ouro);}
+    .lb-count{color:rgba(255,255,255,.55);font-size:.7rem;margin-top:8px;}
+    .foot-mini{background:var(--escuro);color:rgba(255,255,255,.6);text-align:center;padding:18px 20px;font-size:.7rem;}
+    .foot-mini a{color:var(--claro);}
+    .foot-mini a:hover{color:#fff;}
+    @media(max-width:880px){.im-layout{grid-template-columns:1fr;}.det-panel{position:static;}.gal-main{height:300px;}.det-chars{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:500px){.gal-main{height:240px;}.det-chars{grid-template-columns:1fr 1fr;}.lb-arr{display:none;}.sim-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+
+<script id="schema-imovel" type="application/ld+json">{}</script>
+
+<!-- NAVBAR -->
+<header id="nav-mini" role="banner">
+  <div class="nav-mini-inner">
+    <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;" class="nav-logo-mini" aria-label="Voltar para home FCosta">
+      <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta Corretor" width="48" height="48"/>
+      <div class="nav-logo-mini-txt">
+        <span>FCosta Corretor</span>
+        <span>CRECI-SP 294791-F</span>
+      </div>
+    </a>
+    <nav class="nav-bread" aria-label="Localização na página">
+      <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;">Home</a>
+      <span class="sep">›</span>
+      <a href="#" id="bread-cat-link">Imóveis</a>
+      <span class="sep">›</span>
+      <span class="nav-bread-atual" id="bread-titulo">Carregando...</span>
+    </nav>
+    <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;" class="btn-voltar" aria-label="Voltar à home">← Voltar</a>
+    <a href="https://wa.me/5511993509109" target="_blank" rel="noopener" class="nav-mini-wa" aria-label="WhatsApp">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+</header>
+
+<!-- LOADING -->
+<div id="page-loading" aria-live="polite">
+  <div class="spinner" aria-hidden="true"></div>
+  <p>Carregando imóvel...</p>
+</div>
+
+<!-- ERRO -->
+<div id="page-erro" role="alert">
+  <h2>😕 Imóvel não encontrado</h2>
+  <p style="color:var(--sec);margin-bottom:24px;">O link pode estar incorreto ou o imóvel foi removido.</p>
+  <a href="https://fcostacorretor.com/comprar" onclick="window.top.location.href='https://fcostacorretor.com/comprar';return false;" style="display:inline-flex;align-items:center;gap:8px;background:var(--azul);color:#fff;font-weight:700;font-size:.85rem;padding:13px 26px;border-radius:50px;">🏠 Ver todos os imóveis</a>
+</div>
+
+<!-- PÁGINA DO IMÓVEL -->
+<main id="imovel-page">
+<div class="im-container">
+
+  <nav class="breadcrumb" aria-label="Navegação estrutural">
+    <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;">Home</a>
+    <span class="sep">›</span>
+    <a href="#" id="bc-cat-link">Imóveis</a>
+    <span class="sep">›</span>
+    <span id="bc-titulo" aria-current="page">–</span>
+  </nav>
+
+  <div class="im-layout">
+
+    <!-- COLUNA GALERIA -->
+    <div class="gal-col">
+      <div class="gal-main" id="gal-main" onclick="lbAbrir(_gIdx)" role="img" aria-label="Galeria de fotos — clique para ampliar">
+        <div class="gal-main-ph" id="gal-ph" aria-hidden="true">🏠</div>
+      </div>
+      <div class="gal-thumbs" id="gal-thumbs" role="list" aria-label="Miniaturas das fotos"></div>
+      <button class="gal-btn-full" id="gal-btn-full" onclick="lbAbrir(0)" style="display:none" aria-label="Abrir galeria completa">
+        🖼️ Ver galeria completa — <span id="gal-total">0</span> fotos
+      </button>
+
+      <div class="det-extra">
+        <div class="det-sec" id="sec-desc" style="display:none">
+          <h3 class="det-sec-titulo">📋 Descrição do Imóvel</h3>
+          <p class="det-sec-desc" id="desc-txt"></p>
+        </div>
+
+        <!-- ✅ AVISO LEGAL FIXO — aparece em todos os imóveis -->
+        <div class="det-sec">
+          <div class="aviso-legal">
+            <div class="aviso-legal-ic">⚠️</div>
+            <div class="aviso-legal-txt">
+              <strong>Atenção</strong>
+              Valores do imóvel anunciado podem sofrer alterações sem prévio aviso. As metragens e taxas (condominiais e/ou IPTU) informadas são aproximadas. Favor entrar em contato para confirmar as informações atualizadas e a disponibilidade do imóvel!
+            </div>
+          </div>
+        </div>
+        <!-- FIM AVISO LEGAL -->
+
+        <div class="det-sec" id="sec-tags" style="display:none">
+          <h3 class="det-sec-titulo">✦ Características</h3>
+          <div class="det-tags" id="tags-wrap"></div>
+        </div>
+        <div class="det-sec" id="sec-video" style="display:none">
+          <h3 class="det-sec-titulo">▶️ Vídeo do Imóvel</h3>
+          <a id="video-link" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#E53935;color:#fff;font-weight:700;font-size:.8rem;padding:11px 20px;border-radius:50px;">▶️ Assistir no YouTube</a>
+        </div>
+        <div class="det-sec" id="sec-mapa">
+          <h3 class="det-sec-titulo">📍 Localização</h3>
+          <div class="mapa-wrap" id="mapa-wrap">
+            <span>🗺️</span>
+            <span id="mapa-hint">Endereço não informado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA DETALHES -->
+    <div class="det-panel">
+      <div class="det-card">
+        <div class="det-cod" id="det-cod">–</div>
+        <h1 class="det-titulo" id="det-titulo">Carregando...</h1>
+        <p class="det-local" id="det-local">📍 –</p>
+        <div class="det-preco-wrap" id="det-preco-wrap" style="display:none">
+          <div class="det-preco-label" id="det-preco-label">Venda</div>
+          <div class="det-preco" id="det-preco">–</div>
+        </div>
+        <div class="det-div"></div>
+        <div class="det-chars" id="det-chars"></div>
+        <div class="det-div"></div>
+        <div class="det-btns">
+          <a class="det-bwa" id="det-bwa" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            💬 Tenho interesse — WhatsApp
+          </a>
+          <a class="det-btel" href="tel:+5511993509109" aria-label="Ligar para FCosta">📞 (11) 99350-9109 — Ligar agora</a>
+          <button class="det-bcompartilhar" onclick="compartilhar()" aria-label="Compartilhar imóvel">🔗 Compartilhar este imóvel</button>
+        </div>
+        <div class="det-corretor" aria-label="Informações do corretor">
+          <div class="det-corretor-foto" aria-hidden="true">👨‍💼</div>
+          <div>
+            <div class="det-corretor-nome">Fábio Costa</div>
+            <div class="det-corretor-creci">Corretor · CRECI-SP 294791-F · CNAI 52708</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="sim-sec" aria-label="Imóveis similares" id="sim-sec" style="display:none">
+    <h2 class="sim-titulo">🏠 Imóveis Similares</h2>
+    <div class="sim-grid" id="sim-grid"></div>
+  </section>
+
+</div>
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Galeria de fotos em tela cheia">
+  <button class="lb-close" onclick="lbFechar()" aria-label="Fechar galeria">✕</button>
+  <div class="lb-wrap">
+    <button class="lb-arr lb-prev" onclick="lbNav(-1)" aria-label="Foto anterior">‹</button>
+    <img id="lb-img" src="" alt="Foto do imóvel"/>
+    <button class="lb-arr lb-next" onclick="lbNav(1)" aria-label="Próxima foto">›</button>
+  </div>
+  <div class="lb-thumbs" id="lb-thumbs" role="list"></div>
+  <div class="lb-count" id="lb-count" aria-live="polite"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="foot-mini" role="contentinfo">
+  <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;">FCosta Corretor e Avaliador Imobiliário</a>
+  &nbsp;·&nbsp; CRECI-SP 294791-F · CNAI 52708
+  &nbsp;·&nbsp; <a href="https://wa.me/5511993509109">(11) 99350-9109</a>
+  &nbsp;·&nbsp; <a href="https://fcostacorretor.com/politica-de-privacidade" onclick="window.top.location.href='https://fcostacorretor.com/politica-de-privacidade';return false;">Política de Privacidade</a>
+</footer>
+
+<script>
+if(!firebase.apps.length){
+  firebase.initializeApp({
+    apiKey:'AIzaSyAH-QF57Igr9fzBCqkAP28IRRE-QHp_2Z4',
+    authDomain:'fcosta-31125.firebaseapp.com',
+    databaseURL:'https://fcosta-31125-default-rtdb.firebaseio.com',
+    projectId:'fcosta-31125',
+    storageBucket:'fcosta-31125.firebasestorage.app',
+    messagingSenderId:'826619190234',
+    appId:'1:826619190234:web:347cdf5d9078433daabee3'
+  });
+}
+var _db=firebase.database();
+var _gFotos=[],_gIdx=0,_lbIdx=0,_todosIm=[],_imAtual=null;
+
+var SIGLAS={venda:'FCV',aluguel:'FCA',lancamento:'FCL',panfleto:'FCP',vendido:'FCV'};
+function getCod(i){if(i.codigo)return i.codigo;var s=SIGLAS[i.status]||'FCV';var n=i.numeroCodigo||(i.id.slice(-3).replace(/[^0-9]/g,'').padStart(3,'0'))||'001';return s+n;}
+function getFotos(i){if(!i.fotos)return[];if(Array.isArray(i.fotos))return i.fotos.filter(Boolean);return Object.values(i.fotos).filter(Boolean);}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function getBadge(s){return{venda:['bv','À Venda'],aluguel:['ba','Aluguel'],lancamento:['bl','Lançamento'],panfleto:['bp','Panfleto'],vendido:['bx','Vendido']}[s]||['bv',s||''];}
+function getCatLink(s){return{venda:'https://fcostacorretor.com/comprar',aluguel:'https://fcostacorretor.com/alugar',lancamento:'https://fcostacorretor.com/lancamentos',panfleto:'https://fcostacorretor.com/panfletos'}[s]||'https://fcostacorretor.com/comprar';}
+function getCatLabel(s){return{venda:'Comprar (FCV)',aluguel:'Alugar (FCA)',lancamento:'Lançamentos (FCL)',panfleto:'Panfletos (FCP)'}[s]||'Imóveis';}
+
+function getIdUrl(){var p=new URLSearchParams(window.location.search);return p.get('id')||p.get('codigo')||null;}
+
+var _idBuscado=getIdUrl();
+if(!_idBuscado){
+  mostrarErro();
+}else{
+  _db.ref('fcosta_imoveis').once('value',function(snap){
+    var data=snap.val()||{};
+    _todosIm=Object.entries(data).map(function(e){return Object.assign({id:e[0]},e[1]);});
+    var imovel=_todosIm.find(function(x){return x.id===_idBuscado||getCod(x)===_idBuscado.toUpperCase();});
+    if(!imovel){mostrarErro();return;}
+    _imAtual=imovel;
+    renderImovel(imovel);
+    renderSimilares(imovel);
+  });
+}
+
+function mostrarErro(){
+  document.getElementById('page-loading').style.display='none';
+  document.getElementById('page-erro').style.display='block';
+}
+
+function renderImovel(i){
+  document.getElementById('page-loading').style.display='none';
+  document.getElementById('imovel-page').style.display='block';
+  var fotos=getFotos(i),cod=getCod(i),b=getBadge(i.status);
+  _gFotos=fotos;_gIdx=0;_lbIdx=0;
+
+  var titSeo='FCosta — '+escH(i.titulo||'Imóvel')+' | Cód '+cod+' | '+escH(i.bairro||'Zona Leste SP');
+  document.getElementById('page-title').textContent=titSeo;
+  document.getElementById('page-desc').content=escH((i.descricao||'Imóvel na Zona Leste de SP').slice(0,155));
+  document.getElementById('og-title').content=titSeo;
+  document.getElementById('og-desc').content=escH((i.descricao||'').slice(0,155));
+  if(fotos[0])document.getElementById('og-img').content=fotos[0];
+  var pageUrl='https://fcostacorretor.com/imovel?id='+i.id;
+  document.getElementById('og-url').content=pageUrl;
+  document.getElementById('canonical').href=pageUrl;
+
+  var schema={'@context':'https://schema.org','@type':'RealEstateListing','name':i.titulo||'Imóvel FCosta','description':i.descricao||'','url':pageUrl,'image':fotos[0]||'','address':{'@type':'PostalAddress','streetAddress':i.endereco||'','addressLocality':i.bairro||'São Paulo','addressRegion':'SP','addressCountry':'BR'},'offers':i.preco?{'@type':'Offer','price':String(i.preco).replace(/[^0-9]/g,''),'priceCurrency':'BRL'}:undefined};
+  document.getElementById('schema-imovel').textContent=JSON.stringify(schema);
+
+  var catLink=getCatLink(i.status),catLabel=getCatLabel(i.status);
+  ['bc-cat-link','bread-cat-link'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){
+      el.href=catLink;
+      el.textContent=catLabel;
+      el.onclick=function(){window.top.location.href=catLink;return false;};
+    }
+  });
+  document.getElementById('bc-titulo').textContent=i.titulo||cod;
+  document.getElementById('bread-titulo').textContent=i.titulo||cod;
+
+  var galEl=document.getElementById('gal-main');
+  galEl.innerHTML=
+    (fotos.length?'<img src="'+escH(fotos[0])+'" id="gal-img" alt="'+escH(i.titulo||'')+'" loading="eager" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;"/>':'<div class="gal-main-ph" aria-hidden="true">🏠</div>')
+    +'<span class="gal-badge '+b[0]+'">'+escH(b[1])+'</span>'
+    +'<span class="gal-cod">'+escH(cod)+'</span>'
+    +(fotos.length>1?'<button class="gal-nav gal-prev" onclick="event.stopPropagation();galNav(-1)" aria-label="Foto anterior">‹</button><button class="gal-nav gal-next" onclick="event.stopPropagation();galNav(1)" aria-label="Próxima foto">›</button><span class="gal-fcount"><span id="gal-fidx">1</span>/'+fotos.length+'</span>':'')
+    +(fotos.length?'<span class="gal-hint">🔍 Clique para galeria completa</span>':'');
+
+  document.getElementById('gal-thumbs').innerHTML=fotos.map(function(f,idx){return'<img src="'+escH(f)+'" class="gth'+(idx===0?' on':'')+'" onclick="galIr('+idx+')" loading="lazy" role="listitem" alt="Foto '+(idx+1)+' de '+fotos.length+'"/>';}).join('');
+  if(fotos.length>1){document.getElementById('gal-btn-full').style.display='flex';document.getElementById('gal-total').textContent=fotos.length;}
+
+  document.getElementById('det-cod').textContent='Cód: '+cod;
+  document.getElementById('det-titulo').textContent=i.titulo||'Imóvel FCosta';
+  document.getElementById('det-local').innerHTML='📍 '+escH([i.bairro,i.cidade,i.endereco].filter(Boolean).join(' — '));
+
+  if(i.preco){document.getElementById('det-preco-wrap').style.display='block';document.getElementById('det-preco-label').textContent=i.status==='aluguel'?'Valor do Aluguel/mês':'Valor de Venda';document.getElementById('det-preco').textContent='R$ '+i.preco;}
+
+  var chars=[];
+  if(i.quartos)   chars.push({ic:'🛏',val:i.quartos+' Quarto'+(i.quartos>1?'s':''),lbl:'Dormitórios'});
+  if(i.banheiros) chars.push({ic:'🚿',val:i.banheiros+' Banheiro'+(i.banheiros>1?'s':''),lbl:'Banheiros'});
+  if(i.area)      chars.push({ic:'📐',val:i.area+' m²',lbl:'Área Total'});
+  if(i.vagas)     chars.push({ic:'🚗',val:i.vagas+' Vaga'+(i.vagas>1?'s':''),lbl:'Garagem'});
+  if(i.tipo)      chars.push({ic:'🏠',val:i.tipo,lbl:'Tipo'});
+  if(i.status)    chars.push({ic:'🏷️',val:escH(b[1]),lbl:'Status'});
+  document.getElementById('det-chars').innerHTML=chars.map(function(c){return'<div class="det-char"><div class="det-char-ic">'+c.ic+'</div><div><div class="det-char-val">'+escH(c.val)+'</div><div class="det-char-lbl">'+escH(c.lbl)+'</div></div></div>';}).join('');
+
+  var waMsg='Olá!%20Tenho%20interesse%20no%20imóvel%20*'+encodeURIComponent(cod)+'*%20-%20'+encodeURIComponent(i.titulo||'');
+  document.getElementById('det-bwa').href='https://wa.me/5511993509109?text='+waMsg;
+
+  if(i.descricao){document.getElementById('sec-desc').style.display='block';document.getElementById('desc-txt').textContent=i.descricao;}
+
+  var tags=[];
+  if(i.tipo)     tags.push(i.tipo);
+  if(i.bairro)   tags.push('📍 '+i.bairro);
+  if(i.cidade)   tags.push(i.cidade);
+  if(i.area)     tags.push(i.area+' m²');
+  if(i.destaque) tags.push('⭐ Destaque');
+  if(i.sigla)    tags.push(i.sigla);
+  if(tags.length){document.getElementById('sec-tags').style.display='block';document.getElementById('tags-wrap').innerHTML=tags.map(function(t){return'<span class="det-tag">'+escH(t)+'</span>';}).join('');}
+
+  if(i.video){document.getElementById('sec-video').style.display='block';document.getElementById('video-link').href=i.video;}
+
+  var enderecoMapa=[i.endereco,i.bairro,i.cidade,'SP','Brasil'].filter(Boolean).join(', ');
+  var mapaEl=document.getElementById('mapa-wrap');
+  if(i.bairro||i.endereco){mapaEl.innerHTML='<iframe src="https://www.google.com/maps?q='+encodeURIComponent(enderecoMapa)+'&output=embed" allowfullscreen loading="lazy" title="Localização do imóvel '+escH(cod)+'"></iframe>';}
+  else{document.getElementById('mapa-hint').textContent='Endereço não disponível';}
+}
+
+function galNav(dir){if(!_gFotos.length)return;_gIdx=(_gIdx+dir+_gFotos.length)%_gFotos.length;galMostrar(_gIdx);}
+function galIr(idx){_gIdx=idx;galMostrar(idx);}
+function galMostrar(idx){var img=document.getElementById('gal-img');if(img)img.src=_gFotos[idx];var fc=document.getElementById('gal-fidx');if(fc)fc.textContent=idx+1;document.querySelectorAll('.gth').forEach(function(t,i){t.classList.toggle('on',i===idx);});}
+
+function renderSimilares(im){
+  var lista=_todosIm.filter(function(x){return x.id!==im.id&&x.status===im.status;}).slice(0,4);
+  if(!lista.length)return;
+  document.getElementById('sim-sec').style.display='block';
+  document.getElementById('sim-grid').innerHTML=lista.map(function(i){
+    var fotos=getFotos(i),cod=getCod(i),b=getBadge(i.status);
+    var url='https://fcostacorretor.com/imovel?id='+i.id;
+    return '<article class="sim-card" onclick="window.top.location.href=\''+url+'\'" aria-label="'+escH(i.titulo||'Imóvel')+'">'
+      +'<div class="sim-foto">'
+        +(fotos[0]?'<img src="'+escH(fotos[0])+'" alt="'+escH(i.titulo||'')+'" loading="lazy"/>':'<div class="sim-foto-ph" aria-hidden="true">🏠</div>')
+        +'<span class="sim-badge '+b[0]+'">'+escH(b[1])+'</span>'
+        +'<span class="sim-cod">'+escH(cod)+'</span>'
+      +'</div>'
+      +'<div class="sim-body">'
+        +'<div class="sim-tipo">'+escH(i.tipo||'Imóvel')+'</div>'
+        +'<div class="sim-nome">'+escH(i.titulo||'Imóvel FCosta')+'</div>'
+        +'<div class="sim-local">📍 '+escH(i.bairro||'')+'</div>'
+        +(i.preco?'<div class="sim-preco">R$ '+escH(i.preco)+'</div>':'')
+      +'</div>'
+    +'</article>';
+  }).join('');
+}
+
+function lbAbrir(idx){if(!_gFotos.length)return;_lbIdx=idx||0;document.getElementById('lb').classList.add('on');document.body.style.overflow='hidden';lbRender();}
+function lbRender(){var img=document.getElementById('lb-img');img.style.opacity='0';setTimeout(function(){img.src=_gFotos[_lbIdx];img.style.opacity='1';},80);document.getElementById('lb-count').textContent=(_lbIdx+1)+' / '+_gFotos.length;document.getElementById('lb-thumbs').innerHTML=_gFotos.map(function(f,i){return'<img src="'+escH(f)+'" class="lb-th'+(i===_lbIdx?' on':'')+'" onclick="lbIr('+i+')" loading="lazy" role="listitem" alt="Foto '+(i+1)+'"/>';}).join('');setTimeout(function(){var ths=document.querySelectorAll('.lb-th');if(ths[_lbIdx])ths[_lbIdx].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});},100);}
+function lbNav(dir){_lbIdx=(_lbIdx+dir+_gFotos.length)%_gFotos.length;lbRender();}
+function lbIr(i){_lbIdx=i;lbRender();}
+function lbFechar(){document.getElementById('lb').classList.remove('on');document.body.style.overflow='';}
+document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)lbFechar();});
+
+function compartilhar(){var url=window.location.href;var titulo=document.getElementById('det-titulo').textContent;if(navigator.share){navigator.share({title:'FCosta — '+titulo,url:url});}else{navigator.clipboard.writeText(url).then(function(){alert('Link copiado: '+url);});}}
+
+document.addEventListener('keydown',function(e){if(document.getElementById('lb').classList.contains('on')){if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);if(e.key==='Escape')lbFechar();}});
+window.addEventListener('scroll',function(){document.getElementById('nav-mini').classList.toggle('sc',window.scrollY>20);});
+</script>
+</body>
+</html>

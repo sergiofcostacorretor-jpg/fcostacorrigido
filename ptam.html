@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HP 12C Imobiliária | FCosta Corretor</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #87ceeb;
+    --surface: #a8dcf0;
+    --card: #c5e8f7;
+    --border: #7ab8d8;
+    --gold: #b05a00;
+    --gold2: #c87000;
+    --blue: #1565a8;
+    --blue2: #1a7abf;
+    --orange: #c04f00;
+    --green: #1a6e2a;
+    --red: #b52020;
+    --text: #0a2a3a;
+    --muted: #2a5570;
+    --hp-body: #2b2f3a;
+    --hp-dark: #1e2130;
+    --hp-key: #363c50;
+    --hp-key2: #232839;
+    --hp-screen: #b8d4a0;
+    --hp-screen-bg: #1a2010;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: linear-gradient(160deg, #b0e0f8 0%, #87ceeb 40%, #6ab8e0 100%);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 32px 0 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    margin-bottom: 32px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1565a8, #0a3a6e);
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(22px, 5vw, 40px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #0a2a4a, #1565a8, #0a3a6e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .header p { color: var(--muted); font-size: 14px; }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 10px;
+    padding: 6px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    backdrop-filter: blur(6px);
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 120px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .2s;
+    text-transform: uppercase;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #1565a8, #0a3a6e);
+    color: #fff;
+  }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.5); color: var(--text); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ================== CALCULADORA VISUAL ================== */
+  .calc-wrap {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .hp12c {
+    background: linear-gradient(160deg, #3a3f52, #2b2f3a, #1e2130);
+    border-radius: 16px;
+    border: 2px solid #4a5068;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);
+    padding: 18px 14px 20px;
+    width: 340px;
+    flex-shrink: 0;
+  }
+
+  .hp-brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .hp-brand .name {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+  .hp-brand .model { font-family: 'Share Tech Mono'; font-size: 11px; color: var(--muted); }
+
+  .hp-screen-wrap {
+    background: var(--hp-screen-bg);
+    border: 2px solid #0a0c10;
+    border-radius: 6px;
+    padding: 10px 12px 8px;
+    margin-bottom: 14px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,.5);
+  }
+  .hp-screen-label {
+    font-family: 'Share Tech Mono';
+    font-size: 9px;
+    color: #4a6030;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+  }
+  #hp-display {
+    font-family: 'Share Tech Mono';
+    font-size: 28px;
+    color: var(--hp-screen);
+    text-align: right;
+    min-height: 36px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(184,212,160,.4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .hp-flags {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .hp-flag {
+    font-family: 'Share Tech Mono';
+    font-size: 8px;
+    color: #2a4020;
+    letter-spacing: 1px;
+  }
+  .hp-flag.on { color: #8ab870; }
+
+  /* HP KEYS */
+  .hp-keys { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+  .hk {
+    background: linear-gradient(160deg, #454b62, #363c50);
+    border: 1px solid #555c78;
+    border-bottom: 3px solid #252932;
+    border-radius: 4px;
+    padding: 6px 4px 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all .1s;
+    position: relative;
+    user-select: none;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .hk:active, .hk.pressed {
+    transform: translateY(1px);
+    border-bottom-width: 1px;
+    background: linear-gradient(160deg, #505872, #424859);
+  }
+  .hk .top-label {
+    font-family: 'Share Tech Mono';
+    font-size: 7px;
+    color: var(--orange);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+    min-height: 8px;
+  }
+  .hk .main-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #d0d8f0;
+    line-height: 1;
+  }
+  .hk .sub-label {
+    font-family: 'Share Tech Mono';
+    font-size: 7px;
+    color: var(--blue2);
+    margin-top: 2px;
+    min-height: 8px;
+  }
+
+  /* KEY COLORS */
+  .hk.gold { background: linear-gradient(160deg, #c8a84b, #a07830); border-color: #d4b060; }
+  .hk.gold .main-label { color: #1a1200; }
+  .hk.blue { background: linear-gradient(160deg, #3a7bd5, #2a5ba5); border-color: #4a8be5; }
+  .hk.blue .main-label { color: #fff; }
+  .hk.enter { grid-column: span 2; }
+  .hk.dark { background: linear-gradient(160deg, #232839, #1a1e2a); border-color: #333848; }
+  .hk.enter .main-label { font-size: 9px; }
+
+  /* CALC RESULT PANEL */
+  .calc-result {
+    flex: 1;
+    min-width: 260px;
+  }
+  .result-card {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(8px);
+  }
+  .result-card h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(100,160,200,0.25);
+    font-size: 13px;
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .label { color: var(--muted); font-size: 12px; }
+  .result-row .value {
+    font-family: 'Share Tech Mono';
+    color: var(--green);
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .result-row .value.highlight {
+    color: var(--blue);
+    font-size: 18px;
+  }
+
+  /* ================== CALCULADORAS MODOS ================== */
+  .calc-modes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .mode-btn {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+    backdrop-filter: blur(6px);
+  }
+  .mode-btn:hover, .mode-btn.active-mode {
+    border-color: var(--blue);
+    background: rgba(21,101,168,0.12);
+  }
+  .mode-btn .icon { font-size: 22px; margin-bottom: 6px; }
+  .mode-btn .title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .mode-btn .desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* INPUTS */
+  .calc-form {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .calc-form h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field input, .field select {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(100,160,200,0.5);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'Share Tech Mono';
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border .2s;
+  }
+  .field input:focus, .field select:focus { border-color: var(--blue); }
+  .field select option { background: #d0eaf8; }
+  .field .hint { font-size: 10px; color: #4a7a98; margin-top: 2px; }
+
+  .calc-btn {
+    background: linear-gradient(135deg, #1565a8, #0a3a6e);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 14px 32px;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: all .2s;
+    width: 100%;
+  }
+  .calc-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+  /* RESULTS DISPLAY */
+  .results-display {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 12px;
+    padding: 24px;
+    display: none;
+    backdrop-filter: blur(8px);
+  }
+  .results-display.show { display: block; }
+  .results-display h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .result-item {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(100,160,200,0.4);
+    border-radius: 8px;
+    padding: 14px;
+    border-left: 3px solid var(--blue);
+  }
+  .result-item .r-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .result-item .r-value { font-family: 'Share Tech Mono'; font-size: 18px; color: var(--green); font-weight: bold; }
+  .result-item.highlight { border-left-color: var(--orange); }
+  .result-item.highlight .r-value { color: var(--blue); font-size: 22px; }
+
+  .amort-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 11px;
+  }
+  .amort-table th {
+    background: rgba(21,101,168,0.15);
+    color: var(--blue);
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 8px 6px;
+    text-align: right;
+    border-bottom: 2px solid rgba(21,101,168,0.3);
+  }
+  .amort-table th:first-child { text-align: left; }
+  .amort-table td {
+    padding: 6px 6px;
+    text-align: right;
+    border-bottom: 1px solid rgba(100,160,200,0.2);
+    font-family: 'Share Tech Mono';
+    color: var(--text);
+    font-size: 11px;
+  }
+  .amort-table td:first-child { text-align: left; color: var(--muted); }
+  .amort-table tr:hover td { background: rgba(21,101,168,0.06); }
+
+  /* ================== SUMÁRIO ================== */
+  .keys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .key-card {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 16px;
+    border-left: 3px solid rgba(100,160,200,0.4);
+    transition: all .2s;
+    backdrop-filter: blur(6px);
+  }
+  .key-card:hover { border-left-color: var(--blue); transform: translateX(2px); }
+  .key-card .kc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .key-badge {
+    background: var(--hp-key);
+    border: 1px solid #555c78;
+    border-bottom: 2px solid #252932;
+    border-radius: 4px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #d0d8f0;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .key-badge.gold-badge { background: linear-gradient(135deg, #c8a84b, #a07830); color: #1a1200; border-color: #d4b060; }
+  .key-badge.blue-badge { background: linear-gradient(135deg, #3a7bd5, #2a5ba5); color: #fff; border-color: #4a8be5; }
+  .key-card .kc-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .key-card .kc-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .key-card .kc-example {
+    margin-top: 10px;
+    background: rgba(21,101,168,0.08);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: 'Share Tech Mono';
+    font-size: 11px;
+    color: var(--green);
+    border-left: 2px solid var(--green);
+  }
+  .key-card .kc-example .ex-title { color: var(--muted); font-size: 10px; margin-bottom: 4px; }
+
+  .mcmv-bands {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mcmv-band {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 16px;
+    border-top: 3px solid var(--blue);
+    backdrop-filter: blur(6px);
+  }
+  .mcmv-band.faixa1 { border-top-color: var(--green); }
+  .mcmv-band.faixa2 { border-top-color: var(--blue); }
+  .mcmv-band.faixa3 { border-top-color: var(--orange); }
+  .mcmv-band h4 { font-family: 'Orbitron', monospace; font-size: 11px; color: var(--blue); margin-bottom: 8px; }
+  .mcmv-band .band-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid rgba(100,160,200,0.25); }
+  .mcmv-band .band-row:last-child { border: none; }
+  .mcmv-band .band-row span:last-child { font-family: 'Share Tech Mono'; color: var(--green); }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(21,101,168,0.25);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #a8d8f0; }
+  ::-webkit-scrollbar-thumb { background: #5a9ac0; border-radius: 3px; }
+
+  @media (max-width: 700px) {
+    .calc-wrap { flex-direction: column; }
+    .hp12c { width: 100%; }
+    .hk .main-label { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">FCosta Corretor · CRECI-SP 294791-F</div>
+    <h1>HP 12C Imobiliária</h1>
+    <p>Calculadora financeira completa · Foco em MCMV e Financiamento Imobiliário</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('calc')">🧮 Calculadora HP</button>
+    <button class="tab-btn" onclick="showTab('mcmv')">🏠 Simulador MCMV</button>
+    <button class="tab-btn" onclick="showTab('financ')">📊 Financiamento SAC/PRICE</button>
+    <button class="tab-btn" onclick="showTab('teclas')">📖 Guia das Teclas</button>
+  </div>
+
+  <!-- ===== TAB: CALCULADORA HP ===== -->
+  <div class="tab-panel active" id="tab-calc">
+    <div class="calc-wrap">
+      <!-- HP 12C VISUAL -->
+      <div class="hp12c">
+        <div class="hp-brand">
+          <span class="name">HP 12C</span>
+          <span class="model">FINANCIAL CALCULATOR</span>
+        </div>
+        <div class="hp-screen-wrap">
+          <div class="hp-screen-label">DISPLAY</div>
+          <div id="hp-display">0.00</div>
+          <div class="hp-flags">
+            <span class="hp-flag" id="flag-f">f</span>
+            <span class="hp-flag" id="flag-g">g</span>
+            <span class="hp-flag" id="flag-begin">BEGIN</span>
+            <span class="hp-flag" id="flag-c">C</span>
+          </div>
+        </div>
+        <!-- KEYS -->
+        <div class="hp-keys" id="hp-keys-grid">
+          <!-- ROW 1 -->
+          <div class="hk dark" onclick="hpKey('n')" title="Número de Parcelas">
+            <div class="top-label">12×</div>
+            <div class="main-label">n</div>
+            <div class="sub-label">PRAZO</div>
+          </div>
+          <div class="hk dark" onclick="hpKey('i')" title="Taxa de Juros">
+            <div class="top-label">12÷</div>
+            <div class="main-label">i%</div>
+            <div class="sub-label">TAXA</div>
+          </div>
+          <div class="hk dark" onclick="hpKey('pv')" title="Valor Presente / Valor do Imóvel">
+            <div class="top-label">CFo</div>
+            <div class="main-label">PV</div>
+            <div class="sub-label">IMÓVEL</div>
+          </div>
+          <div class="hk dark" onclick="hpKey('pmt')" title="Valor da Parcela Mensal">
+            <div class="top-label">CFj</div>
+            <div class="main-label">PMT</div>
+            <div class="sub-label">PARCELA</div>
+          </div>
+          <div class="hk dark" onclick="hpKey('fv')" title="Valor Futuro / Saldo Devedor">
+            <div class="top-label">NPV</div>
+            <div class="main-label">FV</div>
+            <div class="sub-label">SALDO</div>
+          </div>
+
+          <!-- ROW 2 -->
+          <div class="hk gold" onclick="hpKey('f-shift')">
+            <div class="top-label"></div>
+            <div class="main-label">f</div>
+            <div class="sub-label"></div>
+          </div>
+          <div class="hk blue" onclick="hpKey('g-shift')">
+            <div class="top-label"></div>
+            <div class="main-label">g</div>
+            <div class="sub-label"></div>
+          </div>
+          <div class="hk" onclick="hpKey('sto')" title="Guardar Valor">
+            <div class="top-label">FRAC</div>
+            <div class="main-label">STO</div>
+            <div class="sub-label">SALVAR</div>
+          </div>
+          <div class="hk" onclick="hpKey('rcl')" title="Recuperar Valor">
+            <div class="top-label">INT</div>
+            <div class="main-label">RCL</div>
+            <div class="sub-label">BUSCAR</div>
+          </div>
+          <div class="hk" onclick="hpKey('clx')" title="Limpar Entrada">
+            <div class="top-label">GTO</div>
+            <div class="main-label">CLx</div>
+            <div class="sub-label">LIMPAR</div>
+          </div>
+
+          <!-- ROW 3 -->
+          <div class="hk" onclick="hpKey('minus')">
+            <div class="top-label">DATE</div>
+            <div class="main-label">—</div>
+            <div class="sub-label">SUBTR</div>
+          </div>
+          <div class="hk" onclick="hpKey('7')"><div class="top-label"></div><div class="main-label">7</div><div class="sub-label">BEG</div></div>
+          <div class="hk" onclick="hpKey('8')"><div class="top-label"></div><div class="main-label">8</div><div class="sub-label">END</div></div>
+          <div class="hk" onclick="hpKey('9')"><div class="top-label"></div><div class="main-label">9</div><div class="sub-label">AMORT</div></div>
+          <div class="hk" onclick="hpKey('div')" title="Divisão / Taxa %">
+            <div class="top-label">%T</div>
+            <div class="main-label">÷</div>
+            <div class="sub-label">DIVIDIR</div>
+          </div>
+
+          <!-- ROW 4 -->
+          <div class="hk" onclick="hpKey('plus')">
+            <div class="top-label">DATE</div>
+            <div class="main-label">+</div>
+            <div class="sub-label">SOMAR</div>
+          </div>
+          <div class="hk" onclick="hpKey('4')"><div class="top-label">CF0</div><div class="main-label">4</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('5')"><div class="top-label">CF1</div><div class="main-label">5</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('6')"><div class="top-label">Nj</div><div class="main-label">6</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('mul')" title="Multiplicação">
+            <div class="top-label">%</div>
+            <div class="main-label">×</div>
+            <div class="sub-label">MULT</div>
+          </div>
+
+          <!-- ROW 5 -->
+          <div class="hk enter" onclick="hpKey('enter')" title="Confirmar / Calcular">
+            <div class="top-label">AMORT</div>
+            <div class="main-label">CALCULAR / ENTER</div>
+            <div class="sub-label"></div>
+          </div>
+          <div class="hk" onclick="hpKey('1')"><div class="top-label">→R</div><div class="main-label">1</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('2')"><div class="top-label">→H.MS</div><div class="main-label">2</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('3')"><div class="top-label">→H</div><div class="main-label">3</div><div class="sub-label"></div></div>
+
+          <!-- ROW 6 -->
+          <div class="hk" onclick="hpKey('chs')" title="Inverter sinal">
+            <div class="top-label">DATE</div>
+            <div class="main-label">CHS</div>
+            <div class="sub-label">+/-</div>
+          </div>
+          <div class="hk" onclick="hpKey('0')"><div class="top-label"></div><div class="main-label">0</div><div class="sub-label"></div></div>
+          <div class="hk" onclick="hpKey('dot')"><div class="top-label"></div><div class="main-label">.</div><div class="sub-label">VÍRGULA</div></div>
+          <div class="hk" onclick="hpKey('bsp')" title="Apagar último dígito">
+            <div class="top-label"></div>
+            <div class="main-label">⌫</div>
+            <div class="sub-label">APAGAR</div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:6px;">
+          <button onclick="hpClear()" style="flex:1; background:var(--red); border:none; border-radius:5px; color:#fff; font-family:'Orbitron',monospace; font-size:9px; padding:8px; cursor:pointer; letter-spacing:1px;">LIMPAR TUDO</button>
+          <button onclick="calcHP()" style="flex:2; background:linear-gradient(135deg,#1565a8,#0a3a6e); border:none; border-radius:5px; color:#fff; font-family:'Orbitron',monospace; font-size:9px; padding:8px; cursor:pointer; letter-spacing:1px; font-weight:700;">▶ CALCULAR DESCONHECIDO</button>
+        </div>
+      </div>
+
+      <!-- LADO DIREITO -->
+      <div class="calc-result">
+        <div class="result-card">
+          <h3>💡 Como usar a HP 12C</h3>
+          <div style="font-size:12px; color:var(--muted); line-height:1.8;">
+            <p style="margin-bottom:8px;"><strong style="color:var(--gold);">1.</strong> Digite o valor → pressione a tecla correspondente (PV, i%, n, PMT ou FV)</p>
+            <p style="margin-bottom:8px;"><strong style="color:var(--gold);">2.</strong> Deixe <strong style="color:var(--text);">UM</strong> campo vazio (o que você quer calcular)</p>
+            <p style="margin-bottom:8px;"><strong style="color:var(--gold);">3.</strong> Pressione <strong style="color:var(--green);">"CALCULAR DESCONHECIDO"</strong></p>
+            <p style="margin-bottom:8px;"><strong style="color:var(--gold);">4.</strong> Use <strong style="color:var(--text);">CHS (+/-)</strong> para valores negativos (entrada, amort.)</p>
+          </div>
+        </div>
+
+        <div class="result-card" id="hp-result-card" style="display:none;">
+          <h3>📊 Resultado HP 12C</h3>
+          <div id="hp-result-content"></div>
+        </div>
+
+        <div class="result-card">
+          <h3>🔢 Registradores (Memória)</h3>
+          <div id="hp-registers" style="font-family:'Share Tech Mono'; font-size:12px; color:var(--muted);">
+            <div class="result-row"><span class="label">n (Prazo)</span><span class="value" id="reg-n">—</span></div>
+            <div class="result-row"><span class="label">i% (Taxa/mês)</span><span class="value" id="reg-i">—</span></div>
+            <div class="result-row"><span class="label">PV (Valor Imóvel)</span><span class="value" id="reg-pv">—</span></div>
+            <div class="result-row"><span class="label">PMT (Parcela)</span><span class="value" id="reg-pmt">—</span></div>
+            <div class="result-row"><span class="label">FV (Saldo Final)</span><span class="value" id="reg-fv">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: MCMV ===== -->
+  <div class="tab-panel" id="tab-mcmv">
+    <div class="section-title">🏠 MINHA CASA MINHA VIDA 2026 — TAXAS E SIMULAÇÃO</div>
+
+    <div class="mcmv-bands">
+      <div class="mcmv-band faixa1">
+        <h4>FAIXA 1</h4>
+        <div class="band-row"><span>Renda familiar</span><span>Até R$ 2.850</span></div>
+        <div class="band-row"><span>Taxa de juros</span><span>4,00% a.a.</span></div>
+        <div class="band-row"><span>Taxa mensal</span><span>0,3274% a.m.</span></div>
+        <div class="band-row"><span>Imóvel máx.</span><span>R$ 170.000</span></div>
+        <div class="band-row"><span>Subsídio</span><span>Até R$ 55.000</span></div>
+        <div class="band-row"><span>Prazo máx.</span><span>360 meses</span></div>
+      </div>
+      <div class="mcmv-band faixa2">
+        <h4>FAIXA 2</h4>
+        <div class="band-row"><span>Renda familiar</span><span>R$ 2.851 – R$ 4.700</span></div>
+        <div class="band-row"><span>Taxa de juros</span><span>4,75% – 6,00% a.a.</span></div>
+        <div class="band-row"><span>Taxa mensal</span><span>0,3876% – 0,4868% a.m.</span></div>
+        <div class="band-row"><span>Imóvel máx.</span><span>R$ 264.000</span></div>
+        <div class="band-row"><span>Subsídio</span><span>Até R$ 29.000</span></div>
+        <div class="band-row"><span>Prazo máx.</span><span>360 meses</span></div>
+      </div>
+      <div class="mcmv-band faixa3">
+        <h4>FAIXA 3</h4>
+        <div class="band-row"><span>Renda familiar</span><span>R$ 4.701 – R$ 8.000</span></div>
+        <div class="band-row"><span>Taxa de juros</span><span>7,66% – 8,16% a.a.</span></div>
+        <div class="band-row"><span>Taxa mensal</span><span>0,6181% – 0,6576% a.m.</span></div>
+        <div class="band-row"><span>Imóvel máx.</span><span>R$ 350.000</span></div>
+        <div class="band-row"><span>Subsídio</span><span>Sem subsídio</span></div>
+        <div class="band-row"><span>Prazo máx.</span><span>360 meses</span></div>
+      </div>
+    </div>
+
+    <div class="calc-form">
+      <h3>🔢 SIMULADOR MCMV — CALCULE AGORA</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label>Renda Familiar Bruta (R$)</label>
+          <input type="number" id="mcmv-renda" placeholder="Ex: 3500" oninput="mcmvAutoFaixa()">
+          <div class="hint">Informe para identificar a Faixa automaticamente</div>
+        </div>
+        <div class="field">
+          <label>Faixa MCMV</label>
+          <select id="mcmv-faixa" onchange="mcmvFaixaChange()">
+            <option value="">— Selecionar —</option>
+            <option value="1">Faixa 1 (até R$ 2.850)</option>
+            <option value="2a">Faixa 2A (R$ 2.851 – R$ 4.000)</option>
+            <option value="2b">Faixa 2B (R$ 4.001 – R$ 4.700)</option>
+            <option value="3a">Faixa 3A (R$ 4.701 – R$ 6.000)</option>
+            <option value="3b">Faixa 3B (R$ 6.001 – R$ 8.000)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Taxa de Juros a.a. (%)</label>
+          <input type="number" id="mcmv-taxa" placeholder="Ex: 6.00" step="0.01">
+          <div class="hint">Preenchida automaticamente pela faixa</div>
+        </div>
+        <div class="field">
+          <label>Valor do Imóvel (R$)</label>
+          <input type="number" id="mcmv-imovel" placeholder="Ex: 250000">
+        </div>
+        <div class="field">
+          <label>Entrada / FGTS (R$)</label>
+          <input type="number" id="mcmv-entrada" placeholder="Ex: 20000" value="0">
+          <div class="hint">Mínimo: 20% do valor (regra geral)</div>
+        </div>
+        <div class="field">
+          <label>Subsídio Estimado (R$)</label>
+          <input type="number" id="mcmv-subsidio" placeholder="Ex: 29000" value="0">
+          <div class="hint">Preenchido automaticamente pela faixa</div>
+        </div>
+        <div class="field">
+          <label>Prazo (meses)</label>
+          <input type="number" id="mcmv-prazo" placeholder="Ex: 360" value="360">
+          <div class="hint">Máximo: 360 meses (30 anos)</div>
+        </div>
+        <div class="field">
+          <label>Sistema de Amortização</label>
+          <select id="mcmv-sistema">
+            <option value="price">PRICE (parcelas fixas)</option>
+            <option value="sac">SAC (parcelas decrescentes)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcMCMV()">▶ CALCULAR FINANCIAMENTO MCMV</button>
+    </div>
+
+    <div class="results-display" id="mcmv-results">
+      <h3>📊 RESULTADO DO FINANCIAMENTO MCMV</h3>
+      <div class="result-grid" id="mcmv-result-grid"></div>
+      <div id="mcmv-table-wrap" style="overflow-x:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: FINANCIAMENTO ===== -->
+  <div class="tab-panel" id="tab-financ">
+    <div class="section-title">📊 FINANCIAMENTO SAC / PRICE — CALCULADORA COMPLETA</div>
+
+    <div class="calc-modes">
+      <div class="mode-btn active-mode" onclick="setMode('parcela', this)">
+        <div class="icon">💰</div>
+        <div class="title">CALCULAR PARCELA</div>
+        <div class="desc">Sei o valor do imóvel, entrada, taxa e prazo. Quero saber a parcela mensal.</div>
+      </div>
+      <div class="mode-btn" onclick="setMode('prazo', this)">
+        <div class="icon">📅</div>
+        <div class="title">CALCULAR PRAZO</div>
+        <div class="desc">Sei quanto posso pagar por mês. Quero saber em quanto tempo quito.</div>
+      </div>
+      <div class="mode-btn" onclick="setMode('imovel', this)">
+        <div class="icon">🏠</div>
+        <div class="title">CALCULAR IMÓVEL</div>
+        <div class="desc">Sei a parcela que cabe no bolso. Quero saber qual valor de imóvel consigo.</div>
+      </div>
+      <div class="mode-btn" onclick="setMode('taxa', this)">
+        <div class="icon">📈</div>
+        <div class="title">CALCULAR TAXA</div>
+        <div class="desc">Tenho todos os dados. Quero calcular a taxa efetiva do financiamento.</div>
+      </div>
+    </div>
+
+    <div class="calc-form">
+      <h3 id="financ-form-title">🔢 CALCULAR PARCELA MENSAL</h3>
+      <div class="form-grid" id="financ-inputs"></div>
+      <button class="calc-btn" onclick="calcFinanciamento()">▶ CALCULAR</button>
+    </div>
+
+    <div class="results-display" id="financ-results">
+      <h3>📊 RESULTADO</h3>
+      <div class="result-grid" id="financ-result-grid"></div>
+      <div id="financ-table-wrap" style="margin-top:20px; overflow-x:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: TECLAS ===== -->
+  <div class="tab-panel" id="tab-teclas">
+    <div class="section-title">📖 GUIA COMPLETO DAS TECLAS HP 12C — PARA IMOBILIÁRIA</div>
+
+    <div class="keys-grid">
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">n</span>
+          <span class="kc-name">Número de Parcelas / Prazo</span>
+        </div>
+        <div class="kc-desc">Armazena ou calcula o número de pagamentos. Em financiamento imobiliário, representa o prazo em <strong>meses</strong>. Para anos, multiplique por 12 antes.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO IMOBILIÁRIO:</div>
+          360 → [n] = financiamento de 30 anos<br>
+          Para calcular: deixe [n] vazio e pressione ENTER
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">i%</span>
+          <span class="kc-name">Taxa de Juros Mensal</span>
+        </div>
+        <div class="kc-desc">Armazena ou calcula a taxa de juros por período (mês). Para converter taxa anual: divida por 12 ou use a tecla g→12÷. MCMV Faixa 2: 6% a.a. = 0,4868% a.m.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO IMOBILIÁRIO:</div>
+          0.4868 → [i%] = taxa mensal MCMV F2<br>
+          6 → [g] → [i%] = converte 6% a.a. em mensal
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">PV</span>
+          <span class="kc-name">Valor Presente — Valor Financiado</span>
+        </div>
+        <div class="kc-desc">O valor que está sendo financiado hoje. Em imóveis = Valor do imóvel MENOS a entrada MENOS o subsídio MENOS o FGTS. É o saldo que vai para o banco.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO IMOBILIÁRIO:</div>
+          Imóvel R$ 250.000 – entrada R$ 50.000<br>
+          200000 → [PV] = valor financiado
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">PMT</span>
+          <span class="kc-name">Parcela Mensal de Pagamento</span>
+        </div>
+        <div class="kc-desc">O valor da prestação mensal. Na HP, o PMT sai negativo (pagamento = saída de dinheiro). Para o sistema PRICE, o PMT é fixo durante todo o prazo. Para SAC, use a calculadora dedicada.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO IMOBILIÁRIO:</div>
+          Deixe vazio e pressione ENTER para<br>
+          calcular a parcela do financiamento
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">FV</span>
+          <span class="kc-name">Valor Futuro — Saldo Devedor Final</span>
+        </div>
+        <div class="kc-desc">O valor que restará ao final do prazo. Em financiamentos normais, FV = 0 (dívida zerada). Útil para calcular o saldo devedor após X meses ou o valor do balão residual.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO IMOBILIÁRIO:</div>
+          0 → [FV] = financiamento total quitado<br>
+          Deixe vazio para calcular saldo devedor
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge gold-badge">f</span>
+          <span class="kc-name">Shift Amarelo — Funções Financeiras</span>
+        </div>
+        <div class="kc-desc">Ativa as funções secundárias escritas acima das teclas em amarelo. Principal uso: f → AMORT (amortização acumulada), f → CLx (limpar registros financeiros).</div>
+        <div class="kc-example">
+          <div class="ex-title">COMBINAÇÕES ÚTEIS:</div>
+          [f] + [CLx] = zera todos os registros<br>
+          [f] + [PMT] = calcula amortização acumulada
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge blue-badge">g</span>
+          <span class="kc-name">Shift Azul — Funções Matemáticas</span>
+        </div>
+        <div class="kc-desc">Ativa funções escritas abaixo das teclas em azul. Fundamental para converter taxas anuais em mensais (12÷) e mensais em anuais (12×). Também controla modo BEGIN/END.</div>
+        <div class="kc-example">
+          <div class="ex-title">COMBINAÇÕES ÚTEIS:</div>
+          [g] + [i%] = 12÷ (anual → mensal)<br>
+          [g] + [n] = 12× (anos → meses)
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">STO</span>
+          <span class="kc-name">Guardar Valor na Memória</span>
+        </div>
+        <div class="kc-desc">Salva o número mostrado no display em uma das memórias (0 a 9). Útil para guardar resultados intermediários durante cálculos complexos de financiamento.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          Calcula parcela → [STO] → [1]<br>
+          O valor fica salvo para uso posterior
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">RCL</span>
+          <span class="kc-name">Recuperar Valor da Memória</span>
+        </div>
+        <div class="kc-desc">Recupera um valor guardado com STO. [RCL] + [n] mostra o número de parcelas registrado. [RCL] + [PV] mostra o valor financiado. Muito útil para revisar os dados inseridos.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          [RCL] + [PV] = mostra valor financiado<br>
+          [RCL] + [i%] = mostra taxa inserida
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">CLx</span>
+          <span class="kc-name">Limpar Display / Apagar Erro</span>
+        </div>
+        <div class="kc-desc">Limpa o número atual no display sem apagar os registros financeiros. Use quando digitar um número errado. Para limpar TUDO (n, i, PV, PMT, FV), use [f] + [CLx].</div>
+        <div class="kc-example">
+          <div class="ex-title">DICA IMPORTANTE:</div>
+          [CLx] = apaga só o display<br>
+          [f]+[CLx] = apaga TODOS os registros
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">CHS</span>
+          <span class="kc-name">Inverter Sinal (+/−)</span>
+        </div>
+        <div class="kc-desc">Inverte o sinal do número no display (positivo→negativo ou vice-versa). Na HP 12C, pagamentos (PMT) e entrada (PV em algumas convenções) devem ser negativos para o cálculo funcionar corretamente.</div>
+        <div class="kc-example">
+          <div class="ex-title">QUANDO USAR:</div>
+          PMT sai negativo = é pagamento (saída)<br>
+          50000 [CHS] → [-50000] = entrada paga
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">÷</span>
+          <span class="kc-name">Divisão — Calcular Taxa Proporcional</span>
+        </div>
+        <div class="kc-desc">Divisão comum. No contexto imobiliário: use para converter taxa anual em mensal manualmente (taxa a.a. ÷ 12), ou calcular percentual de entrada (entrada ÷ valor do imóvel × 100).</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          8.16 [ENTER] 12 [÷] = 0,68% a.m.<br>
+          50000 [ENTER] 250000 [÷] = 20% entrada
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">×</span>
+          <span class="kc-name">Multiplicação — Total Pago / Custo Real</span>
+        </div>
+        <div class="kc-desc">Multiplicação. Fundamental para calcular o custo total do financiamento: PMT × n = total pago. Compare com o valor financiado para ver quanto os juros custam no total.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          1500 [ENTER] 360 [×] = R$ 540.000<br>
+          = total pago em 30 anos de R$ 1.500/mês
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">+</span>
+          <span class="kc-name">Adição — Valor Total do Imóvel</span>
+        </div>
+        <div class="kc-desc">Adição simples. Use para somar: entrada + FGTS + subsídio para calcular o total da "entrada composta". Ou para calcular custo total: valor financiado + juros totais pagos.</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          20000 [ENTER] 15000 [+] = R$ 35.000<br>
+          = entrada (R$20k) + FGTS (R$15k)
+        </div>
+      </div>
+
+      <div class="key-card">
+        <div class="kc-head">
+          <span class="key-badge">−</span>
+          <span class="kc-name">Subtração — Valor Financiado Líquido</span>
+        </div>
+        <div class="kc-desc">Subtração simples. Use para calcular o valor financiado: valor do imóvel − entrada − subsídio − FGTS = PV (o que vai para o banco financiar).</div>
+        <div class="kc-example">
+          <div class="ex-title">EXEMPLO:</div>
+          250000 [ENTER] 50000 [−] 29000 [−]<br>
+          = R$ 171.000 (valor a financiar)
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:36px;">📋 SEQUÊNCIA PADRÃO — CALCULAR PARCELA MCMV</div>
+    <div class="result-card">
+      <h3>PASSO A PASSO NA HP 12C REAL</h3>
+      <div style="font-size:13px; line-height:2.2; color:var(--text);">
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">1.</span> <span style="color:var(--muted);">Limpar registros:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--green); font-size:12px;">[f] + [CLx]</code></div>
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">2.</span> <span style="color:var(--muted);">Prazo em meses:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--green); font-size:12px;">360 → [n]</code></div>
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">3.</span> <span style="color:var(--muted);">Taxa mensal:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--green); font-size:12px;">6 → [g] → [i%]</code> <span style="color:var(--muted); font-size:11px;">(converte 6% a.a. em mensal)</span></div>
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">4.</span> <span style="color:var(--muted);">Valor financiado:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--green); font-size:12px;">200000 → [PV]</code></div>
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">5.</span> <span style="color:var(--muted);">Saldo final:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--green); font-size:12px;">0 → [FV]</code></div>
+        <div><span style="color:var(--blue); font-family:'Share Tech Mono'; width:30px; display:inline-block;">6.</span> <span style="color:var(--muted);">Calcular parcela:</span> <code style="background:rgba(21,101,168,0.12); padding:2px 6px; border-radius:3px; color:var(--blue); font-size:12px;">[PMT]</code> <span style="color:var(--muted); font-size:11px;">(resultado aparece negativo = pagamento)</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+// ============================================================
+// HP 12C EMULADOR
+// ============================================================
+let hpState = { n: null, i: null, pv: null, pmt: null, fv: null };
+let hpBuffer = '';
+let hpShift = null;
+let lastKey = null;
+
+function hpKey(key) {
+  const el = event?.currentTarget;
+  if (el) { el.classList.add('pressed'); setTimeout(()=>el.classList.remove('pressed'), 120); }
+
+  if (key === 'f-shift') { hpShift = (hpShift === 'f') ? null : 'f'; updateFlags(); return; }
+  if (key === 'g-shift') { hpShift = (hpShift === 'g') ? null : 'g'; updateFlags(); return; }
+
+  if (['0','1','2','3','4','5','6','7','8','9'].includes(key)) {
+    if (hpBuffer === '0' || hpBuffer === '') hpBuffer = key;
+    else hpBuffer += key;
+    updateDisplay(hpBuffer);
+    return;
+  }
+  if (key === 'dot') { if (!hpBuffer.includes('.')) hpBuffer += '.'; updateDisplay(hpBuffer); return; }
+  if (key === 'bsp') { hpBuffer = hpBuffer.slice(0,-1) || '0'; updateDisplay(hpBuffer); return; }
+  if (key === 'chs') { hpBuffer = hpBuffer.startsWith('-') ? hpBuffer.slice(1) : (hpBuffer ? '-'+hpBuffer : '-0'); updateDisplay(hpBuffer); return; }
+  if (key === 'clx') { hpBuffer = ''; updateDisplay('0'); return; }
+
+  const val = parseFloat(hpBuffer) || 0;
+
+  // Arithmetic
+  if (key === 'plus') { hpBuffer = String(parseFloat(hpBuffer||0)); updateDisplay(hpBuffer); return; }
+  if (key === 'minus') { updateDisplay(hpBuffer); return; }
+  if (key === 'mul') { updateDisplay(hpBuffer); return; }
+  if (key === 'div') { updateDisplay(hpBuffer); return; }
+
+  // Register keys
+  if (key === 'n') {
+    if (hpShift === 'g') { hpState.n = val * 12; updateDisplay(hpState.n); }
+    else { hpState.n = val; updateDisplay(hpState.n); }
+    hpBuffer = ''; updateRegs(); hpShift = null; updateFlags(); return;
+  }
+  if (key === 'i') {
+    if (hpShift === 'g') {
+      // 12÷ anual → mensal
+      const monthly = (Math.pow(1 + val/100, 1/12) - 1) * 100;
+      hpState.i = monthly;
+      updateDisplay(monthly.toFixed(6));
+    } else {
+      hpState.i = val;
+      updateDisplay(hpState.i);
+    }
+    hpBuffer = ''; updateRegs(); hpShift = null; updateFlags(); return;
+  }
+  if (key === 'pv') { hpState.pv = val; updateDisplay(hpState.pv); hpBuffer = ''; updateRegs(); return; }
+  if (key === 'pmt') { hpState.pmt = val; updateDisplay(hpState.pmt); hpBuffer = ''; updateRegs(); return; }
+  if (key === 'fv') { hpState.fv = val; updateDisplay(hpState.fv); hpBuffer = ''; updateRegs(); return; }
+
+  if (key === 'enter') { calcHP(); return; }
+  if (key === 'sto') { updateDisplay('STO→?'); return; }
+  if (key === 'rcl') { updateDisplay('RCL→?'); return; }
+}
+
+function calcHP() {
+  const s = hpState;
+  const nulls = Object.keys(s).filter(k => s[k] === null);
+
+  if (nulls.length === 0) {
+    showHpResult('Todos registros preenchidos. Use [f]+[CLx] para limpar e refazer.', null);
+    return;
+  }
+  if (nulls.length > 1) {
+    showHpResult(`Faltam dados: ${nulls.join(', ').toUpperCase()}. Preencha mais um campo.`, null);
+    return;
+  }
+
+  const unknown = nulls[0];
+  const { n, i, pv, pmt, fv } = s;
+
+  let result;
+  try {
+    if (unknown === 'pmt') {
+      const r = i / 100;
+      const num = r * pv * Math.pow(1+r, n);
+      const den = Math.pow(1+r, n) - 1;
+      result = -(num / den);
+      if (fv !== null && fv !== 0) {
+        result -= fv * r / (Math.pow(1+r, n) - 1);
+      }
+    } else if (unknown === 'pv') {
+      const r = i / 100;
+      result = (-pmt * (Math.pow(1+r,n)-1)) / (r * Math.pow(1+r,n));
+    } else if (unknown === 'n') {
+      const r = i / 100;
+      result = Math.log(-pmt / (pv * r + pmt)) / Math.log(1+r);
+    } else if (unknown === 'i') {
+      result = solveRate(n, pmt, pv, fv || 0);
+    } else if (unknown === 'fv') {
+      const r = i / 100;
+      result = -(pv * Math.pow(1+r,n) + pmt * (Math.pow(1+r,n)-1)/r);
+    }
+  } catch(e) {
+    showHpResult('Erro no cálculo. Verifique os valores.', null);
+    return;
+  }
+
+  hpState[unknown] = result;
+  updateRegs();
+  updateDisplay(result.toFixed(2));
+
+  const totalPago = unknown === 'pmt' ? Math.abs(result) * n : Math.abs(pmt) * n;
+  const jurosTotais = totalPago - (pv || 0);
+
+  showHpResult(`<div class="result-row"><span class="label">${unknown.toUpperCase()} Calculado</span><span class="value highlight">${fmt(result)}</span></div>
+  <div class="result-row"><span class="label">Total Pago</span><span class="value">${fmt(totalPago)}</span></div>
+  <div class="result-row"><span class="label">Juros Totais</span><span class="value">${fmt(jurosTotais)}</span></div>`, unknown);
+}
+
+function solveRate(n, pmt, pv, fv) {
+  let r = 0.01;
+  for (let i = 0; i < 200; i++) {
+    const f = pv * Math.pow(1+r,n) + pmt * (Math.pow(1+r,n)-1)/r + fv;
+    const df = n * pv * Math.pow(1+r,n-1) + pmt * (n * r * Math.pow(1+r,n-1) * r - (Math.pow(1+r,n)-1)) / (r*r);
+    const rNew = r - f/df;
+    if (Math.abs(rNew - r) < 1e-10) return rNew * 100;
+    r = rNew;
+  }
+  return r * 100;
+}
+
+function showHpResult(html, key) {
+  const card = document.getElementById('hp-result-card');
+  const content = document.getElementById('hp-result-content');
+  card.style.display = 'block';
+  content.innerHTML = html;
+}
+
+function updateDisplay(val) {
+  const d = document.getElementById('hp-display');
+  let str = typeof val === 'number' ? val.toFixed(2) : String(val);
+  d.textContent = str;
+}
+
+function updateRegs() {
+  const s = hpState;
+  document.getElementById('reg-n').textContent = s.n !== null ? s.n + ' meses' : '—';
+  document.getElementById('reg-i').textContent = s.i !== null ? s.i.toFixed(4) + '%' : '—';
+  document.getElementById('reg-pv').textContent = s.pv !== null ? fmt(s.pv) : '—';
+  document.getElementById('reg-pmt').textContent = s.pmt !== null ? fmt(s.pmt) : '—';
+  document.getElementById('reg-fv').textContent = s.fv !== null ? fmt(s.fv) : '—';
+}
+
+function hpClear() {
+  hpState = { n: null, i: null, pv: null, pmt: null, fv: null };
+  hpBuffer = ''; hpShift = null;
+  updateDisplay('0.00');
+  updateRegs();
+  document.getElementById('hp-result-card').style.display = 'none';
+  updateFlags();
+}
+
+function updateFlags() {
+  document.getElementById('flag-f').classList.toggle('on', hpShift === 'f');
+  document.getElementById('flag-g').classList.toggle('on', hpShift === 'g');
+}
+
+// ============================================================
+// MCMV
+// ============================================================
+const MCMV_FAIXAS = {
+  '1':  { taxa: 4.00, subsidio: 55000, maxImovel: 170000, label: 'Faixa 1' },
+  '2a': { taxa: 4.75, subsidio: 29000, maxImovel: 264000, label: 'Faixa 2A' },
+  '2b': { taxa: 6.00, subsidio: 20000, maxImovel: 264000, label: 'Faixa 2B' },
+  '3a': { taxa: 7.66, subsidio: 0,     maxImovel: 350000, label: 'Faixa 3A' },
+  '3b': { taxa: 8.16, subsidio: 0,     maxImovel: 350000, label: 'Faixa 3B' },
+};
+
+function mcmvAutoFaixa() {
+  const renda = parseFloat(document.getElementById('mcmv-renda').value) || 0;
+  let faixa = '';
+  if (renda <= 2850) faixa = '1';
+  else if (renda <= 4000) faixa = '2a';
+  else if (renda <= 4700) faixa = '2b';
+  else if (renda <= 6000) faixa = '3a';
+  else if (renda <= 8000) faixa = '3b';
+  if (faixa) {
+    document.getElementById('mcmv-faixa').value = faixa;
+    mcmvFaixaChange();
+  }
+}
+
+function mcmvFaixaChange() {
+  const f = document.getElementById('mcmv-faixa').value;
+  if (!f) return;
+  const d = MCMV_FAIXAS[f];
+  document.getElementById('mcmv-taxa').value = d.taxa;
+  document.getElementById('mcmv-subsidio').value = d.subsidio;
+}
+
+function calcMCMV() {
+  const taxa_aa = parseFloat(document.getElementById('mcmv-taxa').value);
+  const imovel = parseFloat(document.getElementById('mcmv-imovel').value);
+  const entrada = parseFloat(document.getElementById('mcmv-entrada').value) || 0;
+  const subsidio = parseFloat(document.getElementById('mcmv-subsidio').value) || 0;
+  const prazo = parseInt(document.getElementById('mcmv-prazo').value);
+  const sistema = document.getElementById('mcmv-sistema').value;
+  const faixa = document.getElementById('mcmv-faixa').value;
+
+  if (!taxa_aa || !imovel || !prazo) { alert('Preencha: Valor do Imóvel, Taxa e Prazo.'); return; }
+
+  const r = Math.pow(1 + taxa_aa/100, 1/12) - 1;
+  const pv = imovel - entrada - subsidio;
+  const faixaLabel = faixa ? MCMV_FAIXAS[faixa]?.label : 'Personalizada';
+
+  let pmt1, totalPago, jurosTotais, tabelaHTML;
+
+  if (sistema === 'price') {
+    pmt1 = pv * (r * Math.pow(1+r, prazo)) / (Math.pow(1+r, prazo) - 1);
+    totalPago = pmt1 * prazo;
+    jurosTotais = totalPago - pv;
+
+    // Tabela resumida (12 meses)
+    let rows = '';
+    let saldo = pv;
+    for (let m = 1; m <= Math.min(prazo, 12); m++) {
+      const juros = saldo * r;
+      const amort = pmt1 - juros;
+      saldo -= amort;
+      rows += `<tr><td>${m}</td><td>${fmtBR(pmt1)}</td><td>${fmtBR(juros)}</td><td>${fmtBR(amort)}</td><td>${fmtBR(Math.max(0,saldo))}</td></tr>`;
+    }
+    if (prazo > 12) rows += `<tr><td colspan="5" style="color:var(--muted);text-align:center;">... ${prazo-12} parcelas restantes ...</td></tr>`;
+
+    tabelaHTML = `<h4 style="font-family:'Orbitron',monospace;font-size:11px;color:var(--blue);margin-bottom:10px;">TABELA PRICE — PRIMEIROS 12 MESES</h4>
+    <table class="amort-table"><thead><tr><th>Mês</th><th>Parcela</th><th>Juros</th><th>Amortiz.</th><th>Saldo</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  } else {
+    // SAC
+    const amortMensal = pv / prazo;
+    pmt1 = amortMensal + pv * r; // 1ª parcela
+    const pmtUltima = amortMensal + amortMensal * r;
+    let rows = '';
+    let saldo = pv;
+    let totalJ = 0;
+    let totalPagoAcc = 0;
+    for (let m = 1; m <= prazo; m++) {
+      const juros = saldo * r;
+      const pmt = amortMensal + juros;
+      totalJ += juros;
+      totalPagoAcc += pmt;
+      saldo -= amortMensal;
+      if (m <= 12) rows += `<tr><td>${m}</td><td>${fmtBR(pmt)}</td><td>${fmtBR(juros)}</td><td>${fmtBR(amortMensal)}</td><td>${fmtBR(Math.max(0,saldo))}</td></tr>`;
+    }
+    if (prazo > 12) rows += `<tr><td colspan="5" style="color:var(--muted);text-align:center;">... ${prazo-12} parcelas decrescentes ...</td></tr>`;
+    jurosTotais = totalJ;
+    totalPago = totalPagoAcc;
+    tabelaHTML = `<h4 style="font-family:'Orbitron',monospace;font-size:11px;color:var(--blue);margin-bottom:10px;">TABELA SAC — PRIMEIROS 12 MESES</h4>
+    <table class="amort-table"><thead><tr><th>Mês</th><th>Parcela</th><th>Juros</th><th>Amortiz.</th><th>Saldo</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  const grid = document.getElementById('mcmv-result-grid');
+  grid.innerHTML = `
+    <div class="result-item highlight"><div class="r-label">1ª Parcela ${sistema.toUpperCase()}</div><div class="r-value">${fmtBR(pmt1)}</div></div>
+    <div class="result-item"><div class="r-label">Valor Financiado (PV)</div><div class="r-value">${fmtBR(pv)}</div></div>
+    <div class="result-item"><div class="r-label">Taxa Mensal Efetiva</div><div class="r-value">${(r*100).toFixed(4)}% a.m.</div></div>
+    <div class="result-item"><div class="r-label">Taxa Anual</div><div class="r-value">${taxa_aa.toFixed(2)}% a.a.</div></div>
+    <div class="result-item"><div class="r-label">Prazo</div><div class="r-value">${prazo} meses</div></div>
+    <div class="result-item"><div class="r-label">Entrada + Subsídio</div><div class="r-value">${fmtBR(entrada + subsidio)}</div></div>
+    <div class="result-item"><div class="r-label">Total Pago (principal + juros)</div><div class="r-value">${fmtBR(totalPago)}</div></div>
+    <div class="result-item"><div class="r-label">Juros Totais</div><div class="r-value">${fmtBR(jurosTotais)}</div></div>
+    <div class="result-item"><div class="r-label">Custo Efetivo Total</div><div class="r-value">${fmtBR(totalPago + entrada)}</div></div>
+    <div class="result-item"><div class="r-label">Faixa MCMV</div><div class="r-value" style="font-size:14px;">${faixaLabel}</div></div>
+  `;
+  document.getElementById('mcmv-table-wrap').innerHTML = tabelaHTML;
+  const res = document.getElementById('mcmv-results');
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// FINANCIAMENTO GERAL
+// ============================================================
+let currentMode = 'parcela';
+
+const modeConfig = {
+  parcela: {
+    title: '🔢 CALCULAR PARCELA MENSAL',
+    fields: [
+      { id: 'f-imovel', label: 'Valor do Imóvel (R$)', ph: '250000' },
+      { id: 'f-entrada', label: 'Entrada + FGTS + Subsídio (R$)', ph: '50000', def: '0' },
+      { id: 'f-taxa', label: 'Taxa de Juros a.a. (%)', ph: '8.16' },
+      { id: 'f-prazo', label: 'Prazo (meses)', ph: '360', def: '360' },
+      { id: 'f-sistema', label: 'Sistema', type: 'select', opts: [['price','PRICE (parcelas fixas)'],['sac','SAC (decrescentes)']] },
+    ]
+  },
+  prazo: {
+    title: '📅 CALCULAR PRAZO (QUANTOS MESES)',
+    fields: [
+      { id: 'f-imovel', label: 'Valor do Imóvel (R$)', ph: '250000' },
+      { id: 'f-entrada', label: 'Entrada (R$)', ph: '50000', def: '0' },
+      { id: 'f-taxa', label: 'Taxa de Juros a.a. (%)', ph: '8.16' },
+      { id: 'f-parcela', label: 'Parcela Que Consigo Pagar (R$)', ph: '1800' },
+    ]
+  },
+  imovel: {
+    title: '🏠 CALCULAR VALOR DO IMÓVEL',
+    fields: [
+      { id: 'f-parcela', label: 'Parcela Máxima (R$)', ph: '2000' },
+      { id: 'f-taxa', label: 'Taxa de Juros a.a. (%)', ph: '8.16' },
+      { id: 'f-prazo', label: 'Prazo (meses)', ph: '360', def: '360' },
+    ]
+  },
+  taxa: {
+    title: '📈 CALCULAR TAXA EFETIVA',
+    fields: [
+      { id: 'f-imovel', label: 'Valor Financiado (PV) (R$)', ph: '200000' },
+      { id: 'f-parcela', label: 'Parcela Mensal (R$)', ph: '1800' },
+      { id: 'f-prazo', label: 'Prazo (meses)', ph: '360', def: '360' },
+    ]
+  }
+};
+
+function setMode(mode, el) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active-mode'));
+  el.classList.add('active-mode');
+  renderFinancInputs();
+  document.getElementById('financ-results').classList.remove('show');
+}
+
+function renderFinancInputs() {
+  const cfg = modeConfig[currentMode];
+  document.getElementById('financ-form-title').textContent = cfg.title;
+  const grid = document.getElementById('financ-inputs');
+  grid.innerHTML = cfg.fields.map(f => {
+    if (f.type === 'select') {
+      return `<div class="field"><label>${f.label}</label><select id="${f.id}">${f.opts.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join('')}</select></div>`;
+    }
+    return `<div class="field"><label>${f.label}</label><input type="number" id="${f.id}" placeholder="${f.ph}" ${f.def ? `value="${f.def}"` : ''}></div>`;
+  }).join('');
+}
+
+function calcFinanciamento() {
+  const g = id => { const el = document.getElementById(id); return el ? parseFloat(el.value) : null; };
+  const gs = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+
+  const taxa_aa = g('f-taxa');
+  const r = taxa_aa ? (Math.pow(1 + taxa_aa/100, 1/12) - 1) : 0;
+
+  let resultHTML = '';
+  let tabelaHTML = '';
+
+  if (currentMode === 'parcela') {
+    const imovel = g('f-imovel'), entrada = g('f-entrada') || 0, prazo = g('f-prazo') || 360;
+    const sistema = gs('f-sistema');
+    const pv = imovel - entrada;
+    let pmt1, totalPago, jurosTotais;
+
+    if (sistema === 'price') {
+      pmt1 = pv * (r * Math.pow(1+r, prazo)) / (Math.pow(1+r, prazo) - 1);
+      totalPago = pmt1 * prazo;
+    } else {
+      const amort = pv / prazo;
+      pmt1 = amort + pv * r;
+      let saldo = pv, total = 0;
+      for (let m = 1; m <= prazo; m++) { const j = saldo * r; total += amort + j; saldo -= amort; }
+      totalPago = total;
+    }
+    jurosTotais = totalPago - pv;
+
+    resultHTML = `
+      <div class="result-item highlight"><div class="r-label">1ª Parcela (${sistema.toUpperCase()})</div><div class="r-value">${fmtBR(pmt1)}</div></div>
+      <div class="result-item"><div class="r-label">PV (Financiado)</div><div class="r-value">${fmtBR(pv)}</div></div>
+      <div class="result-item"><div class="r-label">Taxa Mensal</div><div class="r-value">${(r*100).toFixed(4)}%</div></div>
+      <div class="result-item"><div class="r-label">Total Pago</div><div class="r-value">${fmtBR(totalPago)}</div></div>
+      <div class="result-item"><div class="r-label">Juros Totais</div><div class="r-value">${fmtBR(jurosTotais)}</div></div>
+      <div class="result-item"><div class="r-label">Prazo</div><div class="r-value">${prazo} meses</div></div>
+    `;
+
+    // Tabela
+    let rows = '', saldo2 = pv;
+    for (let m = 1; m <= Math.min(prazo,12); m++) {
+      let pmt, juros, amort;
+      if (sistema === 'price') {
+        juros = saldo2 * r; amort = pmt1 - juros; pmt = pmt1;
+      } else {
+        const am = pv/prazo; juros = saldo2 * r; amort = am; pmt = am + juros;
+      }
+      saldo2 -= amort;
+      rows += `<tr><td>${m}</td><td>${fmtBR(pmt)}</td><td>${fmtBR(juros)}</td><td>${fmtBR(amort)}</td><td>${fmtBR(Math.max(0,saldo2))}</td></tr>`;
+    }
+    if (prazo > 12) rows += `<tr><td colspan="5" style="color:var(--muted);text-align:center;">... ${prazo-12} meses restantes ...</td></tr>`;
+    tabelaHTML = `<table class="amort-table"><thead><tr><th>Mês</th><th>Parcela</th><th>Juros</th><th>Amortiz.</th><th>Saldo</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  } else if (currentMode === 'prazo') {
+    const imovel = g('f-imovel'), entrada = g('f-entrada') || 0, pmt = g('f-parcela');
+    const pv = imovel - entrada;
+    if (pmt <= pv * r) { alert('Parcela muito baixa! Não cobre nem os juros do mês.'); return; }
+    const n = Math.log(pmt / (pmt - pv * r)) / Math.log(1 + r);
+    const prazo = Math.ceil(n);
+    const totalPago = pmt * prazo;
+    const jurosTotais = totalPago - pv;
+    resultHTML = `
+      <div class="result-item highlight"><div class="r-label">Prazo Necessário</div><div class="r-value">${prazo} meses</div></div>
+      <div class="result-item"><div class="r-label">Em anos</div><div class="r-value">${(prazo/12).toFixed(1)} anos</div></div>
+      <div class="result-item"><div class="r-label">Parcela Mensal</div><div class="r-value">${fmtBR(pmt)}</div></div>
+      <div class="result-item"><div class="r-label">PV Financiado</div><div class="r-value">${fmtBR(pv)}</div></div>
+      <div class="result-item"><div class="r-label">Total Pago</div><div class="r-value">${fmtBR(totalPago)}</div></div>
+      <div class="result-item"><div class="r-label">Juros Totais</div><div class="r-value">${fmtBR(jurosTotais)}</div></div>
+    `;
+
+  } else if (currentMode === 'imovel') {
+    const pmt = g('f-parcela'), prazo = g('f-prazo') || 360;
+    const pv = pmt * (Math.pow(1+r, prazo) - 1) / (r * Math.pow(1+r, prazo));
+    resultHTML = `
+      <div class="result-item highlight"><div class="r-label">Valor Financiável (PV)</div><div class="r-value">${fmtBR(pv)}</div></div>
+      <div class="result-item"><div class="r-label">Parcela Usada</div><div class="r-value">${fmtBR(pmt)}</div></div>
+      <div class="result-item"><div class="r-label">Prazo</div><div class="r-value">${prazo} meses</div></div>
+      <div class="result-item"><div class="r-label">Taxa Mensal</div><div class="r-value">${(r*100).toFixed(4)}%</div></div>
+      <div class="result-item"><div class="r-label">Com 20% entrada</div><div class="r-value">${fmtBR(pv/0.8)}</div></div>
+      <div class="result-item"><div class="r-label">Entrada Necessária (20%)</div><div class="r-value">${fmtBR(pv*0.25)}</div></div>
+    `;
+
+  } else if (currentMode === 'taxa') {
+    const pv = g('f-imovel'), pmt = g('f-parcela'), prazo = g('f-prazo') || 360;
+    const rSolved = solveHP(prazo, -pmt, pv, 0);
+    const taxaMensal = rSolved * 100;
+    const taxaAnual = (Math.pow(1+rSolved, 12) - 1) * 100;
+    const totalPago = pmt * prazo;
+    resultHTML = `
+      <div class="result-item highlight"><div class="r-label">Taxa Mensal Efetiva</div><div class="r-value">${taxaMensal.toFixed(4)}% a.m.</div></div>
+      <div class="result-item highlight"><div class="r-label">Taxa Anual Efetiva</div><div class="r-value">${taxaAnual.toFixed(2)}% a.a.</div></div>
+      <div class="result-item"><div class="r-label">Parcela</div><div class="r-value">${fmtBR(pmt)}</div></div>
+      <div class="result-item"><div class="r-label">Prazo</div><div class="r-value">${prazo} meses</div></div>
+      <div class="result-item"><div class="r-label">Total Pago</div><div class="r-value">${fmtBR(totalPago)}</div></div>
+      <div class="result-item"><div class="r-label">Juros Totais</div><div class="r-value">${fmtBR(totalPago - pv)}</div></div>
+    `;
+  }
+
+  document.getElementById('financ-result-grid').innerHTML = resultHTML;
+  document.getElementById('financ-table-wrap').innerHTML = tabelaHTML;
+  const res = document.getElementById('financ-results');
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function solveHP(n, pmt, pv, fv) {
+  let r = 0.01;
+  for (let i = 0; i < 300; i++) {
+    const f = pv * Math.pow(1+r,n) + pmt * (Math.pow(1+r,n)-1)/r + fv;
+    const df = n * pv * Math.pow(1+r,n-1) + pmt * (n*Math.pow(1+r,n-1)*r - (Math.pow(1+r,n)-1))/(r*r);
+    const rNew = r - f/df;
+    if (Math.abs(rNew-r) < 1e-12) return rNew;
+    r = rNew;
+  }
+  return r;
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function fmt(v) {
+  if (v === null || v === undefined) return '—';
+  return 'R$ ' + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtBR(v) {
+  return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// INIT
+renderFinancInputs();
+</script>
+</body>
+</html>

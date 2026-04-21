@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Costa - FCosta Corretor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #003da5;
+            --vermelho: #dc1c2d;
+            --branco: #ffffff;
+            --cinza-claro: #f8f9fc;
+            --cinza-meio: #8a9bb5;
+            --cinza-escuro: #374561;
+            --borda: #e4e9f2;
+            --preto: #0d1829;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--preto);
+            color: var(--branco);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid var(--vermelho);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--vermelho);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--branco);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--vermelho);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--vermelho);
+            color: var(--branco);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #b01420;
+            transform: translateY(-2px);
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--vermelho) 0%, #8b0a1a 100%);
+            color: var(--branco);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        /* PLAYER PRINCIPAL */
+        .player-container {
+            background: var(--preto);
+            border: 3px solid var(--vermelho);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(220, 28, 45, 0.3);
+        }
+
+        .player {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .player-info {
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--branco);
+            padding: 20px;
+            border-top: 2px solid var(--vermelho);
+        }
+
+        .player-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .player-desc {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .player-indicador {
+            display: inline-block;
+            background: var(--vermelho);
+            color: var(--branco);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* CONTROLES */
+        .player-controles {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .controle-btn {
+            padding: 8px 16px;
+            background: var(--vermelho);
+            color: var(--branco);
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .controle-btn:hover {
+            background: #b01420;
+            transform: translateY(-2px);
+        }
+
+        .controle-btn.pausado {
+            background: var(--azul);
+        }
+
+        /* PLAYLIST */
+        .playlist-section {
+            margin-top: 40px;
+        }
+
+        .playlist-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--vermelho);
+        }
+
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 28, 45, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            border-color: var(--vermelho);
+            background: rgba(220, 28, 45, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .video-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, var(--vermelho) 0%, #8b0a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            position: relative;
+        }
+
+        .video-play-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--vermelho);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-play-icon {
+            background: var(--branco);
+            color: var(--vermelho);
+            transform: scale(1.1);
+        }
+
+        .video-info {
+            padding: 16px;
+        }
+
+        .video-titulo {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--branco);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .video-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--cinza-meio);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid var(--vermelho);
+            color: var(--branco);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .playlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="navbar">
+            <a href="/" class="logo">
+                <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta">
+                <span>TV Costa</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/comprar">Comprar</a></li>
+                    <li><a href="/alugar">Alugar</a></li>
+                    <li><a href="https://www.youtube.com/playlist?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1" target="_blank" style="color: var(--vermelho);">YouTube Oficial</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <button class="back-btn" onclick="window.location.href='/'">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h1 style="margin-top: 20px;">📹 TV Costa</h1>
+            <p>Canal exclusivo com tours, dicas e conteúdo sobre imóveis</p>
+        </div>
+    </section>
+
+    <!-- PLAYER PRINCIPAL -->
+    <div class="container">
+        <div class="player-container">
+            <div class="player" id="player-principal">
+                <iframe id="video-atual" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="player-info">
+                <div class="player-titulo" id="video-titulo-atual">FC - Conteúdo em Produção</div>
+                <div class="player-desc" id="video-desc-atual">Confira em breve vídeos exclusivos sobre imóveis e dicas do mercado imobiliário.</div>
+                <span class="player-indicador">
+                    <i class="fas fa-circle" style="font-size: 8px; margin-right: 8px; animation: pulse 2s infinite;"></i>
+                    AO VIVO
+                </span>
+                <div class="player-controles">
+                    <button class="controle-btn" onclick="pausarReproducao()">
+                        <i class="fas fa-pause"></i> Pausar
+                    </button>
+                    <button class="controle-btn" onclick="proximoVideo()">
+                        <i class="fas fa-forward"></i> Próximo
+                    </button>
+                    <button class="controle-btn" onclick="videoAnterior()">
+                        <i class="fas fa-backward"></i> Anterior
+                    </button>
+                    <a href="https://www.youtube.com/playlist?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1" target="_blank" class="controle-btn" style="text-decoration: none;">
+                        <i class="fab fa-youtube"></i> Ver no YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYLIST -->
+        <section class="playlist-section">
+            <h2 class="playlist-titulo">📺 Playlist Completa</h2>
+            <div class="playlist-grid" id="playlist-grid">
+                <div class="empty-state" style="grid-column: 1/-1;">
+                    <i class="fas fa-video"></i>
+                    <h3>Nenhum vídeo adicionado</h3>
+                    <p>Os vídeos serão exibidos aqui quando forem cadastrados no painel administrativo</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 FCosta Corretor - TV Costa</p>
+    </footer>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+
+    <script>
+        let videoAtual = 0;
+        let videos = [];
+        let reproduzindo = true;
+        let timerAutoNext;
+
+        function formatarUrlYoutube(url) {
+            if (!url) return '';
+            
+            // Se for URL completa
+            if (url.includes('youtube.com/watch?v=')) {
+                const videoId = url.split('v=')[1];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            // Se for URL curta
+            if (url.includes('youtu.be/')) {
+                const videoId = url.split('youtu.be/')[1];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            // Se for só o ID
+            if (url.length === 11 && !url.includes('/')) {
+                return `https://www.youtube.com/embed/${url}`;
+            }
+            
+            return url;
+        }
+
+        function carregarVideos() {
+            videos = JSON.parse(localStorage.getItem('fcosta_videos') || '[]');
+            
+            if (videos.length === 0) {
+                document.getElementById('playlist-grid').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <i class="fas fa-video"></i>
+                        <h3>Nenhum vídeo adicionado</h3>
+                        <p>Os vídeos serão exibidos aqui quando forem cadastrados no painel administrativo</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Exibir primeiro vídeo
+            exibirVideo(0);
+
+            // Carregar playlist
+            document.getElementById('playlist-grid').innerHTML = videos.map((video, index) => `
+                <div class="video-card" onclick="exibirVideo(${index})">
+                    <div class="video-thumb">
+                        <i class="fab fa-youtube"></i>
+                        <div class="video-play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-titulo">${video.titulo}</div>
+                        <div class="video-desc">${video.descricao || 'Conteúdo FCosta'}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function exibirVideo(index) {
+            if (videos.length === 0) return;
+
+            videoAtual = index;
+            const video = videos[index];
+            
+            const embedUrl = formatarUrlYoutube(video.url);
+            document.getElementById('video-atual').src = embedUrl;
+            document.getElementById('video-titulo-atual').textContent = video.titulo;
+            document.getElementById('video-desc-atual').textContent = video.descricao || 'Conteúdo FCosta';
+
+            // Auto play próximo vídeo em 5 minutos (300s)
+            clearTimeout(timerAutoNext);
+            if (reproduzindo) {
+                timerAutoNext = setTimeout(() => {
+                    proximoVideo();
+                }, 300000);
+            }
+
+            // Highlight card na playlist
+            document.querySelectorAll('.video-card').forEach((card, i) => {
+                card.style.borderColor = i === index ? 'var(--vermelho)' : 'rgba(220, 28, 45, 0.3)';
+                card.style.background = i === index ? 'rgba(220, 28, 45, 0.2)' : 'rgba(255, 255, 255, 0.05)';
+            });
+        }
+
+        function proximoVideo() {
+            if (videos.length === 0) return;
+            exibirVideo((videoAtual + 1) % videos.length);
+        }
+
+        function videoAnterior() {
+            if (videos.length === 0) return;
+            exibirVideo((videoAtual - 1 + videos.length) % videos.length);
+        }
+
+        function pausarReproducao() {
+            reproduzindo = !reproduzindo;
+            const btn = event.target.closest('.controle-btn');
+            
+            if (reproduzindo) {
+                btn.classList.remove('pausado');
+                btn.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+                timerAutoNext = setTimeout(() => {
+                    proximoVideo();
+                }, 300000);
+            } else {
+                btn.classList.add('pausado');
+                btn.innerHTML = '<i class="fas fa-play"></i> Reproduzir';
+                clearTimeout(timerAutoNext);
+            }
+        }
+
+        // Carregar vídeos ao iniciar
+        carregarVideos();
+
+        // Atualizar quando mudar abas
+        window.addEventListener('storage', carregarVideos);
+    </script>
+</body>
+</html>

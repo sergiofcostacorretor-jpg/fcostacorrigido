@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeria de Imóveis — FCosta Corretor</title>
+<meta name="description" content="Galeria completa de imóveis à venda, para alugar, lançamentos e catálogo. FCosta Corretor — CRECI-SP 294791-F">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;min-height:100vh;background:#f4f7fd;font-family:'Open Sans',sans-serif;}
+
+/* ── Topo ── */
+.gal-topo{background:linear-gradient(135deg,#003da5 0%,#002580 100%);padding:28px 20px 24px;text-align:center;}
+.gal-topo-logo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;}
+.gal-topo-logo img{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);object-fit:cover;}
+.gal-topo-logo span{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;color:#fff;}
+.gal-topo h1{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:#fff;margin-bottom:6px;}
+.gal-topo h1 em{color:#ffcc00;font-style:normal;}
+.gal-topo p{color:rgba(255,255,255,0.75);font-size:13px;}
+.gal-voltar{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;text-decoration:none;margin-top:16px;transition:.2s;cursor:pointer;font-family:inherit;}
+.gal-voltar:hover{background:rgba(255,255,255,0.25);}
+
+/* ── Container principal ── */
+.gal-wrap{max-width:1200px;margin:0 auto;padding:32px 20px 60px;}
+
+/* ── Seções por categoria ── */
+.fcg-secao{margin-bottom:48px;}
+.fcg-secao-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:3px solid #e0e8f5;}
+.fcg-secao-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.fcg-secao-titulo{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:800;color:#1a2540;}
+.fcg-secao-sub{font-size:12px;color:#8a9bbf;margin-top:2px;}
+.fcg-secao-count{margin-left:auto;background:#eef2ff;color:#003da5;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.icon-fcv{background:#fff0f0;}
+.icon-fca{background:#f0f4ff;}
+.icon-fcl{background:#fff7ed;}
+.icon-fcp{background:#f0fdf4;}
+
+/* ── Grid de cards ── */
+.fcg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.fcg-item{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(0,61,165,0.10);border:1px solid #e8edf5;transition:transform .2s,box-shadow .2s;}
+.fcg-item:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,61,165,0.16);}
+
+/* ── Carrossel ── */
+.fcg-carousel{position:relative;height:220px;background:#eef2ff;overflow:hidden;}
+.fcg-carousel img{width:100%;height:100%;object-fit:cover;display:block;}
+.fcg-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.45);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;}
+.fcg-item:hover .fcg-nav{display:flex;}
+.fcg-nav.p{left:8px;} .fcg-nav.n{right:8px;}
+.fcg-cnt{position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.5);color:#fff;font-size:10px;padding:3px 8px;border-radius:8px;}
+.fcg-sig{position:absolute;top:10px;left:10px;color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;font-family:'Montserrat',sans-serif;letter-spacing:.5px;z-index:2;}
+.s-fcv{background:#dc1c2d;} .s-fca{background:#0050d8;} .s-fcl{background:#d97706;} .s-fcp{background:#10b981;}
+.fcg-home-badge{position:absolute;top:10px;right:10px;background:#f59e0b;color:#333;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;}
+
+/* ── Dots ── */
+.fcg-dots{display:flex;gap:5px;justify-content:center;padding:8px 0;background:#f8faff;}
+.fcg-dot{width:7px;height:7px;border-radius:50%;background:#c8d3ea;cursor:pointer;border:none;transition:.2s;}
+.fcg-dot.on{background:#003da5;transform:scale(1.3);}
+
+/* ── Corpo do card ── */
+.fcg-body{padding:16px;}
+.fcg-local{font-size:11px;color:#8a9bbf;margin-bottom:4px;}
+.fcg-titulo{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#1a2540;margin-bottom:5px;line-height:1.35;}
+.fcg-preco{font-size:17px;font-weight:800;color:#dc1c2d;margin-bottom:14px;font-family:'Montserrat',sans-serif;}
+.fcg-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fcg-btns button{padding:10px;border-radius:8px;border:none;font-weight:700;font-size:12px;cursor:pointer;font-family:'Open Sans',sans-serif;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.fcg-wpp{background:#25d366;color:#fff;} .fcg-wpp:hover{background:#1db954;}
+.fcg-det{background:#003da5;color:#fff;} .fcg-det:hover{background:#002a73;}
+
+/* ── Estados ── */
+.fcg-loading{text-align:center;padding:80px 20px;color:#8a9bbf;}
+.fcg-spinner{width:44px;height:44px;border:4px solid #e8edf5;border-top-color:#003da5;border-radius:50%;animation:fcgSpin 1s linear infinite;margin:0 auto 16px;}
+@keyframes fcgSpin{to{transform:rotate(360deg)}}
+.fcg-vazio{text-align:center;padding:40px;color:#8a9bbf;grid-column:1/-1;}
+
+/* ── Rodapé ── */
+.gal-footer{text-align:center;padding:24px 20px;background:#fff;border-top:1px solid #e8edf5;font-size:12px;color:#8a9bbf;}
+.gal-footer a{color:#003da5;text-decoration:none;font-weight:600;}
+
+@media(max-width:768px){
+  .fcg-grid{grid-template-columns:1fr 1fr;}
+  .gal-topo h1{font-size:20px;}
+}
+@media(max-width:520px){
+  .fcg-grid{grid-template-columns:1fr;}
+  .fcg-btns{grid-template-columns:1fr;}
+  .fcg-secao-header{flex-wrap:wrap;}
+  .fcg-secao-count{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- Topo -->
+<div class="gal-topo">
+  <div class="gal-topo-logo">
+    <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta">
+    <span>FCosta Corretor</span>
+  </div>
+  <h1>Galeria de <em>Imóveis</em></h1>
+  <p>Navegue pelas fotos e encontre o imóvel ideal para você</p>
+  <button class="gal-voltar" onclick="window.location.href='https://fcostacorretor.com'">&#8592; Voltar para a Home</button>
+</div>
+
+<!-- Conteúdo -->
+<div class="gal-wrap">
+  <div id="fcg-conteudo">
+    <div class="fcg-loading">
+      <div class="fcg-spinner"></div>
+      <p>Carregando imóveis...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Rodapé -->
+<div class="gal-footer">
+  <p>FCosta Corretor · CRECI-SP 294791-F · CNAI 52708</p>
+  <p style="margin-top:4px;"><a href="https://fcostacorretor.com">fcostacorretor.com</a></p>
+</div>
+
+<script type="module">
+import { initializeApp }         from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyAH-QF57Igr9fzBCqkAP28IRRE-QHp_2Z4",
+  authDomain:        "fcosta-31125.firebaseapp.com",
+  databaseURL:       "https://fcosta-31125-default-rtdb.firebaseio.com",
+  projectId:         "fcosta-31125",
+  storageBucket:     "fcosta-31125.firebasestorage.app",
+  messagingSenderId: "826619190234",
+  appId:             "1:826619190234:web:347cdf5d9078433daabee3"
+};
+
+const WPP     = '5511993509109';
+const BASE_URL = 'https://fcostacorretor.com/index.html';
+const CATEGORIAS = [
+  { sigla:'FCV', label:'Imóveis à Venda',     sub:'Compra e venda de imóveis',       emoji:'🏷️', cls:'icon-fcv' },
+  { sigla:'FCA', label:'Imóveis para Alugar', sub:'Locação residencial e comercial',  emoji:'🔑', cls:'icon-fca' },
+  { sigla:'FCL', label:'Lançamentos',          sub:'Novos empreendimentos na planta',  emoji:'🏗️', cls:'icon-fcl' },
+  { sigla:'FCP', label:'Catálogo',             sub:'Folhetos e materiais informativos',emoji:'📋', cls:'icon-fcp' },
+];
+
+const estados = {};
+
+async function carregarImoveis() {
+  try {
+    const snap = await get(ref(getDatabase(initializeApp(firebaseConfig, 'galeria')), 'fcosta_imoveis'));
+    if (!snap.exists()) return [];
+    const val = snap.val();
+    return (Array.isArray(val) ? val : Object.values(val)).filter(Boolean);
+  } catch(e) {
+    console.error('Firebase:', e);
+    return [];
+  }
+}
+
+function cardHTML(it) {
+  const fotos = (it.fotos || []).filter(f => typeof f === 'string' && f.startsWith('http'));
+  const fIdx  = (it.destaquePhoto >= 0 && fotos[it.destaquePhoto]) ? it.destaquePhoto : 0;
+  estados[it.id] = { fotos, idx: fIdx };
+  const src   = fotos[fIdx] || '';
+  const uid   = it._uid || it.id || '';
+  const msg   = encodeURIComponent('Olá! Vi o imóvel ' + it.id + ' na galeria e tenho interesse!');
+  const dots  = fotos.length > 1
+    ? fotos.map((_, i) => `<button class="fcg-dot${i===fIdx?' on':''}" onclick="fcgGoFoto('${it.id}',${i})"></button>`).join('')
+    : '';
+
+  return `<div class="fcg-item" id="fcg-${it.id}">
+    <div class="fcg-carousel">
+      ${src
+        ? `<img id="fcg-img-${it.id}" src="${src}" alt="${it.titulo||''}" loading="lazy">`
+        : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:48px;color:#c8d3ea">🏠</div>`}
+      ${fotos.length > 1 ? `
+        <button class="fcg-nav p" onclick="fcgNav('${it.id}',-1)">&#8249;</button>
+        <button class="fcg-nav n" onclick="fcgNav('${it.id}',1)">&#8250;</button>
+        <div class="fcg-cnt" id="fcg-cnt-${it.id}">${fIdx+1}/${fotos.length}</div>` : ''}
+      <span class="fcg-sig s-${it.sigla.toLowerCase()}">${it.id}</span>
+      ${it.exibirHome ? `<div class="fcg-home-badge">⭐ Destaque</div>` : ''}
+    </div>
+    ${dots ? `<div class="fcg-dots" id="fcg-dots-${it.id}">${dots}</div>` : ''}
+    <div class="fcg-body">
+      ${it.local ? `<div class="fcg-local">📍 ${it.local}</div>` : ''}
+      <div class="fcg-titulo">${it.titulo || ''}</div>
+      ${it.preco ? `<div class="fcg-preco">R$ ${it.preco}</div>` : ''}
+      <div class="fcg-btns">
+        <button class="fcg-wpp" onclick="window.open('https://wa.me/${WPP}?text=${msg}','_blank')">💬 Interesse</button>
+        <button class="fcg-det" onclick="irParaImovel('${uid}')">🔍 Ver Detalhes</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function secaoHTML(cat, imoveis) {
+  const lista = imoveis.filter(i => i.sigla === cat.sigla && i.status !== 'rascunho');
+  if (!lista.length) return '';
+  return `<div class="fcg-secao">
+    <div class="fcg-secao-header">
+      <div class="fcg-secao-icon ${cat.cls}">${cat.emoji}</div>
+      <div>
+        <div class="fcg-secao-titulo">${cat.label}</div>
+        <div class="fcg-secao-sub">${cat.sub}</div>
+      </div>
+      <div class="fcg-secao-count">${lista.length} imóvel${lista.length !== 1 ? 'is' : ''}</div>
+    </div>
+    <div class="fcg-grid">${lista.map(it => cardHTML(it)).join('')}</div>
+  </div>`;
+}
+
+window.fcgNav = function(id, dir) {
+  const est = estados[id]; if (!est || !est.fotos.length) return;
+  est.idx = (est.idx + dir + est.fotos.length) % est.fotos.length;
+  fcgAtualizar(id);
+};
+window.fcgGoFoto = function(id, i) {
+  const est = estados[id]; if (!est) return;
+  est.idx = i; fcgAtualizar(id);
+};
+function fcgAtualizar(id) {
+  const est  = estados[id]; if (!est) return;
+  const img  = document.getElementById('fcg-img-' + id);
+  const cnt  = document.getElementById('fcg-cnt-' + id);
+  const dots = document.getElementById('fcg-dots-' + id);
+  if (img)  img.src = est.fotos[est.idx];
+  if (cnt)  cnt.textContent = (est.idx+1) + '/' + est.fotos.length;
+  if (dots) dots.querySelectorAll('.fcg-dot').forEach((d,i) => d.className = 'fcg-dot'+(i===est.idx?' on':''));
+}
+
+// Navega para o imóvel específico no index.html
+window.irParaImovel = function(uid) {
+  window.location.href = BASE_URL + '?imovel=' + encodeURIComponent(uid);
+};
+
+// Inicia
+carregarImoveis().then(imoveis => {
+  const el = document.getElementById('fcg-conteudo');
+  if (!imoveis.length) {
+    el.innerHTML = '<div class="fcg-loading"><p>Nenhum imóvel cadastrado ainda.</p></div>';
+    return;
+  }
+  const html = CATEGORIAS.map(cat => secaoHTML(cat, imoveis)).join('');
+  el.innerHTML = html || '<div class="fcg-loading"><p>Nenhum imóvel disponível no momento.</p></div>';
+});
+</script>
+</body>
+</html>

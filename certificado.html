@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condições de Uso - FCosta Corretor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #003da5;
+            --vermelho: #dc1c2d;
+            --branco: #ffffff;
+            --cinza-claro: #f8f9fc;
+            --cinza-meio: #8a9bb5;
+            --cinza-escuro: #374561;
+            --borda: #e4e9f2;
+            --preto: #0d1829;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cinza-claro);
+            color: var(--cinza-escuro);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--branco);
+            border-bottom: 1px solid var(--borda);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 61, 165, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--azul);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cinza-escuro);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--vermelho);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--azul);
+            color: var(--branco);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #002280;
+        }
+
+        /* CONTEÚDO */
+        .content {
+            background: var(--branco);
+            padding: 60px 40px;
+            margin: 40px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 61, 165, 0.08);
+        }
+
+        .content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--preto);
+        }
+
+        .content-meta {
+            font-size: 13px;
+            color: var(--cinza-meio);
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--preto);
+        }
+
+        .content p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--cinza-escuro);
+        }
+
+        .content ul,
+        .content ol {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            color: var(--cinza-escuro);
+        }
+
+        .destaque {
+            background: rgba(220, 28, 45, 0.1);
+            border-left: 4px solid var(--vermelho);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--preto);
+            color: var(--branco);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 30px 20px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="navbar">
+            <a href="/" class="logo">
+                <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta">
+                <span>FCosta</span>
+            </a>
+            <nav>
+                <a href="/">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='/'">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="content">
+            <h1>Condições de Uso</h1>
+            <div class="content-meta">
+                <i class="fas fa-calendar-alt"></i> Última atualização: Março de 2026
+            </div>
+
+            <h2>1. Aceitação dos Termos</h2>
+            <p>Ao acessar e usar o site FCosta Corretor, você concorda em cumprir e estar vinculado a estas Condições de Uso. Se você não concordar com qualquer parte deste documento, não deverá usar nosso site.</p>
+
+            <h2>2. Uso do Site</h2>
+            <p>Você concorda em usar este site apenas para fins legais e não utilizá-lo de maneira alguma que possa danificar, desabilitar, sobrecarregar ou prejudicar nossos servidores ou a rede conectada ao nosso site.</p>
+
+            <div class="destaque">
+                <strong>⚠️ Importante:</strong> Você é responsável por manter a confidencialidade de qualquer informação de acesso ao seu navegador e é responsável por todas as atividades que ocorrem em sua conta.
+            </div>
+
+            <h2>3. Propriedade Intelectual</h2>
+            <p>Todo o conteúdo presente neste site, incluindo textos, gráficos, logos, imagens e software, é propriedade exclusiva de FCosta Corretor e está protegido por leis de propriedade intelectual.</p>
+
+            <h2>4. Isenção de Responsabilidade</h2>
+            <p>Este site é fornecido em uma base "como está". FCosta Corretor não faz representações ou garantias de qualquer tipo, expressas ou implícitas, incluindo, sem limitação, garantias de adequação para um propósito específico.</p>
+
+            <h2>5. Limitação de Responsabilidade</h2>
+            <p>Em nenhum caso FCosta Corretor será responsável por quaisquer danos diretos, indiretos, incidentais, especiais ou consequentes decorrentes de ou relacionados ao uso deste site.</p>
+
+            <h2>6. Links para Websites de Terceiros</h2>
+            <p>Este site pode conter links para websites de terceiros. FCosta Corretor não é responsável pela precisão, adequação ou legalidade do conteúdo dos websites de terceiros.</p>
+
+            <h2>7. Modificação dos Termos</h2>
+            <p>FCosta Corretor se reserva o direito de modificar estas Condições de Uso a qualquer momento. As modificações entram em vigor imediatamente após a publicação. O uso continuado do site após as modificações constitui sua aceitação dos termos modificados.</p>
+
+            <h2>8. Rescisão</h2>
+            <p>FCosta Corretor pode rescindir ou suspender seu acesso ao site a qualquer momento, sem aviso prévio, por qualquer motivo, incluindo, sem limitação, a violação destas Condições de Uso.</p>
+
+            <h2>9. Lei Aplicável</h2>
+            <p>Estas Condições de Uso serão regidas por e interpretadas de acordo com as leis do Brasil, sem considerar seus conflitos de disposições de leis.</p>
+
+            <h2>10. Contato</h2>
+            <p>Se tiver alguma dúvida sobre estas Condições de Uso, entre em contato conosco através do WhatsApp: <strong>(11) 99350-9109</strong></p>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 FCosta Corretor - Imóveis em São Paulo</p>
+    </footer>
+</body>
+</html>

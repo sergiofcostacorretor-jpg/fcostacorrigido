@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locação e Administração Imobiliária – FCosta Corretor</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #fff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ===== HEADER ===== */
+  .wh {
+    background: linear-gradient(120deg, #0d2b45 0%, #1a4f3a 100%);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+  .wh img { height: 46px; width: auto; flex-shrink: 0; }
+  .wh-info { flex: 1; }
+  .wh-info h1 {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.4;
+  }
+  .wh-info p {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #a8d5b5;
+    margin-top: 2px;
+  }
+  .wh-badges { display: flex; flex-direction: column; gap: 4px; text-align: right; }
+  .badge {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .badge-creci { background: #ffd966; color: #0d2b45; }
+  .badge-cnai  { background: #c6efce; color: #1a4f3a; }
+
+  /* ===== NAV ===== */
+  .wnav {
+    background: #f0f2f5;
+    border-bottom: 2px solid #0d2b45;
+    padding: 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .nb {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 14px;
+    border: none;
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nb:hover { color: #0d2b45; border-bottom-color: #2d6a4f; }
+  .nb.active { color: #0d2b45; border-bottom-color: #0d2b45; background: #fff; }
+
+  /* ===== CONTENT ===== */
+  .wcontent { padding: 16px 20px; width: 100%; }
+  .wsec { display: none; }
+  .wsec.active { display: block; }
+
+  /* ===== SUBTÍTULOS ===== */
+  .stitle {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0d2b45;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-left: 4px solid #1a4f3a;
+    padding-left: 8px;
+    margin: 14px 0 8px 0;
+  }
+  .stitle:first-child { margin-top: 0; }
+
+  /* ===== TEXTO ===== */
+  .tx {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .tx strong { color: #0d2b45; }
+
+  /* ===== GRID DE CARDS ===== */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  @media(max-width:900px){ .grid4 { grid-template-columns: 1fr 1fr; } .grid3 { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:600px){ .grid2,.grid3,.grid4 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #f7f9fb;
+    border: 1px solid #dde3ea;
+    border-top: 3px solid #0d2b45;
+    border-radius: 4px;
+    padding: 10px 12px;
+  }
+  .card .clabel { font-family: Arial, sans-serif; font-size: 12px; color: #777; margin-bottom: 3px; }
+  .card .cval { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #0d2b45; line-height: 1.4; }
+  .card.green { border-top-color: #1a4f3a; }
+  .card.green .cval { color: #1a4f3a; }
+  .card.amber { border-top-color: #b8860b; }
+  .card.amber .cval { color: #7a5800; }
+
+  /* ===== LISTA DETALHADA ===== */
+  ul.dlist { padding-left: 0; margin-bottom: 10px; list-style: none; }
+  ul.dlist li {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+    padding: 5px 0 5px 18px;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+    position: relative;
+  }
+  ul.dlist li:last-child { border-bottom: none; }
+  ul.dlist li::before { content: "▸"; position: absolute; left: 0; color: #1a4f3a; font-size: 11px; }
+  ul.dlist li strong { color: #0d2b45; }
+
+  /* ===== TABELA ===== */
+  table.wtbl {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
+  table.wtbl thead tr { background: #0d2b45; color: #fff; }
+  table.wtbl thead th { padding: 7px 10px; text-align: left; font-weight: bold; font-size: 12px; }
+  table.wtbl tbody tr:nth-child(even) { background: #f4f6f9; }
+  table.wtbl tbody tr:hover { background: #e8f0fb; }
+  table.wtbl tbody td { padding: 6px 10px; color: #333; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  table.wtbl tbody td strong { color: #0d2b45; }
+  .tag { display: inline-block; font-family: Arial, sans-serif; font-size: 12px; padding: 1px 7px; border-radius: 10px; font-weight: bold; }
+  .tag-ok  { background: #c6efce; color: #1a4f3a; }
+  .tag-req { background: #fff2cc; color: #7a5800; }
+  .tag-lei { background: #dce6f1; color: #0d2b45; }
+
+  /* ===== CAIXAS DE DESTAQUE ===== */
+  .infobox {
+    border-left: 4px solid #1a4f3a; background: #f0faf3;
+    padding: 10px 14px; margin-bottom: 12px; border-radius: 0 4px 4px 0;
+    font-family: Arial, sans-serif; font-size: 12px; color: #1a3a2a; line-height: 1.7;
+  }
+  .warnbox {
+    border-left: 4px solid #c0392b; background: #fdf3f2;
+    padding: 10px 14px; margin-bottom: 12px; border-radius: 0 4px 4px 0;
+    font-family: Arial, sans-serif; font-size: 12px; color: #7a1a10; line-height: 1.7;
+  }
+  .tipbox {
+    border-left: 4px solid #b8860b; background: #fffbf0;
+    padding: 10px 14px; margin-bottom: 12px; border-radius: 0 4px 4px 0;
+    font-family: Arial, sans-serif; font-size: 12px; color: #5a4000; line-height: 1.7;
+  }
+
+  /* ===== DUAS COLUNAS ===== */
+  .col2wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+  @media(max-width:640px){ .col2wrap { grid-template-columns: 1fr; } }
+
+  /* ===== BOTÕES ===== */
+  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .cbtn {
+    font-family: Arial, sans-serif; font-size: 12px; padding: 7px 16px;
+    border-radius: 3px; text-decoration: none; font-weight: bold;
+    display: inline-block; cursor: pointer; border: none;
+  }
+  .btn-wa  { background: #25D366; color: #fff; }
+  .btn-nav { background: #0d2b45; color: #fff; }
+  .btn-grn { background: #1a4f3a; color: #fff; }
+  .btn-out { background: #fff; color: #0d2b45; border: 1px solid #0d2b45; }
+
+  /* ===== ETAPAS ===== */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 12px; }
+  .step  { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px dashed #ddd; }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    min-width: 24px; height: 24px; background: #0d2b45; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-body { font-family: Arial, sans-serif; font-size: 12px; color: #333; line-height: 1.65; }
+  .step-body strong { color: #0d2b45; display: block; margin-bottom: 2px; }
+
+  /* ===== FOOTER ===== */
+  .wfoot {
+    background: #0d2b45; padding: 10px 20px;
+    display: flex; flex-wrap: wrap; justify-content: space-between;
+    align-items: center; gap: 6px; width: 100%;
+  }
+  .wfoot span { font-family: Arial, sans-serif; font-size: 12px; color: #8ab4d8; }
+  .wfoot a    { font-family: Arial, sans-serif; font-size: 12px; color: #ffd966; text-decoration: none; font-weight: bold; }
+
+  hr.sep { border: none; border-top: 1px solid #dde3ea; margin: 12px 0; }
+</style>
+</head>
+<body>
+<div style="width:100%">
+
+<!-- ========== HEADER ========== -->
+<div class="wh">
+  <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta Corretor">
+  <div class="wh-info">
+    <h1>Locação e Administração Imobiliária</h1>
+    <p>FCosta Corretor · Especialista em locação residencial e comercial em São Paulo e região</p>
+  </div>
+  <div class="wh-badges">
+    <span class="badge badge-creci">CRECI-SP 294791-F</span>
+    <span class="badge badge-cnai">CNAI 52708</span>
+  </div>
+</div>
+
+<!-- ========== NAVEGAÇÃO ========== -->
+<div class="wnav">
+  <a class="nb active" href="#" onclick="nav('aluguel',this);return false;">🏠 Aluguel</a>
+  <a class="nb" href="#" onclick="nav('administracao',this);return false;">🏢 Administração</a>
+  <a class="nb" href="#" onclick="nav('garantias',this);return false;">🔒 Garantias</a>
+  <a class="nb" href="#" onclick="nav('documentacao',this);return false;">📄 Documentação</a>
+  <a class="nb" href="#" onclick="nav('inquilinato',this);return false;">⚖️ Lei do Inquilinato</a>
+  <a class="nb" href="#" onclick="nav('custos',this);return false;">💰 Custos e Taxas</a>
+  <a class="nb" href="#" onclick="nav('contato',this);return false;">📞 Contato</a>
+</div>
+
+<!-- ========== CONTEÚDO ========== -->
+<div class="wcontent">
+
+<!-- ======== ABA: ALUGUEL ======== -->
+<div id="aluguel" class="wsec active">
+
+  <div class="stitle">O que Oferecemos em Locação</div>
+  <p class="tx">A FCosta Corretor oferece atendimento completo para quem quer <strong>alugar um imóvel</strong> com segurança jurídica, transparência e suporte em todas as etapas — da visita à assinatura do contrato. Trabalhamos com imóveis residenciais e comerciais em São Paulo e região metropolitana.</p>
+
+  <div class="grid4">
+    <div class="card"><div class="clabel">Modalidade</div><div class="cval">Residencial e Comercial</div></div>
+    <div class="card"><div class="clabel">Prazo Mínimo</div><div class="cval">12 meses (residencial)<br>Negociável comercial</div></div>
+    <div class="card green"><div class="clabel">Reajuste Anual</div><div class="cval">IGP-M / IPCA<br>(conforme contrato)</div></div>
+    <div class="card amber"><div class="clabel">Atendimento</div><div class="cval">Seg a Sáb · 8h–18h<br>WhatsApp 24h</div></div>
+  </div>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">Tipos de Imóvel Disponíveis</div>
+      <ul class="dlist">
+        <li><strong>Apartamento:</strong> kitnet, studio, 1 a 4 dormitórios, com ou sem vaga, lazer completo</li>
+        <li><strong>Casa:</strong> térrea, sobrado, geminada, condomínio fechado, com quintal</li>
+        <li><strong>Sala Comercial:</strong> conjuntos compactos a lajes corporativas</li>
+        <li><strong>Loja / Ponto Comercial:</strong> frente de rua, galeria, shopping</li>
+        <li><strong>Galpão / Armazém:</strong> logística, indústria, e-commerce</li>
+        <li><strong>Terreno:</strong> locação para usos específicos (evento, estacionamento)</li>
+      </ul>
+
+      <div class="stitle" style="margin-top:12px;">Critérios de Seleção do Inquilino</div>
+      <ul class="dlist">
+        <li><strong>Renda mínima:</strong> 3x o valor do aluguel (bruto mensal comprovado)</li>
+        <li><strong>Histórico de crédito:</strong> consulta Serasa, SPC e SCPC</li>
+        <li><strong>Ausência de restrições:</strong> CPF regular na Receita Federal</li>
+        <li><strong>Referências:</strong> locação anterior verificada (quando aplicável)</li>
+        <li><strong>Documentação completa:</strong> entrega em até 48h para análise</li>
+      </ul>
+    </div>
+    <div>
+      <div class="stitle">Como Funciona o Processo de Locação</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Visita ao Imóvel</strong>Agendamento via WhatsApp ou formulário no site; horários flexíveis inclusive aos sábados</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Proposta de Locação</strong>Apresentação de proposta por escrito com valores, condições e data de início</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Análise Cadastral</strong>Verificação de renda, CPF, histórico de crédito (Serasa/SPC); prazo de 48h úteis</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Aprovação da Garantia</strong>Escolha e aprovação da modalidade: fiador, seguro, caução ou título</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Vistoria de Entrada</strong>Laudo fotográfico detalhado de todos os cômodos, assinado por ambas as partes</div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-body"><strong>Assinatura do Contrato</strong>Contrato elaborado conforme Lei 8.245/91; registro em cartório opcional</div></div>
+        <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Entrega das Chaves</strong>Chaves entregues após pagamento do primeiro aluguel, garantia e seguro incêndio</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="infobox">
+    <strong>💡 Dica do Corretor:</strong> O valor do aluguel deve comprometer no máximo <strong>30% da renda bruta mensal</strong> do locatário. Recomendamos renda comprovada de pelo menos <strong>3 vezes o valor do aluguel</strong> para aprovação cadastral sem necessidade de fiador adicional.
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Olá,%20tenho%20interesse%20em%20alugar%20um%20imóvel" target="_blank">📲 Falar com Corretor</a>
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/alugar" target="_blank">🏠 Ver Imóveis Disponíveis</a>
+  </div>
+</div>
+
+<!-- ======== ABA: ADMINISTRAÇÃO ======== -->
+<div id="administracao" class="wsec">
+
+  <div class="stitle">Administração Completa do Seu Imóvel</div>
+  <p class="tx">Proprietário, deixe a gestão do seu imóvel com quem entende do assunto. A FCosta Corretor cuida de <strong>todo o ciclo da locação</strong> — do anúncio ao repasse mensal — garantindo renda passiva segura, sem dores de cabeça e com total transparência.</p>
+
+  <div class="grid3">
+    <div class="card green"><div class="clabel">Taxa de Administração</div><div class="cval">8% a 10% do aluguel mensal<br>(negociável por volume)</div></div>
+    <div class="card"><div class="clabel">Repasse ao Proprietário</div><div class="cval">Entre os dias 10 e 15<br>de cada mês via transferência</div></div>
+    <div class="card amber"><div class="clabel">Prestação de Contas</div><div class="cval">Relatório mensal detalhado<br>enviado por e-mail ou WhatsApp</div></div>
+  </div>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">Serviços Inclusos na Administração</div>
+      <ul class="dlist">
+        <li><strong>Avaliação gratuita</strong> do valor de locação compatível com o mercado</li>
+        <li><strong>Divulgação profissional</strong> em portais (Zap, Viva Real, OLX) e redes sociais</li>
+        <li><strong>Fotos e descrição</strong> do imóvel para anúncio atrativo</li>
+        <li><strong>Captação e seleção rigorosa</strong> de candidatos a inquilino</li>
+        <li><strong>Análise cadastral completa</strong> (renda, CPF, Serasa, SPC, histórico)</li>
+        <li><strong>Elaboração do contrato</strong> de locação conforme Lei 8.245/91</li>
+        <li><strong>Vistoria fotográfica</strong> de entrada e saída com laudo técnico assinado</li>
+        <li><strong>Cobrança do aluguel</strong>, condomínio e encargos mensais</li>
+        <li><strong>Repasse líquido</strong> ao proprietário com demonstrativo detalhado</li>
+        <li><strong>Notificações extrajudiciais</strong> em caso de atraso ou inadimplência</li>
+        <li><strong>Assessoria para ação de despejo</strong> quando necessário</li>
+        <li><strong>Aplicação do reajuste anual</strong> conforme índice contratual</li>
+        <li><strong>Renovação contratual</strong> negociada com o inquilino</li>
+        <li><strong>Intermediação de manutenções</strong> e reparos urgentes</li>
+        <li><strong>Restituição do imóvel</strong> ao proprietário ao final da locação</li>
+      </ul>
+    </div>
+    <div>
+      <div class="stitle">Vantagens de Contratar a Administração FCosta</div>
+      <ul class="dlist">
+        <li>Você <strong>não precisa lidar</strong> com cobranças, conflitos ou inadimplência</li>
+        <li>Inquilino <strong>selecionado com critério</strong> reduz risco de calote</li>
+        <li>Contrato juridicamente correto <strong>protege seu patrimônio</strong></li>
+        <li>Vistorias documentadas evitam disputas sobre <strong>danos ao imóvel</strong></li>
+        <li>Reajuste aplicado pontualmente <strong>mantém o valor de mercado</strong></li>
+        <li>Seguro fiança garante recebimento mesmo em <strong>caso de inadimplência</strong></li>
+        <li>Relatórios mensais com <strong>total transparência financeira</strong></li>
+        <li>Imóvel divulgado rapidamente para <strong>reduzir tempo de vacância</strong></li>
+      </ul>
+
+      <div class="stitle" style="margin-top:12px;">Fluxo de Repasse ao Proprietário</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Cobrança até o vencimento</strong>Boleto ou PIX enviado ao inquilino com vencimento contratual</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Conferência e compensação</strong>Confirmação do pagamento e abatimento de encargos (condomínio, IPTU se previsto)</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Repasse líquido</strong>Transferência do valor líquido ao proprietário entre os dias 10 e 15</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Relatório mensal</strong>Extrato detalhado com todas as movimentações enviado por e-mail</div></div>
+      </div>
+
+      <div class="tipbox">
+        <strong>📌 Atenção ao proprietário:</strong> Imóvel sem administração profissional pode gerar contratos mal redigidos, atraso no reajuste, dificuldade de despejo e prejuízo financeiro. Proteja seu investimento com suporte especializado.
+      </div>
+    </div>
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Quero%20contratar%20administração%20imobiliária" target="_blank">📲 Solicitar Proposta</a>
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/alugar" target="_blank">🏢 Saiba Mais</a>
+  </div>
+</div>
+
+<!-- ======== ABA: GARANTIAS ======== -->
+<div id="garantias" class="wsec">
+
+  <div class="stitle">Modalidades de Garantia Locatícia</div>
+  <p class="tx">A Lei do Inquilinato (art. 37) permite <strong>apenas uma modalidade de garantia</strong> por contrato. Conheça cada opção, suas vantagens e exigências antes de escolher a mais adequada ao seu perfil.</p>
+
+  <table class="wtbl">
+    <thead>
+      <tr>
+        <th>Modalidade</th>
+        <th>Como Funciona</th>
+        <th>Vantagens</th>
+        <th>Desvantagens / Exigências</th>
+        <th>Indicado para</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fiador</strong></td>
+        <td>Terceiro que se responsabiliza solidariamente pelo contrato em caso de inadimplência do inquilino</td>
+        <td>Sem custo financeiro direto ao locatário; aceito pela maioria dos proprietários</td>
+        <td>Fiador deve ter imóvel quitado em SP; análise cadastral rigorosa; nem sempre disponível</td>
+        <td>Quem tem familiar ou amigo proprietário disposto a ser fiador</td>
+      </tr>
+      <tr>
+        <td><strong>Seguro Fiança</strong></td>
+        <td>Seguradora garante o pagamento ao proprietário. O inquilino paga prêmio mensal ou anual</td>
+        <td>Não exige fiador; cobre inadimplência, danos e encargos; aprovação rápida (1–3 dias)</td>
+        <td>Custo de 1 a 1,5 aluguel/ano (prêmio); análise de crédito pela seguradora</td>
+        <td>Quem não tem fiador mas tem renda comprovada e bom histórico de crédito</td>
+      </tr>
+      <tr>
+        <td><strong>Depósito Caução</strong></td>
+        <td>Inquilino deposita valor equivalente a até 3 aluguéis em conta poupança vinculada ao contrato</td>
+        <td>Simples, sem burocracia; valor devolvido ao final se não houver dívidas ou danos</td>
+        <td>Capital imobilizado; limitado a 3 aluguéis; não cobre inadimplência prolongada</td>
+        <td>Locações de curto prazo ou imóveis de valor menor; perfis sem histórico de crédito</td>
+      </tr>
+      <tr>
+        <td><strong>Título de Capitalização</strong></td>
+        <td>Inquilino adquire título equivalente a 12–18 aluguéis; valor resgatado ao fim do contrato</td>
+        <td>Sem fiador; valor resgatável ao final; cobertura robusta e longa para o proprietário</td>
+        <td>Capital imobilizado; custo inicial elevado; pode haver carência para resgate</td>
+        <td>Imóveis de alto padrão ou proprietários que exigem cobertura mais ampla</td>
+      </tr>
+      <tr>
+        <td><strong>Cessão Fiduciária</strong></td>
+        <td>Inquilino cede cotas de fundo de investimento como garantia ao proprietário</td>
+        <td>Não imobiliza capital em espécie; mantém rendimento do investimento durante o contrato</td>
+        <td>Requer conta em corretora; menos comum; análise e burocracia mais complexas</td>
+        <td>Locatários investidores com patrimônio financeiro em fundos ou renda fixa</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warnbox">
+    <strong>⚠️ Atenção Legal:</strong> É <strong>proibido por lei</strong> exigir mais de uma modalidade de garantia no mesmo contrato (art. 37, parágrafo único da Lei 8.245/91). O descumprimento sujeita o proprietário a multa e à nulidade da cláusula excessiva.
+  </div>
+
+  <div class="infobox">
+    <strong>💡 Recomendação FCosta:</strong> Para a maioria dos perfis de locatário, o <strong>Seguro Fiança</strong> é a modalidade mais prática e que oferece maior segurança ao proprietário, cobrindo inadimplência, encargos e até danos ao imóvel dependendo da apólice contratada.
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Quero%20tirar%20dúvidas%20sobre%20garantias%20locatícias" target="_blank">📲 Tirar Dúvidas</a>
+  </div>
+</div>
+
+<!-- ======== ABA: DOCUMENTAÇÃO ======== -->
+<div id="documentacao" class="wsec">
+
+  <div class="stitle">Documentação Necessária para Locação</div>
+  <p class="tx">Tenha os documentos organizados antes de iniciar o processo. A análise cadastral é feita em até <strong>48 horas úteis</strong> após entrega completa da documentação. Documentos incompletos ou vencidos causam atraso na aprovação.</p>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">📋 Documentos do Locatário – Pessoa Física</div>
+      <table class="wtbl">
+        <thead><tr><th>Documento</th><th>Observação</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>RG ou CNH (frente e verso)</td><td>Cópia legível, sem rasuras, validade vigente</td><td><span class="tag tag-req">Obrigatório</span></td></tr>
+          <tr><td>CPF</td><td>Consulta situação cadastral na Receita Federal</td><td><span class="tag tag-req">Obrigatório</span></td></tr>
+          <tr><td>Comprovante de residência atual</td><td>Conta de luz, água ou gás – últimos 90 dias</td><td><span class="tag tag-req">Obrigatório</span></td></tr>
+          <tr><td>Holerite / contracheque</td><td>Últimos 3 meses (CLT, servidor público ou aposentado)</td><td><span class="tag tag-req">Obrigatório</span></td></tr>
+          <tr><td>Extrato bancário</td><td>Últimos 3 meses – complementa comprovação de renda</td><td><span class="tag tag-req">Obrigatório</span></td></tr>
+          <tr><td>Declaração de IR (pessoa física)</td><td>Último exercício com recibo de entrega na Receita</td><td><span class="tag tag-ok">Recomendado</span></td></tr>
+          <tr><td>Carteira de trabalho (CTPS)</td><td>Página de identificação e registro do último emprego</td><td><span class="tag tag-ok">Recomendado</span></td></tr>
+          <tr><td>Certidão de nascimento / casamento</td><td>Necessário para incluir cônjuge ou dependente no contrato</td><td><span class="tag tag-ok">Se aplicável</span></td></tr>
+          <tr><td>Decore / pró-labore</td><td>Para autônomos, MEI ou empresários sem holerite</td><td><span class="tag tag-ok">Se aplicável</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="stitle" style="margin-top:14px;">🏢 Documentos do Locatário – Pessoa Jurídica</div>
+      <ul class="dlist">
+        <li><strong>Contrato Social</strong> ou Estatuto com todas as alterações consolidadas registradas</li>
+        <li><strong>CNPJ</strong> – consulta situação cadastral ativa na Receita Federal</li>
+        <li><strong>Cartão CNPJ</strong> atualizado (emitido nos últimos 90 dias)</li>
+        <li><strong>Últimos 3 balanços anuais</strong> assinados por contador com CRC registrado</li>
+        <li><strong>Balancetes mensais</strong> dos últimos 3 meses com assinatura do contador</li>
+        <li><strong>Faturamento dos últimos 12 meses</strong> (extrato bancário ou DRE)</li>
+        <li><strong>Documentos pessoais</strong> do(s) sócio(s) administrador(es) com poderes para assinar</li>
+        <li><strong>Certidão Negativa de Débitos</strong> federal, estadual e municipal</li>
+        <li><strong>Regularidade FGTS e INSS</strong> – CND Previdenciária</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="stitle">🏠 Documentos do Proprietário</div>
+      <table class="wtbl">
+        <thead><tr><th>Documento</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Matrícula atualizada do imóvel</strong></td><td>Emitida no Cartório de Registro de Imóveis – prazo máximo 30 dias</td></tr>
+          <tr><td><strong>IPTU do exercício vigente</strong></td><td>Comprovação da situação fiscal junto ao município</td></tr>
+          <tr><td><strong>Certidão negativa de débitos do imóvel</strong></td><td>Câmara Municipal ou Prefeitura correspondente</td></tr>
+          <tr><td><strong>RG e CPF do proprietário</strong></td><td>Ou CNPJ e documentos societários se pessoa jurídica</td></tr>
+          <tr><td><strong>Comprovante de residência do proprietário</strong></td><td>Últimos 90 dias</td></tr>
+          <tr><td><strong>Procuração (se representado)</strong></td><td>Pública com poderes específicos para locar e assinar contrato</td></tr>
+          <tr><td><strong>Habite-se / Auto de Conclusão</strong></td><td>Para imóveis novos, reformados ou recém-regularizados</td></tr>
+          <tr><td><strong>Documentos do condomínio</strong></td><td>Regulamento interno, convenção e taxa mensal atualizada</td></tr>
+          <tr><td><strong>Certidão de ônus reais</strong></td><td>Confirma ausência de hipoteca, penhora ou alienação fiduciária</td></tr>
+        </tbody>
+      </table>
+
+      <div class="stitle" style="margin-top:14px;">📑 Documentos do Fiador (modalidade fiador)</div>
+      <ul class="dlist">
+        <li><strong>RG e CPF</strong> do fiador e cônjuge (ambos assinam o contrato)</li>
+        <li><strong>Certidão de casamento</strong> – obrigatória se casado em qualquer regime de bens</li>
+        <li><strong>Matrícula atualizada</strong> do imóvel dado em garantia (emitida em até 30 dias)</li>
+        <li><strong>Certidão de ônus reais</strong> – confirma que o imóvel não tem hipoteca ou penhora</li>
+        <li><strong>IPTU</strong> do imóvel do fiador (exercício atual)</li>
+        <li><strong>Comprovante de renda</strong> – mínimo 3x o valor do aluguel mensal</li>
+        <li><strong>Comprovante de residência</strong> do fiador (últimos 90 dias)</li>
+        <li><strong>Declaração de IR</strong> do fiador (último exercício com recibo)</li>
+      </ul>
+
+      <div class="tipbox">
+        <strong>📌 Atenção:</strong> Documentos com prazo de validade vencido, ilegíveis ou com rasuras causam atraso na análise. Envie digitalizações em PDF de alta qualidade ou fotos nítidas com boa iluminação em todos os documentos.
+      </div>
+    </div>
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Tenho%20dúvidas%20sobre%20documentação%20para%20locação" target="_blank">📲 Tirar Dúvidas</a>
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/documentacao-imobiliaria" target="_blank">📄 Central de Documentação</a>
+  </div>
+</div>
+
+<!-- ======== ABA: LEI DO INQUILINATO ======== -->
+<div id="inquilinato" class="wsec">
+
+  <div class="stitle">Lei do Inquilinato – Lei Federal nº 8.245/1991</div>
+  <p class="tx">A Lei do Inquilinato é a principal norma que regula as <strong>relações entre locadores e locatários</strong> de imóveis urbanos no Brasil. Conhecê-la protege tanto o proprietário quanto o inquilino. Confira os pontos mais relevantes:</p>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">⚖️ Direitos do Inquilino (Locatário)</div>
+      <ul class="dlist">
+        <li><strong>Receber o imóvel em boas condições</strong> de uso, habitabilidade e segurança (art. 22)</li>
+        <li><strong>Contrato com prazo determinado mínimo de 12 meses</strong> sem rescisão antecipada pelo proprietário sem justa causa</li>
+        <li><strong>Preferência de compra</strong> caso o proprietário decida vender o imóvel (art. 27) – notificação obrigatória por escrito</li>
+        <li><strong>Rescisão antecipada</strong> com multa proporcional ao tempo restante (art. 4º) – após 12 meses e com aviso de 30 dias, sem multa</li>
+        <li><strong>Não ser obrigado</strong> a realizar reparos de responsabilidade do proprietário (estrutura, hidráulica e elétrica ocultas)</li>
+        <li><strong>Recebimento de recibo</strong> para todos os pagamentos realizados (art. 22, XI)</li>
+        <li><strong>Devolução do depósito caução</strong> em até 30 dias após entrega das chaves (art. 38, §2º)</li>
+        <li><strong>Não ser despejado</strong> sem ordem judicial ou fora do prazo legal de notificação</li>
+        <li><strong>Indenização</strong> caso o proprietário rescinda o contrato antes do prazo para uso próprio</li>
+      </ul>
+
+      <div class="stitle" style="margin-top:12px;">📋 Deveres do Inquilino</div>
+      <ul class="dlist">
+        <li>Pagar pontualmente o aluguel e encargos (IPTU, condomínio conforme contrato)</li>
+        <li>Conservar o imóvel como se fosse seu – pequenos reparos de uso são sua responsabilidade</li>
+        <li>Não realizar obras, reformas ou benfeitorias sem autorização por escrito do proprietário</li>
+        <li>Restituir o imóvel nas mesmas condições da vistoria de entrada ao final do contrato</li>
+        <li>Comunicar imediatamente danos, vazamentos ou problemas estruturais ao proprietário</li>
+        <li>Respeitar integralmente as normas do condomínio e da boa vizinhança</li>
+        <li>Não sublocar total ou parcialmente sem autorização expressa do locador</li>
+        <li>Pagar seguro contra incêndio (obrigatório por lei – art. 22, VIII)</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="stitle">🏠 Direitos do Proprietário (Locador)</div>
+      <ul class="dlist">
+        <li><strong>Receber o aluguel</strong> pontualmente na data acordada em contrato</li>
+        <li><strong>Reajuste anual</strong> pelo índice contratado (IGP-M, IPCA ou outro legalmente permitido)</li>
+        <li><strong>Revisão judicial</strong> do aluguel após 3 anos de vigência (ação revisional – art. 19)</li>
+        <li><strong>Retomada do imóvel</strong> ao término do contrato sem necessidade de justificativa</li>
+        <li><strong>Rescisão e despejo</strong> por falta de pagamento, uso indevido ou infração contratual</li>
+        <li><strong>Vistoria periódica</strong> do imóvel mediante aviso prévio razoável ao inquilino</li>
+        <li><strong>Receber o imóvel</strong> nas mesmas condições da vistoria de entrada</li>
+        <li><strong>Cobrar danos</strong> comprovados por laudo técnico ao final da locação</li>
+      </ul>
+
+      <div class="stitle" style="margin-top:12px;">⏰ Prazos Legais Importantes</div>
+      <table class="wtbl">
+        <thead><tr><th>Situação</th><th>Prazo Legal</th></tr></thead>
+        <tbody>
+          <tr><td>Devolução do depósito caução</td><td><span class="tag tag-lei">30 dias após entrega das chaves</span></td></tr>
+          <tr><td>Desocupação após rescisão pelo proprietário (término)</td><td><span class="tag tag-lei">30 dias de aviso prévio</span></td></tr>
+          <tr><td>Aviso prévio do inquilino para saída voluntária</td><td><span class="tag tag-lei">30 dias antes da desocupação</span></td></tr>
+          <tr><td>Preferência de compra – manifestação do inquilino</td><td><span class="tag tag-lei">30 dias após notificação</span></td></tr>
+          <tr><td>Ação revisional de aluguel</td><td><span class="tag tag-lei">A partir de 3 anos de contrato</span></td></tr>
+          <tr><td>Ação renovatória (locação comercial)</td><td><span class="tag tag-lei">Mínimo 5 anos contínuos no imóvel</span></td></tr>
+          <tr><td>Liminar de despejo por falta de pagamento</td><td><span class="tag tag-lei">15 dias (Lei 12.112/2009)</span></td></tr>
+          <tr><td>Prazo para desocupação voluntária após despejo</td><td><span class="tag tag-lei">15 a 30 dias conforme decisão</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="stitle">🔎 Principais Motivos de Rescisão Contratual</div>
+  <table class="wtbl">
+    <thead><tr><th>Motivo</th><th>Quem rescinde</th><th>Multa</th><th>Prazo para desocupação</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Falta de pagamento do aluguel</strong></td><td>Proprietário</td><td>Não há multa ao proprietário; inquilino pode pagar dívida e purgar mora</td><td>Ação judicial de despejo – liminar em até 15 dias</td></tr>
+      <tr><td><strong>Uso indevido ou infração contratual</strong></td><td>Proprietário</td><td>Não há</td><td>Judicial – prazo fixado pelo juiz</td></tr>
+      <tr><td><strong>Término natural do contrato</strong></td><td>Proprietário</td><td>Não há</td><td>30 dias de aviso prévio</td></tr>
+      <tr><td><strong>Rescisão antecipada pelo inquilino</strong></td><td>Inquilino</td><td>Proporcional ao tempo restante (art. 4º)</td><td>Conforme acordo entre as partes</td></tr>
+      <tr><td><strong>Necessidade do proprietário (uso próprio)</strong></td><td>Proprietário</td><td>Deve indenizar o inquilino se não ocupar em 6 meses</td><td>30 dias após notificação</td></tr>
+      <tr><td><strong>Demolição ou reforma necessária</strong></td><td>Proprietário</td><td>Pode haver indenização</td><td>Conforme necessidade e autorização judicial</td></tr>
+      <tr><td><strong>Sublocação não autorizada</strong></td><td>Proprietário</td><td>Não há</td><td>Ação judicial</td></tr>
+    </tbody>
+  </table>
+
+  <div class="btnrow">
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/inquilinato" target="_blank">📖 Guia Completo da Lei do Inquilinato</a>
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Tenho%20dúvidas%20sobre%20a%20Lei%20do%20Inquilinato" target="_blank">📲 Falar com Especialista</a>
+  </div>
+</div>
+
+<!-- ======== ABA: CUSTOS E TAXAS ======== -->
+<div id="custos" class="wsec">
+
+  <div class="stitle">Custos e Taxas na Locação</div>
+  <p class="tx">Entender todos os custos envolvidos evita surpresas financeiras. Veja a divisão de responsabilidades entre <strong>locatário (inquilino)</strong> e <strong>locador (proprietário)</strong> em cada despesa:</p>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">💸 Responsabilidade do Inquilino</div>
+      <table class="wtbl">
+        <thead><tr><th>Despesa</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aluguel mensal</strong></td><td>Valor base acordado em contrato; vencimento conforme cláusula</td></tr>
+          <tr><td><strong>Condomínio ordinário</strong></td><td>Despesas do dia a dia: limpeza, portaria, energia das áreas comuns</td></tr>
+          <tr><td><strong>IPTU</strong></td><td>Se previsto em contrato – pode ser negociado entre as partes</td></tr>
+          <tr><td><strong>Energia elétrica</strong></td><td>Consumo do imóvel locado – conta em nome do inquilino</td></tr>
+          <tr><td><strong>Água e gás</strong></td><td>Consumo próprio mensal</td></tr>
+          <tr><td><strong>Seguro incêndio obrigatório</strong></td><td>Exigido por lei (art. 22, VIII); custo médio R$ 15–60/mês</td></tr>
+          <tr><td><strong>Prêmio do seguro fiança</strong></td><td>Se essa for a modalidade de garantia escolhida e aprovada</td></tr>
+          <tr><td><strong>Reparos de desgaste por uso</strong></td><td>Torneiras, fechaduras, vidros quebrados, pintura por uso normal</td></tr>
+          <tr><td><strong>Taxa de condomínio extraordinária</strong></td><td>Somente se aprovada em assembleia <em>antes</em> do início da locação</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="stitle">🏠 Responsabilidade do Proprietário</div>
+      <table class="wtbl">
+        <thead><tr><th>Despesa</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Obras estruturais</strong></td><td>Telhado, fundação, fachada, estrutura de lajes</td></tr>
+          <tr><td><strong>Instalações elétricas e hidráulicas ocultas</strong></td><td>Problemas existentes antes ou surgidos por desgaste natural</td></tr>
+          <tr><td><strong>Condomínio extraordinário</strong></td><td>Fundo de obras, reformas e melhorias nas áreas comuns</td></tr>
+          <tr><td><strong>IPTU</strong></td><td>Quando não repassado ao inquilino em cláusula contratual</td></tr>
+          <tr><td><strong>Taxa de administração imobiliária</strong></td><td>8% a 10% do aluguel mensal cobrado pela imobiliária</td></tr>
+          <tr><td><strong>Corretagem na locação</strong></td><td>Geralmente equivale a 1 aluguel; pago na assinatura do contrato</td></tr>
+          <tr><td><strong>Imposto de Renda sobre aluguéis</strong></td><td>Declarado mensalmente no carnê-leão e na DIRPF anual</td></tr>
+          <tr><td><strong>Seguro patrimonial do imóvel</strong></td><td>Cobertura do bem contra danos estruturais (opcional, recomendado)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="stitle">📊 Tributação do Aluguel Recebido pelo Proprietário (Tabela IR 2025)</div>
+  <table class="wtbl">
+    <thead><tr><th>Rendimento Mensal (R$)</th><th>Alíquota IR</th><th>Parcela a Deduzir</th><th>Observação</th></tr></thead>
+    <tbody>
+      <tr><td>Até R$ 2.259,20</td><td><strong>Isento</strong></td><td>–</td><td>Sem obrigação de recolhimento mensal</td></tr>
+      <tr><td>R$ 2.259,21 a R$ 2.826,65</td><td><strong>7,5%</strong></td><td>R$ 169,44</td><td>Recolhimento via carnê-leão mensal</td></tr>
+      <tr><td>R$ 2.826,66 a R$ 3.751,05</td><td><strong>15%</strong></td><td>R$ 381,44</td><td>Recolhimento via carnê-leão mensal</td></tr>
+      <tr><td>R$ 3.751,06 a R$ 4.664,68</td><td><strong>22,5%</strong></td><td>R$ 662,77</td><td>Recolhimento via carnê-leão mensal</td></tr>
+      <tr><td>Acima de R$ 4.664,68</td><td><strong>27,5%</strong></td><td>R$ 896,00</td><td>Alíquota máxima – recolhimento obrigatório</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tipbox">
+    <strong>📌 Dica fiscal:</strong> O proprietário pode deduzir despesas comprovadas de conservação e benfeitorias do imóvel locado na base de cálculo do IR. Consulte sempre um contador especializado em renda imobiliária para minimizar a tributação legalmente.
+  </div>
+
+  <div class="stitle">💰 Custo Estimado de Entrada para o Inquilino</div>
+  <div class="grid4">
+    <div class="card"><div class="clabel">1º Aluguel</div><div class="cval">Proporcional ao dia de entrada<br>ou 1 mês cheio</div></div>
+    <div class="card amber"><div class="clabel">Caução (se escolhido)</div><div class="cval">Até 3x o valor do aluguel<br>em poupança vinculada</div></div>
+    <div class="card"><div class="clabel">Seguro Incêndio</div><div class="cval">Aprox. R$ 180–720/ano<br>obrigatório por lei</div></div>
+    <div class="card green"><div class="clabel">Taxa de Vistoria</div><div class="cval">Geralmente inclusa<br>na corretagem de locação</div></div>
+  </div>
+
+  <div class="infobox">
+    <strong>💡 Exemplo prático:</strong> Para um apartamento com aluguel de <strong>R$ 2.000/mês</strong>: entrada total estimada com caução = R$ 2.000 (aluguel) + R$ 6.000 (caução 3x) + R$ 300 (seguro) = <strong>R$ 8.300</strong>. Com seguro fiança, a entrada é somente R$ 2.000 + R$ 300 + R$ 2.000–3.000 (prêmio anual) = <strong>R$ 4.300 a R$ 5.300</strong>.
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Quero%20simular%20os%20custos%20para%20alugar%20um%20imóvel" target="_blank">📲 Simular Custos</a>
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/financiamento" target="_blank">💰 Simulador de Financiamento</a>
+  </div>
+</div>
+
+<!-- ======== ABA: CONTATO ======== -->
+<div id="contato" class="wsec">
+
+  <div class="stitle">Fale com o Corretor Sergio Costa</div>
+  <p class="tx">Atendimento <strong>personalizado e humanizado</strong> para locação e administração imobiliária. Corretor habilitado pelo CRECI-SP e avaliador certificado pelo CNAI, Sergio Costa oferece assessoria completa para inquilinos, proprietários e investidores em São Paulo.</p>
+
+  <div class="grid4">
+    <div class="card green"><div class="clabel">Corretor Responsável</div><div class="cval">Sergio Costa</div></div>
+    <div class="card"><div class="clabel">CRECI-SP</div><div class="cval">294791-F (ativo)</div></div>
+    <div class="card"><div class="clabel">CNAI</div><div class="cval">52708 (avaliador)</div></div>
+    <div class="card amber"><div class="clabel">Horário de Atendimento</div><div class="cval">Seg–Sáb · 8h–18h<br>WhatsApp 24h</div></div>
+  </div>
+
+  <div class="col2wrap">
+    <div>
+      <div class="stitle">📞 Canais de Atendimento</div>
+      <ul class="dlist">
+        <li><strong>WhatsApp:</strong> <a href="https://wa.me/5511993509109" target="_blank" style="color:#1a4f3a;">(11) 99350-9109</a> – envio de fotos, documentos e proposta</li>
+        <li><strong>Catálogo WhatsApp:</strong> <a href="https://wa.me/c/5511993509109" target="_blank" style="color:#1a4f3a;">wa.me/c/5511993509109</a> – imóveis disponíveis</li>
+        <li><strong>Site:</strong> <a href="https://fcostacorretor.com" target="_blank" style="color:#1a4f3a;">fcostacorretor.com</a> – busca de imóveis, simuladores e guias</li>
+        <li><strong>Instagram:</strong> <a href="https://instagram.com/f.cost.a_corretor" target="_blank" style="color:#1a4f3a;">@f.cost.a_corretor</a> – lançamentos e conteúdo imobiliário</li>
+        <li><strong>YouTube:</strong> <a href="https://youtube.com/@fcostacorretor" target="_blank" style="color:#1a4f3a;">@fcostacorretor</a> – vídeos educativos sobre locação e compra</li>
+        <li><strong>Facebook:</strong> <a href="https://facebook.com/SergioCostaRCM" target="_blank" style="color:#1a4f3a;">SergioCostaRCM</a></li>
+        <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-costa-corretor-b6a984371" target="_blank" style="color:#1a4f3a;">sergio-costa-corretor</a></li>
+        <li><strong>TikTok:</strong> <a href="https://tiktok.com/@fcosta.corretor" target="_blank" style="color:#1a4f3a;">@fcosta.corretor</a></li>
+        <li><strong>App FCosta:</strong> <a href="https://play.google.com/store/apps/details?id=meu.fcosta.app2026" target="_blank" style="color:#1a4f3a;">Google Play – meu.fcosta.app2026</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="stitle">🤝 Por que Escolher a FCosta Corretor?</div>
+      <ul class="dlist">
+        <li><strong>Corretor registrado</strong> no CRECI-SP – atuação legal, ética e fiscalizada pelo conselho</li>
+        <li><strong>Avaliador certificado CNAI</strong> – laudos de avaliação com respaldo técnico e jurídico</li>
+        <li><strong>Contrato seguro</strong> elaborado em conformidade com a Lei 8.245/91</li>
+        <li><strong>Análise rigorosa de candidatos</strong> – minimiza risco de inadimplência ao proprietário</li>
+        <li><strong>Vistoria fotográfica profissional</strong> em todas as locações com laudo técnico</li>
+        <li><strong>Suporte jurídico</strong> nos casos de inadimplência, despejo e disputa contratual</li>
+        <li><strong>Transparência total</strong> – relatórios mensais claros para o proprietário</li>
+        <li><strong>Forte presença digital</strong> – imóveis divulgados nos principais portais do Brasil</li>
+        <li><strong>Atendimento ágil</strong> – resposta em até 2h no WhatsApp em horário comercial</li>
+      </ul>
+
+      <div class="stitle" style="margin-top:12px;">📍 Área de Atuação</div>
+      <ul class="dlist">
+        <li><strong>São Paulo Capital:</strong> Zona Sul, Zona Norte, Zona Leste, Zona Oeste e Centro</li>
+        <li><strong>Grande São Paulo:</strong> Santo André, São Bernardo, São Caetano, Guarulhos e região</li>
+        <li><strong>Lançamentos:</strong> empreendimentos na planta com condições especiais de locação futura</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="btnrow">
+    <a class="cbtn btn-wa" href="https://wa.me/5511993509109?text=Olá%20Sergio,%20gostaria%20de%20atendimento%20imobiliário" target="_blank">📲 Iniciar Atendimento</a>
+    <a class="cbtn btn-grn" href="https://fcostacorretor.com/alugar" target="_blank">🏠 Ver Imóveis para Alugar</a>
+    <a class="cbtn btn-out" href="https://fcostacorretor.com/avaliacao-fcosta" target="_blank">📊 Avaliar Meu Imóvel</a>
+    <a class="cbtn btn-nav" href="https://fcostacorretor.com/contratos-fcosta" target="_blank">📄 Contratos Imobiliários</a>
+  </div>
+</div>
+
+</div><!-- /wcontent -->
+
+<!-- ========== FOOTER ========== -->
+<div class="wfoot">
+  <span>© FCosta Corretor Imobiliário · São Paulo – SP · <a href="https://fcostacorretor.com" target="_blank">fcostacorretor.com</a></span>
+  <span style="color:#a8d5b5;">CRECI-SP 294791-F &nbsp;|&nbsp; CNAI 52708 &nbsp;|&nbsp; (11) 99350-9109</span>
+</div>
+
+</div>
+
+<script>
+  function nav(id, btn) {
+    document.querySelectorAll('.wsec').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

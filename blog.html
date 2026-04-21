@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog & Dicas Imobiliárias — FCosta Corretor | CRECI-SP 294791-F</title>
+<meta name="description" content="Blog com dicas, curiosidades e novidades sobre o mercado imobiliário em São Paulo. FCosta Corretor — CRECI-SP 294791-F.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --azul:#003da5;--azul-escuro:#002580;--vermelho:#dc1c2d;--roxo:#7c3aed;
+  --branco:#ffffff;--cinza-claro:#f4f6fa;--cinza-meio:#888;
+  --cinza-escuro:#2a2a2a;--preto:#0d1829;--borda:#e2e8f0;
+  --sombra:0 4px 24px rgba(0,61,165,0.10);
+}
+html,body{font-family:'DM Sans',sans-serif;background:var(--cinza-claro);color:var(--cinza-escuro);overflow-x:hidden;width:100%;max-width:100vw;}
+header{background:var(--azul);border-bottom:3px solid var(--roxo);padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,61,165,.3);}
+.navbar{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;height:64px;gap:12px;}
+.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-wrap img{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);object-fit:cover;flex-shrink:0;}
+.logo-nome{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;color:#fff;line-height:1;}
+.logo-creci{font-size:9px;color:rgba(255,255,255,.6);letter-spacing:1.5px;text-transform:uppercase;}
+.nav-links{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.nav-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;border:none;font-family:'DM Sans',sans-serif;}
+.nav-btn.ghost{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;}
+.nav-btn.ghost:hover{background:rgba(255,255,255,.22);}
+.nav-btn.wpp{background:#25d366;color:#fff;}
+.nav-btn.ativo{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);color:#fff;font-weight:700;}
+@media(max-width:600px){.logo-nome{font-size:16px;}.logo-creci{display:none;}.nav-btn span{display:none;}.nav-btn{padding:8px 10px;}}
+.hero{background:linear-gradient(135deg,#581c87 0%,#7c3aed 100%);color:#fff;padding:48px 20px 40px;text-align:center;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:800;margin-bottom:10px;line-height:1.2;}
+.hero p{font-size:15px;opacity:.85;}
+.container{max-width:1200px;margin:0 auto;padding:32px 16px 60px;}
+/* BUSCA */
+.busca-wrap{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--sombra);margin-bottom:28px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.busca-input{flex:1;min-width:180px;padding:10px 14px;border:1.5px solid var(--borda);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.busca-input:focus{border-color:var(--roxo);}
+.busca-select{padding:10px 12px;border:1.5px solid var(--borda);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--cinza-escuro);cursor:pointer;}
+.busca-select:focus{border-color:var(--roxo);}
+.resultado-count{font-size:13px;color:var(--cinza-meio);width:100%;}
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--sombra);transition:all .3s;cursor:pointer;}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(124,58,237,.15);}
+.card-imagem{width:100%;height:200px;background:var(--cinza-claro);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:48px;}
+.card-imagem img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.card:hover .card-imagem img{transform:scale(1.05);}
+.card-badge{position:absolute;top:12px;left:12px;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:1px;z-index:1;}
+.card-badge.blog{background:var(--azul);}
+.card-badge.dica{background:#f59e0b;color:#333;}
+.card-body{padding:18px;}
+.card-data{font-size:12px;color:var(--cinza-meio);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.card-titulo{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cinza-escuro);margin-bottom:8px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-preview{font-size:13px;color:var(--cinza-meio);line-height:1.5;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--azul);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.card-btn:hover{background:var(--azul-escuro);}
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--cinza-meio);}
+.empty-state i{font-size:56px;display:block;margin-bottom:16px;opacity:.3;}
+.skeleton{background:#e2e8f0;border-radius:14px;overflow:hidden;}
+.skeleton-img{width:100%;height:200px;background:linear-gradient(90deg,#e2e8f0 25%,#f4f6fa 50%,#e2e8f0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+.skeleton-body{padding:18px;}
+.skeleton-line{height:12px;border-radius:6px;margin-bottom:10px;background:linear-gradient(90deg,#e2e8f0 25%,#f4f6fa 50%,#e2e8f0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+.skeleton-line.w60{width:60%;}.skeleton-line.w80{width:80%;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,24,41,.88);z-index:600;align-items:center;justify-content:center;padding:20px 12px;backdrop-filter:blur(6px);overflow-y:auto;}
+.modal-overlay.ativo{display:flex;}
+.modal{background:#fff;max-width:640px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.4);max-height:90vh;display:flex;flex-direction:column;position:relative;margin:auto;}
+.modal-fechar{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.1);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;color:#555;z-index:10;display:flex;align-items:center;justify-content:center;}
+.modal-imagem{width:100%;height:200px;background:var(--cinza-claro);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden;flex-shrink:0;}
+.modal-imagem img{width:100%;height:100%;object-fit:cover;}
+.modal-body{padding:24px;overflow-y:auto;flex:1;}
+.modal-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;}
+.modal-titulo{font-family:'Playfair Display',serif;font-size:22px;color:var(--preto);margin-bottom:6px;line-height:1.3;}
+.modal-data{font-size:12px;color:var(--cinza-meio);margin-bottom:16px;}
+.modal-texto{font-size:15px;color:var(--cinza-escuro);line-height:1.9;border-top:1px solid #eee;padding-top:16px;}
+.modal-wpp{display:flex;align-items:center;justify-content:center;gap:10px;background:#25d366;color:#fff;text-decoration:none;border-radius:10px;padding:14px;font-weight:700;font-size:14px;margin-top:20px;}
+footer{background:var(--preto);color:#fff;padding:28px 20px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.45);}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.btn-voltar{display:inline-flex;align-items:center;gap:8px;background:var(--azul);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <a class="logo-wrap" href="https://fcostacorretor.com">
+      <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta Corretor">
+      <div><div class="logo-nome">FCosta Corretor</div><div class="logo-creci">CRECI-SP 294791-F</div></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-btn ghost" href="https://fcostacorretor.com"><i class="fas fa-home"></i><span> Home</span></a>
+      <a class="nav-btn ghost" href="https://fcostacorretor.com/comprar"><i class="fas fa-home"></i><span> Comprar</span></a>
+      <a class="nav-btn ghost" href="https://fcostacorretor.com/alugar"><i class="fas fa-key"></i><span> Alugar</span></a>
+      <a class="nav-btn ativo" href="#"><i class="fas fa-newspaper"></i><span> Blog</span></a>
+      <a class="nav-btn wpp" href="https://wa.me/5511993509109" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i><span> WhatsApp</span></a>
+    </div>
+  </div>
+</header>
+<section class="hero">
+  <h1><i class="fas fa-newspaper" style="font-size:.8em;opacity:.8;"></i> Blog & Dicas</h1>
+  <p>Artigos, dicas e curiosidades sobre o mercado imobiliário em São Paulo</p>
+</section>
+<div class="container">
+  <div class="busca-wrap">
+    <input type="text" class="busca-input" id="busca-input" placeholder="🔍 Buscar artigos e dicas…" oninput="filtrar()">
+    <select class="busca-select" id="busca-cat" onchange="filtrar()">
+      <option value="">Todas as categorias</option>
+    </select>
+    <div class="resultado-count" id="resultado-count"></div>
+  </div>
+  <div id="secao-blog">
+    <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--preto);margin-bottom:16px;padding-left:14px;border-left:4px solid var(--azul);">📰 Artigos do Blog</h2>
+    <div class="cards-grid" id="grid-blog">
+      <div class="skeleton"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div></div></div>
+      <div class="skeleton"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div></div></div>
+    </div>
+  </div>
+  <div id="secao-dicas" style="margin-top:48px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--preto);margin-bottom:16px;padding-left:14px;border-left:4px solid #f59e0b;">💡 Dicas e Curiosidades</h2>
+    <div class="cards-grid" id="grid-dicas">
+      <div class="skeleton"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div></div></div>
+      <div class="skeleton"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)fecharModal()">
+  <div class="modal">
+    <button class="modal-fechar" onclick="fecharModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-imagem" id="modal-imagem"><span id="modal-emoji">📰</span><img id="modal-img" src="" alt="" style="display:none;"></div>
+    <div class="modal-body">
+      <div class="modal-badge" id="modal-badge"></div>
+      <h2 class="modal-titulo" id="modal-titulo"></h2>
+      <div class="modal-data" id="modal-data"></div>
+      <div class="modal-texto" id="modal-texto"></div>
+      <a class="modal-wpp" href="https://wa.me/5511993509109" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Falar com FCosta — (11) 99350-9109</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="btn-voltar" href="https://fcostacorretor.com"><i class="fas fa-arrow-left"></i> Voltar à Home</a>
+    <span class="footer-copy">© 2026 FCosta Corretor — CRECI-SP 294791-F</span>
+    <div class="footer-links">
+      <a href="https://fcostacorretor.com/politica-de-privacidade" target="_blank" rel="noopener noreferrer"><i class="fas fa-shield-alt"></i> Privacidade</a>
+      <a href="https://fcostacorretor.com/condicoes-de-uso" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt"></i> Termos de Uso</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var FB_URL='https://fcosta-31125-default-rtdb.firebaseio.com';
+var todosBlog=[];var todasDicas=[];
+
+async function fbLista(chave){
+  try{
+    var r=await fetch(FB_URL+'/'+chave+'.json');var d=await r.json();
+    if(!d)return[];
+    if(Array.isArray(d))return d.filter(Boolean);
+    return Object.entries(d).filter(function(e){return e[1];}).map(function(e){return Object.assign({},e[1],{_uid:e[1]._uid||e[0]});});
+  }catch(e){return[];}
+}
+
+async function init(){
+  var [blog, dicas] = await Promise.all([fbLista('fcosta_dicas'), fbLista('fcosta_curiosidades')]);
+  todosBlog = [...blog].reverse();
+  todasDicas = [...dicas].reverse();
+  popularCategorias();
+  renderBlog(todosBlog);
+  renderDicas(todasDicas);
+  atualizarContador();
+}
+
+function popularCategorias(){
+  var sel=document.getElementById('busca-cat');
+  var cats=new Set();
+  todosBlog.forEach(function(d){if(d.categoria)cats.add(d.categoria);});
+  todasDicas.forEach(function(d){if(d.categoria)cats.add(d.categoria);});
+  cats.forEach(function(c){var o=document.createElement('option');o.value=c.toLowerCase();o.textContent=c;sel.appendChild(o);});
+}
+
+function criarCard(d, tipo){
+  var emoji=tipo==='blog'?'📰':'💡';
+  var badgeCls=tipo==='blog'?'blog':'dica';
+  var badgeTxt=tipo==='blog'?'Blog':'Dica';
+  var data=d.data?new Date(d.data).toLocaleDateString('pt-BR'):'';
+  var preview=(d.conteudo||'').substring(0,130)+'...';
+  return '<div class="card" onclick="abrirModal('+JSON.stringify(d).replace(/'/g,"\'").replace(/"/g,'&quot;')+',\''+tipo+'\')">'
+    +'<div class="card-imagem">'+(d.imagem?'<img src="'+esc(d.imagem)+'" alt="'+esc(d.titulo||'')+'" loading="lazy">':emoji)
+    +'<div class="card-badge '+badgeCls+'">'+badgeTxt+'</div>'
+    +'</div><div class="card-body">'
+    +(data?'<div class="card-data"><i class="fas fa-calendar-alt"></i> '+data+'</div>':'')
+    +'<div class="card-titulo">'+esc(d.titulo||'')+'</div>'
+    +'<div class="card-preview">'+esc(preview)+'</div>'
+    +'<button class="card-btn"><i class="fas fa-arrow-right"></i> Ler mais</button>'
+    +'</div></div>';
+}
+
+function renderBlog(lista){
+  var grid=document.getElementById('grid-blog');
+  var sec=document.getElementById('secao-blog');
+  if(!lista.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-newspaper"></i><h3>Nenhum artigo publicado</h3></div>';return;}
+  grid.innerHTML=lista.map(function(d){return criarCard(d,'blog');}).join('');
+}
+
+function renderDicas(lista){
+  var grid=document.getElementById('grid-dicas');
+  if(!lista.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-lightbulb"></i><h3>Nenhuma dica publicada</h3></div>';return;}
+  grid.innerHTML=lista.map(function(d){return criarCard(d,'dica');}).join('');
+}
+
+function filtrar(){
+  var q=(document.getElementById('busca-input').value||'').toLowerCase().trim();
+  var cat=(document.getElementById('busca-cat').value||'').toLowerCase();
+  function match(d){
+    var okQ=!q||(d.titulo||'').toLowerCase().includes(q)||(d.conteudo||'').toLowerCase().includes(q);
+    var okCat=!cat||(d.categoria||'').toLowerCase()===cat;
+    return okQ&&okCat;
+  }
+  renderBlog(todosBlog.filter(match));
+  renderDicas(todasDicas.filter(match));
+  atualizarContador(todosBlog.filter(match).length+todasDicas.filter(match).length);
+}
+
+function atualizarContador(n){
+  var total=n!==undefined?n:todosBlog.length+todasDicas.length;
+  document.getElementById('resultado-count').textContent=total+' publicação(ões) encontrada(s)';
+}
+
+window.abrirModal=function(d,tipo){
+  var mi=document.getElementById('modal-img');var me=document.getElementById('modal-emoji');
+  if(d.imagem){mi.src=d.imagem;mi.style.display='block';me.style.display='none';}
+  else{mi.style.display='none';me.style.display='block';me.textContent=tipo==='blog'?'📰':'💡';}
+  var badge=document.getElementById('modal-badge');
+  badge.textContent=tipo==='blog'?'📰 Blog':'💡 Dica';
+  badge.style.background=tipo==='blog'?'var(--azul)':'#f59e0b';
+  badge.style.color=tipo==='blog'?'#fff':'#333';
+  document.getElementById('modal-titulo').textContent=d.titulo||'';
+  document.getElementById('modal-data').innerHTML=d.data?'<i class="fas fa-calendar-alt"></i> '+new Date(d.data).toLocaleDateString('pt-BR'):'';
+  document.getElementById('modal-texto').innerHTML=(d.conteudo||'').replace(/\n/g,'<br>');
+  document.getElementById('modal').classList.add('ativo');
+  document.body.style.overflow='hidden';
+};
+
+function fecharModal(){document.getElementById('modal').classList.remove('ativo');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharModal();});
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle Financeiro | FCosta</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root {
+  --sky:#87CEEB; --sky2:#5bb8e0; --sky3:#3a9fd6;
+  --navy:#1E3A5F; --navy2:#0d2a45;
+  --white:#ffffff; --off:#f0f8ff; --off2:#e4f2fb;
+  --border:#c2dff0; --border2:#dde9f3;
+  --text:#0F172A; --muted:#475569; --light:#94a3b8;
+
+  --sh-col:#B8860B; --sh-bg:#FFF8E1; --sh-bdr:#D4A843; --sh-cell:#FFFDE7;
+  --ro-col:#1D4ED8; --ro-bg:#EFF6FF; --ro-bdr:#3B82F6; --ro-cell:#F0F7FF;
+  --se-col:#15803D; --se-bg:#F0FDF4; --se-bdr:#22C55E; --se-cell:#F6FFF9;
+
+  --green:#10B981; --red:#EF4444; --indigo:#6366F1;
+  --shadow:0 4px 20px rgba(30,58,95,0.13);
+  --shadow2:0 2px 8px rgba(30,58,95,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:linear-gradient(160deg,var(--sky) 0%,#b4d9ef 45%,#cfe8f5 100%);
+  background-attachment:fixed;
+  color:var(--text);padding:16px;min-height:100vh;
+}
+
+/* ── PAGE HEADER ── */
+.pg-header{
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(14px);
+  border-radius:16px;border:1px solid rgba(255,255,255,0.9);
+  box-shadow:var(--shadow);
+  padding:18px 24px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-left:5px solid var(--navy);
+}
+.pg-title{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+.pg-title span{color:var(--sky3)}
+.pg-sub{font-size:.72rem;color:var(--muted);font-weight:600;margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
+.hd-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{padding:9px 18px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:.2s;letter-spacing:.3px;display:flex;align-items:center;gap:6px}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn-save{background:var(--green);color:#fff}
+.btn-load{background:var(--indigo);color:#fff}
+.btn-print{background:var(--navy);color:#fff}
+.btn-year{background:var(--sky3);color:#fff}
+
+/* ── CARDS CNPJ ── */
+.cnpj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media(max-width:700px){.cnpj-grid{grid-template-columns:1fr}}
+.cnpj-card{
+  background:rgba(255,255,255,0.92);
+  border-radius:14px;padding:14px 18px;
+  box-shadow:var(--shadow2);
+  border-top:4px solid;
+  transition:.2s;
+}
+.cnpj-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.cnpj-card.sh{border-top-color:var(--sh-bdr)}
+.cnpj-card.ro{border-top-color:var(--ro-bdr)}
+.cnpj-card.se{border-top-color:var(--se-bdr)}
+.cnpj-lbl{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.cnpj-card.sh .cnpj-lbl{color:var(--sh-col)}
+.cnpj-card.ro .cnpj-lbl{color:var(--ro-col)}
+.cnpj-card.se .cnpj-lbl{color:var(--se-col)}
+.cnpj-val{font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem}
+.cnpj-card.sh .cnpj-val{color:var(--sh-col)}
+.cnpj-card.ro .cnpj-val{color:var(--ro-col)}
+.cnpj-card.se .cnpj-val{color:var(--se-col)}
+
+/* ── LEGENDA ── */
+.leg-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.leg-pill{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.9);
+  border-radius:20px;padding:6px 14px;
+  box-shadow:var(--shadow2);font-size:.75rem;font-weight:700;border-left:4px solid;
+}
+.leg-pill.sh{border-left-color:var(--sh-bdr);color:var(--sh-col)}
+.leg-pill.ro{border-left-color:var(--ro-bdr);color:var(--ro-col)}
+.leg-pill.se{border-left-color:var(--se-bdr);color:var(--se-col)}
+.leg-dot{width:10px;height:10px;border-radius:50%}
+.leg-pill.sh .leg-dot{background:var(--sh-bdr)}
+.leg-pill.ro .leg-dot{background:var(--ro-bdr)}
+.leg-pill.se .leg-dot{background:var(--se-bdr)}
+
+/* ── TABELA ── */
+.tbl-wrap{
+  background:rgba(255,255,255,0.95);
+  border-radius:16px;overflow:hidden;
+  box-shadow:0 12px 48px rgba(30,58,95,0.18),0 2px 8px rgba(0,0,0,0.06);
+  border:1px solid rgba(255,255,255,0.9);
+  overflow-x:auto;
+}
+table{width:100%;border-collapse:collapse;min-width:1150px}
+
+/* group headers */
+.th-g{font-size:.6rem;text-transform:uppercase;letter-spacing:.8px;padding:8px 4px;text-align:center;font-weight:800}
+.th-g.sh{background:var(--sh-col);color:#fff;border-right:3px solid var(--sh-bdr)}
+.th-g.ro{background:var(--ro-col);color:#fff;border-right:3px solid var(--ro-bdr)}
+.th-g.se{background:var(--se-col);color:#fff}
+.th-g.base{background:var(--navy2);color:#94a3b8}
+
+/* sub headers */
+.th-s{font-size:.58rem;text-transform:uppercase;padding:6px 4px;font-weight:800;text-align:center}
+.th-s.sh{background:var(--sh-bg);color:var(--sh-col);border-bottom:3px solid var(--sh-bdr);border-right:1px solid #E5C85A}
+.th-s.ro{background:var(--ro-bg);color:var(--ro-col);border-bottom:3px solid var(--ro-bdr);border-right:3px solid var(--ro-bdr)}
+.th-s.se{background:var(--se-bg);color:var(--se-col);border-bottom:3px solid var(--se-bdr);border-right:1px solid #86EFAC}
+.th-s.base{background:#f0f6fc;color:var(--muted);border-right:1px solid var(--border)}
+
+/* cells */
+td{padding:3px 3px;border-bottom:1px solid var(--border2);border-right:1px solid var(--border2);vertical-align:middle;position:relative}
+.td-mes{
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:.68rem;
+  text-align:center;color:#fff;background:var(--navy);letter-spacing:.5px;
+  width:66px;text-transform:uppercase;
+}
+.td-sh{background:var(--sh-cell);border-right:1px solid #E5C85A}
+.td-sh-last{background:var(--sh-cell);border-right:3px solid var(--sh-bdr)!important}
+.td-ro{background:var(--ro-cell);border-right:3px solid var(--ro-bdr)!important}
+.td-se{background:var(--se-cell);border-right:1px solid #86EFAC}
+.td-export{background:#f8fafc;border-right:2px solid var(--border)!important;width:82px}
+
+/* totals */
+.td-tot-sh{background:#FEF9E7;border-left:3px solid var(--sh-bdr)!important;border-right:3px solid var(--sh-bdr)!important}
+.td-tot-ro{background:var(--ro-bg);border-left:3px solid var(--ro-bdr)!important;border-right:3px solid var(--ro-bdr)!important}
+.td-tot-se{background:var(--se-bg);border-left:3px solid var(--se-bdr)!important;min-width:130px}
+
+.tot-val{font-family:'Poppins',sans-serif;font-weight:800;font-size:.8rem;text-align:center;display:block}
+.tot-label{font-size:.5rem;text-transform:uppercase;letter-spacing:.4px;display:block;margin-top:1px;text-align:center}
+.tv-sh{color:var(--sh-col)}.tv-ro{color:var(--ro-col)}.tv-se{color:var(--se-col)}
+.paid-tag{font-size:.5rem;font-weight:700;display:block;margin-top:2px;padding:1px 5px;border-radius:4px;text-align:center}
+.paid-tag.sh{color:var(--sh-col);background:rgba(212,168,67,0.15)}
+.paid-tag.ro{color:#15803D;background:rgba(34,197,94,0.12)}
+.paid-tag.se{color:#15803D;background:rgba(34,197,94,0.12)}
+
+/* cell content */
+.cell-in{display:flex;flex-direction:column;align-items:center;gap:2px;padding:1px}
+.half{
+  font-size:.6rem;color:var(--sh-col);font-weight:800;
+  background:rgba(212,168,67,0.15);padding:2px 6px;border-radius:4px;
+  min-height:16px;line-height:16px;letter-spacing:.2px;
+}
+input{
+  width:100%;background:rgba(255,255,255,0.75);
+  border:1.5px solid rgba(0,0,0,0.08);color:var(--text);
+  padding:3px 3px;text-align:center;border-radius:5px;
+  font-size:.67rem;font-family:'Nunito',sans-serif;min-width:54px;font-weight:700;
+  transition:.15s;
+}
+input:focus{outline:none;border-color:var(--sky3);background:#fff;box-shadow:0 0 0 3px rgba(58,159,214,.12)}
+.pay-btn{
+  background:rgba(0,0,0,0.06);color:var(--muted);border:none;
+  font-size:.47rem;padding:2px 5px;border-radius:4px;cursor:pointer;
+  text-transform:uppercase;font-weight:800;transition:.15s;font-family:'Nunito',sans-serif;
+  letter-spacing:.3px;
+}
+.pay-btn:hover{background:var(--green);color:#fff}
+
+/* PAGO stamp */
+.is-paid input{color:#EF4444!important;opacity:.6;pointer-events:none}
+.is-paid .pay-btn{background:#FEE2E2;color:#EF4444}
+.is-paid .half{opacity:.35}
+.is-paid::after{
+  content:"PAGO";
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-15deg);
+  border:2.5px solid rgba(220,38,38,.65);
+  color:rgba(220,38,38,.65);padding:2px 10px;
+  font-weight:900;font-size:1rem;border-radius:7px;
+  letter-spacing:2px;z-index:10;background:rgba(255,255,255,.5);
+  pointer-events:none;font-family:'Arial Black',sans-serif;
+}
+
+/* export buttons */
+.exp-wrap{display:flex;flex-direction:column;gap:3px;align-items:center;padding:4px 3px}
+.exp-lbl{font-size:.48rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--light);margin-bottom:1px}
+.exp-row{display:flex;gap:3px;width:100%}
+.ebtn{border:none;font-size:.48rem;padding:3px 4px;border-radius:4px;cursor:pointer;font-weight:800;flex:1;white-space:nowrap;transition:.15s}
+.ebtn:hover{opacity:.85;transform:scale(1.03)}
+.ebtn.jr{background:var(--ro-col);color:#fff}
+.ebtn.js{background:var(--se-col);color:#fff}
+.ebtn.pr{background:#60a5fa;color:#fff}
+.ebtn.ps{background:#4ade80;color:#1a4731}
+
+/* hover rows */
+tbody tr:hover td{filter:brightness(.97)}
+
+/* ── RESUMO ANUAL ── */
+.resumo-wrap{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-top:16px;
+}
+@media(max-width:700px){.resumo-wrap{grid-template-columns:1fr 1fr}}
+.res-card{
+  background:rgba(255,255,255,0.92);border-radius:14px;padding:16px 18px;
+  box-shadow:var(--shadow2);border-top:4px solid;text-align:center;
+  transition:.2s;
+}
+.res-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.res-card.sh{border-top-color:var(--sh-bdr)}
+.res-card.ro{border-top-color:var(--ro-bdr)}
+.res-card.se{border-top-color:var(--se-bdr)}
+.res-card.total{border-top-color:var(--navy)}
+.res-lbl{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.res-card.sh .res-lbl{color:var(--sh-col)}
+.res-card.ro .res-lbl{color:var(--ro-col)}
+.res-card.se .res-lbl{color:var(--se-col)}
+.res-card.total .res-lbl{color:var(--navy)}
+.res-val{font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:800}
+.res-card.sh .res-val{color:var(--sh-col)}
+.res-card.ro .res-val{color:var(--ro-col)}
+.res-card.se .res-val{color:var(--se-col)}
+.res-card.total .res-val{color:var(--navy)}
+.res-sub{font-size:.62rem;color:var(--muted);margin-top:4px}
+
+/* ── MODAIS ── */
+.modal-ov{
+  display:none;position:fixed;inset:0;
+  background:rgba(10,22,40,.7);z-index:9999;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.modal-ov.on{display:flex}
+.modal-box{
+  background:#fff;border-radius:16px;padding:26px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  min-width:300px;max-width:95vw;
+}
+.modal-box h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:16px}
+.modal-box h3.sh{color:var(--sh-col)}
+.modal-box h3.ro{color:var(--ro-col)}
+.modal-box h3.se{color:var(--se-col)}
+.modal-box h3.navy{color:var(--navy)}
+select.modal-sel{
+  width:100%;padding:9px 12px;border-radius:8px;
+  background:#f8fafc;border:2px solid var(--border);
+  font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);
+  margin-bottom:14px;
+}
+select.modal-sel:focus{outline:none;border-color:var(--sky3)}
+.modal-btns{display:flex;gap:8px}
+.mbtn{flex:1;padding:10px;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:.15s}
+.mbtn:hover{opacity:.88}
+.mbtn.save{background:var(--green);color:#fff}
+.mbtn.cancel{background:#e2e8f0;color:var(--muted)}
+.mbtn.print-a{background:#EF4444;color:#fff}
+
+/* print preview */
+#print-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9998;align-items:center;justify-content:center;flex-direction:column;gap:15px}
+#print-modal.on{display:flex}
+#print-frame{background:#1E293B;border-radius:12px;padding:20px;border:1px solid var(--sh-bdr);max-width:95vw;max-height:80vh;overflow:auto}
+.pmod-btns{display:flex;gap:10px}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--sky3)}
+
+@media print{
+  body{background:#fff;padding:4px}
+  .pg-header,.cnpj-grid,.leg-bar,.hd-actions,.td-export,#print-modal,.resumo-wrap{display:none!important}
+  .pay-btn{display:none!important}
+  .tbl-wrap{box-shadow:none;border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="pg-header">
+  <div>
+    <div class="pg-title">📊 Gestão Financeira <span>Anual</span></div>
+    <div class="pg-sub">FCosta · Controle de Contas Compartilhadas e Individuais</div>
+  </div>
+  <div class="hd-actions">
+    <button class="btn btn-save" onclick="abrirSalvar()">💾 Salvar Mês</button>
+    <button class="btn btn-load" onclick="document.getElementById('inp-load').click()">📂 Carregar</button>
+    <input type="file" id="inp-load" accept=".json" style="display:none" onchange="carregarMes(event)">
+    <button class="btn btn-year" onclick="exportarAno()">📥 Exportar Ano</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ PDF Completo</button>
+  </div>
+</div>
+
+<!-- CNPJ -->
+<div class="cnpj-grid">
+  <div class="cnpj-card sh">
+    <div class="cnpj-lbl">🤝 Contas Divididas — 50% cada</div>
+    <div class="cnpj-val">Luz · Água · Internet · Amil · São Miguel</div>
+  </div>
+  <div class="cnpj-card ro">
+    <div class="cnpj-lbl">👤 Rodrigo — CNPJ</div>
+    <div class="cnpj-val">15.323.633/0001-08</div>
+  </div>
+  <div class="cnpj-card se">
+    <div class="cnpj-lbl">👤 Leiliana (Sérgio) — CNPJ</div>
+    <div class="cnpj-val">43.046.728/0001-67</div>
+  </div>
+</div>
+
+<!-- LEGENDA -->
+<div class="leg-bar">
+  <div class="leg-pill sh"><div class="leg-dot"></div>AMBOS PAGAM — dividido 50% cada</div>
+  <div class="leg-pill ro"><div class="leg-dot"></div>SÓ RODRIGO paga</div>
+  <div class="leg-pill se"><div class="leg-dot"></div>SÓ SÉRGIO paga</div>
+</div>
+
+<!-- TABELA -->
+<div class="tbl-wrap">
+  <table id="main-table">
+    <thead>
+      <tr>
+        <th class="th-g base" style="width:82px">Export</th>
+        <th class="th-g base">Mês</th>
+        <th class="th-g sh" colspan="5">🤝 AMBOS PAGAM — 50% CADA</th>
+        <th class="th-g base" style="background:#f0f6fc;color:var(--muted);border-right:1px solid var(--border)">Total Div.</th>
+        <th class="th-g ro" colspan="2">👤 SÓ RODRIGO</th>
+        <th class="th-g base" style="background:var(--ro-bg);color:var(--ro-col);border-right:3px solid var(--ro-bdr)">Total Rod.</th>
+        <th class="th-g se" colspan="6">👤 SÓ SÉRGIO</th>
+        <th class="th-g base" style="background:var(--se-bg);color:var(--se-col);min-width:130px">Total Sér.</th>
+      </tr>
+      <tr>
+        <th class="th-s base" style="width:82px"></th>
+        <th class="th-s base"></th>
+        <th class="th-s sh">Luz</th>
+        <th class="th-s sh">Água</th>
+        <th class="th-s sh">Internet</th>
+        <th class="th-s sh">Amil</th>
+        <th class="th-s sh" style="border-right:3px solid var(--sh-bdr)">S.Miguel</th>
+        <th class="th-s base" style="background:#f0f6fc;color:var(--muted);border-right:1px solid var(--border);width:82px">Cada paga</th>
+        <th class="th-s ro">DAS MEI</th>
+        <th class="th-s ro" style="border-right:3px solid var(--ro-bdr)">Outros</th>
+        <th class="th-s base" style="background:var(--ro-bg);color:var(--ro-col);border-right:3px solid var(--ro-bdr);width:82px">Total</th>
+        <th class="th-s se" style="min-width:60px">Cel Sér.</th>
+        <th class="th-s se" style="min-width:60px">Cel Kátia</th>
+        <th class="th-s se" style="min-width:60px">Cartão</th>
+        <th class="th-s se" style="min-width:60px">Mercado</th>
+        <th class="th-s se" style="min-width:60px">Dízimo</th>
+        <th class="th-s se" style="min-width:60px">Outros</th>
+        <th class="th-s base" style="background:var(--se-bg);color:var(--se-col);min-width:130px">Total</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<!-- RESUMO ANUAL -->
+<div class="resumo-wrap" id="resumo-anual">
+  <div class="res-card sh">
+    <div class="res-lbl">🤝 Total Dividido (ano)</div>
+    <div class="res-val tv-sh" id="res-sh">R$ 0,00</div>
+    <div class="res-sub">Cada: <span id="res-sh-each">R$ 0,00</span></div>
+  </div>
+  <div class="res-card ro">
+    <div class="res-lbl">👤 Total Rodrigo (ano)</div>
+    <div class="res-val tv-ro" id="res-ro">R$ 0,00</div>
+    <div class="res-sub" id="res-ro-sub"></div>
+  </div>
+  <div class="res-card se">
+    <div class="res-lbl">👤 Total Sérgio (ano)</div>
+    <div class="res-val tv-se" id="res-se">R$ 0,00</div>
+    <div class="res-sub" id="res-se-sub"></div>
+  </div>
+  <div class="res-card total">
+    <div class="res-lbl">📊 Total Geral (ano)</div>
+    <div class="res-val" id="res-total">R$ 0,00</div>
+    <div class="res-sub" id="res-total-sub">Todas as contas</div>
+  </div>
+</div>
+
+<!-- MODAL SALVAR -->
+<div class="modal-ov" id="modal-save">
+  <div class="modal-box">
+    <h3 class="navy">💾 Salvar Mês</h3>
+    <label style="font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:6px">Selecione o mês:</label>
+    <select class="modal-sel" id="sel-mes"></select>
+    <div class="modal-btns">
+      <button class="mbtn save" onclick="salvarMes()">💾 Baixar JSON</button>
+      <button class="mbtn cancel" onclick="fecharModal('modal-save')">✕ Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRINT -->
+<div id="print-modal">
+  <div id="print-frame"></div>
+  <div class="pmod-btns">
+    <button class="mbtn print-a" onclick="doPrint()">🖨️ Imprimir / PDF</button>
+    <button class="mbtn cancel" onclick="fecharPrintModal()">✕ Fechar</button>
+  </div>
+</div>
+
+<script>
+const MESES=["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO","JULHO","AGOSTO","SETEMBRO","OUTUBRO","NOVEMBRO","DEZEMBRO"];
+
+const sharedCols=[
+  {id:"luz",    label:"Luz",        cls:"td-sh",      isShared:true},
+  {id:"agua",   label:"Água",       cls:"td-sh",      isShared:true},
+  {id:"net",    label:"Internet",   cls:"td-sh",      isShared:true},
+  {id:"amil",   label:"Amil",       cls:"td-sh",      isShared:true},
+  {id:"smig",   label:"São Miguel", cls:"td-sh-last", isShared:true},
+];
+const rodrigoCols=[
+  {id:"das",   label:"DAS MEI",  cls:"td-ro"},
+  {id:"outr",  label:"Outros",   cls:"td-ro"},
+];
+const sergioCols=[
+  {id:"cser",  label:"Cel Sér.",  cls:"td-se"},
+  {id:"ckat",  label:"Cel Kátia", cls:"td-se"},
+  {id:"cart",  label:"Cartão",    cls:"td-se"},
+  {id:"merc",  label:"Mercado",   cls:"td-se"},
+  {id:"diz",   label:"Dízimo",    cls:"td-se"},
+  {id:"outs",  label:"Outros",    cls:"td-se"},
+];
+const allCols=[...sharedCols,...rodrigoCols,...sergioCols];
+let curPrintMes=null,curPrintPessoa=null;
+
+function fmt(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function parseVal(id){const e=document.getElementById(id);if(!e)return 0;const n=parseFloat(e.value.replace(/[R$\s.]/g,'').replace(',','.'));return isNaN(n)?0:n}
+function isPaid(mIdx,colId){const td=document.getElementById(`td-${mIdx}-${colId}`);return td?td.classList.contains('is-paid'):false}
+
+function recalcTotals(mIdx){
+  let totSh=0,paidSh=0;
+  sharedCols.forEach(c=>{
+    const v=parseVal(`in-${mIdx}-${c.id}`);
+    totSh+=v;
+    if(isPaid(mIdx,c.id))paidSh+=v;
+    const h=document.getElementById(`hint-${mIdx}-${c.id}`);
+    if(h)h.textContent=v>0?`½ ${fmt(v/2)}`:'';
+  });
+  const eachTot=totSh/2,eachPaid=paidSh/2,eachPend=eachTot-eachPaid;
+  const tsh=document.getElementById(`tot-sh-${mIdx}`);
+  tsh.innerHTML=`<span class="tot-val tv-sh">${fmt(totSh)}</span>
+    <span class="tot-label" style="color:var(--sh-col)">Cada: ${fmt(eachTot)}</span>
+    ${paidSh>0?`<span class="paid-tag sh">✓ Pago: ${fmt(paidSh)} | Falta: ${fmt(totSh-paidSh)}</span>`:''}`;
+
+  let totRo=eachTot,paidRo=eachPaid;
+  rodrigoCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totRo+=v;if(isPaid(mIdx,c.id))paidRo+=v;});
+  const pendRo=totRo-paidRo;
+  document.getElementById(`tot-ro-${mIdx}`).innerHTML=
+    `<span class="tot-val tv-ro">${fmt(pendRo)}</span>
+     <span class="tot-label" style="color:var(--ro-col)">Falta pagar</span>
+     ${paidRo>0?`<span class="paid-tag ro">✓ Pago: ${fmt(paidRo)}</span>`:''}`;
+
+  let totSe=eachTot,paidSe=eachPaid;
+  sergioCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSe+=v;if(isPaid(mIdx,c.id))paidSe+=v;});
+  const pendSe=totSe-paidSe;
+  document.getElementById(`tot-se-${mIdx}`).innerHTML=
+    `<span class="tot-val tv-se">${fmt(pendSe)}</span>
+     <span class="tot-label" style="color:var(--se-col)">Falta pagar</span>
+     ${paidSe>0?`<span class="paid-tag se">✓ Pago: ${fmt(paidSe)}</span>`:''}`;
+
+  recalcResumoAnual();
+}
+
+function recalcResumoAnual(){
+  let aSh=0,aRo=0,aSe=0;
+  MESES.forEach((_,i)=>{
+    let sh=0;sharedCols.forEach(c=>{sh+=parseVal(`in-${i}-${c.id}`)});
+    const each=sh/2;
+    let ro=each;rodrigoCols.forEach(c=>ro+=parseVal(`in-${i}-${c.id}`));
+    let se=each;sergioCols.forEach(c=>se+=parseVal(`in-${i}-${c.id}`));
+    aSh+=sh;aRo+=ro;aSe+=se;
+  });
+  document.getElementById('res-sh').textContent=fmt(aSh);
+  document.getElementById('res-sh-each').textContent=fmt(aSh/2);
+  document.getElementById('res-ro').textContent=fmt(aRo);
+  document.getElementById('res-se').textContent=fmt(aSe);
+  document.getElementById('res-total').textContent=fmt(aRo+aSe);
+  document.getElementById('res-total-sub').textContent=`Rodrigo + Sérgio`;
+}
+
+function makeCell(mIdx,col){
+  const td=document.createElement('td');
+  td.className=col.cls;
+  td.id=`td-${mIdx}-${col.id}`;
+  const wrap=document.createElement('div');
+  wrap.className='cell-in';
+  const inp=document.createElement('input');
+  inp.id=`in-${mIdx}-${col.id}`;
+  inp.placeholder='0,00';
+  inp.title=col.label;
+  inp.oninput=function(){localStorage.setItem(this.id,this.value);recalcTotals(mIdx)};
+  wrap.appendChild(inp);
+  if(col.isShared){
+    const h=document.createElement('div');
+    h.className='half';h.id=`hint-${mIdx}-${col.id}`;h.textContent='';
+    wrap.appendChild(h);
+  }
+  const btn=document.createElement('button');
+  btn.className='pay-btn';btn.textContent='✓ Pagar';
+  btn.onclick=()=>togglePago(mIdx,col.id);
+  wrap.appendChild(btn);
+  td.appendChild(wrap);
+  return td;
+}
+
+function togglePago(mIdx,colId){
+  const td=document.getElementById(`td-${mIdx}-${colId}`);
+  const key=`st-${mIdx}-${colId}`;
+  if(td.classList.contains('is-paid')){
+    td.classList.remove('is-paid');localStorage.setItem(key,'open');
+  } else {
+    td.classList.add('is-paid');localStorage.setItem(key,'paid');
+  }
+  recalcTotals(mIdx);
+}
+
+// ── BUILD REPORT HTML ──
+function buildReport(mIdx,pessoa){
+  const isRod=pessoa==='rodrigo';
+  const mn=MESES[mIdx];
+  let totSh=0,paidSh=0;
+  sharedCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSh+=v;if(isPaid(mIdx,c.id))paidSh+=v;});
+  const eachTot=totSh/2,eachPaid=paidSh/2,eachPend=eachTot-eachPaid;
+  const proCols=isRod?rodrigoCols:sergioCols;
+  let totPro=0,paidPro=0;
+  proCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totPro+=v;if(isPaid(mIdx,c.id))paidPro+=v;});
+  const totG=eachTot+totPro,paidG=eachPaid+paidPro,pendG=totG-paidG;
+  const pc=isRod?'#1D4ED8':'#15803D',pb=isRod?'#3B82F6':'#22C55E',pbg=isRod?'#EFF6FF':'#F0FDF4';
+  const pLabel=isRod?'RODRIGO':'SÉRGIO';
+  const shRows=sharedCols.map(c=>{
+    const v=parseVal(`in-${mIdx}-${c.id}`),paid=isPaid(mIdx,c.id);
+    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${c.label}</td>
+      <td style="padding:9px 13px;text-align:center;color:#64748b;border-bottom:1px solid #E2EDF5">${v>0?fmt(v):'—'}</td>
+      <td style="padding:9px 13px;text-align:center;font-weight:900;color:#B8860B;border-bottom:1px solid #E2EDF5">${v>0?fmt(v/2):'—'}</td>
+      <td style="padding:9px 13px;text-align:center;border-bottom:1px solid #E2EDF5">${paid?'<span style="color:#EF4444;font-weight:900;font-size:.7rem;border:1.5px solid #EF4444;border-radius:4px;padding:1px 7px;display:inline-block">PAGO</span>':'<span style="color:#94a3b8;font-size:.75rem">Pendente</span>'}</td></tr>`;
+  }).join('');
+  const proRows=proCols.map(c=>{
+    const v=parseVal(`in-${mIdx}-${c.id}`),paid=isPaid(mIdx,c.id);
+    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${c.label}</td>
+      <td colspan="2" style="padding:9px 13px;text-align:center;font-weight:900;color:${pc};border-bottom:1px solid #E2EDF5">${v>0?fmt(v):'—'}</td>
+      <td style="padding:9px 13px;text-align:center;border-bottom:1px solid #E2EDF5">${paid?'<span style="color:#EF4444;font-weight:900;font-size:.7rem;border:1.5px solid #EF4444;border-radius:4px;padding:1px 7px;display:inline-block">PAGO</span>':'<span style="color:#94a3b8;font-size:.75rem">Pendente</span>'}</td></tr>`;
+  }).join('');
+  return`<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito',sans-serif;background:#fff;color:#0F172A;padding:28px;font-size:14px}
+    .rh{border-bottom:3px solid ${pb};padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-end}
+    .rt{font-family:'Poppins',sans-serif;font-size:1.4rem;font-weight:800;color:${pc}}
+    .rs{font-size:.75rem;color:#64748b;margin-top:3px;font-weight:600}
+    .rm{font-size:1.1rem;font-weight:900;color:${pc};font-family:'Poppins',sans-serif}
+    .sec{margin-bottom:18px;border-radius:10px;overflow:hidden;border:1.5px solid #E2EDF5}
+    .sh2{padding:10px 14px;font-weight:800;font-size:.7rem;text-transform:uppercase;letter-spacing:.8px}
+    table{width:100%;border-collapse:collapse}
+    th{padding:8px 13px;font-size:.6rem;text-transform:uppercase;letter-spacing:.7px;font-weight:800;text-align:center;border-bottom:2px solid #E2EDF5;background:#1E3A5F;color:#cbd5e1}
+    th:first-child{text-align:left}
+    .sbox{background:${pbg};border:2px solid ${pb};border-radius:12px;padding:18px 22px;margin-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .si{text-align:center}.sl{font-size:.62rem;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:4px;font-weight:700}
+    .sv{font-size:1.3rem;font-weight:900;font-family:'Poppins',sans-serif;color:${pc}}
+    .sv.red{color:#EF4444}.sv.grn{color:#15803D}
+    .note{background:#FFF1F2;border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 14px;font-size:.68rem;color:#EF4444;text-align:center;margin-bottom:18px;font-weight:700}
+    .foot{margin-top:18px;font-size:.6rem;color:#94a3b8;text-align:right}
+    @media print{@page{size:A4 portrait;margin:10mm}body{padding:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style>
+  <div class="note">🔒 Relatório individual — apenas contas de <strong>${pLabel}</strong></div>
+  <div class="rh">
+    <div><div class="rt">👤 Relatório Financeiro — ${pLabel}</div>
+    <div class="rs">FCosta · Gestão Compartilhada · Divisão 50/50 nas contas conjuntas</div></div>
+    <div class="rm">${mn} ${new Date().getFullYear()}</div>
+  </div>
+  <div class="sec">
+    <div class="sh2" style="background:#FFF8E1;color:#B8860B">🤝 Contas Divididas — sua parte (50%)</div>
+    <table><thead><tr><th style="text-align:left">Conta</th><th>Valor Total</th><th>Sua Parte (½)</th><th>Situação</th></tr></thead>
+    <tbody>${shRows}</tbody>
+    <tfoot><tr>
+      <td colspan="2" style="padding:10px 13px;font-weight:900;color:#B8860B;border-top:2px solid #D4A843">SUBTOTAL sua parte</td>
+      <td style="padding:10px 13px;text-align:center;font-weight:900;font-size:1rem;color:#B8860B;border-top:2px solid #D4A843">${fmt(eachTot)}</td>
+      <td style="padding:10px 13px;text-align:center;font-size:.75rem;border-top:2px solid #D4A843">
+        ${eachPaid>0?`<span style="color:#15803D;font-weight:700">✓ Pago: ${fmt(eachPaid)}</span><br>`:''}
+        ${eachPend>0?`<span style="color:#EF4444;font-weight:700">Falta: ${fmt(eachPend)}</span>`:''}
+      </td>
+    </tr></tfoot></table>
+  </div>
+  <div class="sec">
+    <div class="sh2" style="background:${pbg};color:${pc}">👤 Suas contas exclusivas</div>
+    <table><thead><tr><th style="text-align:left">Conta</th><th colspan="2">Valor</th><th>Situação</th></tr></thead>
+    <tbody>${proRows}</tbody>
+    <tfoot><tr>
+      <td colspan="2" style="padding:10px 13px;font-weight:900;color:${pc};border-top:2px solid ${pb}">SUBTOTAL contas exclusivas</td>
+      <td style="padding:10px 13px;text-align:center;font-weight:900;font-size:1rem;color:${pc};border-top:2px solid ${pb}">${fmt(totPro)}</td>
+      <td style="padding:10px 13px;text-align:center;font-size:.75rem;border-top:2px solid ${pb}">
+        ${paidPro>0?`<span style="color:#15803D;font-weight:700">✓ Pago: ${fmt(paidPro)}</span><br>`:''}
+        ${(totPro-paidPro)>0?`<span style="color:#EF4444;font-weight:700">Falta: ${fmt(totPro-paidPro)}</span>`:''}
+      </td>
+    </tr></tfoot></table>
+  </div>
+  <div class="sbox">
+    <div class="si"><span class="sl">Total do Mês</span><span class="sv">${fmt(totG)}</span></div>
+    <div class="si"><span class="sl">✓ Já Pago</span><span class="sv grn">${fmt(paidG)}</span></div>
+    <div class="si"><span class="sl">⚠ Ainda Deve</span><span class="sv red">${fmt(pendG)}</span></div>
+  </div>
+  <div class="foot">Gerado em ${new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'})} · FCosta Gestão Financeira · Confidencial: ${pLabel}</div>`;
+}
+
+function exportJPG(mIdx,pessoa){
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:fixed;top:-9999px;left:0;background:#fff;padding:20px;width:820px;font-family:Nunito,sans-serif';
+  wrap.innerHTML=buildReport(mIdx,pessoa);
+  document.body.appendChild(wrap);
+  html2canvas(wrap,{scale:3,backgroundColor:'#fff',useCORS:true,logging:false}).then(canvas=>{
+    document.body.removeChild(wrap);
+    const a=document.createElement('a');
+    a.download=`Financeiro_${MESES[mIdx]}_${pessoa==='rodrigo'?'Rodrigo':'Sergio'}.jpg`;
+    a.href=canvas.toDataURL('image/jpeg',.95);a.click();
+  });
+}
+function exportPDF(mIdx,pessoa){
+  curPrintMes=mIdx;curPrintPessoa=pessoa;
+  document.getElementById('print-frame').innerHTML=buildReport(mIdx,pessoa);
+  document.getElementById('print-modal').classList.add('on');
+}
+function doPrint(){
+  const html=document.getElementById('print-frame').innerHTML;
+  const mn=curPrintMes!==null?MESES[curPrintMes]:'';
+  const pl=curPrintPessoa==='rodrigo'?'Rodrigo':'Sergio';
+  const w=window.open('','_blank','width=900,height=700');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Financeiro ${mn} ${pl}</title></head><body>${html}<script>window.onload=()=>window.print();<\/script></body></html>`);
+  w.document.close();
+}
+function fecharPrintModal(){document.getElementById('print-modal').classList.remove('on');curPrintPessoa=null;}
+
+function exportarAno(){
+  const data={ano:new Date().getFullYear(),exportado:new Date().toISOString(),meses:{}};
+  MESES.forEach((_,mIdx)=>{
+    data.meses[mIdx]={nome:MESES[mIdx],cols:{}};
+    allCols.forEach(c=>{
+      data.meses[mIdx].cols[c.id]={
+        value:document.getElementById(`in-${mIdx}-${c.id}`)?.value||'',
+        paid:isPaid(mIdx,c.id)
+      };
+    });
+  });
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`Financeiro_FCosta_${data.ano}_completo.json`;a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function createTable(){
+  const tbody=document.getElementById('tbody');
+  MESES.forEach((m,mIdx)=>{
+    const tr=document.createElement('tr');tr.id=`row-${mIdx}`;
+
+    // export
+    const expTd=document.createElement('td');expTd.className='td-export';
+    expTd.innerHTML=`<div class="exp-wrap">
+      <div class="exp-lbl">📷 JPG</div>
+      <div class="exp-row">
+        <button class="ebtn jr" onclick="exportJPG(${mIdx},'rodrigo')" title="JPG Rodrigo">Rod.</button>
+        <button class="ebtn js" onclick="exportJPG(${mIdx},'sergio')" title="JPG Sérgio">Sér.</button>
+      </div>
+      <div class="exp-lbl" style="margin-top:3px">📄 PDF</div>
+      <div class="exp-row">
+        <button class="ebtn pr" onclick="exportPDF(${mIdx},'rodrigo')" title="PDF Rodrigo">Rod.</button>
+        <button class="ebtn ps" onclick="exportPDF(${mIdx},'sergio')" title="PDF Sérgio">Sér.</button>
+      </div>
+    </div>`;
+    tr.appendChild(expTd);
+
+    // mês
+    const mtd=document.createElement('td');mtd.className='td-mes';mtd.textContent=m;
+    tr.appendChild(mtd);
+
+    // shared
+    sharedCols.forEach(c=>tr.appendChild(makeCell(mIdx,c)));
+
+    // total shared
+    const tsh=document.createElement('td');tsh.className='td-tot-sh';tsh.id=`tot-sh-${mIdx}`;
+    tsh.innerHTML=`<span class="tot-val tv-sh">R$ 0,00</span>`;tr.appendChild(tsh);
+
+    // rodrigo
+    rodrigoCols.forEach(c=>tr.appendChild(makeCell(mIdx,c)));
+    const tro=document.createElement('td');tro.className='td-tot-ro';tro.id=`tot-ro-${mIdx}`;
+    tro.innerHTML=`<span class="tot-val tv-ro">R$ 0,00</span>`;tr.appendChild(tro);
+
+    // sérgio
+    sergioCols.forEach(c=>tr.appendChild(makeCell(mIdx,c)));
+    const tse=document.createElement('td');tse.className='td-tot-se';tse.id=`tot-se-${mIdx}`;
+    tse.innerHTML=`<span class="tot-val tv-se">R$ 0,00</span>`;tr.appendChild(tse);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function abrirSalvar(){
+  const sel=document.getElementById('sel-mes');
+  sel.innerHTML='';
+  MESES.forEach((m,i)=>sel.innerHTML+=`<option value="${i}">${m}</option>`);
+  document.getElementById('modal-save').classList.add('on');
+}
+function fecharModal(id){document.getElementById(id).classList.remove('on')}
+
+function salvarMes(){
+  const mIdx=parseInt(document.getElementById('sel-mes').value);
+  const data={mes:MESES[mIdx],mIdx,cols:{}};
+  allCols.forEach(c=>{
+    data.cols[c.id]={
+      value:document.getElementById(`in-${mIdx}-${c.id}`)?.value||'',
+      paid:isPaid(mIdx,c.id)
+    };
+  });
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`Financeiro_${MESES[mIdx]}.json`;a.click();
+  URL.revokeObjectURL(a.href);
+  fecharModal('modal-save');
+}
+
+function carregarMes(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      // suporte ao formato antigo (sem wrapper de ano) e novo
+      const meses=data.meses||null;
+      if(meses){
+        // formato ano completo
+        Object.entries(meses).forEach(([mIdx,info])=>{
+          Object.entries(info.cols||{}).forEach(([colId,inf])=>{
+            const inp=document.getElementById(`in-${mIdx}-${colId}`);
+            if(inp){inp.value=inf.value;localStorage.setItem(`in-${mIdx}-${colId}`,inf.value);}
+            const td=document.getElementById(`td-${mIdx}-${colId}`);
+            if(td){
+              inf.paid?td.classList.add('is-paid'):td.classList.remove('is-paid');
+              localStorage.setItem(`st-${mIdx}-${colId}`,inf.paid?'paid':'open');
+            }
+          });
+          recalcTotals(parseInt(mIdx));
+        });
+        alert(`✅ Ano ${data.ano} carregado com sucesso!`);
+      } else {
+        // formato mês único
+        const mIdx=data.mIdx;
+        if(mIdx===undefined||!data.cols){alert('Arquivo inválido.');return;}
+        Object.entries(data.cols).forEach(([colId,inf])=>{
+          const inp=document.getElementById(`in-${mIdx}-${colId}`);
+          if(inp){inp.value=inf.value;localStorage.setItem(`in-${mIdx}-${colId}`,inf.value);}
+          const td=document.getElementById(`td-${mIdx}-${colId}`);
+          if(td){
+            inf.paid?td.classList.add('is-paid'):td.classList.remove('is-paid');
+            localStorage.setItem(`st-${mIdx}-${colId}`,inf.paid?'paid':'open');
+          }
+        });
+        recalcTotals(mIdx);
+        alert(`✅ Mês ${data.mes} carregado com sucesso!`);
+      }
+    }catch(x){alert('Erro ao carregar arquivo.')}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+function load(){
+  MESES.forEach((_,mIdx)=>{
+    allCols.forEach(c=>{
+      const v=localStorage.getItem(`in-${mIdx}-${c.id}`);
+      if(v)document.getElementById(`in-${mIdx}-${c.id}`).value=v;
+      if(localStorage.getItem(`st-${mIdx}-${c.id}`)==='paid')
+        document.getElementById(`td-${mIdx}-${c.id}`).classList.add('is-paid');
+    });
+    recalcTotals(mIdx);
+  });
+}
+
+// fechar modais clicando fora
+document.getElementById('modal-save').addEventListener('click',function(e){if(e.target===this)fecharModal('modal-save')});
+
+createTable();
+load();
+</script>
+</body>
+</html>
