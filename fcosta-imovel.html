@@ -379,15 +379,36 @@ if(!_idBuscado&&!_slugEhImovel){
     var data=snap.val()||{};
     _todosIm=Object.entries(data).map(function(e){return Object.assign({id:e[0]},e[1]);});
 
+    // Normaliza o id buscado: remove hífens e zeros à esquerda para comparar
+    // Ex: "FCV-019" → "FCV019", "FCV-019" → "FCV019"
+    function normId(s){return String(s||'').toUpperCase().replace(/-/g,'').replace(/^([A-Z]+)0+([1-9])/,'$1$2');}
+    // Também versão com zeros para comparar com getCod que usa padStart(3,'0')
+    function normIdZ(s){
+      var r=String(s||'').toUpperCase().replace(/-/g,'');
+      // Se tem letras+numeros, normaliza o número com 3 dígitos
+      var m=r.match(/^([A-Z]+)([0-9]+)$/);
+      if(m)return m[1]+m[2].padStart(3,'0');
+      return r;
+    }
+
     var imovel=_todosIm.find(function(x){
-      // 1) Firebase key direto
+      // 1) Firebase key direto (exato)
       if(_idBuscado&&x.id===_idBuscado)return true;
-      // 2) Código (FCV001 etc)
-      if(_idBuscado&&getCod(x).toUpperCase()===_idBuscado.toUpperCase())return true;
-      // 3) Slug via pathname da página pai
+      // 2) Firebase key normalizado (remove hífen: FCV-019 === FCV019)
+      if(_idBuscado&&normIdZ(x.id)===normIdZ(_idBuscado))return true;
+      // 3) Campo codigo do imóvel (FCV019, FCV-019 etc)
+      if(_idBuscado&&x.codigo&&normIdZ(x.codigo)===normIdZ(_idBuscado))return true;
+      // 4) getCod() gerado dinamicamente
+      if(_idBuscado&&normIdZ(getCod(x))===normIdZ(_idBuscado))return true;
+      // 5) Slug via pathname da página pai
       if(_slugEhImovel&&x.slug){
         var slugFb=String(x.slug).replace(/^\/+/,'').replace(/\/+$/,'');
         if(slugFb===_slugBuscado)return true;
+      }
+      // 6) Slug gerado pelo título/bairro bate com pathname
+      if(_slugEhImovel&&_slugBuscado){
+        var codX=getCod(x).toLowerCase().replace(/-/g,'');
+        if(_slugBuscado.toLowerCase().replace(/-/g,'').indexOf(codX)!==-1)return true;
       }
       return false;
     });
