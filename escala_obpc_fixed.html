@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala Pro | OBPC JD SÃO FERNANDO</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700;900&family=DM+Serif+Display&family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        :root {
+            --bg: #050A12;
+            --card: #111B2D;
+            --gold: #D4A843;
+            --blue: #3B82F6;
+            --white: #FFFFFF;
+            --sunday: #FFF1F2;
+            --wednesday: #F0F9FF;
+            --saturday: #F0FDF4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); font-family: 'DM Sans', sans-serif; padding: 5px; color: #fff; overflow-x: hidden; }
+
+        .top-nav { 
+            width: 1150px; margin: 0 auto 5px; display: flex; justify-content: space-between; align-items: center; 
+            background: var(--card); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(212, 168, 67, 0.3);
+        }
+        .btn { padding: 6px 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.75rem; transition: 0.2s; }
+        .btn-add { background: #10B981; color: #fff; }
+        .btn-config { background: #6366F1; color: #fff; }
+        .btn-photo { background: var(--gold); color: #000; }
+        .btn-clear { background: #EF4444; color: #fff; }
+
+        #filter-panel {
+            width: 1150px; margin: 0 auto 5px;
+            background: var(--card); padding: 10px 14px; border-radius: 8px;
+            border: 1px solid rgba(59,130,246,0.5);
+        }
+        .filter-tabs {
+            display: flex; gap: 4px; margin-bottom: 10px; border-bottom: 1px solid #1E3A5F; padding-bottom: 8px;
+        }
+        .filter-tab {
+            padding: 5px 14px; border-radius: 6px 6px 0 0; border: none; font-size: 0.75rem; font-weight: 900;
+            cursor: pointer; transition: 0.2s; background: #1E293B; color: #94A3B8; letter-spacing: 0.5px;
+        }
+        .filter-tab.active { background: var(--blue); color: #fff; }
+        
+        .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .filter-row label { font-size: 0.72rem; color: var(--gold); font-weight: bold; white-space: nowrap; }
+        .filter-select {
+            flex: 1; min-width: 180px; max-width: 300px; padding: 5px 8px; border-radius: 6px;
+            background: #0F172A; color: #fff; border: 1px solid #334155;
+            font-family: inherit; font-size: 0.8rem;
+        }
+        input.filter-select[type="date"] {
+            max-width: 200px; height: 34px; cursor: pointer; color-scheme: dark;
+        }
+        .filter-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .btn-share { background: #0EA5E9; color: #fff; }
+        .btn-upload { background: #8B5CF6; color: #fff; }
+        .btn-clear-f { background: #64748B; color: #fff; }
+        .btn-screenshot-f { background: var(--gold); color: #000; }
+
+        .jpg-group { display: flex; gap: 4px; align-items: center; }
+        .btn-jpg-quadro {
+            background: #F59E0B; color: #000; font-size: 0.72rem; padding: 6px 10px;
+            border-radius: 6px; border: none; font-weight: 900; cursor: pointer;
+            display: flex; align-items: center; gap: 4px; white-space: nowrap; transition: 0.2s;
+        }
+        .btn-jpg-quadro:hover { background: #D97706; }
+        .btn-jpg-individual {
+            background: #10B981; color: #fff; font-size: 0.72rem; padding: 6px 10px;
+            border-radius: 6px; border: none; font-weight: 900; cursor: pointer;
+            display: flex; align-items: center; gap: 4px; white-space: nowrap; transition: 0.2s;
+        }
+        .btn-jpg-individual:hover { background: #059669; }
+
+        #active-filter-badge {
+            width: 1150px; margin: 0 auto 3px;
+            background: #1E3A5F; border: 1px solid var(--blue); border-radius: 6px;
+            padding: 5px 12px; font-size: 0.78rem; color: #7DD3FC;
+            display: none; align-items: center; gap: 8px;
+        }
+        #active-filter-badge.visible { display: flex; }
+        #active-filter-badge strong { color: #fff; }
+
+        #toolbar-selection {
+            width: 1150px; margin: 0 auto 0; background: var(--blue); border-radius: 10px 10px 0 0;
+            display: none; padding: 10px; flex-wrap: wrap; gap: 8px; justify-content: center;
+            border: 2px solid #fff; border-bottom: none;
+        }
+        .chip {
+            background: #fff; color: #000; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;
+            font-weight: 900; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .chip:hover { background: var(--gold); }
+
+        #scale-sheet {
+            width: 1150px; background: var(--white); margin: 0 auto;
+            padding: 10px 25px 20px; color: #000; border-radius: 0 0 4px 4px;
+        }
+
+        .compact-header { border: 1.5px solid #000; padding: 5px; margin-bottom: 8px; text-align: center; }
+        .church-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; text-transform: uppercase; margin-bottom: 2px; line-height: 1; }
+
+        /* ── PERÍODO AUTOMÁTICO ── */
+        .period-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 3px 0 2px; }
+        .period-nav {
+            background: none; border: 1.5px solid #000; border-radius: 50%;
+            width: 22px; height: 22px; font-size: 0.85rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; color: #000; line-height: 1; transition: 0.15s;
+            padding: 0;
+        }
+        .period-nav:hover { background: #000; color: #fff; }
+
+        /* ── PERÍODO: TIPOGRAFIA ELEGANTE ── */
+        .period-label-wrap {
+            text-align: center;
+            line-height: 1;
+        }
+        .period-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.6rem; font-weight: 900; letter-spacing: 3px;
+            color: #888; text-transform: uppercase; display: block;
+            margin-bottom: 3px;
+        }
+        .period-month {
+            font-family: 'Playfair Display', 'DM Serif Display', serif;
+            font-size: 2rem; font-weight: 900; letter-spacing: 2px;
+            color: #000; display: inline; line-height: 1;
+            text-transform: uppercase;
+        }
+        .period-sep {
+            font-family: 'Cormorant Garamond', 'DM Serif Display', serif;
+            font-size: 1.3rem; font-weight: 600; color: #999;
+            margin: 0 6px; vertical-align: middle;
+        }
+        .period-year {
+            font-family: 'Cormorant Garamond', 'DM Serif Display', serif;
+            font-size: 1.6rem; font-weight: 700; letter-spacing: 1px;
+            color: #333; display: inline; line-height: 1;
+        }
+
+        .theme-line { font-weight: bold; font-style: italic; font-size: 0.85rem; text-transform: uppercase; outline: none; display: block; margin-top: 2px; }
+
+        #filter-name-line {
+            display: none;
+            font-size: 0.85rem; font-weight: bold; color: #1E40AF;
+            margin-top: 4px; letter-spacing: 0.5px;
+        }
+
+        /* ── TABELA PRINCIPAL ── */
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 2px solid #000; }
+        
+        /* CABEÇALHOS */
+        th { 
+            background: #E2E8F0; color: #000; border: 1.5px solid #000; padding: 5px 2px; 
+            font-size: 0.68rem; text-transform: uppercase; font-weight: 900; letter-spacing: 0.3px;
+            vertical-align: middle; text-align: center;
+        }
+        th.sub-header {
+            background: #CBD5E1; font-size: 0.63rem; padding: 3px 2px;
+        }
+
+        td { border: 1.5px solid #000; padding: 0; vertical-align: middle; position: relative; }
+
+        .col-dirigente, .col-oportunidade, .col-ministrante { }
+        .hide-for-export .col-dirigente,
+        .hide-for-export .col-oportunidade,
+        .hide-for-export .col-ministrante { display: none !important; }
+
+        /* ── CÉLULA DIRIGENTE DIVIDIDA (Ceia/Primícias) ── */
+        .td-dirigente-split { padding: 0 !important; }
+        .td-dirigente-split .dir-split-wrap {
+            display: flex; width: 100%; height: 100%; min-height: 36px;
+        }
+        .td-dirigente-split .dir-sub {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-start; padding: 0;
+        }
+        .td-dirigente-split .dir-sub:first-child { border-right: 1.5px solid #000; }
+        .dir-sub-label {
+            font-size: 0.55rem; font-weight: 900; text-transform: uppercase;
+            color: #7C3AED; background: #EDE9FE;
+            width: 100%; text-align: center; padding: 1px 0;
+            border-bottom: 1px solid #C4B5FD; letter-spacing: 0.3px; line-height: 1.3;
+        }
+        .dir-sub-input {
+            flex: 1; width: 100%; border: none; background: transparent;
+            text-align: center; font-size: 0.75rem; color: #000; outline: none;
+            padding: 2px 2px; white-space: pre-wrap; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 24px; line-height: 1.2;
+        }
+
+        /* ── CÉLULAS ── */
+        .cell-data {
+            width: 100%; min-height: 36px; border: none; background: transparent; 
+            text-align: center; font-size: 0.78rem; color: #000; outline: none;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2px 3px; white-space: pre-wrap; cursor: pointer; line-height: 1.2;
+        }
+        .cell-data.cell-ensaio { font-size: 0.75rem; min-height: 36px; }
+
+        .active-cell { background: rgba(59, 130, 246, 0.15) !important; outline: 2px solid var(--blue); z-index: 5; }
+
+        .cell-data .nome-highlight { 
+            background: #FBBF24; padding: 1px 4px; border-radius: 3px; font-weight: 900; font-size: 0.75rem;
+        }
+        .cell-data .nome-oculto { 
+            color: #ccc; font-size: 0.7rem; font-style: italic;
+        }
+
+        input[type="date"] { width: 100%; height: 36px; border: none; text-align: center; font-family: inherit; font-weight: bold; font-size: 0.78rem; cursor: pointer; }
+
+        .row-dom { background-color: var(--sunday); }
+        .row-qua { background-color: var(--wednesday); }
+        .row-sab { background-color: var(--saturday); }
+
+        .row-ceia .td-dirigente-normal,
+        .row-ceia .td-dirigente-split { border-top: 2px solid #7C3AED !important; }
+
+        tr.row-filtered-out { display: none; }
+        tr.row-no-match { display: none; }
+
+        .btn-del { position: absolute; right: -30px; top: 8px; color: #EF4444; cursor: pointer; display: none; }
+        tr:hover .btn-del { display: block; }
+
+        /* ── MODAIS ── */
+        #upload-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 6000; }
+        .upload-box { background: #1E293B; padding: 25px; border-radius: 12px; width: 480px; border: 1px solid #8B5CF6; }
+        .upload-box h2 { color: #A78BFA; text-align: center; margin-bottom: 15px; }
+        .upload-drop { border: 2px dashed #8B5CF6; border-radius: 8px; padding: 30px; text-align: center; cursor: pointer; color: #94A3B8; font-size: 0.9rem; transition: 0.2s; }
+        .upload-drop:hover { background: rgba(139,92,246,0.1); }
+        .upload-drop input { display: none; }
+        #upload-preview { max-width: 100%; max-height: 300px; display: none; margin: 10px auto; border-radius: 8px; }
+        .upload-info { color: #7DD3FC; font-size: 0.8rem; text-align: center; margin-top: 8px; }
+
+        #config-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 5000; }
+        .config-box { background: #1E293B; padding: 25px; border-radius: 12px; width: 600px; border: 1px solid var(--gold); }
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .config-grid textarea { width: 100%; height: 200px; padding: 10px; border-radius: 5px; background: #0F172A; color: #fff; border: 1px solid #444; font-family: inherit; }
+        .config-grid label { font-size: 0.8rem; color: var(--gold); display: block; margin-bottom: 5px; }
+
+        @media print { .top-nav, #filter-panel, #active-filter-badge, #toolbar-selection, .btn-del { display: none !important; } }
+
+        #share-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 7000; }
+        .share-box { background: #1E293B; padding: 20px; border-radius: 14px; width: 340px; border: 2px solid #25D366; text-align: center; }
+        .share-box h2 { color: #25D366; margin-bottom: 12px; font-size: 1rem; }
+        #share-preview-img { max-width: 100%; max-height: 220px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #334155; }
+        #share-status { font-size: 0.85rem; color: #94A3B8; margin-bottom: 14px; }
+        .share-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .btn-baixar-share { background: var(--gold); color: #000; }
+        .btn-zap-share { background: #25D366; color: #fff; }
+        .btn-fechar-share { background: #64748B; color: #fff; }
+
+        .ceia-legenda { font-size: 0.65rem; color: #7C3AED; font-weight: bold; margin-top: 3px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+    <div style="display: flex; gap: 8px;">
+        <button class="btn btn-add" onclick="addRow()">➕ Novo Culto</button>
+        <button class="btn btn-config" onclick="openConfig(true)">⚙️ Listas</button>
+    </div>
+    <div style="text-align: center">
+        <strong style="color: var(--gold); font-size: 0.8rem;">SISTEMA DE ESCALA OBPC</strong>
+    </div>
+    <div style="display: flex; gap: 8px;">
+        <button class="btn btn-photo" onclick="takeScreenshot()">📸 Foto Completa</button>
+        <button class="btn btn-clear" onclick="resetData()">🗑️</button>
+    </div>
+</div>
+
+<div id="filter-panel">
+    <div class="filter-tabs">
+        <button class="filter-tab active" onclick="switchTab('obreiro')">👤 POR OBREIRO</button>
+        <button class="filter-tab" onclick="switchTab('data')">📅 POR DATA</button>
+        <button class="filter-tab" onclick="switchTab('culto')">⛪ POR CULTO</button>
+        <button class="filter-tab" onclick="switchTab('atividade')">🎯 POR ATIVIDADE</button>
+    </div>
+
+    <!-- FILTRO OBREIRO -->
+    <div id="tab-obreiro" class="filter-row">
+        <label>🔍 OBREIRO:</label>
+        <select id="sel-obreiro" class="filter-select" onchange="applyFilter()">
+            <option value="">— Selecione —</option>
+        </select>
+        <div class="filter-actions">
+            <div class="jpg-group">
+                <button class="btn-jpg-quadro" onclick="gerarJpgQuadro()" title="Tabela completa do mês sem Dirigente, Oportunidade e Ministrante">🖼️ JPG Quadro</button>
+                <button class="btn-jpg-individual" onclick="gerarJpgIndividual()" title="Escala individual do obreiro selecionado">👤 JPG Individual</button>
+            </div>
+            <button class="btn btn-share" onclick="compartilharFiltro()">📤 Compartilhar</button>
+            <button class="btn btn-upload" onclick="openUpload()">📁 Upload</button>
+            <button class="btn btn-clear-f" onclick="clearFilter()">✕ Limpar</button>
+        </div>
+    </div>
+
+    <!-- FILTRO DATA -->
+    <div id="tab-data" class="filter-row" style="display:none">
+        <label>📅 DATA:</label>
+        <select id="sel-data" class="filter-select" onchange="applyFilter()">
+            <option value="">— Selecione —</option>
+        </select>
+        <div class="filter-actions">
+            <button class="btn btn-screenshot-f" onclick="gerarFotoFiltro()">📲 Gerar Foto</button>
+            <button class="btn btn-share" onclick="compartilharFiltro()">📤 Compartilhar</button>
+            <button class="btn btn-upload" onclick="openUpload()">📁 Upload</button>
+            <button class="btn btn-clear-f" onclick="clearFilter()">✕ Limpar</button>
+        </div>
+    </div>
+
+    <!-- FILTRO CULTO -->
+    <div id="tab-culto" class="filter-row" style="display:none">
+        <label>⛪ CULTO:</label>
+        <select id="sel-culto" class="filter-select" onchange="applyFilter()">
+            <option value="">— Selecione —</option>
+        </select>
+        <div class="filter-actions">
+            <button class="btn btn-screenshot-f" onclick="gerarFotoFiltro()">📲 Gerar Foto</button>
+            <button class="btn btn-share" onclick="compartilharFiltro()">📤 Compartilhar</button>
+            <button class="btn btn-upload" onclick="openUpload()">📁 Upload</button>
+            <button class="btn btn-clear-f" onclick="clearFilter()">✕ Limpar</button>
+        </div>
+    </div>
+
+    <!-- FILTRO ATIVIDADE -->
+    <div id="tab-atividade" class="filter-row" style="display:none">
+        <label>🎯 ATIVIDADE:</label>
+        <select id="sel-atividade" class="filter-select" onchange="applyFilter()">
+            <option value="">— Selecione —</option>
+            <option value="PORTA">Porta / Recepção</option>
+            <option value="ENSAIO">Ensaio</option>
+            <option value="DIRIGENTE">Dirigente</option>
+            <option value="CELEBRACAO">Celebração (Ceia)</option>
+            <option value="OPORTUNIDADE">Oportunidade</option>
+            <option value="MINISTRANTE">Ministrante</option>
+        </select>
+        <select id="sel-atividade-obr" class="filter-select" onchange="applyFilter()" style="display:none">
+            <option value="">— Todos os obreiros —</option>
+        </select>
+        <div class="filter-actions">
+            <button class="btn btn-screenshot-f" onclick="gerarFotoFiltro()">📲 Gerar Foto</button>
+            <button class="btn btn-share" onclick="compartilharFiltro()">📤 Compartilhar</button>
+            <button class="btn btn-upload" onclick="openUpload()">📁 Upload</button>
+            <button class="btn btn-clear-f" onclick="clearFilter()">✕ Limpar</button>
+        </div>
+    </div>
+</div>
+
+<div id="active-filter-badge">
+    <span>🔎 FILTRO ATIVO:</span>
+    <strong id="badge-text">—</strong>
+    <span style="margin-left: auto; font-size: 0.7rem; color: #64748B;">Apenas os registros correspondentes são exibidos</span>
+</div>
+
+<div id="toolbar-selection"></div>
+
+<div id="scale-sheet">
+    <div class="compact-header">
+        <div class="church-title" contenteditable="true" id="save-church">O BRASIL PARA CRISTO - JD SÃO FERNANDO</div>
+
+        <!-- ── PERÍODO COM NAVEGAÇÃO E TIPOGRAFIA ELEGANTE ── -->
+        <div class="period-wrap">
+            <button class="period-nav" onclick="mudaMes(-1)" title="Mês anterior">&#8249;</button>
+            <div class="period-label-wrap">
+                <span class="period-sub">Escala de Obreiros</span>
+                <div id="periodo-display">
+                    <span class="period-month" id="periodo-mes"></span>
+                    <span class="period-sep">/</span>
+                    <span class="period-year" id="periodo-ano"></span>
+                </div>
+            </div>
+            <button class="period-nav" onclick="mudaMes(1)" title="Próximo mês">&#8250;</button>
+        </div>
+
+        <div class="theme-line" contenteditable="true" id="save-theme">TEMA: "2026 ANO DA UNÇÃO"</div>
+        <div id="filter-name-line">📋 <span id="filter-name-display"></span></div>
+    </div>
+
+    <table id="main-table">
+        <thead>
+            <tr>
+                <th style="width:100px;">DATA</th>
+                <th style="width:82px;">DIA</th>
+                <th style="width:90px;" class="col-ensaio">ENSAIO</th>
+                <th style="width:140px;">CULTO / EVENTO</th>
+                <th style="width:110px;">PORTA (RECEPÇÃO)</th>
+                <th style="width:110px;" class="col-dirigente">DIRIGENTE</th>
+                <th style="width:100px;" class="col-oportunidade">OPORTUNIDADE</th>
+                <th style="width:100px;" class="col-ministrante">MINISTRANTE</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<!-- MODAL UPLOAD -->
+<div id="upload-modal">
+    <div class="upload-box">
+        <h2>📁 Upload de Escala</h2>
+        <div class="upload-drop" onclick="document.getElementById('file-input').click()">
+            <input type="file" id="file-input" accept="image/*,.html" onchange="handleUpload(event)">
+            <div style="font-size:2rem; margin-bottom:8px">📤</div>
+            <div>Toque para selecionar imagem ou arquivo HTML</div>
+            <div style="font-size:0.75rem; color:#64748B; margin-top:4px">PNG, JPG, WebP, HTML</div>
+        </div>
+        <img id="upload-preview" alt="Preview">
+        <div id="upload-status" class="upload-info"></div>
+        <div style="display:flex; gap:8px; margin-top:12px">
+            <button class="btn btn-share" style="flex:1; justify-content:center" onclick="compartilharUpload()">📤 Compartilhar via Zap</button>
+            <button class="btn btn-clear-f" style="flex:1; justify-content:center" onclick="closeUpload()">✕ Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CONFIG -->
+<div id="config-modal">
+    <div class="config-box">
+        <h2 style="color: var(--gold); text-align: center;">⚙️ Editar Listas</h2>
+        <div class="config-grid">
+            <div>
+                <label>Cultos (um por linha) — inclua "Santa Ceia" ou "Primícias" para ativar subcolunas</label>
+                <textarea id="list-cultos" oninput="saveSettings(); populateCultoSelect()"></textarea>
+            </div>
+            <div>
+                <label>Obreiros (um por linha)</label>
+                <textarea id="list-obreiros" oninput="saveSettings(); populateObreiroSelects()"></textarea>
+            </div>
+        </div>
+        <button class="btn btn-add" style="width: 100%; margin-top: 20px; justify-content: center; height: 40px;" onclick="openConfig(false)">✅ Salvar e Fechar</button>
+    </div>
+</div>
+
+<!-- MODAL COMPARTILHAR -->
+<div id="share-modal">
+    <div class="share-box">
+        <h2>📤 Compartilhar Escala</h2>
+        <img id="share-preview-img" alt="Preview da escala">
+        <div id="share-status">⏳ Gerando imagem...</div>
+        <div class="share-btns">
+            <button class="btn btn-baixar-share" id="share-btn-baixar" style="display:none">⬇️ Baixar PNG</button>
+            <button class="btn btn-zap-share" id="share-btn-zap" style="display:none">💬 Baixar + WhatsApp</button>
+            <button class="btn btn-fechar-share" onclick="document.getElementById('share-modal').style.display='none'">✕ Fechar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let globalActiveCell = null;
+    let currentTab = 'obreiro';
+    let uploadedImageBlob = null;
+
+    // ─── MESES ────────────────────────────────────────────────────────────────
+    // UMA única declaração — usada em todo o sistema
+    const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    // ─── MÊS / ANO AUTOMÁTICO ────────────────────────────────────────────────
+    let periodoAtual = new Date();  // começa no mês atual
+
+    function renderPeriodo() {
+        const mes = document.getElementById('periodo-mes');
+        const ano = document.getElementById('periodo-ano');
+        if (mes) mes.textContent = MESES[periodoAtual.getMonth()].toUpperCase();
+        if (ano) ano.textContent = periodoAtual.getFullYear();
+    }
+
+    function mudaMes(delta) {
+        periodoAtual.setMonth(periodoAtual.getMonth() + delta);
+        renderPeriodo();
+        save();
+    }
+
+    // ── Detecta se culto é Ceia / Primícias ──────────────────────────────────
+    function isCeia(cultoText) {
+        const t = (cultoText || '').toLowerCase();
+        return t.includes('ceia') || t.includes('primícias') || t.includes('primicias');
+    }
+
+    // ── Atualiza a célula TD de DIRIGENTE dessa linha ─────────────────────────
+    function updateCeiaRow(tr) {
+        const cltCell = tr.querySelector('.cell-clt');
+        const cultoText = cltCell ? cltCell.innerText : '';
+        const ehCeia = isCeia(cultoText);
+        const tdDir = tr.querySelector('td.td-dirigente');
+
+        if (!tdDir) return;
+
+        if (ehCeia) {
+            if (tdDir.classList.contains('td-dirigente-split')) return;
+
+            const oldInput = tdDir.querySelector('.cell-obr-dir');
+            const oldVal = oldInput ? (oldInput.getAttribute('data-raw') || oldInput.innerText) : '';
+            const oldCel = tdDir.getAttribute('data-cel') || '';
+
+            tdDir.classList.remove('td-dirigente-normal');
+            tdDir.classList.add('td-dirigente-split');
+            tdDir.innerHTML = `
+                <div class="dir-split-wrap">
+                    <div class="dir-sub">
+                        <div class="dir-sub-label">DIRIGENTE</div>
+                        <div class="dir-sub-input cell-obr cell-obr-dir"
+                             onclick="activateCell(this,'obreiros')"
+                             contenteditable="true"
+                             data-raw="${escAttr(oldVal)}">${oldVal}</div>
+                    </div>
+                    <div class="dir-sub">
+                        <div class="dir-sub-label">CELEBRAÇÃO</div>
+                        <div class="dir-sub-input cell-obr cell-obr-cel"
+                             onclick="activateCell(this,'obreiros')"
+                             contenteditable="true"
+                             data-raw="${escAttr(oldCel)}">${oldCel}</div>
+                    </div>
+                </div>`;
+            tr.classList.add('row-ceia');
+        } else {
+            if (tdDir.classList.contains('td-dirigente-normal')) return;
+
+            const dirInput = tdDir.querySelector('.cell-obr-dir');
+            const curVal = dirInput ? (dirInput.getAttribute('data-raw') || dirInput.innerText) : '';
+            const celInput = tdDir.querySelector('.cell-obr-cel');
+            const celVal = celInput ? (celInput.getAttribute('data-raw') || celInput.innerText) : '';
+            tdDir.setAttribute('data-cel', celVal);
+
+            tdDir.classList.remove('td-dirigente-split');
+            tdDir.classList.add('td-dirigente-normal');
+            tdDir.innerHTML = `
+                <div class="cell-data cell-obr cell-obr-dir"
+                     onclick="activateCell(this,'obreiros')"
+                     contenteditable="true"
+                     data-raw="${escAttr(curVal)}">${curVal}</div>`;
+            tr.classList.remove('row-ceia');
+        }
+    }
+
+    function escAttr(s) {
+        return (s || '').replace(/"/g, '&quot;');
+    }
+
+    function checkGlobalCeia() {
+        document.querySelectorAll('#tableBody tr').forEach(tr => updateCeiaRow(tr));
+    }
+
+    // ─── NOME DO ARQUIVO ─────────────────────────────────────────────────────
+    function getNomeArquivo() {
+        if (currentTab === 'obreiro') {
+            const v = document.getElementById('sel-obreiro').value;
+            return v ? v : 'Escala_OBPC';
+        }
+        if (currentTab === 'data') {
+            const v = document.getElementById('sel-data').value;
+            if (v) { const [y,m,d] = v.split('-'); return `Escala_${d}-${m}-${y}`; }
+            return 'Escala_OBPC';
+        }
+        if (currentTab === 'culto') {
+            const v = document.getElementById('sel-culto').value;
+            return v ? v.replace(/[^a-zA-Z0-9À-ú\s]/g,'').trim() : 'Escala_OBPC';
+        }
+        if (currentTab === 'atividade') {
+            const atv = document.getElementById('sel-atividade').value;
+            const obr = document.getElementById('sel-atividade-obr').value;
+            if (obr) return obr;
+            return atv ? `Escala_${atv}` : 'Escala_OBPC';
+        }
+        return 'Escala_OBPC';
+    }
+
+    // ─── ABAS DE FILTRO ──────────────────────────────────────────────────────
+    function switchTab(tab) {
+        currentTab = tab;
+        ['obreiro','data','culto','atividade'].forEach((t, i) => {
+            document.getElementById('tab-'+t).style.display = t === tab ? 'flex' : 'none';
+            document.querySelectorAll('.filter-tab')[i].classList.toggle('active', t === tab);
+        });
+        if (tab === 'data') populateDatasSelect();
+        clearFilter();
+    }
+
+    // ─── POPULA SELECTS ──────────────────────────────────────────────────────
+    function getLista(chaveLS, idTextarea) {
+        const ls = localStorage.getItem(chaveLS) || '';
+        const ta = document.getElementById(idTextarea) ? document.getElementById(idTextarea).value : '';
+        const raw = ls || ta;
+        return raw.split('\n').map(n => n.trim()).filter(Boolean);
+    }
+
+    function populateObreiroSelects() {
+        const nomes = getLista('obpc_set_obreiros_v3', 'list-obreiros');
+        ['sel-obreiro', 'sel-atividade-obr'].forEach(id => {
+            const sel = document.getElementById(id);
+            const cur = sel.value;
+            const firstOpt = id === 'sel-atividade-obr'
+                ? '<option value="">— Todos os obreiros —</option>'
+                : '<option value="">— Selecione —</option>';
+            sel.innerHTML = firstOpt + nomes.map(n => `<option value="${n}">${n}</option>`).join('');
+            if (cur) sel.value = cur;
+        });
+    }
+
+    function populateCultoSelect() {
+        const cultos = getLista('obpc_set_cultos_v3', 'list-cultos');
+        const sel = document.getElementById('sel-culto');
+        const cur = sel.value;
+        sel.innerHTML = '<option value="">— Selecione —</option>'
+            + cultos.map(c => `<option value="${c}">${c}</option>`).join('');
+        if (cur) sel.value = cur;
+    }
+
+    function populateDatasSelect() {
+        const sel = document.getElementById('sel-data');
+        const cur = sel.value;
+        const datas = [];
+        document.querySelectorAll('#tableBody tr').forEach(tr => {
+            const dt = tr.querySelector('.dt-input');
+            if (dt && dt.value) {
+                const label = formatDate(dt.value) + ' — ' + (tr.querySelector('.cell-day').innerText || '');
+                if (!datas.find(d => d.val === dt.value)) {
+                    datas.push({ val: dt.value, label: label.trim() });
+                }
+            }
+        });
+        datas.sort((a,b) => a.val.localeCompare(b.val));
+        sel.innerHTML = '<option value="">— Selecione —</option>'
+            + datas.map(d => `<option value="${d.val}">${d.label}</option>`).join('');
+        if (cur) sel.value = cur;
+    }
+
+    // ─── APLICAR FILTRO ──────────────────────────────────────────────────────
+    function applyFilter() {
+        const atv = document.getElementById('sel-atividade').value;
+        document.getElementById('sel-atividade-obr').style.display = atv ? 'block' : 'none';
+
+        const rows = document.querySelectorAll('#tableBody tr');
+        const badge = document.getElementById('active-filter-badge');
+        const nameLine = document.getElementById('filter-name-line');
+        const nameDisplay = document.getElementById('filter-name-display');
+
+        rows.forEach(tr => {
+            tr.classList.remove('row-filtered-out', 'row-no-match');
+            restoreCells(tr);
+        });
+
+        nameLine.style.display = 'none';
+        let filterActive = false;
+        let badgeLabel = '';
+
+        if (currentTab === 'obreiro') {
+            const nome = document.getElementById('sel-obreiro').value;
+            if (!nome) { clearBadge(); return; }
+            filterActive = true;
+            badgeLabel = `OBREIRO: ${nome.toUpperCase()}`;
+
+            rows.forEach(tr => {
+                const obrs = tr.querySelectorAll('.cell-obr');
+                let aparece = false;
+                obrs.forEach(cell => {
+                    const lista = (cell.getAttribute('data-raw') || cell.innerText)
+                        .split('\n').map(n => n.trim()).filter(Boolean);
+                    if (lista.some(n => n.toLowerCase() === nome.toLowerCase())) aparece = true;
+                });
+                if (!aparece) {
+                    tr.classList.add('row-no-match');
+                } else {
+                    obrs.forEach(cell => {
+                        const lista = (cell.getAttribute('data-raw') || cell.innerText)
+                            .split('\n').map(n => n.trim()).filter(Boolean);
+                        const tem = lista.some(n => n.toLowerCase() === nome.toLowerCase());
+                        cell.innerHTML = tem
+                            ? `<span class="nome-highlight">${nome}</span>`
+                            : `<span class="nome-oculto">—</span>`;
+                    });
+                    nameLine.style.display = 'block';
+                    nameDisplay.textContent = `MINHA ESCALA — ${nome.toUpperCase()}`;
+                }
+            });
+
+        } else if (currentTab === 'data') {
+            const data = document.getElementById('sel-data').value;
+            if (!data) { clearBadge(); return; }
+            filterActive = true;
+            const fmt = formatDate(data);
+            badgeLabel = `DATA: ${fmt}`;
+            rows.forEach(tr => {
+                const dt = tr.querySelector('.dt-input');
+                if (!dt || dt.value !== data) tr.classList.add('row-filtered-out');
+            });
+            nameLine.style.display = 'block';
+            nameDisplay.textContent = `CULTO DO DIA: ${fmt}`;
+
+        } else if (currentTab === 'culto') {
+            const culto = document.getElementById('sel-culto').value;
+            if (!culto) { clearBadge(); return; }
+            filterActive = true;
+            badgeLabel = `CULTO: ${culto.toUpperCase()}`;
+            rows.forEach(tr => {
+                const clt = tr.querySelector('.cell-clt');
+                if (!clt || !clt.innerText.trim().toLowerCase().includes(culto.toLowerCase()))
+                    tr.classList.add('row-filtered-out');
+            });
+            nameLine.style.display = 'block';
+            nameDisplay.textContent = `CULTO: ${culto.toUpperCase()}`;
+
+        } else if (currentTab === 'atividade') {
+            const atividade = document.getElementById('sel-atividade').value;
+            const obreiro = document.getElementById('sel-atividade-obr').value;
+            if (!atividade) { clearBadge(); return; }
+            filterActive = true;
+            const atividadeIdx = { 'PORTA': 0, 'DIRIGENTE': 1, 'CELEBRACAO': 2, 'OPORTUNIDADE': 3, 'MINISTRANTE': 4 };
+            badgeLabel = `ATIVIDADE: ${atividade}${obreiro ? ' — '+obreiro : ''}`;
+
+            if (atividade === 'ENSAIO') {
+                rows.forEach(tr => {
+                    const ensaioCell = tr.querySelector('.cell-ensaio');
+                    if (!ensaioCell || !ensaioCell.innerText.trim()) tr.classList.add('row-filtered-out');
+                });
+            } else {
+                const idx = atividadeIdx[atividade];
+                rows.forEach(tr => {
+                    const obrs = tr.querySelectorAll('.cell-obr');
+                    if (!obrs[idx]) { tr.classList.add('row-filtered-out'); return; }
+                    const nomes = (obrs[idx].getAttribute('data-raw') || obrs[idx].innerText)
+                        .split('\n').map(n => n.trim()).filter(Boolean);
+                    if (obreiro) {
+                        const tem = nomes.some(n => n.toLowerCase() === obreiro.toLowerCase());
+                        if (!tem) { tr.classList.add('row-filtered-out'); return; }
+                        obrs[idx].innerHTML = `<span class="nome-highlight">${obreiro}</span>`;
+                    } else if (nomes.length === 0) {
+                        tr.classList.add('row-filtered-out');
+                    }
+                });
+            }
+            nameLine.style.display = 'block';
+            nameDisplay.textContent = `ATIVIDADE: ${atividade}${obreiro ? ' — '+obreiro.toUpperCase() : ''}`;
+        }
+
+        if (filterActive) {
+            badge.classList.add('visible');
+            document.getElementById('badge-text').textContent = badgeLabel;
+        }
+    }
+
+    function clearBadge() {
+        document.getElementById('active-filter-badge').classList.remove('visible');
+        document.getElementById('filter-name-line').style.display = 'none';
+    }
+
+    function clearFilter() {
+        document.getElementById('sel-obreiro').value = '';
+        document.getElementById('sel-data').value = '';
+        document.getElementById('sel-culto').value = '';
+        document.getElementById('sel-atividade').value = '';
+        document.getElementById('sel-atividade-obr').value = '';
+        document.getElementById('sel-atividade-obr').style.display = 'none';
+        document.querySelectorAll('#tableBody tr').forEach(tr => {
+            tr.classList.remove('row-filtered-out', 'row-no-match');
+            restoreCells(tr);
+        });
+        clearBadge();
+    }
+
+    function restoreCells(tr) {
+        tr.querySelectorAll('.cell-obr').forEach(cell => {
+            const raw = cell.getAttribute('data-raw');
+            if (raw !== null) cell.innerText = raw;
+        });
+    }
+
+    // ─── JPG QUADRO ──────────────────────────────────────────────────────────
+    function gerarJpgQuadro() {
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        document.getElementById('toolbar-selection').style.display = 'none';
+
+        const savedFilteredOut = [];
+        const savedNoMatch = [];
+        document.querySelectorAll('#tableBody tr').forEach((tr, i) => {
+            savedFilteredOut.push(tr.classList.contains('row-filtered-out'));
+            savedNoMatch.push(tr.classList.contains('row-no-match'));
+            tr.classList.remove('row-filtered-out', 'row-no-match');
+            restoreCells(tr);
+        });
+
+        document.getElementById('scale-sheet').classList.add('hide-for-export');
+        document.querySelectorAll('#tableBody tr').forEach(tr => {
+            const tds = tr.querySelectorAll('td');
+            if (tds[5]) tds[5].style.display = 'none';
+            if (tds[6]) tds[6].style.display = 'none';
+            if (tds[7]) tds[7].style.display = 'none';
+            if (tds[8]) tds[8].style.display = 'none';
+        });
+
+        const nameLine = document.getElementById('filter-name-line');
+        const prevNameDisplay = nameLine.style.display;
+        nameLine.style.display = 'none';
+
+        setTimeout(() => {
+            html2canvas(document.querySelector("#scale-sheet"), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+                document.getElementById('scale-sheet').classList.remove('hide-for-export');
+                document.querySelectorAll('#tableBody tr').forEach((tr, i) => {
+                    const tds = tr.querySelectorAll('td');
+                    if (tds[5]) tds[5].style.display = '';
+                    if (tds[6]) tds[6].style.display = '';
+                    if (tds[7]) tds[7].style.display = '';
+                    if (tds[8]) tds[8].style.display = '';
+                    if (savedFilteredOut[i]) tr.classList.add('row-filtered-out');
+                    if (savedNoMatch[i]) tr.classList.add('row-no-match');
+                });
+                nameLine.style.display = prevNameDisplay;
+                checkGlobalCeia();
+                applyFilter();
+
+                const link = document.createElement('a');
+                link.download = 'Quadro_Avisos_OBPC.jpg';
+                link.href = canvas.toDataURL("image/jpeg", 0.95);
+                link.click();
+            });
+        }, 80);
+    }
+
+    // ─── JPG INDIVIDUAL ──────────────────────────────────────────────────────
+    function gerarJpgIndividual() {
+        const nome = document.getElementById('sel-obreiro').value;
+        if (!nome) { alert('Selecione um obreiro primeiro.'); return; }
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        document.getElementById('toolbar-selection').style.display = 'none';
+
+        const rows = document.querySelectorAll('#tableBody tr');
+        const snapshots = [];
+        rows.forEach(tr => {
+            const obrs = tr.querySelectorAll('.cell-obr');
+            const cellSnaps = [];
+            obrs.forEach(cell => cellSnaps.push({ html: cell.innerHTML, raw: cell.getAttribute('data-raw') }));
+            snapshots.push({
+                filteredOut: tr.classList.contains('row-filtered-out'),
+                noMatch:     tr.classList.contains('row-no-match'),
+                cells: cellSnaps
+            });
+        });
+
+        rows.forEach(tr => {
+            tr.classList.remove('row-filtered-out', 'row-no-match');
+            const obrs = tr.querySelectorAll('.cell-obr');
+            let aparece = false;
+            obrs.forEach(cell => {
+                const lista = (cell.getAttribute('data-raw') || cell.innerText)
+                    .split('\n').map(n => n.trim()).filter(Boolean);
+                if (lista.some(n => n.toLowerCase() === nome.toLowerCase())) aparece = true;
+            });
+            if (!aparece) {
+                tr.classList.add('row-no-match');
+            } else {
+                obrs.forEach(cell => {
+                    const lista = (cell.getAttribute('data-raw') || cell.innerText)
+                        .split('\n').map(n => n.trim()).filter(Boolean);
+                    const tem = lista.some(n => n.toLowerCase() === nome.toLowerCase());
+                    cell.innerHTML = tem
+                        ? `<span class="nome-highlight">${nome}</span>`
+                        : `<span class="nome-oculto">—</span>`;
+                });
+            }
+        });
+
+        const nameLine    = document.getElementById('filter-name-line');
+        const nameDisplay = document.getElementById('filter-name-display');
+        const prevNameDisplay = nameLine.style.display;
+        nameLine.style.display = 'block';
+        nameDisplay.textContent = `MINHA ESCALA — ${nome.toUpperCase()}`;
+
+        setTimeout(() => {
+            html2canvas(document.querySelector("#scale-sheet"), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+                rows.forEach((tr, i) => {
+                    const snap = snapshots[i];
+                    tr.classList.remove('row-filtered-out', 'row-no-match');
+                    if (snap.filteredOut) tr.classList.add('row-filtered-out');
+                    if (snap.noMatch)     tr.classList.add('row-no-match');
+                    const obrs = tr.querySelectorAll('.cell-obr');
+                    obrs.forEach((cell, ci) => {
+                        if (snap.cells[ci] !== undefined) {
+                            cell.innerHTML = snap.cells[ci].html;
+                            if (snap.cells[ci].raw !== null) cell.setAttribute('data-raw', snap.cells[ci].raw);
+                        }
+                    });
+                });
+                nameLine.style.display = prevNameDisplay;
+                applyFilter();
+
+                const nomeArquivo = nome.replace(/[^a-zA-Z0-9À-ú\s]/g,'').trim();
+                const link = document.createElement('a');
+                link.download = `${nomeArquivo}.jpg`;
+                link.href = canvas.toDataURL("image/jpeg", 0.95);
+                link.click();
+            });
+        }, 80);
+    }
+
+    // ─── FOTO E COMPARTILHAR ─────────────────────────────────────────────────
+    function gerarFotoFiltro() {
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        document.getElementById('toolbar-selection').style.display = 'none';
+        const nome = getNomeArquivo();
+        html2canvas(document.querySelector("#scale-sheet"), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+            canvas.toBlob(blob => { uploadedImageBlob = blob; });
+            const link = document.createElement('a');
+            link.download = `${nome}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+
+    function compartilharFiltro() {
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        document.getElementById('toolbar-selection').style.display = 'none';
+        const nome = getNomeArquivo();
+
+        document.getElementById('share-modal').style.display = 'flex';
+        document.getElementById('share-preview-img').style.display = 'none';
+        document.getElementById('share-status').textContent = '⏳ Gerando imagem...';
+        document.getElementById('share-btn-baixar').style.display = 'none';
+        document.getElementById('share-btn-zap').style.display = 'none';
+
+        html2canvas(document.querySelector("#scale-sheet"), { scale: 3, backgroundColor: "#ffffff" }).then(function(canvas) {
+            var dataUrl = canvas.toDataURL("image/png");
+            var img = document.getElementById('share-preview-img');
+            img.src = dataUrl;
+            img.style.display = 'block';
+            document.getElementById('share-status').textContent = '✅ Pronto! Escolha como enviar:';
+
+            var btnBaixar = document.getElementById('share-btn-baixar');
+            btnBaixar.style.display = 'inline-flex';
+            btnBaixar.onclick = function() {
+                var a = document.createElement('a');
+                a.href = dataUrl; a.download = nome + '.png';
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            };
+
+            var btnZap = document.getElementById('share-btn-zap');
+            btnZap.style.display = 'inline-flex';
+            btnZap.onclick = function() {
+                var a = document.createElement('a');
+                a.href = dataUrl; a.download = nome + '.png';
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                setTimeout(function() {
+                    var wa = document.createElement('a');
+                    wa.href = 'whatsapp://send?text=' + encodeURIComponent('Segue a escala: ' + nome);
+                    document.body.appendChild(wa); wa.click(); document.body.removeChild(wa);
+                }, 600);
+            };
+        });
+    }
+
+    function takeScreenshot() {
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        document.getElementById('toolbar-selection').style.display = 'none';
+        html2canvas(document.querySelector("#scale-sheet"), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'Escala_OBPC_Completa.png';
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+
+    // ─── UPLOAD ──────────────────────────────────────────────────────────────
+    function openUpload() { document.getElementById('upload-modal').style.display = 'flex'; }
+    function closeUpload() { document.getElementById('upload-modal').style.display = 'none'; uploadedImageBlob = null; }
+
+    function handleUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const preview = document.getElementById('upload-preview');
+        const status = document.getElementById('upload-status');
+        if (file.type.startsWith('image/')) {
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            status.textContent = `✅ Imagem carregada: ${file.name}`;
+            uploadedImageBlob = file;
+        } else if (file.name.endsWith('.html')) {
+            status.textContent = `⚠️ Arquivo HTML selecionado.`;
+            uploadedImageBlob = file;
+            preview.style.display = 'none';
+        }
+    }
+
+    function compartilharUpload() {
+        if (!uploadedImageBlob) { alert('Selecione um arquivo primeiro.'); return; }
+        const nome = getNomeArquivo();
+        const file = new File([uploadedImageBlob], `${nome}.png`, { type: uploadedImageBlob.type });
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ title: nome, files: [file] }).catch(() => {});
+        } else {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(uploadedImageBlob);
+            a.download = `${nome}.png`; a.click();
+            setTimeout(() => window.open('https://wa.me/?text=Segue+a+escala+OBPC', '_blank'), 800);
+        }
+    }
+
+    // ─── TABELA: ADICIONAR LINHA ──────────────────────────────────────────────
+    function addRow(data = null) {
+        const tbody = document.getElementById('tableBody');
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+            <td><input type="date" class="dt-input" onchange="updateDate(this)"></td>
+            <td><div class="cell-data cell-day"></div></td>
+            <td class="col-ensaio"><div class="cell-data cell-ensaio" onclick="activateCell(this, 'obreiros')" contenteditable="true"></div></td>
+            <td><div class="cell-data cell-clt" onclick="activateCell(this, 'cultos')" contenteditable="true" oninput="onCultoInput(this)"></div></td>
+            <td><div class="cell-data cell-obr" onclick="activateCell(this, 'obreiros')" contenteditable="true"></div></td>
+            <td class="td-dirigente td-dirigente-normal col-dirigente"><div class="cell-data cell-obr cell-obr-dir" onclick="activateCell(this, 'obreiros')" contenteditable="true"></div></td>
+            <td class="col-oportunidade"><div class="cell-data cell-obr" onclick="activateCell(this, 'obreiros')" contenteditable="true"></div></td>
+            <td class="col-ministrante"><div class="cell-data cell-obr" onclick="activateCell(this, 'obreiros')" contenteditable="true"></div></td>
+            <span class="btn-del" onclick="this.parentElement.remove(); save();">✕</span>
+        `;
+        tbody.appendChild(tr);
+
+        if (data) {
+            tr.querySelector('.dt-input').value = data.dt;
+            tr.querySelector('.cell-day').innerText = data.day;
+            tr.querySelector('.cell-clt').innerText = data.clt;
+            if (data.ensaio !== undefined) tr.querySelector('.cell-ensaio').innerText = data.ensaio;
+
+            const porta = tr.querySelector('.cell-obr');
+            porta.innerText = data.p1 || '';
+            porta.setAttribute('data-raw', data.p1 || '');
+
+            const tdDir = tr.querySelector('td.td-dirigente');
+            const dirEl = tdDir.querySelector('.cell-obr-dir');
+            dirEl.innerText = data.dir || '';
+            dirEl.setAttribute('data-raw', data.dir || '');
+            tdDir.setAttribute('data-cel', data.cel || '');
+
+            const obrs = tr.querySelectorAll('td.col-oportunidade .cell-obr, td.col-ministrante .cell-obr');
+            if (obrs[0]) { obrs[0].innerText = data.opt || ''; obrs[0].setAttribute('data-raw', data.opt || ''); }
+            if (obrs[1]) { obrs[1].innerText = data.min || ''; obrs[1].setAttribute('data-raw', data.min || ''); }
+
+            applyRowColor(tr, data.day);
+            updateCeiaRow(tr);
+        }
+    }
+
+    function onCultoInput(cell) {
+        const tr = cell.closest('tr');
+        updateCeiaRow(tr);
+        save();
+    }
+
+    function activateCell(cell, type) {
+        if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+        globalActiveCell = cell;
+        cell.classList.add('active-cell');
+        const toolbar = document.getElementById('toolbar-selection');
+        const listId = type === 'cultos' ? 'list-cultos' : 'list-obreiros';
+        const options = document.getElementById(listId).value.split('\n').filter(n => n.trim() !== '');
+        if (options.length === 0) { toolbar.style.display = 'none'; return; }
+        toolbar.innerHTML = options.map(opt => `<div class="chip" onclick="pushName('${opt.trim()}')">${opt.trim()}</div>`).join('');
+        toolbar.style.display = 'flex';
+    }
+
+    function pushName(name) {
+        if (!globalActiveCell) return;
+        const current = globalActiveCell.innerText.trim();
+        const newVal = current === "" ? name : current + '\n' + name;
+        globalActiveCell.innerText = newVal;
+        globalActiveCell.setAttribute('data-raw', newVal);
+        if (globalActiveCell.classList.contains('cell-clt')) {
+            updateCeiaRow(globalActiveCell.closest('tr'));
+        }
+        save();
+    }
+
+    function updateDate(input) {
+        const row = input.parentElement.parentElement;
+        const date = new Date(input.value + 'T00:00:00');
+        const days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+        const dayName = days[date.getDay()] || "";
+        row.querySelector('.cell-day').innerText = dayName;
+        applyRowColor(row, dayName);
+        save();
+    }
+
+    function applyRowColor(row, day) {
+        row.classList.remove('row-dom', 'row-qua', 'row-sab');
+        if (day === 'Domingo') row.classList.add('row-dom');
+        if (day === 'Quarta-feira') row.classList.add('row-qua');
+        if (day === 'Sábado') row.classList.add('row-sab');
+    }
+
+    function formatDate(val) {
+        if (!val) return '';
+        const [y,m,d] = val.split('-');
+        return `${d}/${m}/${y}`;
+    }
+
+    // ─── SAVE / LOAD ─────────────────────────────────────────────────────────
+    // Salva o período como índice numérico (mês + ano) para recarregar corretamente
+    function save() {
+        const rows = [];
+        document.querySelectorAll('#tableBody tr').forEach(tr => {
+            const ensaioEl = tr.querySelector('.cell-ensaio');
+            const portaEl  = tr.querySelector('.cell-obr');
+            const tdDir    = tr.querySelector('td.td-dirigente');
+            const dirEl    = tdDir ? tdDir.querySelector('.cell-obr-dir') : null;
+            const celEl    = tdDir ? tdDir.querySelector('.cell-obr-cel') : null;
+            const optEl    = tr.querySelector('td.col-oportunidade .cell-obr');
+            const minEl    = tr.querySelector('td.col-ministrante .cell-obr');
+
+            rows.push({
+                dt:     tr.querySelector('.dt-input').value,
+                day:    tr.querySelector('.cell-day').innerText,
+                clt:    tr.querySelector('.cell-clt').innerText,
+                ensaio: ensaioEl ? ensaioEl.innerText : '',
+                p1:     portaEl ? (portaEl.getAttribute('data-raw') || portaEl.innerText) : '',
+                dir:    dirEl   ? (dirEl.getAttribute('data-raw')   || dirEl.innerText)   : '',
+                cel:    celEl   ? (celEl.getAttribute('data-raw')   || celEl.innerText)   : (tdDir ? tdDir.getAttribute('data-cel') || '' : ''),
+                opt:    optEl   ? (optEl.getAttribute('data-raw')   || optEl.innerText)   : '',
+                min:    minEl   ? (minEl.getAttribute('data-raw')   || minEl.innerText)   : ''
+            });
+        });
+
+        localStorage.setItem('obpc_1click_scale_v4', JSON.stringify({
+            church:       document.getElementById('save-church').innerText,
+            theme:        document.getElementById('save-theme').innerText,
+            periodoMes:   periodoAtual.getMonth(),    // 0-11
+            periodoAno:   periodoAtual.getFullYear(),
+            rows
+        }));
+        if (currentTab === 'data') populateDatasSelect();
+    }
+
+    function saveSettings() {
+        localStorage.setItem('obpc_set_cultos_v3',   document.getElementById('list-cultos').value);
+        localStorage.setItem('obpc_set_obreiros_v3', document.getElementById('list-obreiros').value);
+    }
+
+    function openConfig(show) { document.getElementById('config-modal').style.display = show ? 'flex' : 'none'; }
+
+    function load() {
+        const savedCultos   = localStorage.getItem('obpc_set_cultos_v3')   || "Santa Ceia\nPrimícias\nCulto de Louvor\nCulto de Ensino\nCulto de Jovens";
+        const savedObreiros = localStorage.getItem('obpc_set_obreiros_v3') || "Pr Sergio\nPr André";
+        document.getElementById('list-cultos').value   = savedCultos;
+        document.getElementById('list-obreiros').value = savedObreiros;
+        populateObreiroSelects();
+        populateCultoSelect();
+
+        const savedRaw = localStorage.getItem('obpc_1click_scale_v4')
+                      || localStorage.getItem('obpc_1click_scale_v3')
+                      || localStorage.getItem('obpc_1click_scale_v2');
+
+        if (savedRaw) {
+            const data = JSON.parse(savedRaw);
+            document.getElementById('save-church').innerText = data.church || '';
+            document.getElementById('save-theme').innerText  = data.theme  || '';
+
+            // Restaura o período salvo; se não existir (versão antiga), usa hoje
+            if (data.periodoMes !== undefined && data.periodoAno !== undefined) {
+                periodoAtual = new Date(data.periodoAno, data.periodoMes, 1);
+            } else {
+                periodoAtual = new Date(); // fallback: mês atual
+            }
+
+            data.rows.forEach(r => addRow(r));
+        } else {
+            // Primeiro acesso: período = mês atual (já é o default de periodoAtual)
+            for (let i = 0; i < 4; i++) addRow();
+        }
+
+        renderPeriodo(); // renderiza sempre depois de definir periodoAtual
+        checkGlobalCeia();
+    }
+
+    function resetData() {
+        if (confirm("Deseja apagar os dados?")) {
+            localStorage.removeItem('obpc_1click_scale_v4');
+            localStorage.removeItem('obpc_1click_scale_v3');
+            location.reload();
+        }
+    }
+
+    document.addEventListener('input', (e) => {
+        if (e.target.classList.contains('cell-obr')) {
+            e.target.setAttribute('data-raw', e.target.innerText);
+        }
+        if (e.target.classList.contains('cell-clt')) {
+            const tr = e.target.closest('tr');
+            if (tr) updateCeiaRow(tr);
+        }
+        save();
+    });
+
+    document.addEventListener('mousedown', (e) => {
+        if (!e.target.closest('td') && !e.target.closest('#toolbar-selection')) {
+            if (globalActiveCell) globalActiveCell.classList.remove('active-cell');
+            document.getElementById('toolbar-selection').style.display = 'none';
+        }
+    });
+
+    window.onload = load;
+</script>
+
+</body>
+</html>
