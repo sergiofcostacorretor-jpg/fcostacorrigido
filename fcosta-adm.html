@@ -512,6 +512,7 @@ img{max-width:100%;display:block;}
       <option value="vendido">Vendido</option>
     </select>
     <button class="btn btn-ok" onclick="novoImovel()">➕ Novo Imóvel</button>
+    <button class="btn btn-warn" onclick="corrigirTodosOsSlugs()" title="Corrige slugs inválidos (ativo, duplicados) em todos os imóveis">🔧 Corrigir Slugs</button>
   </div>
   <div class="im-grid" id="lista"><div class="loading"><div class="spin"></div><p>Carregando...</p></div></div>
 </div>
@@ -1199,7 +1200,9 @@ function render(lista){
     var fs=fotos(i), f0=i.fotoDestaque||fs[0]||'', c=cod(i);
     var urlPag=PAG_LINKS[i.status]||'https://fcostacorretor.com/comprar';
     var slugCard=i.slug||gerarSlug(i.status,i.tipo,i.bairro,c);
-    var urlSlug=slugCard?('https://fcostacorretor.com'+slugCard):('https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html?id='+i.id);
+    // Link direto: se tem slug usa fcostacorretor.com/slug, senão usa GitHub direto com ?id=
+    var githubUrl='https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html?id='+i.id;
+    var urlSlug=slugCard?('https://fcostacorretor.com'+slugCard):githubUrl;
     var lbl=PAG_LABELS[i.status]||'Ver';
     var iId=i.id, iTitulo=esc(i.titulo||c);
     return '<div class="icard">'
@@ -1245,9 +1248,18 @@ function salvar(){
   if(dupCod){mostrarErroSalvar('Código '+codigoNovo+' em uso por "'+(dupCod.titulo||'sem título')+'".');return;}
   var slugInput=document.getElementById('slug-input').value.trim();
   var c=calcCod(status,numcod);
-  var slugFinal=slugInput||gerarSlug(status,tipoReal,document.getElementById('f-bairro').value,c);
+  // Gera slug limpo — nunca usa 'ativo', sempre usa status correto (comprar/alugar/etc)
+  var slugGerado=gerarSlug(status,tipoReal,document.getElementById('f-bairro').value,c);
+  // Usa o slug do input SOMENTE se foi editado manualmente E não contém palavras inválidas
+  var palavrasInvalidas=['ativo','undefined','null'];
+  var slugInputValido=slugInput&&!palavrasInvalidas.some(function(p){return slugInput.indexOf(p)!==-1;});
+  var slugFinal=slugInputValido?slugInput:slugGerado;
   if(slugFinal&&!slugFinal.startsWith('/'))slugFinal='/'+slugFinal;
-  if(slugFinal&&slugDuplicado(slugFinal)){mostrarErroSalvar('Slug "'+slugFinal+'" já em uso.');return;}
+  // Verifica duplicata apenas para slugs diferentes do imóvel atual
+  if(slugFinal&&slugDuplicado(slugFinal)){
+    // Se for duplicata, adiciona o id do Firebase no final para garantir unicidade
+    slugFinal=slugFinal+'-'+idAtual.slice(-4);
+  }
   var seoTitulo=document.getElementById('seo-title-edit').value.trim();
   var seoDescricao=document.getElementById('seo-desc-edit').value.trim();
   setSalvando(true);
@@ -1452,14 +1464,26 @@ function editar(id){
   atualizarDragHint();
   document.getElementById('cod-sugestao').textContent='';
   atualizarRefCodigos(i.status,id);
-  if(i.slug){
+  // Verifica se o slug salvo é válido (não contém 'ativo', não é duplicado de outro imóvel)
+  var slugSalvo=i.slug||'';
+  var palavrasInvalidas=['ativo','undefined','null'];
+  var slugInvalido=!slugSalvo||palavrasInvalidas.some(function(p){return slugSalvo.indexOf(p)!==-1;});
+  if(slugSalvo&&!slugInvalido){
+    // Slug válido — carrega normalmente
     _slugManual=true;
-    document.getElementById('slug-input').value=i.slug;
+    document.getElementById('slug-input').value=slugSalvo;
     document.getElementById('slug-prev-box').style.display='block';
-    document.getElementById('slug-prev-url').innerHTML='URL: <strong>https://fcostacorretor.com'+i.slug+'</strong>';
-    _slugAtual='https://fcostacorretor.com'+i.slug;
+    document.getElementById('slug-prev-url').innerHTML='URL: <strong>https://fcostacorretor.com'+slugSalvo+'</strong>';
+    _slugAtual='https://fcostacorretor.com'+slugSalvo;
     document.getElementById('slug-dup-warn').style.display='none';
-  } else {_slugManual=false;atualizarPrev();}
+  } else {
+    // Slug inválido ou ausente — regenera automaticamente
+    _slugManual=false;
+    if(slugInvalido&&slugSalvo){
+      toast('⚠️ Slug inválido detectado — regenerando automaticamente...','warn');
+    }
+    atualizarPrev();
+  }
   atualizarPrev();
   tab('adicionar',document.querySelector('[data-painel=adicionar]'));
 }
@@ -1493,13 +1517,46 @@ function limpar(){
   esconderErroSalvar();setSalvando(false);
   _fotosEx=[];_slugAtual='';_slugManual=false;_salvando=false;_seoTitleManual=false;_seoDescManual=false;
 }
+/* ── Corrigir todos os slugs inválidos ── */
+function corrigirTodosOsSlugs(){
+  if(!confirm('Verificar e corrigir slugs inválidos em todos os imóveis?\n\nIsso irá regenerar slugs com palavras como "ativo", "undefined" etc.'))return;
+  var SIG={venda:'FCV',aluguel:'FCA',lancamento:'FCL',panfleto:'FCP',vendido:'FCV'};
+  var palavrasInvalidas=['ativo','undefined','null'];
+  var updates={};
+  var corrigidos=0;
+  _todos.forEach(function(i){
+    var slugAtual=i.slug||'';
+    var invalido=!slugAtual||palavrasInvalidas.some(function(p){return slugAtual.indexOf(p)!==-1;});
+    if(invalido){
+      var s=SIG[i.status]||'FCV';
+      var n=i.numeroCodigo?String(i.numeroCodigo).padStart(3,'0'):'001';
+      var c=i.codigo||(s+n);
+      var novoSlug=gerarSlug(i.status,i.tipo,i.bairro,c);
+      if(novoSlug){
+        updates['fcosta_imoveis/'+i.id+'/slug']=novoSlug;
+        updates['fcosta_imoveis/'+i.id+'/seoSlug']=novoSlug;
+        corrigidos++;
+      }
+    }
+  });
+  if(!corrigidos){toast('✅ Todos os slugs já estão corretos!');return;}
+  db.ref().update(updates).then(function(){
+    toast('✅ '+corrigidos+' slug'+(corrigidos>1?'s':'')+' corrigido'+(corrigidos>1?'s':'')+'!');
+  }).catch(function(e){toast('Erro: '+msgErr(e),true);});
+}
+
 function copiarIframe(id){
-  // Script de redirect — padrão que funciona na Hostinger
-  var base='https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html';
-  var redirect='<script>window.top.location.href=\'https://fcostacorretor.com/imovel?id='+id+'\';'+'<\/script>';
-  var direto='\n\nOU acesso direto (sem Hostinger):\n'+base+'?id='+id;
-  if(navigator.clipboard){navigator.clipboard.writeText(redirect).then(function(){toast('✅ Script copiado! Cole na Hostinger.');});}
-  else{prompt('Script para Hostinger:',redirect);}
+  // ✅ PADRÃO FCA001: script que redireciona direto para o GitHub com ?id= no src
+  // Funciona porque o arquivo do GitHub lê window.location.search (própria URL)
+  var githubBase='https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html';
+  var script='<script>window.top.location.href=\''+githubBase+'?id='+id+'\';'+'<\/script>';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(script).then(function(){
+      toast('✅ Script copiado! Cole na Hostinger na página do imóvel.');
+    });
+  } else {
+    prompt('Cole na Hostinger:',script);
+  }
 }
 
 /* ── Controle de Páginas (Botões) ── */
