@@ -1199,7 +1199,7 @@ function render(lista){
     var fs=fotos(i), f0=i.fotoDestaque||fs[0]||'', c=cod(i);
     var urlPag=PAG_LINKS[i.status]||'https://fcostacorretor.com/comprar';
     var slugCard=i.slug||gerarSlug(i.status,i.tipo,i.bairro,c);
-    var urlSlug=slugCard?('https://fcostacorretor.com'+slugCard):('https://fcostacorretor.com/imovel?id='+i.id);
+    var urlSlug=slugCard?('https://fcostacorretor.com'+slugCard):('https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html?id='+i.id);
     var lbl=PAG_LABELS[i.status]||'Ver';
     var iId=i.id, iTitulo=esc(i.titulo||c);
     return '<div class="icard">'
@@ -1494,9 +1494,12 @@ function limpar(){
   _fotosEx=[];_slugAtual='';_slugManual=false;_salvando=false;_seoTitleManual=false;_seoDescManual=false;
 }
 function copiarIframe(id){
-  var tag='<scr'+'ipt>window.top.location.href=\'https://fcostacorretor.com/imovel?id='+id+'\';'+'</'+'script>';
-  if(navigator.clipboard){navigator.clipboard.writeText(tag).then(function(){toast('✅ Código copiado! Cole na Hostinger.');});}
-  else{prompt('Copie:',tag);}
+  // Script de redirect — padrão que funciona na Hostinger
+  var base='https://sergiofcostacorretor-jpg.github.io/fcostacorrigido/fcosta-imovel.html';
+  var redirect='<script>window.top.location.href=\'https://fcostacorretor.com/imovel?id='+id+'\';'+'<\/script>';
+  var direto='\n\nOU acesso direto (sem Hostinger):\n'+base+'?id='+id;
+  if(navigator.clipboard){navigator.clipboard.writeText(redirect).then(function(){toast('✅ Script copiado! Cole na Hostinger.');});}
+  else{prompt('Script para Hostinger:',redirect);}
 }
 
 /* ── Controle de Páginas (Botões) ── */
