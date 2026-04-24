@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="page-title">FCosta — Imóvel</title>
+<meta name="description" id="page-desc" content="FCosta Corretor e Avaliador Imobiliário"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f5f7fa;color:#1E3A5F;min-height:100vh}
+
+/* NAV */
+nav{background:#1E3A5F;display:flex;align-items:center;gap:12px;padding:10px 16px;position:sticky;top:0;z-index:100}
+nav img{height:38px;border-radius:50%}
+nav .btn-voltar{background:#3B9BD6;color:#fff;border:none;border-radius:6px;padding:7px 14px;cursor:pointer;font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+nav .btn-wpp{background:#25D366;color:#fff;border:none;border-radius:6px;padding:7px 14px;cursor:pointer;font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-left:auto}
+
+/* ESTADO LOADING / ERRO */
+#estado{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center}
+#estado .spinner{width:48px;height:48px;border:4px solid #e0e8f0;border-top-color:#3B9BD6;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#estado .msg-erro{font-size:18px;color:#c0392b;font-weight:600}
+#estado .msg-sub{font-size:14px;color:#666;margin-top:8px}
+
+/* GALERIA */
+#conteudo{display:none}
+.galeria-wrap{background:#000;position:relative}
+.galeria-principal{width:100%;max-height:480px;object-fit:cover;display:block}
+.galeria-strip{display:flex;gap:6px;padding:8px;background:#111;overflow-x:auto;scrollbar-width:thin}
+.galeria-strip img{height:64px;width:96px;object-fit:cover;border-radius:4px;cursor:pointer;opacity:0.65;flex-shrink:0;transition:opacity .2s}
+.galeria-strip img.ativa{opacity:1;outline:2px solid #3B9BD6}
+.galeria-strip::-webkit-scrollbar{height:4px}
+.galeria-strip::-webkit-scrollbar-thumb{background:#444}
+
+/* SETAS CARROSSEL */
+.galeria-wrap{position:relative}
+.seta-galeria{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(30,58,95,.82);border:none;color:#fff;font-size:28px;font-weight:900;width:48px;height:64px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;line-height:1}
+.seta-galeria:hover{background:#1E3A5F}
+.seta-esq{left:0;border-radius:0 8px 8px 0}
+.seta-dir{right:0;border-radius:8px 0 0 8px}
+
+/* FULLSCREEN */
+#fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;flex-direction:column}
+#fs.aberto{display:flex}
+#fs img{max-width:95vw;max-height:90vh;object-fit:contain}
+#fs .fs-close{position:absolute;top:16px;right:20px;font-size:32px;color:#fff;cursor:pointer;background:none;border:none}
+#fs .fs-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:36px;color:#fff;cursor:pointer;background:rgba(0,0,0,.4);border:none;padding:8px 14px;border-radius:6px}
+#fs .fs-prev{left:10px}
+#fs .fs-next{right:10px}
+
+/* CORPO */
+.corpo{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+.titulo-imovel{font-size:clamp(20px,4vw,28px);font-weight:700;color:#1E3A5F;margin-bottom:6px}
+.codigo-badge{display:inline-block;background:#3B9BD6;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.5px}
+.preco{font-size:clamp(22px,4vw,30px);font-weight:800;color:#1E3A5F;margin-bottom:4px}
+.preco small{font-size:13px;font-weight:400;color:#666}
+.localizacao{font-size:14px;color:#555;margin-bottom:16px;display:flex;align-items:center;gap:5px}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{background:#e8f4fb;color:#1E3A5F;border-radius:20px;padding:5px 12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
+
+/* SEÇÃO */
+.secao{margin-bottom:24px}
+.secao h3{font-size:15px;font-weight:700;color:#1E3A5F;border-bottom:2px solid #3B9BD6;padding-bottom:6px;margin-bottom:12px}
+.secao p{font-size:15px;line-height:1.7;color:#333;white-space:pre-wrap}
+
+/* COMODIDADES */
+.comods{display:flex;flex-wrap:wrap;gap:8px}
+.comod{background:#fff;border:1px solid #d0e4f0;border-radius:8px;padding:6px 12px;font-size:13px;color:#1E3A5F}
+
+/* VIDEO */
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
+
+/* BTN WPP fixo */
+.btn-wpp-fixo{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;border:none;border-radius:50px;padding:13px 22px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,.5);z-index:200;display:flex;align-items:center;gap:8px;text-decoration:none}
+
+/* FOOTER */
+footer{background:#1E3A5F;color:#fff;text-align:center;padding:16px;font-size:12px;line-height:1.7}
+footer a{color:#3B9BD6;text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="https://fcostacorretor.com/wp-content/uploads/2024/01/logo-fcosta.png"
+       onerror="this.src='https://ui-avatars.com/api/?name=FC&background=3B9BD6&color=fff&size=40&rounded=true'"
+       alt="FCosta">
+  <a class="btn-voltar" id="btn-voltar" href="#" onclick="voltarLista();return false;">← Comprar</a>
+  <a class="btn-wpp" id="btn-wpp-nav" href="#" target="_blank">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.568a.5.5 0 0 0 .612.612l5.709-1.476A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 0 1-5.003-1.368l-.358-.214-3.724.961.988-3.615-.234-.372A9.817 9.817 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+    WhatsApp
+  </a>
+</nav>
+
+<div id="estado">
+  <div class="spinner"></div>
+  <p style="color:#555;font-size:16px">Carregando imóvel…</p>
+</div>
+
+<div id="conteudo">
+  <!-- GALERIA -->
+  <div class="galeria-wrap">
+    <button class="seta-galeria seta-esq" id="seta-esq" onclick="mostrarFoto(_fotoIdx-1)" title="Anterior">&#8249;</button>
+    <img id="foto-principal" class="galeria-principal" src="" alt="Foto do imóvel" onclick="abrirFs(_fotoIdx)">
+    <button class="seta-galeria seta-dir" id="seta-dir" onclick="mostrarFoto(_fotoIdx+1)" title="Próxima">&#8250;</button>
+    <div id="galeria-strip" class="galeria-strip"></div>
+  </div>
+
+  <div class="corpo">
+    <span id="det-codigo" class="codigo-badge"></span>
+    <h1 id="det-titulo" class="titulo-imovel"></h1>
+    <div id="det-preco" class="preco"></div>
+    <p id="det-local" class="localizacao">
+      <svg width="14" height="14" fill="#3B9BD6" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      <span id="det-local-txt"></span>
+    </p>
+    <div id="det-chips" class="chips"></div>
+
+    <div class="secao" id="sec-desc" style="display:none">
+      <h3>Descrição</h3>
+      <p id="det-desc"></p>
+    </div>
+
+    <div class="secao" id="sec-comods" style="display:none">
+      <h3>Comodidades</h3>
+      <div id="det-comods" class="comods"></div>
+    </div>
+
+    <div class="secao" id="sec-video" style="display:none">
+      <h3>Vídeo</h3>
+      <div id="det-video" class="video-wrap"></div>
+    </div>
+
+    <div class="secao" id="sec-endereco" style="display:none">
+      <h3>Endereço</h3>
+      <p id="det-endereco"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen -->
+<div id="fs">
+  <button class="fs-close" onclick="fecharFs()">✕</button>
+  <button class="fs-nav fs-prev" onclick="fsNav(-1)">‹</button>
+  <img id="fs-img" src="" alt="">
+  <button class="fs-nav fs-next" onclick="fsNav(1)">›</button>
+</div>
+
+<a class="btn-wpp-fixo" id="btn-wpp-fixo" href="#" target="_blank">
+  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.568a.5.5 0 0 0 .612.612l5.709-1.476A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 0 1-5.003-1.368l-.358-.214-3.724.961.988-3.615-.234-.372A9.817 9.817 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+  Tenho interesse
+</a>
+
+<footer>
+  FCosta Corretor · CRECI-SP 294791-F · CNAI 57708 · (11) 99350-9109 ·
+  <a href="https://fcostacorretor.com/politica-de-privacidade" onclick="window.top.location.href=this.href;return false;">Privacidade</a>
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<script>
+/* ===== CONFIG ===== */
+const FB_CONFIG = {
+  apiKey: "AIzaSyC5Gp_FCosta_placeholder", // substituído em runtime pela URL
+  authDomain: "fcosta-31125.firebaseapp.com",
+  databaseURL: "https://fcosta-31125-default-rtdb.firebaseio.com",
+  projectId: "fcosta-31125",
+  storageBucket: "fcosta-31125.appspot.com",
+  messagingSenderId: "826619190234",
+  appId: "1:826619190234:web:347cdf5d9078433daabee3"
+};
+
+/* A API key é pública para leitura no RTDB — ok para frontend */
+// Sergio: se a página ficar em branco, cole sua apiKey do Firebase aqui
+// Encontra em: Firebase Console → Configurações do Projeto → Seus apps → apiKey
+const API_KEY = "AIzaSyAH-QF57Igr9fzBCqkAP28IRRE-QHp_2Z4";
+
+/* ===== INIT ===== */
+const app  = firebase.initializeApp({...FB_CONFIG, apiKey: API_KEY});
+const db   = firebase.database();
+const NODE = "fcosta_imoveis";
+
+/* ===== URL PARAMS ===== */
+function getParam(nome) {
+  // Tenta na URL atual (iframe)
+  const sp = new URLSearchParams(window.location.search);
+  if (sp.has(nome)) return sp.get(nome);
+  // Tenta na URL pai (quando em iframe no Hostinger)
+  try {
+    const spTop = new URLSearchParams(window.top.location.search);
+    if (spTop.has(nome)) return spTop.get(nome);
+  } catch(e){}
+  return null;
+}
+
+function getPathname() {
+  try { return window.top.location.pathname; } catch(e) {}
+  return window.location.pathname;
+}
+
+/* ===== FOTOS ===== */
+let _fotos = [];
+let _fotoIdx = 0;
+
+function mostrarFoto(idx) {
+  if (!_fotos.length) return;
+  _fotoIdx = (idx + _fotos.length) % _fotos.length;
+  document.getElementById('foto-principal').src = _fotos[_fotoIdx];
+  document.querySelectorAll('.galeria-strip img').forEach((el,i) => {
+    el.classList.toggle('ativa', i === _fotoIdx);
+    if (i === _fotoIdx) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  });
+  var se = document.getElementById('seta-esq'), sd = document.getElementById('seta-dir');
+  if (se) se.style.display = _fotos.length > 1 ? 'flex' : 'none';
+  if (sd) sd.style.display = _fotos.length > 1 ? 'flex' : 'none';
+}
+
+function abrirFs(idx) {
+  _fotoIdx = idx;
+  document.getElementById('fs-img').src = _fotos[idx];
+  document.getElementById('fs').classList.add('aberto');
+}
+function fecharFs() { document.getElementById('fs').classList.remove('aberto'); }
+function fsNav(dir) {
+  _fotoIdx = (_fotoIdx + dir + _fotos.length) % _fotos.length;
+  document.getElementById('fs-img').src = _fotos[_fotoIdx];
+}
+
+/* ===== RENDER ===== */
+function fmtPreco(v, tipo, status) {
+  if (!v) return '';
+  const n = parseFloat(String(v).replace(/\D/g,''));
+  const fmt = n.toLocaleString('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+  const suf = (status==='aluguel'||status==='Aluguel') ? '/mês' : '';
+  return fmt + (suf ? `<small> ${suf}</small>` : '');
+}
+
+function ytEmbed(url) {
+  if (!url) return '';
+  let id = '';
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+    else id = u.searchParams.get('v') || '';
+  } catch(e){ id = ''; }
+  if (!id) {
+    const m = url.match(/(?:v=|youtu\.be\/)([\w-]{11})/);
+    if (m) id = m[1];
+  }
+  return id ? `<iframe src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>` : '';
+}
+
+function renderImovel(data, fbKey) {
+  // Suporte a múltiplos formatos de campos
+  const titulo    = data.titulo || data.nome || data.title || 'Imóvel sem título';
+  const codigo    = data.codigo || data.code || fbKey || '';
+  const tipo      = data.tipo || data.type || '';
+  const status    = data.status || '';
+  const preco     = data.preco || data.price || data.valor || '';
+  const area      = data.area || '';
+  const quartos   = data.quartos || data.dorms || data.quarto || '';
+  const banheiros = data.banheiros || data.banheiro || '';
+  const vagas     = data.vagas || data.vaga || '';
+  const bairro    = data.bairro || '';
+  const cidade    = data.cidade || 'São Paulo';
+  const endereco  = data.endereco || '';
+  const descricao = data.descricao || data.description || '';
+  const video     = data.video || data.videoUrl || '';
+  const comodidades = data.comodidades || data.amenities || [];
+  const fotos     = data.fotos || data.photos || data.images || [];
+  const wppMsg    = data.wppMsg || data.whatsapp || '';
+
+  // SEO
+  document.getElementById('page-title').textContent = data.seoTitulo || `${titulo} — FCosta`;
+  document.getElementById('page-desc').setAttribute('content', data.seoDescricao || descricao.slice(0,160));
+
+  // Botão voltar — detecta tipo
+  const btnVoltar = document.getElementById('btn-voltar');
+  if (status === 'aluguel' || status === 'Aluguel') {
+    btnVoltar.textContent = '← Alugar';
+    btnVoltar.onclick = function(){ voltarLista('alugar'); return false; };
+  } else if (status === 'lancamento' || codigo.startsWith('FCL')) {
+    btnVoltar.textContent = '← Lançamentos';
+    btnVoltar.onclick = function(){ voltarLista('lancamentos'); return false; };
+  } else {
+    btnVoltar.textContent = '← Comprar';
+    btnVoltar.onclick = function(){ voltarLista('comprar'); return false; };
+  }
+
+  // WhatsApp
+  const tel = '5511993509109';
+  const msgWpp = wppMsg || `Olá! Vi o imóvel ${titulo} (${codigo}) no site e gostaria de mais informações.`;
+  const wppLink = `https://wa.me/${tel}?text=${encodeURIComponent(msgWpp)}`;
+  document.getElementById('btn-wpp-nav').href   = wppLink;
+  document.getElementById('btn-wpp-fixo').href  = wppLink;
+
+  // Fotos
+  _fotos = [];
+  if (Array.isArray(fotos)) {
+    fotos.forEach(f => { if (typeof f==='string' && f) _fotos.push(f); else if (f&&f.url) _fotos.push(f.url); });
+  } else if (typeof fotos === 'object') {
+    Object.values(fotos).forEach(f => { if (typeof f==='string' && f) _fotos.push(f); else if (f&&f.url) _fotos.push(f.url); });
+  }
+  if (data.fotoDestaque && !_fotos.includes(data.fotoDestaque)) _fotos.unshift(data.fotoDestaque);
+
+  const strip = document.getElementById('galeria-strip');
+  const fprincipal = document.getElementById('foto-principal');
+
+  if (_fotos.length) {
+    fprincipal.src = _fotos[0];
+    fprincipal.onclick = () => abrirFs(0);
+    strip.innerHTML = _fotos.map((f,i) =>
+      `<img src="${f}" class="${i===0?'ativa':''}" onclick="mostrarFoto(${i});abrirFs(${i})" alt="foto ${i+1}">`
+    ).join('');
+    if (_fotos.length <= 1) strip.style.display='none';
+  } else {
+    fprincipal.src = 'https://via.placeholder.com/800x480/1E3A5F/ffffff?text=Sem+fotos';
+    strip.style.display='none';
+  }
+
+  // Campos
+  document.getElementById('det-codigo').textContent = codigo;
+  document.getElementById('det-titulo').textContent = titulo;
+  document.getElementById('det-preco').innerHTML = fmtPreco(preco, tipo, status);
+
+  const localTxt = [bairro, cidade].filter(Boolean).join(', ');
+  document.getElementById('det-local-txt').textContent = localTxt;
+  if (!localTxt) document.getElementById('det-local').style.display='none';
+
+  // Chips
+  const chips = document.getElementById('det-chips');
+  chips.innerHTML = '';
+  const addChip = (icon, val, suf='') => {
+    if (!val && val!==0) return;
+    const d = document.createElement('span');
+    d.className = 'chip';
+    d.innerHTML = `${icon} ${val}${suf}`;
+    chips.appendChild(d);
+  };
+  addChip('🏠', tipo);
+  if (area)      addChip('📐', area, ' m²');
+  if (quartos)   addChip('🛏', quartos, quartos==1?' quarto':' quartos');
+  if (banheiros) addChip('🚿', banheiros, banheiros==1?' banheiro':' banheiros');
+  if (vagas)     addChip('🚗', vagas, vagas==1?' vaga':' vagas');
+
+  // Descrição
+  if (descricao) {
+    document.getElementById('det-desc').textContent = descricao;
+    document.getElementById('sec-desc').style.display = '';
+  }
+
+  // Comodidades
+  let comList = [];
+  if (Array.isArray(comodidades)) comList = comodidades.filter(Boolean);
+  else if (typeof comodidades==='object') comList = Object.values(comodidades).filter(Boolean);
+  else if (typeof comodidades==='string') comList = comodidades.split(',').map(s=>s.trim()).filter(Boolean);
+  if (comList.length) {
+    document.getElementById('det-comods').innerHTML = comList.map(c=>`<span class="comod">${c}</span>`).join('');
+    document.getElementById('sec-comods').style.display = '';
+  }
+
+  // Vídeo
+  if (video) {
+    const emb = ytEmbed(video);
+    if (emb) {
+      document.getElementById('det-video').innerHTML = emb;
+      document.getElementById('sec-video').style.display = '';
+    }
+  }
+
+  // Endereço
+  if (endereco) {
+    document.getElementById('det-endereco').textContent = endereco;
+    document.getElementById('sec-endereco').style.display = '';
+  }
+
+  // Exibir conteúdo
+  document.getElementById('estado').style.display   = 'none';
+  document.getElementById('conteudo').style.display = 'block';
+}
+
+/* ===== ERRO ===== */
+function mostrarErro(msg, sub) {
+  const el = document.getElementById('estado');
+  el.innerHTML = `<p class="msg-erro">😕 ${msg}</p><p class="msg-sub">${sub||''}</p>
+  <br><a href="#" onclick="voltarLista('comprar');return false;" style="color:#3B9BD6;font-size:14px">← Voltar para listagem</a>`;
+}
+
+/* ===== NAVEGAÇÃO ===== */
+function voltarLista(tipo) {
+  tipo = tipo || 'comprar';
+  const urls = {
+    comprar: 'https://fcostacorretor.com/comprar',
+    alugar:  'https://fcostacorretor.com/alugar',
+    lancamentos: 'https://fcostacorretor.com/lancamentos'
+  };
+  try { window.top.location.href = urls[tipo] || urls.comprar; }
+  catch(e) { window.location.href = urls[tipo] || urls.comprar; }
+}
+
+/* ===== BUSCA NO FIREBASE ===== */
+async function buscarImovel() {
+  const idParam     = getParam('id');     // pode ser Firebase key OU código como FCV-019
+  const codigoParam = getParam('codigo'); // fallback: ?codigo=FCV019
+  const slugParam   = getParam('slug');
+
+  // 1. Tenta por Firebase key direta (key começa com '-O' ou similar)
+  if (idParam && (idParam.startsWith('-') || idParam.length > 10)) {
+    try {
+      const snap = await db.ref(`${NODE}/${idParam}`).once('value');
+      if (snap.exists()) { renderImovel(snap.val(), idParam); return; }
+    } catch(e){ console.warn('busca por key falhou:', e); }
+  }
+
+  // 2. Busca toda a coleção e filtra
+  try {
+    const snap = await db.ref(NODE).once('value');
+    if (!snap.exists()) { mostrarErro('Nenhum imóvel cadastrado.'); return; }
+    const todos = snap.val();
+    let encontrado = null;
+    let fbKey = null;
+
+    const normalize = s => String(s||'').toLowerCase().replace(/[-_\s]/g,'');
+
+    for (const [key, val] of Object.entries(todos)) {
+      const cod = normalize(val.codigo || val.code || '');
+      const sl  = normalize(val.slug || val.seoSlug || '');
+      const titulo = normalize(val.titulo || '');
+
+      // Comparar com ?id=
+      if (idParam) {
+        const idN = normalize(idParam);
+        if (cod === idN || key === idParam || sl === idN) {
+          encontrado = val; fbKey = key; break;
+        }
+      }
+      // Comparar com ?codigo=
+      if (codigoParam) {
+        const codN = normalize(codigoParam);
+        if (cod === codN || key === codigoParam) {
+          encontrado = val; fbKey = key; break;
+        }
+      }
+      // Comparar com ?slug=
+      if (slugParam) {
+        const slN = normalize(slugParam);
+        if (sl === slN || titulo.includes(slN)) {
+          encontrado = val; fbKey = key; break;
+        }
+      }
+    }
+
+    // 3. Tenta pelo pathname da URL pai (slug na URL do Hostinger)
+    if (!encontrado) {
+      const path = getPathname();
+      const pathN = normalize(path.replace(/^\//, ''));
+      for (const [key, val] of Object.entries(todos)) {
+        const sl = normalize(val.slug || val.seoSlug || '');
+        const cod = normalize(val.codigo || '');
+        if (sl && pathN.includes(sl)) { encontrado = val; fbKey = key; break; }
+        if (cod && pathN.includes(cod)) { encontrado = val; fbKey = key; break; }
+      }
+    }
+
+    if (encontrado) {
+      renderImovel(encontrado, fbKey);
+    } else {
+      mostrarErro(
+        'Imóvel não encontrado.',
+        `Parâmetros buscados: id="${idParam||''}" codigo="${codigoParam||''}" slug="${slugParam||''}" path="${getPathname()}"`
+      );
+    }
+  } catch(e) {
+    mostrarErro('Erro ao carregar dados.', e.message);
+    console.error(e);
+  }
+}
+
+// Teclado fullscreen
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') fecharFs();
+  if (e.key==='ArrowLeft')  fsNav(-1);
+  if (e.key==='ArrowRight') fsNav(1);
+});
+
+buscarImovel();
+</script>
+</body>
+</html>
