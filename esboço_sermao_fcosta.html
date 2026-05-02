@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Esboço de Sermão — FCosta</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --azul:#0a4a8a;
+  --azul-esc:#07336b;
+  --ouro:#b8860b;
+  --ouro-cl:#d4a520;
+  --verm:#8b1a1a;
+  --verde:#1a5c30;
+  --borda:#c8d8e8;
+  --papel:#fff;
+  --fundo:#e8eef6;
+  --cinza:#555;
+  --placeholder:#bbb;
+  --fonte-base:18px;
+  --linha-base:1.7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+#barra{
+  background:var(--azul-esc);padding:10px 14px;position:sticky;top:0;z-index:999;
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  border-bottom:3px solid var(--ouro);box-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+.marca{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:3px;color:#e0f0ff;text-transform:uppercase;flex-shrink:0;margin-right:6px;}
+.btn{
+  font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;
+  padding:9px 18px;border-radius:4px;cursor:pointer;border:2px solid;
+  transition:all .15s;white-space:nowrap;line-height:1;
+}
+.btn-salvar{background:var(--verde);border-color:#2a8a50;color:#fff;}
+.btn-salvar:hover{background:#2a7a40;}
+.btn-preview{background:#1a3a6b;border-color:#4a7ab8;color:#c8e0ff;}
+.btn-preview:hover{background:#2a5090;border-color:#6a9ad8;}
+.btn-impr{background:var(--ouro);border-color:var(--ouro-cl);color:#fff;}
+.btn-impr:hover{background:var(--ouro-cl);}
+.btn-limpar{background:transparent;border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.75);}
+.btn-limpar:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.6);}
+.btn-carregar{background:transparent;border-color:rgba(255,200,50,.45);color:#ffe080;}
+.btn-carregar:hover{background:rgba(255,200,50,.14);}
+#inp-carregar{display:none}
+
+.ctrl-grupo{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);
+  border-radius:5px;padding:5px 10px;
+}
+.ctrl-label{
+  font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);white-space:nowrap;
+}
+.ctrl-btn{
+  width:26px;height:26px;border-radius:3px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.1);color:#fff;font-size:14px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .12s;line-height:1;padding:0;font-family:'Oswald',sans-serif;
+}
+.ctrl-btn:hover{background:rgba(255,255,255,.22);border-color:var(--ouro);}
+.ctrl-val{
+  font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;
+  color:#ffe080;min-width:34px;text-align:center;
+}
+.barra-sep{width:1px;height:28px;background:rgba(255,255,255,.15);flex-shrink:0;}
+
+body{font-family:'Lora',Georgia,serif;font-size:var(--fonte-base);background:var(--fundo);color:#111;line-height:var(--linha-base);}
+
+#pagina{max-width:780px;margin:24px auto 60px;padding:0 14px;}
+
+.cartao{
+  background:var(--papel);border:1.5px solid var(--borda);border-radius:8px;
+  padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+.rotulo{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ouro);display:block;margin-bottom:6px;}
+.rotulo-azul{color:var(--azul);}
+.rotulo-verm{color:var(--verm);}
+
+[contenteditable]{font-family:'Lora',Georgia,serif;color:#111;outline:none;display:block;width:100%;min-height:1.8em;line-height:var(--linha-base);font-size:var(--fonte-base);word-break:break-word;}
+[contenteditable]:empty::before{content:attr(data-ph);color:var(--placeholder);font-style:italic;pointer-events:none;}
+[contenteditable]:focus{background:#fffbf0;border-radius:4px;outline:2px solid var(--ouro);outline-offset:2px;padding:2px 4px;}
+
+.txt-titulo{font-weight:700;color:var(--azul-esc);}
+.txt-verso{font-style:italic;color:#333;}
+.txt-conclusao{color:#111;}
+.txt-notas{color:var(--cinza);font-style:italic;}
+
+.campo-linha{
+  width:100%;border:none;border-bottom:2px solid var(--borda);outline:none;
+  font-family:'Lora',Georgia,serif;font-size:var(--fonte-base);font-style:italic;color:var(--cinza);
+  padding:4px 2px;background:transparent;display:block;margin-bottom:4px;
+}
+.campo-linha:focus{border-bottom-color:var(--ouro);background:#fffbf0;}
+.campo-linha::placeholder{color:var(--placeholder);}
+
+.metarow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:12px;}
+.metaf label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:var(--cinza);text-transform:uppercase;display:block;margin-bottom:4px;}
+
+.verse-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.verse-row input{flex:1;min-width:160px;font-family:'Lora',serif;font-size:var(--fonte-base);font-style:italic;color:var(--ouro);border:1.5px solid rgba(184,134,11,.35);border-radius:4px;padding:8px 12px;outline:none;background:#fff;}
+.verse-row input:focus{border-color:var(--ouro);}
+.btn-buscar{font-family:'Oswald',sans-serif;font-size:12px;padding:9px 18px;background:var(--ouro);color:#fff;border:none;border-radius:4px;cursor:pointer;}
+.btn-buscar:hover{background:var(--ouro-cl);}
+#vstatus{font-size:15px;color:var(--cinza);font-style:italic;min-height:18px;margin-bottom:6px;}
+#vstatus.ok{color:var(--verde);font-style:normal;font-weight:600;}
+#vstatus.err{color:var(--verm);font-style:normal;}
+
+.ponto{background:var(--papel);border:1.5px solid var(--borda);border-radius:8px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.08);overflow:hidden;}
+.ponto-topo{display:flex;align-items:stretch;border-bottom:1.5px solid var(--borda);}
+.ponto-num{background:linear-gradient(180deg,var(--ouro-cl),var(--ouro));color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;width:46px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.ponto-titulo-input{flex:1;border:none;outline:none;background:transparent;font-family:'Lora',Georgia,serif;font-weight:700;color:var(--verm);padding:12px 14px;font-size:calc(var(--fonte-base) + 2px);}
+.ponto-titulo-input::placeholder{color:rgba(139,26,26,.28);font-weight:400;font-style:italic;}
+.ponto-del{background:none;border:none;cursor:pointer;color:#c0392b;font-size:20px;padding:0 14px;opacity:.5;transition:opacity .15s;}
+.ponto-del:hover{opacity:1;}
+.linhas{padding:8px 12px 4px;}
+.linha{display:flex;align-items:flex-start;gap:8px;padding:5px 2px;}
+.linha-icone{flex-shrink:0;width:22px;text-align:center;margin-top:4px;color:var(--ouro);font-size:13px;user-select:none;}
+.linha-txt{flex:1;font-family:'Lora',Georgia,serif;font-size:var(--fonte-base);line-height:var(--linha-base);color:#111;outline:none;min-height:1.6em;word-break:break-word;}
+.linha-txt:empty::before{content:attr(data-ph);color:var(--placeholder);font-style:italic;pointer-events:none;}
+.linha-txt:focus{background:#fffbf0;border-radius:3px;outline:2px solid var(--ouro);outline-offset:1px;padding:1px 4px;}
+.linha-txt.t-sub{color:var(--cinza);padding-left:16px;}
+.linha-txt.t-verso{color:var(--verm);font-style:italic;}
+.linha-txt.t-aplica{color:var(--verde);font-weight:600;}
+.linha-rm{background:none;border:1px solid rgba(192,57,43,.25);cursor:pointer;padding:2px 8px;border-radius:3px;color:#c0392b;font-size:13px;margin-top:4px;flex-shrink:0;opacity:.5;transition:all .12s;}
+.linha-rm:hover{opacity:1;background:#c0392b;color:#fff;border-color:#c0392b;}
+.ponto-acoes{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 14px;background:#f8f9fb;border-top:1px solid var(--borda);}
+.rotulo-acoes{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:2px;color:rgba(80,80,80,.5);text-transform:uppercase;margin-right:4px;}
+.abtn{font-family:'Oswald',sans-serif;font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid;cursor:pointer;white-space:nowrap;transition:all .12s;background:#fff;}
+.abtn-linha{color:var(--azul);border-color:rgba(10,74,138,.28);}.abtn-linha:hover{background:#eef4fb;}
+.abtn-sub{color:var(--cinza);border-color:rgba(80,80,80,.22);}.abtn-sub:hover{background:#f0ede8;}
+.abtn-verso{color:var(--verm);border-color:rgba(139,26,26,.22);}.abtn-verso:hover{background:#fdf5f5;}
+.abtn-aplica{color:var(--verde);border-color:rgba(26,92,48,.22);}.abtn-aplica:hover{background:#f3f8f5;}
+#btn-addp{width:100%;padding:14px;background:transparent;border:2.5px dashed rgba(10,74,138,.28);border-radius:8px;color:rgba(10,74,138,.65);font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;margin-bottom:18px;}
+#btn-addp:hover{background:#eef4fb;border-color:var(--azul);color:var(--azul);}
+.cartao-verm{border-left:5px solid var(--verm);background:linear-gradient(to right,#fff8f8,#fff);}
+.cartao-cinza{background:#f7f7f4;border:1.5px dashed rgba(80,80,80,.2);}
+
+#notif{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--azul-esc);color:#e8f0ff;font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:.8px;padding:12px 28px;border-radius:4px;border:1px solid rgba(255,255,255,.2);box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s;text-align:center;white-space:nowrap;}
+#notif.show{opacity:1;}
+
+/* ══ MODAL VISUALIZAÇÃO ══ */
+#modal-preview{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.75);z-index:9000;overflow-y:auto;padding:0;
+}
+#modal-preview.aberto{display:block;}
+#modal-barra{
+  position:sticky;top:0;background:var(--azul-esc);border-bottom:3px solid var(--ouro);
+  padding:8px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);z-index:10;
+}
+#modal-barra .btn-fechar{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);color:#fff;}
+#modal-barra .btn-fechar:hover{background:rgba(255,255,255,.22);}
+#modal-barra .btn-impr-modal{background:var(--ouro);border-color:var(--ouro-cl);color:#fff;}
+#modal-barra .btn-impr-modal:hover{background:var(--ouro-cl);}
+
+#esboco-wrap{
+  display:flex;justify-content:center;
+  padding:16px 10px 40px;
+  background:#666;
+  min-height:calc(100vh - 52px);
+}
+/* O #esboço-renderizado usa estilos inline injetados via JS para respeitar fonte/espaçamento */
+#esboço-renderizado{
+  width:794px;
+  background:#fff;
+  padding:20px 28px 20px;
+  box-shadow:0 4px 32px rgba(0,0,0,.45);
+  color:#111;
+}
+
+/* ── IMPRESSÃO ── */
+@media print{
+  body > *{display:none!important;}
+  #modal-preview.aberto{display:block!important;position:static!important;background:none!important;padding:0!important;overflow:visible!important;}
+  #modal-preview.aberto #modal-barra{display:none!important;}
+  #modal-preview.aberto #esboco-wrap{display:block!important;background:none!important;padding:0!important;}
+  #modal-preview.aberto #esboço-renderizado{width:100%!important;box-shadow:none!important;padding:1cm 1.5cm!important;}
+}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  #barra{gap:6px;padding:8px 10px;}
+  .marca{font-size:12px;}
+  .btn{font-size:11px;padding:8px 12px;}
+  .ctrl-grupo{padding:4px 7px;}
+  .ctrl-val{min-width:28px;}
+  #pagina{margin:12px auto 60px;padding:0 8px;}
+  .metarow{grid-template-columns:1fr;gap:10px;}
+  #esboco-wrap{padding:8px 0 30px;}
+  #esboço-renderizado{min-width:700px;}
+}
+</style>
+</head>
+<body>
+
+<div id="barra">
+  <span class="marca">✦ FCosta</span>
+  <button class="btn btn-salvar" onclick="salvar()">💾 Salvar</button>
+  <button class="btn btn-carregar" onclick="document.getElementById('inp-carregar').click()">📂 Carregar</button>
+  <input type="file" id="inp-carregar" accept=".json" onchange="carregar(event)"/>
+  <button class="btn btn-preview" onclick="abrirPreview()">👁 Visualizar</button>
+  <button class="btn btn-impr" onclick="imprimirDireto()">🖨 Imprimir</button>
+  <button class="btn btn-limpar" onclick="limpar()">✕ Limpar</button>
+
+  <div class="barra-sep"></div>
+
+  <div class="ctrl-grupo">
+    <span class="ctrl-label">Fonte</span>
+    <button class="ctrl-btn" onclick="ajustarFonte(-1)" title="Diminuir fonte">−</button>
+    <span class="ctrl-val" id="ctrl-fonte-val">18px</span>
+    <button class="ctrl-btn" onclick="ajustarFonte(+1)" title="Aumentar fonte">+</button>
+  </div>
+
+  <div class="ctrl-grupo">
+    <span class="ctrl-label">Espaço</span>
+    <button class="ctrl-btn" onclick="ajustarLinha(-0.1)" title="Menos espaço">−</button>
+    <span class="ctrl-val" id="ctrl-linha-val">1.7</span>
+    <button class="ctrl-btn" onclick="ajustarLinha(+0.1)" title="Mais espaço">+</button>
+  </div>
+</div>
+
+<div id="pagina">
+
+  <div class="cartao">
+    <span class="rotulo">✦ Título do Sermão</span>
+    <div contenteditable="true" class="txt-titulo" id="titulo" data-ph="Digite o título aqui..." oninput="marcarAlterado()"></div>
+    <div class="metarow">
+      <div class="metaf">
+        <label>Referência Bíblica</label>
+        <input type="text" class="campo-linha" id="ref" placeholder="Ex: João 3:16" oninput="marcarAlterado()"/>
+      </div>
+      <div class="metaf">
+        <label>Pregador</label>
+        <input type="text" class="campo-linha" id="pregador" placeholder="Nome" oninput="marcarAlterado()"/>
+      </div>
+      <div class="metaf">
+        <label>Data / Ocasião</label>
+        <input type="text" class="campo-linha" id="dataoc" placeholder="Ex: 06/04/2025" oninput="marcarAlterado()"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="cartao">
+    <span class="rotulo rotulo-azul">📖 Texto Central / Versículo Base</span>
+    <div class="verse-row">
+      <input type="text" id="verse-ref" placeholder="Ex: Salmos 23:1 — pressione Enter para buscar" onkeydown="if(event.key==='Enter'){event.preventDefault();buscarVerso()}" oninput="marcarAlterado()"/>
+      <button class="btn-buscar" onclick="buscarVerso()">🔍 Buscar</button>
+    </div>
+    <div id="vstatus"></div>
+    <div contenteditable="true" class="txt-verso" id="verse-text" data-ph="O versículo aparece aqui após a busca, ou escreva manualmente..." oninput="marcarAlterado()"></div>
+  </div>
+
+  <div id="pontos-wrap"></div>
+  <button id="btn-addp" onclick="addPonto()">+ Adicionar Ponto / Seção</button>
+
+  <div class="cartao cartao-verm">
+    <span class="rotulo rotulo-verm">✦ Conclusão &amp; Apelo</span>
+    <div contenteditable="true" class="txt-conclusao" id="conclusao" data-ph="Síntese final, chamado à decisão, oração de encerramento..." oninput="marcarAlterado()"></div>
+  </div>
+
+  <div class="cartao cartao-cinza">
+    <span class="rotulo" style="color:var(--cinza);">📝 Notas Pessoais — não aparecem na visualização/impressão</span>
+    <div contenteditable="true" class="txt-notas" id="notas" data-ph="Lembretes, tempos de pregação, referências extras..." oninput="marcarAlterado()"></div>
+  </div>
+
+</div>
+
+<!-- MODAL VISUALIZAÇÃO COMPACTA -->
+<div id="modal-preview">
+  <div id="modal-barra">
+    <span class="marca" style="font-size:13px;">👁 Visualização do Esboço</span>
+    <button class="btn btn-impr-modal" onclick="window.print()">🖨 Imprimir / PDF</button>
+    <button class="btn btn-fechar" onclick="fecharPreview()">✕ Fechar</button>
+  </div>
+  <div id="esboco-wrap">
+    <div id="esboço-renderizado"></div>
+  </div>
+</div>
+
+<div id="notif"></div>
+
+<script>
+/* ── CONTROLES TIPOGRAFIA ── */
+var _fonte = 18;
+var _linha = 1.7;
+var FONTE_MIN = 14, FONTE_MAX = 28;
+var LINHA_MIN = 1.2, LINHA_MAX = 2.8;
+
+function aplicarTipografia(){
+  document.documentElement.style.setProperty('--fonte-base', _fonte+'px');
+  document.documentElement.style.setProperty('--linha-base', _linha.toFixed(1));
+  document.getElementById('ctrl-fonte-val').textContent = _fonte+'px';
+  document.getElementById('ctrl-linha-val').textContent = _linha.toFixed(1);
+}
+
+function ajustarFonte(delta){
+  _fonte = Math.max(FONTE_MIN, Math.min(FONTE_MAX, _fonte + delta));
+  aplicarTipografia();
+  marcarAlterado();
+  toast('Fonte: '+_fonte+'px');
+}
+
+function ajustarLinha(delta){
+  _linha = Math.max(LINHA_MIN, Math.min(LINHA_MAX, Math.round((_linha + delta)*10)/10));
+  aplicarTipografia();
+  marcarAlterado();
+  toast('Espaçamento: '+_linha.toFixed(1));
+}
+
+/* ── TOAST ── */
+function toast(msg){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.classList.add('show');
+  clearTimeout(n._t);
+  n._t=setTimeout(()=>n.classList.remove('show'),2400);
+}
+
+let alterado=false;
+function marcarAlterado(){alterado=true;}
+
+let nPontos=0;
+const ICONES={linha:'•',sub:'◦',verso:'📖',aplica:'✔'};
+const TIPOS_PH={
+  linha:'Escreva um ponto principal...',
+  sub:'Observação, detalhe ou referência...',
+  verso:'Versículo ou citação bíblica...',
+  aplica:'Aplicação prática para a vida...'
+};
+
+function addPonto(dados){
+  nPontos++;
+  const id='pto'+nPontos;
+  const div=document.createElement('div');
+  div.className='ponto';div.id=id;
+  div.innerHTML=`
+    <div class="ponto-topo">
+      <div class="ponto-num">${nPontos}</div>
+      <input type="text" class="ponto-titulo-input" placeholder="Título do ponto ${nPontos}..." oninput="marcarAlterado()" value="${esc(dados?.titulo||'')}"/>
+      <button class="ponto-del" title="Remover" onclick="removerPonto('${id}')">🗑</button>
+    </div>
+    <div class="linhas" id="${id}-linhas"></div>
+    <div class="ponto-acoes">
+      <span class="rotulo-acoes">+ Adicionar:</span>
+      <button class="abtn abtn-linha" onclick="addLinha('${id}','linha')">• Ponto</button>
+      <button class="abtn abtn-sub"   onclick="addLinha('${id}','sub')">◦ Detalhe</button>
+      <button class="abtn abtn-verso" onclick="addLinha('${id}','verso')">📖 Versículo</button>
+      <button class="abtn abtn-aplica" onclick="addLinha('${id}','aplica')">✔ Aplicação</button>
+    </div>`;
+  document.getElementById('pontos-wrap').appendChild(div);
+  if(dados?.linhas) dados.linhas.forEach(l=>addLinha(id,l.tipo,l.texto));
+  else addLinha(id,'linha');
+  marcarAlterado();
+}
+
+function removerPonto(id){
+  if(!confirm('Remover este ponto?'))return;
+  document.getElementById(id)?.remove();
+  renumerarPontos();marcarAlterado();
+}
+function renumerarPontos(){
+  document.querySelectorAll('.ponto').forEach((p,i)=>p.querySelector('.ponto-num').textContent=i+1);
+}
+function addLinha(pontoId,tipo,texto){
+  const wrap=document.getElementById(pontoId+'-linhas');if(!wrap)return;
+  const lid='l'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  const d=document.createElement('div');d.className='linha';d.id=lid;
+  d.innerHTML=`
+    <span class="linha-icone">${ICONES[tipo]||'•'}</span>
+    <div contenteditable="true" class="linha-txt t-${tipo}" data-tipo="${tipo}"
+         data-ph="${TIPOS_PH[tipo]||''}" oninput="marcarAlterado()">${esc(texto||'')}</div>
+    <button class="linha-rm" onclick="document.getElementById('${lid}').remove();marcarAlterado()">✕</button>`;
+  wrap.appendChild(d);
+  setTimeout(()=>d.querySelector('.linha-txt')?.focus(),50);
+  marcarAlterado();
+}
+
+async function buscarVerso(){
+  const ref=document.getElementById('verse-ref').value.trim();
+  const st=document.getElementById('vstatus');
+  const vt=document.getElementById('verse-text');
+  if(!ref){st.textContent='Digite uma referência primeiro.';st.className='err';return;}
+  st.textContent='🔍 Buscando...';st.className='';
+  try{
+    const r=await fetch(`https://bible-api.com/${encodeURIComponent(ref)}?translation=almeida`);
+    if(!r.ok)throw new Error();
+    const d=await r.json();
+    if(d.error)throw new Error();
+    vt.textContent=d.verses.map(v=>`${v.verse}. ${v.text.trim()}`).join(' ');
+    st.textContent='✔ '+d.reference;st.className='ok';marcarAlterado();
+  }catch{st.textContent='⚠ Não encontrado. Escreva manualmente abaixo.';st.className='err';}
+}
+
+/* ══ RENDERIZAR ESBOÇO — fonte e espaçamento dinâmicos ══ */
+function renderizarEsboço(){
+  const titulo  = document.getElementById('titulo').textContent.trim();
+  const ref     = document.getElementById('ref').value.trim();
+  const preg    = document.getElementById('pregador').value.trim();
+  const dataoc  = document.getElementById('dataoc').value.trim();
+  const vRef    = document.getElementById('verse-ref').value.trim();
+  const vTxt    = document.getElementById('verse-text').textContent.trim();
+  const conc    = document.getElementById('conclusao').textContent.trim();
+
+  // Escala proporcional: base de design era 12px / line-height 1.35
+  // Calculamos o fator em relação ao padrão do editor (18px / 1.7)
+  const fatorFonte = _fonte / 18;
+  const fatorLinha = _linha / 1.7;
+
+  // Tamanhos base da visualização (eram fixos no CSS original)
+  const fTitulo   = Math.round(15  * fatorFonte * 10) / 10;
+  const fMeta     = Math.round(9.5 * fatorFonte * 10) / 10;
+  const fVerso    = Math.round(10.5* fatorFonte * 10) / 10;
+  const fVersoRef = Math.round(9   * fatorFonte * 10) / 10;
+  const fPtTit    = Math.round(12  * fatorFonte * 10) / 10;
+  const fNumBadge = Math.round(8   * fatorFonte * 10) / 10;
+  const fIc       = Math.round(9   * fatorFonte * 10) / 10;
+  const fLinha    = Math.round(11.5* fatorFonte * 10) / 10;
+  const fSub      = Math.round(10  * fatorFonte * 10) / 10;
+  const fVersoTxt = Math.round(10  * fatorFonte * 10) / 10;
+  const fAplica   = Math.round(10.5* fatorFonte * 10) / 10;
+  const fConc     = Math.round(11  * fatorFonte * 10) / 10;
+  const fConcLbl  = Math.round(8   * fatorFonte * 10) / 10;
+  const lhBase    = (_linha * (10/17)).toFixed(2); // line-height proporcional
+
+  const ICONS = {linha:'&#9658;', sub:'&#8211;', verso:'&#9656;', aplica:'&#10003;'};
+
+  // CSS dinâmico injetado no esboço renderizado
+  const css = `
+    <style>
+    .eb-wrap{font-family:Arial,Helvetica,sans-serif;color:#111;}
+    .eb-cab{text-align:center;border-bottom:2px solid #07336b;padding-bottom:6px;margin-bottom:7px;}
+    .eb-titulo{font-size:${fTitulo}px;font-weight:700;color:#07336b;line-height:1.2;}
+    .eb-meta{font-size:${fMeta}px;color:#555;margin-top:2px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+    .eb-verso{background:#fdf8ee;border-left:3px solid #b8860b;padding:4px 10px;margin-bottom:7px;font-size:${fVerso}px;font-style:italic;color:#333;line-height:${lhBase};}
+    .eb-verso-ref{font-style:normal;font-weight:700;color:#b8860b;font-size:${fVersoRef}px;display:block;margin-bottom:1px;}
+    .eb-ponto{margin-bottom:6px;}
+    .eb-ponto-titulo{font-size:${fPtTit}px;font-weight:700;color:#8b1a1a;border-bottom:1px solid #e8c8c8;padding-bottom:1px;margin-bottom:2px;display:flex;align-items:center;gap:5px;}
+    .eb-num{background:#b8860b;color:#fff;font-size:${fNumBadge}px;font-weight:700;width:${Math.round(14*fatorFonte)}px;height:${Math.round(14*fatorFonte)}px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .eb-item{display:flex;align-items:baseline;gap:4px;padding:${(fatorLinha * 1).toFixed(1)}px 0;}
+    .eb-ic{font-size:${fIc}px;flex-shrink:0;line-height:1;}
+    .eb-txt{line-height:${lhBase};}
+    .t-linha-v .eb-ic{color:#0a4a8a;}
+    .t-linha-v .eb-txt{font-size:${fLinha}px;color:#111;}
+    .t-sub-v .eb-ic{color:#888;}
+    .t-sub-v .eb-txt{font-size:${fSub}px;color:#666;padding-left:10px;}
+    .t-verso-v .eb-ic{color:#8b1a1a;}
+    .t-verso-v .eb-txt{font-size:${fVersoTxt}px;color:#8b1a1a;font-style:italic;}
+    .t-aplica-v .eb-ic{color:#1a5c30;}
+    .t-aplica-v .eb-txt{font-size:${fAplica}px;color:#1a5c30;font-weight:700;}
+    .eb-conc{background:#fff8f8;border-left:3px solid #8b1a1a;padding:4px 10px;margin-top:8px;font-size:${fConc}px;color:#111;line-height:${lhBase};}
+    .eb-conc-label{font-size:${fConcLbl}px;letter-spacing:1.5px;color:#8b1a1a;text-transform:uppercase;display:block;margin-bottom:2px;font-weight:700;}
+    .eb-vazio{color:#aaa;font-style:italic;font-size:${fSub}px;}
+    </style>`;
+
+  let html = css + '<div class="eb-wrap">';
+
+  html += `<div class="eb-cab">
+    <div class="eb-titulo">${e(titulo)||'<span class="eb-vazio">Sem título</span>'}</div>
+    <div class="eb-meta">`;
+  if(ref)    html += `<span>&#128214; ${e(ref)}</span>`;
+  if(preg)   html += `<span>&#127908; ${e(preg)}</span>`;
+  if(dataoc) html += `<span>&#128197; ${e(dataoc)}</span>`;
+  html += `</div></div>`;
+
+  if(vTxt){
+    html += `<div class="eb-verso">`;
+    if(vRef) html += `<span class="eb-verso-ref">${e(vRef)}</span>`;
+    html += `"${e(vTxt)}"</div>`;
+  }
+
+  let nP = 0;
+  document.querySelectorAll('.ponto').forEach(p=>{
+    nP++;
+    const titP = p.querySelector('.ponto-titulo-input')?.value.trim()||'';
+    const linhasEl = p.querySelectorAll('.linha-txt');
+    const temC = titP || Array.from(linhasEl).some(l=>l.textContent.trim());
+    if(!temC) return;
+
+    html += `<div class="eb-ponto">
+      <div class="eb-ponto-titulo">
+        <span class="eb-num">${nP}</span>
+        ${e(titP)||'<span class="eb-vazio" style="font-weight:400">Ponto sem título</span>'}
+      </div>`;
+
+    linhasEl.forEach(l=>{
+      const txt  = l.textContent.trim(); if(!txt) return;
+      const tipo = l.dataset.tipo || 'linha';
+      const ic   = ICONS[tipo] || '&#9658;';
+      html += `<div class="eb-item t-${tipo}-v">
+        <span class="eb-ic">${ic}</span>
+        <span class="eb-txt">${e(txt)}</span>
+      </div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  if(conc){
+    html += `<div class="eb-conc">
+      <span class="eb-conc-label">Conclusão &amp; Apelo</span>
+      ${e(conc)}
+    </div>`;
+  }
+
+  html += '</div>';
+
+  document.getElementById('esboço-renderizado').innerHTML = html;
+}
+
+function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function abrirPreview(){
+  renderizarEsboço();
+  const m=document.getElementById('modal-preview');
+  m.classList.add('aberto');m.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function fecharPreview(){
+  document.getElementById('modal-preview').classList.remove('aberto');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape')fecharPreview();});
+function imprimirDireto(){
+  renderizarEsboço();
+  document.getElementById('modal-preview').classList.add('aberto');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>window.print(),250);
+}
+
+/* ── SALVAR / CARREGAR ── */
+function coletarDados(){
+  const pontos=[];
+  document.querySelectorAll('.ponto').forEach(p=>{
+    const titulo=p.querySelector('.ponto-titulo-input')?.value||'';
+    const linhas=[];
+    p.querySelectorAll('.linha-txt').forEach(l=>linhas.push({tipo:l.dataset.tipo||'linha',texto:l.textContent||''}));
+    pontos.push({titulo,linhas});
+  });
+  return{
+    titulo:document.getElementById('titulo').textContent||'',
+    ref:document.getElementById('ref').value||'',
+    pregador:document.getElementById('pregador').value||'',
+    dataoc:document.getElementById('dataoc').value||'',
+    verseRef:document.getElementById('verse-ref').value||'',
+    verseText:document.getElementById('verse-text').textContent||'',
+    conclusao:document.getElementById('conclusao').textContent||'',
+    notas:document.getElementById('notas').textContent||'',
+    fonte:_fonte,
+    linha:_linha,
+    pontos
+  };
+}
+function salvar(){
+  const dados=coletarDados();
+  const nome=(dados.titulo||'sermao').replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_\-áéíóúâêôãõçÁÉÍÓÚÂÊÔÃÕÇ]/g,'').substring(0,40)||'sermao';
+  const blob=new Blob([JSON.stringify({versao:2,salvoEm:new Date().toLocaleString('pt-BR'),dados},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='sermao_'+nome+'.json';a.click();
+  URL.revokeObjectURL(url);alterado=false;toast('✅ Salvo com sucesso!');
+}
+function carregar(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e2=>{
+    try{
+      const j=JSON.parse(e2.target.result);
+      restaurarDados(j.dados||j);
+      toast('📂 Esboço carregado!');alterado=false;
+    }catch{alert('Arquivo inválido.');}
+    ev.target.value='';
+  };
+  r.readAsText(f);
+}
+function restaurarDados(d){
+  document.getElementById('titulo').textContent=d.titulo||'';
+  document.getElementById('ref').value=d.ref||'';
+  document.getElementById('pregador').value=d.pregador||'';
+  document.getElementById('dataoc').value=d.dataoc||'';
+  document.getElementById('verse-ref').value=d.verseRef||'';
+  document.getElementById('verse-text').textContent=d.verseText||'';
+  document.getElementById('conclusao').textContent=d.conclusao||'';
+  document.getElementById('notas').textContent=d.notas||'';
+  document.getElementById('vstatus').textContent='';
+  document.getElementById('pontos-wrap').innerHTML='';
+  nPontos=0;
+  if(d.fonte){_fonte=d.fonte;}
+  if(d.linha){_linha=d.linha;}
+  aplicarTipografia();
+  (d.pontos||[]).forEach(p=>addPonto(p));
+}
+function limpar(){
+  if(!confirm('Limpar tudo e começar um novo esboço?'))return;
+  ['titulo','verse-text','conclusao','notas'].forEach(id=>document.getElementById(id).textContent='');
+  ['ref','pregador','dataoc','verse-ref'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('vstatus').textContent='';
+  document.getElementById('pontos-wrap').innerHTML='';
+  nPontos=0;
+  _fonte=18;_linha=1.7;aplicarTipografia();
+  addPonto({titulo:'Introdução'});addPonto({});addPonto({});
+  alterado=false;toast('✦ Novo esboço iniciado.');
+}
+window.addEventListener('beforeunload',ev=>{if(alterado){ev.preventDefault();ev.returnValue='';}});
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ── INICIAR ── */
+aplicarTipografia();
+addPonto({titulo:'Introdução'});addPonto({});addPonto({});
+</script>
+</body>
+</html>
