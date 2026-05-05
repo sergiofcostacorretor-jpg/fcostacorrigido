@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Do HTML ao Cliente — Guia Completo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f5f7fa;
+      color: #1e293b;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      font-size: clamp(26px, 5vw, 44px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b 30%, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    header p {
+      color: #64748b;
+      font-size: 16px;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .stepper {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Linha vertical contínua */
+    .stepper::before {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #6366f1, #8b5cf6, #ec4899, #f59e0b, #10b981, #3b82f6);
+      opacity: 0.25;
+      border-radius: 2px;
+    }
+
+    .step {
+      position: relative;
+      margin-bottom: 16px;
+      padding-left: 70px;
+    }
+
+    .step-dot {
+      position: absolute;
+      left: 0;
+      top: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      border: 2px solid rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .step.active .step-dot,
+    .step:hover .step-dot {
+      transform: scale(1.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .step-header {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.2s;
+      user-select: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .step-header:hover {
+      background: #f8faff;
+      border-color: #c7d2fe;
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(99,102,241,0.1);
+    }
+
+    .step.active .step-header {
+      border-radius: 16px 16px 0 0;
+      border-bottom-color: transparent;
+      background: #f8faff;
+      border-color: #c7d2fe;
+    }
+
+    .step-title-wrap { flex: 1; }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .step-subtitle {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 3px;
+    }
+
+    .chevron {
+      font-size: 18px;
+      color: #94a3b8;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .step.active .chevron { transform: rotate(180deg); color: #6366f1; }
+
+    .step-body {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #c7d2fe;
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.07);
+    }
+
+    .step.active .step-body { display: block; }
+
+    .step-content {
+      padding: 24px 26px;
+    }
+
+    .step-content p {
+      color: #475569;
+      line-height: 1.7;
+      font-size: 14.5px;
+      margin-bottom: 18px;
+    }
+
+    /* Tags de ferramentas */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+
+    /* Cards de dica */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tip-card {
+      background: #f8faff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .tip-card .tip-icon { font-size: 20px; margin-bottom: 8px; }
+    .tip-card .tip-title { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+    .tip-card .tip-desc { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+    /* Checklist */
+    .checklist { list-style: none; margin-bottom: 22px; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #475569;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li .ck { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Botão ação */
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-action:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* Alert box */
+    .alert {
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* Preço box */
+    .price-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .price-card {
+      flex: 1;
+      min-width: 130px;
+      background: #f8faff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .price-card .pc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 6px; }
+    .price-card .pc-value { font-size: 22px; font-weight: 800; }
+    .price-card .pc-desc { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+    /* Separador de seção dentro do body */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      margin-top: 4px;
+    }
+
+    /* Progress bar no topo */
+    .progress-bar {
+      max-width: 780px;
+      margin: 0 auto 36px;
+    }
+    .pb-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .pb-track {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .pb-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* Cores por step */
+    .s1 .step-dot { background: linear-gradient(135deg, #818cf8, #6366f1); }
+    .s2 .step-dot { background: linear-gradient(135deg, #60a5fa, #2563eb); }
+    .s3 .step-dot { background: linear-gradient(135deg, #34d399, #059669); }
+    .s4 .step-dot { background: linear-gradient(135deg, #fb923c, #ea580c); }
+    .s5 .step-dot { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+    .s6 .step-dot { background: linear-gradient(135deg, #f472b6, #db2777); }
+
+    .tag-blue   { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+    .tag-green  { background: #f0fdf4; color: #059669; border-color: #bbf7d0; }
+    .tag-purple { background: #f5f3ff; color: #7c3aed; border-color: #ddd6fe; }
+    .tag-orange { background: #fff7ed; color: #ea580c; border-color: #fed7aa; }
+    .tag-pink   { background: #fdf2f8; color: #db2777; border-color: #fbcfe8; }
+    .tag-gray   { background: #f8fafc; color: #475569; border-color: #e2e8f0; }
+
+    .btn-indigo  { background: #4f46e5; color: #fff; }
+    .btn-blue    { background: #2563eb; color: #fff; }
+    .btn-green   { background: #059669; color: #fff; }
+    .btn-orange  { background: #ea580c; color: #fff; }
+    .btn-violet  { background: #7c3aed; color: #fff; }
+    .btn-pink    { background: #db2777; color: #fff; }
+
+    .alert-indigo { background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; }
+    .alert-green  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #065f46; }
+    .alert-orange { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; }
+    .alert-pink   { background: #fdf2f8; border: 1px solid #fbcfe8; color: #9d174d; }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    @media (max-width: 500px) {
+      .step { padding-left: 0; margin-left: 0; }
+      .step-dot { display: none; }
+      .stepper::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">📦 Guia Prático</div>
+  <h1>Do código HTML<br>ao cliente final</h1>
+  <p>6 etapas para transformar seu projeto em produto entregue, hospedado e gerando receita recorrente.</p>
+</header>
+
+<!-- Barra de progresso -->
+<div class="progress-bar">
+  <div class="pb-label">
+    <span>Progresso</span>
+    <span id="prog-label">0 de 6 etapas</span>
+  </div>
+  <div class="pb-track"><div class="pb-fill" id="pb-fill"></div></div>
+</div>
+
+<div class="stepper" id="stepper">
+
+  <!-- ───── ETAPA 1 ───── -->
+  <div class="step s1" id="step-1">
+    <div class="step-dot">📁</div>
+    <div class="step-header" onclick="toggle(1)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 01</div>
+        <div class="step-title">Organizar e otimizar o projeto</div>
+        <div class="step-subtitle">Prepare os arquivos antes de qualquer coisa</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>Antes de mostrar qualquer coisa ao cliente, o projeto precisa estar limpo, organizado e funcionando sem dependências locais. Um arquivo HTML bagunçado vai gerar retrabalho e passar uma imagem ruim.</p>
+
+        <div class="section-label">Ferramentas recomendadas</div>
+        <div class="tools-row">
+          <span class="tool-tag tag-blue">🛠 VS Code</span>
+          <span class="tool-tag tag-green">✅ Prettier</span>
+          <span class="tool-tag tag-purple">🔍 HTML Validator (W3C)</span>
+          <span class="tool-tag tag-orange">⚡ Squoosh (imagens)</span>
+          <span class="tool-tag tag-gray">📁 FileZilla</span>
+        </div>
+
+        <div class="section-label">Checklist de preparação</div>
+        <ul class="checklist">
+          <li><span class="ck">✅</span> Todos os links e imagens usam caminhos relativos (sem <code>C:\Users\...</code>)</li>
+          <li><span class="ck">✅</span> CSS e JS estão em arquivos separados ou inline — sem CDNs que dependem de internet externa</li>
+          <li><span class="ck">✅</span> Imagens comprimidas (use Squoosh ou TinyPNG)</li>
+          <li><span class="ck">✅</span> Validado no <a href="https://validator.w3.org" target="_blank" style="color:#6366f1">validator.w3.org</a></li>
+          <li><span class="ck">✅</span> Responsivo: testado em 375px, 768px e 1280px</li>
+          <li><span class="ck">✅</span> Favicon incluído</li>
+          <li><span class="ck">✅</span> Meta tags (title, description, og:image) preenchidas</li>
+        </ul>
+
+        <div class="alert alert-indigo">
+          <span class="alert-icon">💡</span>
+          <span><strong>Dica profissional:</strong> Sempre teste abrindo o arquivo HTML diretamente no navegador <em>sem</em> servidor local. Se quebrar, tem dependência escondida.</span>
+        </div>
+
+        <a class="btn-action btn-indigo" onclick="nextStep(1)">Ir para a Etapa 2 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ETAPA 2 ───── -->
+  <div class="step s2" id="step-2">
+    <div class="step-dot">🌐</div>
+    <div class="step-header" onclick="toggle(2)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 02</div>
+        <div class="step-title">Escolher onde hospedar</div>
+        <div class="step-subtitle">Opções gratuitas e pagas — saiba qual indicar</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>Para projetos em HTML puro (sem back-end), a hospedagem é simples e barata. A escolha certa depende do perfil do cliente e se você quer lucrar com a hospedagem também.</p>
+
+        <div class="section-label">Comparativo de opções</div>
+        <div class="tip-grid">
+          <div class="tip-card">
+            <div class="tip-icon">🟣</div>
+            <div class="tip-title">Netlify (grátis)</div>
+            <div class="tip-desc">Deploy em segundos. SSL automático. Ótimo para portfólios e landing pages.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">⚫</div>
+            <div class="tip-title">GitHub Pages (grátis)</div>
+            <div class="tip-desc">Direto do repositório. Ideal para devs e projetos open source.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🔵</div>
+            <div class="tip-title">Vercel (grátis)</div>
+            <div class="tip-desc">Performance CDN global. Perfeito para sites rápidos com domínio próprio.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🟠</div>
+            <div class="tip-title">Hostinger / Locaweb</div>
+            <div class="tip-desc">Hospedagem paga. Você pode revender ao cliente com margem de lucro.</div>
+          </div>
+        </div>
+
+        <div class="section-label">Quanto cobrar pela hospedagem?</div>
+        <div class="price-row">
+          <div class="price-card">
+            <div class="pc-label">Seu custo</div>
+            <div class="pc-value" style="color:#059669">R$15</div>
+            <div class="pc-desc">Plano básico/mês</div>
+          </div>
+          <div class="price-card">
+            <div class="pc-label">Cobra do cliente</div>
+            <div class="pc-value" style="color:#d97706">R$50</div>
+            <div class="pc-desc">Inclui suporte básico</div>
+          </div>
+          <div class="price-card">
+            <div class="pc-label">Sua margem</div>
+            <div class="pc-value" style="color:#db2777">R$35</div>
+            <div class="pc-desc">Por cliente/mês passivo</div>
+          </div>
+        </div>
+
+        <div class="alert alert-green">
+          <span class="alert-icon">💰</span>
+          <span><strong>Modelo de negócio:</strong> Com 10 clientes pagando R$50/mês cada, você tem R$500 de renda recorrente sem trabalho extra além do suporte ocasional.</span>
+        </div>
+
+        <a class="btn-action btn-blue" onclick="nextStep(2)">Ir para a Etapa 3 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ETAPA 3 ───── -->
+  <div class="step s3" id="step-3">
+    <div class="step-dot">🔗</div>
+    <div class="step-header" onclick="toggle(3)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 03</div>
+        <div class="step-title">Registrar o domínio</div>
+        <div class="step-subtitle">O endereço digital do cliente na internet</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>O domínio é o <strong>www.nomedocliente.com.br</strong> — sem isso, o site é só um link genérico e sem credibilidade. Você pode registrar pelo cliente ou oferecer como serviço incluso.</p>
+
+        <div class="section-label">Onde registrar</div>
+        <div class="tools-row">
+          <span class="tool-tag tag-green">🇧🇷 Registro.br (domínios .com.br — R$40/ano)</span>
+          <span class="tool-tag tag-blue">🌎 GoDaddy (.com — ~R$50/ano)</span>
+          <span class="tool-tag tag-purple">⚡ Cloudflare (mais barato no .com)</span>
+          <span class="tool-tag tag-orange">🏠 Hostinger (combo domínio+hospedagem)</span>
+        </div>
+
+        <div class="section-label">Como apontar o domínio para a hospedagem</div>
+        <ul class="checklist">
+          <li><span class="ck">1️⃣</span> Registre o domínio no provedor escolhido</li>
+          <li><span class="ck">2️⃣</span> No painel da hospedagem, copie os <strong>nameservers</strong> (ex: ns1.hostinger.com)</li>
+          <li><span class="ck">3️⃣</span> No painel do domínio, substitua os nameservers pelos da hospedagem</li>
+          <li><span class="ck">4️⃣</span> Aguarde a propagação: de 5 minutos até 48 horas</li>
+          <li><span class="ck">5️⃣</span> Ative o SSL (HTTPS) — gratuito via Let's Encrypt na maioria das hospedagens</li>
+        </ul>
+
+        <div class="alert alert-orange">
+          <span class="alert-icon">⚠️</span>
+          <span><strong>Atenção:</strong> Sempre registre o domínio no nome do <em>cliente</em>, não no seu. Se o relacionamento terminar, o domínio pertence a quem pagou — e deve ser ele.</span>
+        </div>
+
+        <a class="btn-action btn-green" onclick="nextStep(3)">Ir para a Etapa 4 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ETAPA 4 ───── -->
+  <div class="step s4" id="step-4">
+    <div class="step-dot">🚀</div>
+    <div class="step-header" onclick="toggle(4)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 04</div>
+        <div class="step-title">Fazer o deploy (publicar)</div>
+        <div class="step-subtitle">Colocar o projeto no ar de forma profissional</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>Existem duas formas principais de publicar um projeto HTML puro: via <strong>arrasta e solta</strong> (Netlify/Vercel) ou via <strong>FTP</strong> (hospedagem tradicional). Escolha conforme a hospedagem decidida na etapa 2.</p>
+
+        <div class="section-label">Método 1 — Netlify Drop (mais fácil)</div>
+        <ul class="checklist">
+          <li><span class="ck">🌐</span> Acesse <strong style="color:#6366f1">app.netlify.com/drop</strong></li>
+          <li><span class="ck">📂</span> Arraste a pasta do projeto para a área indicada</li>
+          <li><span class="ck">✅</span> Pronto! Em segundos você tem um link funcional com HTTPS</li>
+          <li><span class="ck">🔗</span> Configure o domínio personalizado em <em>Site Settings → Domain Management</em></li>
+        </ul>
+
+        <div class="section-label">Método 2 — FTP com FileZilla</div>
+        <ul class="checklist">
+          <li><span class="ck">1️⃣</span> Baixe e instale o <strong>FileZilla</strong> (gratuito)</li>
+          <li><span class="ck">2️⃣</span> No painel da hospedagem, crie um usuário FTP e anote: host, usuário, senha e porta</li>
+          <li><span class="ck">3️⃣</span> No FileZilla: <em>Arquivo → Gerenciador de Sites → Novo Site</em></li>
+          <li><span class="ck">4️⃣</span> Cole os dados e clique em <em>Conectar</em></li>
+          <li><span class="ck">5️⃣</span> Navegue até a pasta <strong>public_html</strong> e arraste seus arquivos para lá</li>
+          <li><span class="ck">6️⃣</span> Aguarde o upload e acesse o domínio no navegador</li>
+        </ul>
+
+        <div class="tip-grid">
+          <div class="tip-card">
+            <div class="tip-icon">⚡</div>
+            <div class="tip-title">Netlify Drop</div>
+            <div class="tip-desc">5 minutos. Zero configuração. Perfeito para iniciantes.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🔧</div>
+            <div class="tip-title">FTP</div>
+            <div class="tip-desc">Mais controle. Necessário em hospedagens tradicionais (cPanel).</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🤖</div>
+            <div class="tip-title">GitHub + CI</div>
+            <div class="tip-desc">Deploy automático a cada commit. Ideal para projetos em andamento.</div>
+          </div>
+        </div>
+
+        <a class="btn-action btn-orange" onclick="nextStep(4)">Ir para a Etapa 5 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ETAPA 5 ───── -->
+  <div class="step s5" id="step-5">
+    <div class="step-dot">🤝</div>
+    <div class="step-header" onclick="toggle(5)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 05</div>
+        <div class="step-title">Entregar ao cliente</div>
+        <div class="step-subtitle">Apresentação, acesso e documentação</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>A entrega é onde muitos freelancers perdem pontos. Entregar bem é tão importante quanto desenvolver bem — é o que o cliente vê e lembra.</p>
+
+        <div class="section-label">O que entregar ao cliente</div>
+        <div class="tip-grid">
+          <div class="tip-card">
+            <div class="tip-icon">🔗</div>
+            <div class="tip-title">Link do site</div>
+            <div class="tip-desc">O endereço final com domínio personalizado e HTTPS ativo.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">📦</div>
+            <div class="tip-title">Arquivos fonte</div>
+            <div class="tip-desc">Pasta comprimida (.zip) com todo o código. Direito do cliente.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🔑</div>
+            <div class="tip-title">Acessos</div>
+            <div class="tip-desc">Login FTP, painel da hospedagem e registrador de domínio.</div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">📄</div>
+            <div class="tip-title">Mini manual</div>
+            <div class="tip-desc">PDF simples explicando o que pode e o que não pode editar.</div>
+          </div>
+        </div>
+
+        <div class="section-label">Script de entrega (mensagem modelo)</div>
+        <div class="alert alert-indigo" style="flex-direction:column; gap:10px;">
+          <span style="font-weight:700;">📩 Mensagem para enviar ao cliente:</span>
+          <span style="font-style:italic; line-height:1.8;">
+            "Olá [Nome]! Seu site já está no ar: <strong>www.seusite.com.br</strong> 🎉<br>
+            Em anexo envio a pasta com todos os arquivos e um guia rápido de uso.<br>
+            Os dados de acesso à hospedagem estão no documento em PDF.<br>
+            Qualquer ajuste nos primeiros 15 dias está incluso. Depois disso, seguimos com o plano de manutenção combinado."
+          </span>
+        </div>
+
+        <ul class="checklist">
+          <li><span class="ck">📸</span> Faça um vídeo de <strong>2–3 min</strong> navegando pelo site pronto (Loom é grátis)</li>
+          <li><span class="ck">📋</span> Documente tudo por escrito (e-mail ou PDF) — protege ambos os lados</li>
+          <li><span class="ck">✍️</span> Assine o termo de aceite / conclusão do projeto</li>
+          <li><span class="ck">⭐</span> Peça um depoimento ou avaliação Google enquanto está em alta</li>
+        </ul>
+
+        <a class="btn-action btn-violet" onclick="nextStep(5)">Ir para a Etapa 6 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── ETAPA 6 ───── -->
+  <div class="step s6" id="step-6">
+    <div class="step-dot">💸</div>
+    <div class="step-header" onclick="toggle(6)">
+      <div class="step-title-wrap">
+        <div class="step-num">Etapa 06</div>
+        <div class="step-title">Manutenção e receita recorrente</div>
+        <div class="step-subtitle">Transforme cada projeto em renda mensal</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="step-body">
+      <div class="step-content">
+        <p>O verdadeiro negócio não é no projeto único — é na mensalidade. Um cliente de site pode gerar renda por <strong>anos</strong> com um plano de manutenção bem estruturado.</p>
+
+        <div class="section-label">Modelos de plano de manutenção</div>
+        <div class="price-row">
+          <div class="price-card">
+            <div class="pc-label">🥉 Básico</div>
+            <div class="pc-value" style="color:#64748b">R$79</div>
+            <div class="pc-desc">Hospedagem + backup mensal + suporte por e-mail</div>
+          </div>
+          <div class="price-card">
+            <div class="pc-label">🥈 Profissional</div>
+            <div class="pc-value" style="color:#059669">R$149</div>
+            <div class="pc-desc">+ 2h de alterações + relatório de visitas mensal</div>
+          </div>
+          <div class="price-card">
+            <div class="pc-label">🥇 Premium</div>
+            <div class="pc-value" style="color:#d97706">R$299</div>
+            <div class="pc-desc">+ Prioridade + SEO básico + 5h de alterações/mês</div>
+          </div>
+        </div>
+
+        <div class="section-label">O que inclui a manutenção de HTML</div>
+        <ul class="checklist">
+          <li><span class="ck">🔒</span> Renovação do domínio e manutenção do SSL ativo</li>
+          <li><span class="ck">💾</span> Backup dos arquivos (mensalmente no Google Drive ou similar)</li>
+          <li><span class="ck">✏️</span> Pequenas alterações de texto, imagens ou cores</li>
+          <li><span class="ck">📊</span> Relatório do Google Analytics (visitas, origem do tráfego)</li>
+          <li><span class="ck">⚡</span> Monitoramento de velocidade e disponibilidade (UptimeRobot — grátis)</li>
+          <li><span class="ck">🛡️</span> Verificação de links quebrados mensalmente</li>
+        </ul>
+
+        <div class="alert alert-pink">
+          <span class="alert-icon">🚀</span>
+          <span><strong>Meta realista:</strong> 15 clientes × R$149/mês = <strong>R$2.235 recorrentes</strong> com ~5–8h de trabalho por mês. Você pode automatizar os backups e relatórios com ferramentas gratuitas.</span>
+        </div>
+
+        <div class="section-label">Ferramentas para automatizar</div>
+        <div class="tools-row">
+          <span class="tool-tag tag-green">📈 Google Analytics</span>
+          <span class="tool-tag tag-blue">🔔 UptimeRobot</span>
+          <span class="tool-tag tag-purple">☁️ Google Drive (backup)</span>
+          <span class="tool-tag tag-orange">🧾 Stripe / Hotmart (cobrança recorrente)</span>
+          <span class="tool-tag tag-pink">🤖 Zapier (automações)</span>
+        </div>
+
+        <a class="btn-action btn-pink" onclick="celebrar()">🎉 Projeto concluído! Ver resumo</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /stepper -->
+
+<!-- Modal de conclusão -->
+<div id="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(100,116,139,.4); backdrop-filter:blur(4px); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:20px; padding:40px; max-width:460px; width:90%; text-align:center; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
+    <div style="font-size:56px; margin-bottom:16px;">🏆</div>
+    <h2 style="font-size:24px; font-weight:800; color:#1e293b; margin-bottom:10px;">Parabéns!</h2>
+    <p style="color:#64748b; font-size:15px; line-height:1.7; margin-bottom:28px;">Você domina o fluxo completo: do HTML bruto ao cliente satisfeito pagando mensalidade. Repita esse processo e escale sua renda!</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button onclick="document.getElementById('modal-overlay').style.display='none'" style="background:#6366f1; color:#fff; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer;">Fechar</button>
+      <button onclick="resetAll()" style="background:transparent; color:#94a3b8; border:1px solid #e2e8f0; border-radius:10px; padding:10px 24px; font-size:13px; cursor:pointer;">Reiniciar guia</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Guia — Do HTML ao Cliente · Feito com ❤️ para freelancers e agências</p>
+</footer>
+
+<script>
+  const total = 6;
+  const opened = new Set();
+
+  function toggle(n) {
+    const el = document.getElementById('step-' + n);
+    const wasActive = el.classList.contains('active');
+    for (let i = 1; i <= total; i++) {
+      document.getElementById('step-' + i).classList.remove('active');
+    }
+    if (!wasActive) {
+      el.classList.add('active');
+      opened.add(n);
+    } else {
+      opened.delete(n);
+    }
+    updateProgress();
+  }
+
+  function nextStep(current) {
+    toggle(current);
+    const next = current + 1;
+    if (next <= total) {
+      const el = document.getElementById('step-' + next);
+      el.classList.add('active');
+      opened.add(next);
+      updateProgress();
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    }
+  }
+
+  function updateProgress() {
+    const pct = (opened.size / total) * 100;
+    document.getElementById('pb-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = opened.size + ' de ' + total + ' etapas';
+  }
+
+  function celebrar() {
+    for (let i = 1; i <= total; i++) opened.add(i);
+    updateProgress();
+    document.getElementById('modal-overlay').style.display = 'flex';
+  }
+
+  function resetAll() {
+    opened.clear();
+    for (let i = 1; i <= total; i++) {
+      document.getElementById('step-' + i).classList.remove('active');
+    }
+    updateProgress();
+    document.getElementById('modal-overlay').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

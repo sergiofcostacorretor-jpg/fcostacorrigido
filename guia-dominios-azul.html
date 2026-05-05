@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💰 Guia Definitivo: Lucrar com Domínios</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --surface: #d0e9f7;
+    --card: #ffffff;
+    --border: #b3d4ec;
+    --accent: #0a6eb4;
+    --accent2: #00a8d6;
+    --accent3: #0055a0;
+    --text: #0d2b45;
+    --muted: #4a7a9b;
+    --green: #1a9b5e;
+    --red: #c0392b;
+    --orange: #d97706;
+    --gold: #b8860b;
+    --sky1: #cce7f7;
+    --sky2: #a8d5f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background:
+      radial-gradient(ellipse at 15% 50%, #007fc4 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 20%, #00aadd 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%, #0055a0 0%, transparent 50%),
+      linear-gradient(180deg, #87ceeb 0%, #4db8e8 40%, #1a90d0 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  /* Clouds decoration */
+  .cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50px;
+    pointer-events: none;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+  }
+  .cloud-1 { width: 200px; height: 40px; top: 15%; left: 5%; animation: cloudFloat 18s linear infinite; }
+  .cloud-1::before { width: 80px; height: 70px; top: -35px; left: 30px; }
+  .cloud-1::after { width: 60px; height: 50px; top: -25px; left: 80px; }
+  .cloud-2 { width: 160px; height: 35px; top: 30%; right: 8%; animation: cloudFloat 25s linear infinite reverse; }
+  .cloud-2::before { width: 65px; height: 55px; top: -28px; left: 25px; }
+  .cloud-2::after { width: 50px; height: 42px; top: -20px; left: 65px; }
+  .cloud-3 { width: 240px; height: 45px; top: 60%; left: -5%; animation: cloudFloat 22s linear infinite; opacity: 0.5; }
+  .cloud-3::before { width: 90px; height: 80px; top: -40px; left: 40px; }
+  .cloud-3::after { width: 70px; height: 60px; top: -30px; left: 100px; }
+  @keyframes cloudFloat {
+    from { transform: translateX(-100px); }
+    to { transform: translateX(calc(100vw + 200px)); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    backdrop-filter: blur(8px);
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    color: #fff;
+    text-shadow: 0 4px 24px rgba(0,40,80,0.3);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 span { color: #ffe066; }
+  .hero h1 em { font-style: normal; color: #a0f0ff; }
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: rgba(255,255,255,0.85);
+    max-width: 620px;
+    margin: 0 auto 50px;
+    font-weight: 300;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffe066;
+    display: block;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  .hero-stat .label { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,60,100,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 0 20px;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    padding: 12px 0;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    white-space: nowrap;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: rgba(255,220,50,0.18);
+    color: #ffe066;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 80px 20px; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    background: rgba(10,110,180,0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(10,110,180,0.2);
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  h2 span { color: var(--accent); }
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(10,80,150,0.07);
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(10,80,150,0.14); }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover::before { opacity: 1; }
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+    background: rgba(10,110,180,0.1);
+  }
+  .card p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 14px;
+  }
+  .badge-green { background: rgba(26,155,94,0.1); color: var(--green); border: 1px solid rgba(26,155,94,0.25); }
+  .badge-yellow { background: rgba(185,134,0,0.1); color: var(--gold); border: 1px solid rgba(185,134,0,0.25); }
+  .badge-red { background: rgba(192,57,43,0.1); color: var(--red); border: 1px solid rgba(192,57,43,0.25); }
+  .badge-blue { background: rgba(10,110,180,0.1); color: var(--accent); border: 1px solid rgba(10,110,180,0.25); }
+  .badge-purple { background: rgba(0,85,160,0.1); color: var(--accent3); border: 1px solid rgba(0,85,160,0.25); }
+
+  /* PRICING TABLE */
+  .price-table { width: 100%; border-collapse: collapse; }
+  .price-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    background: #f0f8ff;
+  }
+  .price-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(179,212,236,0.4);
+    font-size: 14px;
+    vertical-align: middle;
+    color: var(--text);
+  }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr:hover td { background: #f0f8ff; }
+  .ext { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--accent3); }
+  .price-val { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); }
+  .table-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 16px rgba(10,80,150,0.08);
+  }
+
+  /* STRATEGY STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(10,110,180,0.3);
+  }
+  .step-content h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .step-content p { color: var(--muted); font-size: 15px; }
+
+  /* PLATFORMS */
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .platform-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(10,80,150,0.06);
+  }
+  .platform-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10,80,150,0.13); }
+  .platform-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); }
+  .platform-url { font-size: 12px; color: var(--accent2); }
+  .platform-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .platform-fee { font-size: 12px; color: var(--orange); font-weight: 500; }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: linear-gradient(135deg, rgba(10,110,180,0.07), rgba(0,168,214,0.07));
+    border: 1px solid rgba(10,110,180,0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .highlight h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 12px; color: var(--accent); }
+  .highlight p, .highlight li { color: var(--muted); font-size: 15px; line-height: 1.8; }
+  .highlight ul { padding-left: 20px; }
+  .highlight li { margin-bottom: 6px; }
+
+  /* CALCULATOR */
+  .calc-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(10,80,150,0.1);
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .input-group input, .input-group select {
+    width: 100%;
+    background: #f0f8ff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-group input:focus, .input-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(10,110,180,0.1); }
+  .calc-result {
+    background: linear-gradient(135deg, rgba(10,110,180,0.08), rgba(0,168,214,0.08));
+    border: 1px solid rgba(10,110,180,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align: center;
+  }
+  .res-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 600; }
+  .res-val { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--accent); }
+  .calc-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 20px rgba(10,110,180,0.3);
+  }
+  .calc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 12px; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(10,80,150,0.05);
+  }
+  .check-item.done { border-color: rgba(26,155,94,0.4); background: rgba(26,155,94,0.05); }
+  .check-item:hover { border-color: var(--accent); }
+  .check-box {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s;
+    color: transparent;
+  }
+  .check-item.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .check-text { font-size: 15px; line-height: 1.5; }
+  .check-text strong { display: block; font-weight: 600; margin-bottom: 2px; color: var(--text); }
+  .check-text span { font-size: 13px; color: var(--muted); }
+
+  /* PROFIT MODELS */
+  .profit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+    box-shadow: 0 2px 12px rgba(10,80,150,0.07);
+  }
+  .profit-card:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(10,80,150,0.14); }
+  .profit-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .profit-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .profit-roi {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--green);
+  }
+  .profit-roi span { font-size: 13px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+  .profit-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .profit-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .profit-card ul { padding-left: 18px; }
+  .profit-card li { font-size: 13px; color: var(--muted); margin-bottom: 5px; line-height: 1.6; }
+  .profit-bar { height: 5px; border-radius: 3px; background: var(--border); margin-top: 16px; }
+  .profit-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+  /* AUDIENCE */
+  .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .audience-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(10,80,150,0.06);
+  }
+  .audience-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .aud-icon { font-size: 32px; margin-bottom: 14px; }
+  .aud-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px; color: var(--text); }
+  .aud-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+  .aud-budget { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ===== NOVA SEÇÃO: COMERCIALIZAÇÃO ===== */
+  .comerc-section {
+    background: linear-gradient(180deg, #e8f4fd 0%, #d0e9f7 100%);
+    border-top: 3px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+  .comerc-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 2px 2px, rgba(10,110,180,0.06) 1px, transparent 0);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* PIPELINE VISUAL */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    margin-bottom: 48px;
+  }
+  .pipe-step {
+    flex: 1;
+    min-width: 150px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 18px;
+    position: relative;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .pipe-step:first-child { border-radius: 14px 0 0 14px; }
+  .pipe-step:last-child { border-radius: 0 14px 14px 0; }
+  .pipe-step:not(:last-child)::after {
+    content: '▶';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 18px;
+    z-index: 2;
+    background: var(--bg);
+    padding: 0 2px;
+  }
+  .pipe-step:hover { background: #f0f8ff; border-color: var(--accent); }
+  .pipe-num {
+    display: inline-flex;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+  }
+  .pipe-icon { font-size: 24px; margin-bottom: 8px; }
+  .pipe-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); line-height: 1.3; }
+  .pipe-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* COMERC CARDS */
+  .comerc-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 3px 16px rgba(10,80,150,0.09);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .comerc-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 4px 0 0 4px;
+  }
+  .comerc-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 36px rgba(10,80,150,0.15); }
+  .comerc-card h3 { font-size: 19px; margin-bottom: 10px; padding-left: 14px; }
+  .comerc-card p { color: var(--muted); font-size: 14px; line-height: 1.75; padding-left: 14px; }
+  .comerc-card ul { padding-left: 32px; margin-top: 12px; }
+  .comerc-card li { font-size: 14px; color: var(--muted); margin-bottom: 6px; line-height: 1.65; }
+  .comerc-card li strong { color: var(--text); }
+  .comerc-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+    padding-left: 14px;
+  }
+  .ct-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .ct-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* JORNADA DO CLIENTE */
+  .jornada {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .jornada-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 18px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(10,80,150,0.06);
+    transition: all 0.2s;
+  }
+  .jornada-item:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .jornada-icon { font-size: 28px; margin-bottom: 12px; }
+  .jornada-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 6px; }
+  .jornada-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* LANDING PAGE MOCKUP */
+  .mockup-box {
+    background: #1a2a3a;
+    border-radius: 16px;
+    padding: 28px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #7ecfff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow-x: auto;
+    position: relative;
+  }
+  .mockup-box::before {
+    content: '• • •';
+    display: block;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+    font-size: 16px;
+    letter-spacing: 4px;
+  }
+  .mockup-box .tag { color: #ff7eb3; }
+  .mockup-box .attr { color: #ffe066; }
+  .mockup-box .val { color: #a0ff80; }
+  .mockup-box .comment { color: #5d7a8a; font-style: italic; }
+  .mockup-box .text { color: #e0e0e0; }
+
+  /* WHATSAPP BUTTON */
+  .wpp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: all 0.2s;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  .wpp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.45); }
+
+  /* PRICING STRATEGY */
+  .price-strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .ps-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(10,80,150,0.06);
+  }
+  .ps-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .ps-card.featured { border-color: var(--accent); background: linear-gradient(135deg, rgba(10,110,180,0.05), rgba(0,168,214,0.05)); }
+  .ps-card.featured::before { content: '⭐ Recomendado'; display: block; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .ps-tier { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+  .ps-price { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px; color: var(--accent); }
+  .ps-range { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .ps-features { list-style: none; text-align: left; font-size: 13px; color: var(--muted); }
+  .ps-features li { padding: 4px 0; }
+  .ps-features li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+
+  /* FOOTER */
+  footer {
+    background: #0d2b45;
+    border-top: 3px solid var(--accent);
+    padding: 48px 20px;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+  }
+  footer strong { color: #ffe066; }
+  footer .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* TABS */
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .tab {
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* TICKER */
+  .ticker {
+    background: linear-gradient(90deg, #0a4070, #0a6eb4, #0a4070);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex;
+    gap: 60px;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); }
+  .ticker-item span { color: #ffe066; font-family: 'Syne', sans-serif; font-weight: 700; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .calc-grid { grid-template-columns: 1fr; }
+    .calc-result { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    section { padding: 60px 20px; }
+    .pipeline { flex-direction: column; }
+    .pipe-step { min-width: auto; }
+    .pipe-step::after { display: none; }
+    .pipe-step:first-child, .pipe-step:last-child { border-radius: 14px; }
+    .pipe-step { border-radius: 14px; }
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--sky1); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="hero-badge">🚀 Guia Definitivo 2024–2025</div>
+  <h1>Lucre com<br><span>Domínios</span><br>de <em>Verdade</em></h1>
+  <p class="hero-sub">Tudo que você precisa: como comprar, registrar, vender, anunciar e transformar domínios em renda real — do zero ao cliente.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">+20</span><span class="label">Formas de lucrar</span></div>
+    <div class="hero-stat"><span class="num">R$ 5</span><span class="label">Investimento mínimo</span></div>
+    <div class="hero-stat"><span class="num">∞</span><span class="label">Potencial de ganho</span></div>
+    <div class="hero-stat"><span class="num">100%</span><span class="label">Online</span></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">📌 .com.br <span>R$ 40/ano</span></span>
+    <span class="ticker-item">📌 .com <span>R$ 55–80/ano</span></span>
+    <span class="ticker-item">📌 .net <span>R$ 60–75/ano</span></span>
+    <span class="ticker-item">📌 .org <span>R$ 55–70/ano</span></span>
+    <span class="ticker-item">📌 .io <span>R$ 250–400/ano</span></span>
+    <span class="ticker-item">📌 .app <span>R$ 90–150/ano</span></span>
+    <span class="ticker-item">📌 .store <span>R$ 80–120/ano</span></span>
+    <span class="ticker-item">📌 .shop <span>R$ 70–110/ano</span></span>
+    <span class="ticker-item">📌 .tech <span>R$ 100–200/ano</span></span>
+    <span class="ticker-item">📌 .ai <span>R$ 450–600/ano</span></span>
+    <span class="ticker-item">📌 .xyz <span>R$ 30–60/ano</span></span>
+    <span class="ticker-item">📌 .com.br <span>R$ 40/ano</span></span>
+    <span class="ticker-item">📌 .com <span>R$ 55–80/ano</span></span>
+    <span class="ticker-item">📌 .net <span>R$ 60–75/ano</span></span>
+    <span class="ticker-item">📌 .org <span>R$ 55–70/ano</span></span>
+    <span class="ticker-item">📌 .io <span>R$ 250–400/ano</span></span>
+    <span class="ticker-item">📌 .app <span>R$ 90–150/ano</span></span>
+    <span class="ticker-item">📌 .store <span>R$ 80–120/ano</span></span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollTo('precos')">💲 Preços</button>
+    <button class="nav-btn" onclick="scrollTo('formas')">💰 Como Lucrar</button>
+    <button class="nav-btn" onclick="scrollTo('plataformas')">🛒 Onde Vender</button>
+    <button class="nav-btn" onclick="scrollTo('anunciar')">📣 Como Anunciar</button>
+    <button class="nav-btn" onclick="scrollTo('compradores')">👥 Para Quem Vender</button>
+    <button class="nav-btn" onclick="scrollTo('estrategia')">🎯 Estratégia</button>
+    <button class="nav-btn" onclick="scrollTo('calculadora')">🧮 Calculadora</button>
+    <button class="nav-btn" onclick="scrollTo('checklist')">✅ Checklist</button>
+    <button class="nav-btn" onclick="scrollTo('registradores')">🌐 Registradores</button>
+    <button class="nav-btn" onclick="scrollTo('comercializar')" style="color:#ffe066;background:rgba(255,220,50,0.12)">🚀 Comercializar</button>
+  </div>
+</nav>
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="container">
+    <span class="section-tag">Investimento Inicial</span>
+    <h2>Preços de <span>Domínio</span><br>em Todos os Registradores</h2>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('br')">🇧🇷 Brasil</button>
+      <button class="tab" onclick="showTab('inter')">🌎 Internacional</button>
+      <button class="tab" onclick="showTab('nicho')">🎯 Nicho</button>
+    </div>
+
+    <div id="tab-br" class="tab-panel active">
+      <div class="table-wrap">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Extensão</th>
+              <th>Registro.br</th>
+              <th>Hostgator</th>
+              <th>Locaweb</th>
+              <th>UOL Host</th>
+              <th>KingHost</th>
+              <th>Melhor para</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="ext">.com.br</span></td><td><span class="price-val">R$ 40</span></td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td><span class="badge badge-green">✦ Negócios BR</span></td></tr>
+            <tr><td><span class="ext">.org.br</span></td><td><span class="price-val">R$ 40</span></td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td><span class="badge badge-blue">ONGs</span></td></tr>
+            <tr><td><span class="ext">.net.br</span></td><td><span class="price-val">R$ 40</span></td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td>R$ 40</td><td><span class="badge badge-yellow">Telecoms</span></td></tr>
+            <tr><td><span class="ext">.agr.br</span></td><td><span class="price-val">R$ 40</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="badge badge-green">Agronegócio</span></td></tr>
+            <tr><td><span class="ext">.adv.br</span></td><td><span class="price-val">R$ 40</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="badge badge-purple">Advogados</span></td></tr>
+            <tr><td><span class="ext">.med.br</span></td><td><span class="price-val">R$ 40</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="badge badge-red">Médicos</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-inter" class="tab-panel">
+      <div class="table-wrap">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Extensão</th>
+              <th>GoDaddy</th>
+              <th>Namecheap</th>
+              <th>Google Domains</th>
+              <th>Cloudflare</th>
+              <th>Hostinger</th>
+              <th>Valor de Revenda</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="ext">.com</span></td><td><span class="price-val">R$ 55–80</span></td><td>R$ 60</td><td>R$ 72</td><td>R$ 55</td><td>R$ 55</td><td><span class="badge badge-green">R$ 500–R$ 50mil+</span></td></tr>
+            <tr><td><span class="ext">.net</span></td><td><span class="price-val">R$ 65</span></td><td>R$ 62</td><td>R$ 72</td><td>R$ 65</td><td>R$ 58</td><td><span class="badge badge-yellow">R$ 200–R$ 5mil</span></td></tr>
+            <tr><td><span class="ext">.org</span></td><td><span class="price-val">R$ 70</span></td><td>R$ 60</td><td>R$ 72</td><td>R$ 65</td><td>R$ 58</td><td><span class="badge badge-yellow">R$ 150–R$ 3mil</span></td></tr>
+            <tr><td><span class="ext">.io</span></td><td><span class="price-val">R$ 290</span></td><td>R$ 270</td><td>R$ 290</td><td>R$ 255</td><td>R$ 260</td><td><span class="badge badge-blue">R$ 1k–R$ 100k+ (Tech)</span></td></tr>
+            <tr><td><span class="ext">.app</span></td><td><span class="price-val">R$ 100</span></td><td>R$ 95</td><td>R$ 100</td><td>R$ 90</td><td>R$ 88</td><td><span class="badge badge-blue">R$ 500–R$ 20k</span></td></tr>
+            <tr><td><span class="ext">.ai</span></td><td><span class="price-val">R$ 500+</span></td><td>R$ 480</td><td>—</td><td>—</td><td>R$ 450</td><td><span class="badge badge-red">R$ 2k–R$ 200k+ (IA)</span></td></tr>
+            <tr><td><span class="ext">.xyz</span></td><td><span class="price-val">R$ 35</span></td><td>R$ 30</td><td>R$ 48</td><td>R$ 30</td><td>R$ 25</td><td><span class="badge badge-yellow">R$ 100–R$ 2k</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-nicho" class="tab-panel">
+      <div class="table-wrap">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Extensão</th>
+              <th>Preço Médio/ano</th>
+              <th>Setor</th>
+              <th>Potencial de Revenda</th>
+              <th>Dificuldade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="ext">.store</span></td><td><span class="price-val">R$ 80–120</span></td><td>E-commerce</td><td><span class="badge badge-green">Alto</span></td><td>Fácil</td></tr>
+            <tr><td><span class="ext">.shop</span></td><td><span class="price-val">R$ 70–100</span></td><td>Varejo</td><td><span class="badge badge-green">Alto</span></td><td>Fácil</td></tr>
+            <tr><td><span class="ext">.tech</span></td><td><span class="price-val">R$ 130–200</span></td><td>Tecnologia</td><td><span class="badge badge-blue">Muito alto</span></td><td>Médio</td></tr>
+            <tr><td><span class="ext">.online</span></td><td><span class="price-val">R$ 60–90</span></td><td>Geral</td><td><span class="badge badge-yellow">Médio</span></td><td>Fácil</td></tr>
+            <tr><td><span class="ext">.digital</span></td><td><span class="price-val">R$ 100–150</span></td><td>Marketing</td><td><span class="badge badge-blue">Alto</span></td><td>Médio</td></tr>
+            <tr><td><span class="ext">.health</span></td><td><span class="price-val">R$ 200–350</span></td><td>Saúde</td><td><span class="badge badge-red">Muito alto</span></td><td>Difícil</td></tr>
+            <tr><td><span class="ext">.finance</span></td><td><span class="price-val">R$ 250–400</span></td><td>Finanças</td><td><span class="badge badge-red">Muito alto</span></td><td>Difícil</td></tr>
+            <tr><td><span class="ext">.blog</span></td><td><span class="price-val">R$ 60–90</span></td><td>Conteúdo</td><td><span class="badge badge-yellow">Médio</span></td><td>Fácil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <h4>💡 Dica de Ouro: Onde Comprar Mais Barato</h4>
+      <ul>
+        <li><strong>Namecheap</strong> — promoções frequentes para primeiro ano (às vezes menos de R$ 5 para .com)</li>
+        <li><strong>Cloudflare Registrar</strong> — cobra apenas o custo de atacado, sem markup (melhor preço de renovação)</li>
+        <li><strong>Hostinger</strong> — pacotes com hospedagem + domínio grátis no primeiro ano</li>
+        <li><strong>Porkbun</strong> — excelente para extensões de nicho com preços abaixo da média</li>
+        <li><strong>Registro.br</strong> — único lugar oficial para registrar .com.br (R$ 40 fixo)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FORMAS DE LUCRAR -->
+<section id="formas">
+  <div class="container">
+    <span class="section-tag">Modelos de Negócio</span>
+    <h2>+20 Formas de <span>Lucrar</span><br>com Domínios</h2>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="profit-card">
+        <div class="profit-header">
+          <span class="profit-tag badge badge-green">Modelo 1</span>
+          <div><div class="profit-roi">500%<span> ROI médio</span></div></div>
+        </div>
+        <h3>🔄 Domain Flipping (Revenda)</h3>
+        <p>Compre domínios genéricos de alto valor por R$ 40–200 e revenda por R$ 500 a R$ 50.000+. O segredo é antecipar tendências.</p>
+        <ul>
+          <li>Busque nomes curtos (2–4 palavras) e memoráveis</li>
+          <li>Foque em setores em crescimento: IA, saúde, fintech</li>
+          <li>Monitore domínios expirados via expireddomains.net</li>
+        </ul>
+        <div class="profit-bar"><div class="profit-bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="profit-card">
+        <div class="profit-header">
+          <span class="profit-tag badge badge-blue">Modelo 2</span>
+          <div><div class="profit-roi">Recorrente<span> todo mês</span></div></div>
+        </div>
+        <h3>🅿️ Domain Parking</h3>
+        <p>Aponte domínios para plataformas de parking que exibem anúncios. Cada visita gera receita.</p>
+        <ul>
+          <li>Plataformas: Sedo, Bodis, ParkingCrew, DomainSponsor</li>
+          <li>Ganhos: R$ 5 a R$ 500+/mês por domínio com tráfego</li>
+          <li>Configure DNS para ns1.bodis.com / ns2.bodis.com</li>
+        </ul>
+        <div class="profit-bar"><div class="profit-bar-fill" style="width:55%"></div></div>
+      </div>
+      <div class="profit-card">
+        <div class="profit-header">
+          <span class="profit-tag badge badge-yellow">Modelo 3</span>
+          <div><div class="profit-roi">R$ 2–50k<span> por venda</span></div></div>
+        </div>
+        <h3>🏗️ Mini Sites + Domínio</h3>
+        <p>Crie sites simples de 5–10 páginas com SEO, monetize com AdSense/afiliados, e venda o pacote completo.</p>
+        <ul>
+          <li>Sites simples com tráfego valem 24–36x a receita mensal</li>
+          <li>Venda no Flippa, Empire Flippers, Motion Invest</li>
+          <li>Foque em nichos com pouca concorrência e CPCs altos</li>
+        </ul>
+        <div class="profit-bar"><div class="profit-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="profit-card">
+        <div class="profit-header">
+          <span class="profit-tag badge badge-purple">Modelo 4</span>
+          <div><div class="profit-roi">R$ 500+<span> por mês</span></div></div>
+        </div>
+        <h3>📩 Aluguel de Domínio</h3>
+        <p>Alugue domínios premium por mensalidade. Empresas pagam R$ 200–2.000/mês para usar um domínio poderoso.</p>
+        <ul>
+          <li>Exemplo: "ClinicaOdonto.com.br" alugado para clínicas</li>
+          <li>Contrato de 12 meses com cláusula de compra</li>
+          <li>HugeDomains faz isso em larga escala como referência</li>
+        </ul>
+        <div class="profit-bar"><div class="profit-bar-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card"><div class="card-icon">🔍</div><h3>Domínios Expirados</h3><p>Capture domínios com backlinks valiosos antes que expirem. Venda para SEOs e agências.</p><span class="badge badge-blue">Alto valor para SEO</span></div>
+      <div class="card"><div class="card-icon">📊</div><h3>Arbitragem</h3><p>Compre em leilão barato (GoDaddy Auctions, NameJet) e revenda mais caro no Sedo e Afternic.</p><span class="badge badge-yellow">Ganho imediato</span></div>
+      <div class="card"><div class="card-icon">🏙️</div><h3>Domínios Locais</h3><p>"AdvogadoSorocaba.com.br", "EncanadorFortaleza.com" — venda para profissionais locais.</p><span class="badge badge-green">Mercado enorme</span></div>
+      <div class="card"><div class="card-icon">🤖</div><h3>Domínios de IA</h3><p>Extensões .ai estão explosivas. Nomes como "TradutorAI.com" podem valer 10–100x o registro.</p><span class="badge badge-red">Tendência 2024</span></div>
+      <div class="card"><div class="card-icon">🏠</div><h3>Imobiliário</h3><p>"ImoveisNatal.com.br" — corretores e imobiliárias pagam caro por palavras-chave de alto valor.</p><span class="badge badge-green">R$ 500–R$ 5k/venda</span></div>
+      <div class="card"><div class="card-icon">🎨</div><h3>Domínio + Marca</h3><p>Venda pacotes: domínio + logo + hospedagem configurada. Empreendedores pagam caro pelo pronto.</p><span class="badge badge-purple">Alto ticket</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PLATAFORMAS -->
+<section id="plataformas">
+  <div class="container">
+    <span class="section-tag">Marketplaces</span>
+    <h2>Onde <span>Vender</span> seus Domínios</h2>
+    <div class="platform-grid">
+      <div class="platform-card"><div class="platform-name">Sedo</div><div class="platform-url">sedo.com</div><div class="platform-desc">Maior marketplace mundial de domínios. Aceita domínios BR. Leilões e venda direta.</div><div class="platform-fee">💸 Comissão: 15% + US$ 60 mín.</div><span class="badge badge-green">Internacional</span></div>
+      <div class="platform-card"><div class="platform-name">Afternic</div><div class="platform-url">afternic.com</div><div class="platform-desc">Rede GoDaddy. Listagem automática em 100+ registradores. Enorme alcance global.</div><div class="platform-fee">💸 Comissão: 20%</div><span class="badge badge-blue">Alta exposição</span></div>
+      <div class="platform-card"><div class="platform-name">Flippa</div><div class="platform-url">flippa.com</div><div class="platform-desc">Venda domínios, sites e apps. Ótimo para pacotes completos (domínio + site).</div><div class="platform-fee">💸 Comissão: 5–10%</div><span class="badge badge-yellow">Sites completos</span></div>
+      <div class="platform-card"><div class="platform-name">Dan.com</div><div class="platform-url">dan.com</div><div class="platform-desc">Interface simples, comissão baixa. Ótimo para quem está começando.</div><div class="platform-fee">💸 Comissão: 9%</div><span class="badge badge-green">Iniciantes</span></div>
+      <div class="platform-card"><div class="platform-name">NamePros</div><div class="platform-url">namepros.com</div><div class="platform-desc">Fórum de domainers. Compra e venda direto entre profissionais, sem comissão.</div><div class="platform-fee">💸 Comissão: 0%</div><span class="badge badge-blue">Comunidade</span></div>
+      <div class="platform-card"><div class="platform-name">Mercado Livre</div><div class="platform-url">mercadolivre.com.br</div><div class="platform-desc">Domínios vendidos no ML. Atinge público que não conhece marketplaces específicos.</div><div class="platform-fee">💸 Comissão: 11–16%</div><span class="badge badge-red">🇧🇷 Subestimado</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- COMO ANUNCIAR -->
+<section id="anunciar">
+  <div class="container">
+    <span class="section-tag">Marketing & Divulgação</span>
+    <h2>Como <span>Anunciar</span> e Encontrar Compradores</h2>
+    <div class="grid-2">
+      <div class="card"><div class="card-icon" style="background:rgba(0,168,214,0.1)">📱</div><h3>Instagram & Facebook Ads</h3><p>Segmente por interesse em "empreendedorismo" e profissão. Use vídeo curto mostrando o domínio disponível.</p><ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:14px"><li>Custo médio: R$ 5–20 por lead qualificado</li><li>Destaque o valor da marca profissional</li></ul><span class="badge badge-blue">Pago</span></div>
+      <div class="card"><div class="card-icon" style="background:rgba(0,85,160,0.1)">🔗</div><h3>LinkedIn Outreach</h3><p>Identifique empresas com domínios ruins. Mensagem personalizada oferecendo seu domínio como solução.</p><ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:14px"><li>Taxa de conversão: 2–8% bem segmentado</li><li>Use Sales Navigator para escalar</li></ul><span class="badge badge-purple">Orgânico B2B</span></div>
+      <div class="card"><div class="card-icon" style="background:rgba(185,134,0,0.1)">📧</div><h3>E-mail Direcionado</h3><p>Identifique empresas que usam domínios ruins e envie email oferecendo seu domínio premium.</p><ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:14px"><li>Ferramentas: Hunter.io, Apollo.io</li><li>Personalize com o nome da empresa</li></ul><span class="badge badge-yellow">Alto ROI</span></div>
+      <div class="card"><div class="card-icon" style="background:rgba(26,155,94,0.1)">🌐</div><h3>Landing no Próprio Domínio</h3><p>Página "Este domínio está à venda" com formulário, preço ou "faça uma oferta". Qualquer visita vira lead.</p><ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:14px"><li>Use Sedo Parking automaticamente</li><li>Adicione WhatsApp para contato rápido</li></ul><span class="badge badge-green">Gratuito</span></div>
+    </div>
+    <div class="highlight">
+      <h4>📝 Modelo de Mensagem para Outreach</h4>
+      <p><em>"Olá [Nome], vi que a [Empresa] atua no setor de [nicho]. Tenho o domínio <strong>[seudominio.com.br]</strong> disponível — seria perfeito para a identidade digital da empresa. Posso reservar por 48h para sua análise. Interesse em conversar?"</em></p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PARA QUEM VENDER -->
+<section id="compradores">
+  <div class="container">
+    <span class="section-tag">Público-Alvo</span>
+    <h2>Para Quem <span>Vender</span><br>seus Domínios</h2>
+    <div class="audience-grid">
+      <div class="audience-card"><div class="aud-icon">🏥</div><div class="aud-title">Profissionais de Saúde</div><div class="aud-desc">Médicos, dentistas, psicólogos — alta renda, baixo conhecimento técnico. Precisam de presença online.</div><div class="aud-budget">💰 R$ 300–3.000</div></div>
+      <div class="audience-card"><div class="aud-icon">⚖️</div><div class="aud-title">Advogados & Escritórios</div><div class="aud-desc">Setor que valoriza muito credibilidade do domínio. Um .adv.br com nome do escritório vale muito.</div><div class="aud-budget">💰 R$ 500–5.000</div></div>
+      <div class="audience-card"><div class="aud-icon">🏘️</div><div class="aud-title">Corretores de Imóveis</div><div class="aud-desc">Precisam de domínios por cidade e especialidade. Volume enorme no Brasil.</div><div class="aud-budget">💰 R$ 200–2.000</div></div>
+      <div class="audience-card"><div class="aud-icon">🏪</div><div class="aud-title">Pequenos Negócios & MEI</div><div class="aud-desc">Donos de lanchonetes, salões, lojas se profissionalizando online. Mercado gigante.</div><div class="aud-budget">💰 R$ 100–800</div></div>
+      <div class="audience-card"><div class="aud-icon">🚀</div><div class="aud-title">Startups & Investidores</div><div class="aud-desc">Pagam premium por domínios curtos e memoráveis, especialmente .com e .io.</div><div class="aud-budget">💰 R$ 2.000–200.000</div></div>
+      <div class="audience-card"><div class="aud-icon">🎓</div><div class="aud-title">Escolas & Cursos Online</div><div class="aud-desc">Setor educacional cresce rapidamente. Nomes como "CursoDeIngles.com.br" têm alto valor.</div><div class="aud-budget">💰 R$ 300–5.000</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ESTRATÉGIA -->
+<section id="estrategia">
+  <div class="container">
+    <span class="section-tag">Passo a Passo</span>
+    <h2>Estratégia para <span>Começar</span><br>do Zero</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-content"><h4>Pesquise e identifique nichos rentáveis</h4><p>Use Google Trends, Semrush, Ubersuggest. Analise CPCs no Keyword Planner para entender quais nichos têm anunciantes dispostos a pagar caro.</p></div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-content"><h4>Analise domínios disponíveis e expirados</h4><p>Use expireddomains.net, GoDaddy Auctions e DropCatch. Verifique backlinks com Ahrefs e se há penalizações.</p></div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-content"><h4>Registre com estratégia de portfólio</h4><p>Comece com 5–10 domínios temáticos. Prefira .com.br para mercado local e .com para venda internacional.</p></div></div>
+      <div class="step"><div class="step-num">04</div><div class="step-content"><h4>Configure parking ou mini landing page</h4><p>Aponte nameservers para Bodis ou Sedo Parking para monetizar tráfego imediato enquanto aguarda compradores.</p></div></div>
+      <div class="step"><div class="step-num">05</div><div class="step-content"><h4>Liste em múltiplos marketplaces</h4><p>Coloque no Sedo, Afternic, Dan.com e Mercado Livre simultaneamente. Mais exposição = mais compradores.</p></div></div>
+      <div class="step"><div class="step-num">06</div><div class="step-content"><h4>Faça outreach ativo para compradores</h4><p>Identifique empresas que se beneficiariam do seu domínio e entre em contato diretamente via email ou LinkedIn.</p></div></div>
+      <div class="step"><div class="step-num">07</div><div class="step-content"><h4>Reinvista e expanda o portfólio</h4><p>Use os lucros das primeiras vendas para registrar mais domínios. Com R$ 500 em lucro, registre 10 novos.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CALCULADORA -->
+<section id="calculadora">
+  <div class="container" style="text-align:center">
+    <span class="section-tag">Simulação de Lucro</span>
+    <h2>Calculadora de <span>Retorno</span></h2>
+    <p style="color:var(--muted); margin-bottom:40px; margin-top:-30px">Simule quanto você pode ganhar com diferentes estratégias</p>
+    <div class="calc-wrap">
+      <div class="calc-grid">
+        <div class="input-group"><label>Quantidade de Domínios</label><input type="number" id="qty" value="10" min="1"></div>
+        <div class="input-group"><label>Custo Médio por Domínio (R$)</label><input type="number" id="cost" value="60"></div>
+        <div class="input-group"><label>Preço Médio de Venda (R$)</label><input type="number" id="price" value="800"></div>
+        <div class="input-group"><label>Taxa de Conversão (%)</label><input type="number" id="rate" value="20"></div>
+        <div class="input-group"><label>Comissão Marketplace (%)</label><input type="number" id="commission" value="15"></div>
+        <div class="input-group"><label>Estratégia Principal</label>
+          <select id="strategy">
+            <option value="flip">Revenda (Flip)</option>
+            <option value="parking">Parking</option>
+            <option value="site">Mini Site</option>
+            <option value="aluguel">Aluguel Mensal</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-result" id="calcResult">
+        <div><div class="res-label">Investimento</div><div class="res-val" id="rInvest">R$ 600</div></div>
+        <div><div class="res-label">Receita Total</div><div class="res-val" id="rReceita">R$ 1.360</div></div>
+        <div><div class="res-label">Lucro Líquido</div><div class="res-val" id="rLucro">R$ 760</div></div>
+      </div>
+      <button class="calc-btn" onclick="calcular()">🧮 Calcular Retorno</button>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="container">
+    <span class="section-tag">Ação Prática</span>
+    <h2>Checklist: <span>Primeiros Passos</span></h2>
+    <p style="color:var(--muted); margin-bottom:32px; margin-top:-30px">Clique nos itens para marcar como concluído</p>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Criar conta no Registro.br</strong><span>Necessário para .com.br — acesse registro.br e cadastre pessoa física ou jurídica</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Criar conta na Namecheap ou GoDaddy</strong><span>Para domínios internacionais. Aproveite promoções de primeiro ano</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Pesquisar 3 nichos com Google Trends</strong><span>Identifique setores em alta e anote 10 domínios potenciais para cada nicho</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Registrar os 5 melhores domínios</strong><span>Comece pequeno. Qualidade > Quantidade. Foque em domínios que você consegue vender fácil</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Criar conta no Sedo e/ou Afternic</strong><span>Liste todos os domínios em pelo menos 2 marketplaces para maximizar a exposição</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Configurar parking nos domínios</strong><span>Aponte para Bodis ou Sedo Parking para gerar receita passiva enquanto aguarda compradores</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Fazer outreach para 10 empresas por domínio</strong><span>Identifique compradores e envie mensagem personalizada via email ou LinkedIn</span></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><div class="check-text"><strong>Anunciar no Mercado Livre</strong><span>Crie anúncios para cada domínio. Inclua o valor da marca profissional na descrição</span></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- REGISTRADORES -->
+<section id="registradores">
+  <div class="container">
+    <span class="section-tag">Onde Registrar</span>
+    <h2>Melhores <span>Registradores</span></h2>
+    <div class="grid-3">
+      <div class="card"><div class="card-icon">🇧🇷</div><h3>Registro.br</h3><p>Único lugar para .com.br, .net.br, .org.br. Gerenciado pelo NIC.br. Preço único R$ 40/ano.</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-green">Oficial BR</span><span class="badge badge-green">R$ 40 fixo</span></div></div>
+      <div class="card"><div class="card-icon">☁️</div><h3>Cloudflare Registrar</h3><p>Sem markup sobre o preço de atacado. Melhor preço de renovação do mercado para .com (~R$ 55/ano).</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-green">Menor preço</span><span class="badge badge-blue">Sem markup</span></div></div>
+      <div class="card"><div class="card-icon">🐱</div><h3>Namecheap</h3><p>Promoções frequentes. WhoisGuard grátis. Interface amigável. Ótimo para iniciantes.</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-yellow">Promoções</span><span class="badge badge-blue">WHOIS grátis</span></div></div>
+      <div class="card"><div class="card-icon">🤠</div><h3>GoDaddy</h3><p>Maior registradora do mundo. Integração nativa com Afternic para domainers.</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-green">Afternic integrado</span></div></div>
+      <div class="card"><div class="card-icon">🟠</div><h3>Hostinger</h3><p>Excelente para domínio + hospedagem. Suporte em português. Primeiro ano muitas vezes grátis.</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-green">Suporte PT-BR</span></div></div>
+      <div class="card"><div class="card-icon">🐷</div><h3>Porkbun</h3><p>Melhor para extensões de nicho (.io, .app, .store). Preços abaixo da média. Interface moderna.</p><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="badge badge-purple">Nichos baratos</span></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== NOVA SEÇÃO: COMO COMERCIALIZAR ===== -->
+<section id="comercializar" class="comerc-section">
+  <div class="container">
+    <span class="section-tag">Do HTML ao Cliente</span>
+    <h2>Como <span>Comercializar</span> este Guia<br>e Fazer Chegar na Mão do Cliente</h2>
+    <p style="color:var(--muted);margin-top:-30px;margin-bottom:48px;font-size:16px;max-width:680px">Você já tem o produto — este arquivo HTML completo e profissional. Agora veja o caminho exato para transformá-lo em renda: do arquivo no computador até o dinheiro na conta.</p>
+
+    <!-- PIPELINE VISUAL -->
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-num">1</div>
+        <div class="pipe-icon">💾</div>
+        <div class="pipe-title">Arquivo HTML pronto</div>
+        <div class="pipe-sub">No seu computador</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">2</div>
+        <div class="pipe-icon">🌐</div>
+        <div class="pipe-title">Hospedar online</div>
+        <div class="pipe-sub">Hostinger / GitHub Pages</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">3</div>
+        <div class="pipe-icon">🔗</div>
+        <div class="pipe-title">Link único</div>
+        <div class="pipe-sub">URL para compartilhar</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">4</div>
+        <div class="pipe-icon">📣</div>
+        <div class="pipe-title">Divulgar</div>
+        <div class="pipe-sub">Redes / WhatsApp / Ads</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">5</div>
+        <div class="pipe-icon">💰</div>
+        <div class="pipe-title">Cobrar & vender</div>
+        <div class="pipe-sub">PIX / Hotmart / Kiwify</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">6</div>
+        <div class="pipe-icon">🚀</div>
+        <div class="pipe-title">Cliente acessa</div>
+        <div class="pipe-sub">100% digital</div>
+      </div>
+    </div>
+
+    <!-- CARDS DE COMERCIALIZAÇÃO -->
+    <div class="grid-2" style="margin-bottom:32px">
+
+      <div class="comerc-card">
+        <div class="comerc-tag"><div class="ct-dot" style="background:#0a6eb4"></div><span class="ct-label" style="color:#0a6eb4">Passo 1 — Hospedagem</span></div>
+        <h3>🌐 Coloque o HTML Online em Minutos</h3>
+        <p>O arquivo HTML é independente — nenhum banco de dados, nenhum backend. Escolha uma das opções abaixo:</p>
+        <ul>
+          <li><strong>GitHub Pages (GRÁTIS):</strong> Faça upload do arquivo em um repositório público e ative o Pages. URL: <em>seuusuario.github.io/guia-dominios</em></li>
+          <li><strong>Hostinger (~R$ 10/mês):</strong> Faça upload via Gerenciador de Arquivos. Profissional, com domínio próprio.</li>
+          <li><strong>Tiiny.host (GRÁTIS):</strong> Arraste o HTML e receba link em 30 segundos. Ótimo para testes.</li>
+          <li><strong>Netlify (GRÁTIS):</strong> Arraste a pasta e o site está no ar com HTTPS automático.</li>
+          <li><strong>Google Drive → Publicar:</strong> Compartilhe como "qualquer pessoa com o link" para distribuição simples.</li>
+        </ul>
+      </div>
+
+      <div class="comerc-card">
+        <div class="comerc-tag"><div class="ct-dot" style="background:#00a8d6"></div><span class="ct-label" style="color:#00a8d6">Passo 2 — Monetização</span></div>
+        <h3>💳 Modelos para Cobrar pelo Guia</h3>
+        <p>Você pode vender o acesso ao guia, o arquivo em si, ou usar o guia como isca para serviços maiores:</p>
+        <ul>
+          <li><strong>Produto digital (R$ 27–97):</strong> Venda o PDF/HTML no Hotmart, Kiwify ou Eduzz. Configure em 1 hora e receba por PIX/cartão automaticamente.</li>
+          <li><strong>Isca gratuita (lead magnet):</strong> Ofereça grátis em troca do email do cliente. Monetize com upsell de consultoria ou curso.</li>
+          <li><strong>Acesso por assinatura (R$ 19/mês):</strong> Coloque em área de membros no Hotmart Club ou Kajabi com updates mensais.</li>
+          <li><strong>Venda direta via WhatsApp:</strong> Compartilhe um trecho, gere interesse, cobre R$ 47 por PIX e envie o link de acesso.</li>
+          <li><strong>Bônus de curso:</strong> Use como material complementar de um curso de marketing digital ou empreendedorismo.</li>
+        </ul>
+      </div>
+
+      <div class="comerc-card">
+        <div class="comerc-tag"><div class="ct-dot" style="background:#1a9b5e"></div><span class="ct-label" style="color:#1a9b5e">Passo 3 — Distribuição Digital</span></div>
+        <h3>📲 Como Fazer o Guia Chegar na Mão do Cliente</h3>
+        <p>Canais gratuitos e pagos para distribuir, ordenados por custo-benefício:</p>
+        <ul>
+          <li><strong>WhatsApp Business:</strong> Crie catálogo com o guia. Envie para grupos de empreendedores e MEIs. Mensagem direta com preview.</li>
+          <li><strong>Instagram (Stories + Reels):</strong> Grave um vídeo de 60s mostrando o conteúdo. Coloque "Link na Bio" com Linktree apontando para a página de vendas.</li>
+          <li><strong>Grupos do Facebook:</strong> Compartilhe em grupos de "Empreendedorismo BR", "Marketing Digital", "Renda Extra Online". Mais de 500k membros nesses grupos.</li>
+          <li><strong>YouTube Shorts:</strong> "5 formas de lucrar com domínios" com CTA no final. Tráfego orgânico consistente.</li>
+          <li><strong>Telegram:</strong> Crie canal temático e divulgue o guia. Telegram tem alta taxa de abertura (80%+ vs 20% do email).</li>
+          <li><strong>TikTok:</strong> Conteúdo mostrando quanto se ganha vendendo domínios. Viraliza facilmente no Brasil.</li>
+        </ul>
+      </div>
+
+      <div class="comerc-card">
+        <div class="comerc-tag"><div class="ct-dot" style="background:#b8860b"></div><span class="ct-label" style="color:#b8860b">Passo 4 — Tráfego Pago</span></div>
+        <h3>🎯 Anúncios para Escalar as Vendas</h3>
+        <p>Quando validar orgânico, escale com anúncios pagos:</p>
+        <ul>
+          <li><strong>Meta Ads (Facebook/Instagram):</strong> Segmente "Empreendedores", "MEI", "Marketing Digital", "E-commerce". Orçamento mínimo: R$ 15/dia. CPC estimado: R$ 0,80–2,50.</li>
+          <li><strong>Google Ads (Pesquisa):</strong> Palavras: "como vender domínios", "ganhar dinheiro com domínios", "comprar domínio barato". CPC: R$ 1–4.</li>
+          <li><strong>YouTube Ads:</strong> Anúncio de 15s mostrando o título do guia e o preço. Alcance enorme com custo baixo.</li>
+          <li><strong>Página de vendas simples:</strong> Uma landing page em HTML (você já sabe fazer!) com headline, benefícios, preço e botão de compra no Hotmart/Kiwify.</li>
+          <li><strong>Afiliados:</strong> Coloque o produto no Hotmart como afiliação e deixe outros venderem por você (comissão de 30–50%).</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- LANDING PAGE HTML EXEMPLO -->
+    <div style="margin-bottom:48px">
+      <h3 style="margin-bottom:20px">🖥️ Código: Mini Landing Page de Vendas (cole no seu HTML)</h3>
+      <p style="color:var(--muted);font-size:15px;margin-bottom:20px">Adicione esta seção no seu guia ou crie uma página separada para capturar leads e vender:</p>
+      <div class="mockup-box">
+<span class="comment">&lt;!-- SEÇÃO: "À VENDA" — cole dentro do seu HTML --&gt;</span>
+<span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="val">"venda"</span> <span class="attr">style</span>=<span class="val">"background:#1a4a7a;padding:60px 20px;text-align:center"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2</span> <span class="attr">style</span>=<span class="val">"color:#ffe066;font-size:36px;margin-bottom:16px"</span><span class="tag">&gt;</span>
+    <span class="text">🎁 Guia Completo — Acesso Imediato</span>
+  <span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"color:#cce7f7;font-size:18px;margin-bottom:32px"</span><span class="tag">&gt;</span>
+    <span class="text">De R$ 97 por apenas &lt;strong style="color:#fff"&gt;R$ 47&lt;/strong&gt;</span>
+  <span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://hotmart.com/SEU-LINK"</span>
+     <span class="attr">style</span>=<span class="val">"background:#25d366;color:#fff;padding:18px 48px;
+            border-radius:50px;font-size:18px;font-weight:700;
+            text-decoration:none;display:inline-block"</span><span class="tag">&gt;</span>
+    <span class="text">✅ QUERO ACESSAR AGORA</span>
+  <span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"color:#87ceeb;margin-top:16px;font-size:13px"</span><span class="tag">&gt;</span>
+    <span class="text">🔒 Pagamento seguro · Acesso imediato · PIX/Cartão</span>
+  <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/section&gt;</span>
+
+<span class="comment">&lt;!-- BOTÃO FLUTUANTE DE WHATSAPP --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://wa.me/55SEUNUMERO?text=Quero+o+guia"</span>
+   <span class="attr">style</span>=<span class="val">"position:fixed;bottom:24px;right:24px;
+          background:#25d366;color:#fff;border-radius:50%;
+          width:60px;height:60px;display:flex;align-items:center;
+          justify-content:center;font-size:28px;
+          box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:999"</span><span class="tag">&gt;</span>
+  <span class="text">💬</span>
+<span class="tag">&lt;/a&gt;</span>
+      </div>
+    </div>
+
+    <!-- JORNADA DO CLIENTE -->
+    <h3 style="margin-bottom:8px">🧭 Jornada Completa do Cliente</h3>
+    <p style="color:var(--muted);font-size:15px;margin-bottom:0">Do primeiro contato até o pagamento:</p>
+    <div class="jornada">
+      <div class="jornada-item">
+        <div class="jornada-icon">👁️</div>
+        <div class="jornada-title">1. Descoberta</div>
+        <div class="jornada-desc">Vê seu post no Instagram, TikTok, YouTube ou anúncio</div>
+      </div>
+      <div class="jornada-item">
+        <div class="jornada-icon">🖱️</div>
+        <div class="jornada-title">2. Interesse</div>
+        <div class="jornada-desc">Clica no link da bio ou no anúncio e chega na landing page</div>
+      </div>
+      <div class="jornada-item">
+        <div class="jornada-icon">📖</div>
+        <div class="jornada-title">3. Consideração</div>
+        <div class="jornada-desc">Lê o guia (ou parte dele) e percebe o valor do conteúdo</div>
+      </div>
+      <div class="jornada-item">
+        <div class="jornada-icon">💳</div>
+        <div class="jornada-title">4. Decisão</div>
+        <div class="jornada-desc">Clica em "Comprar" e realiza o pagamento via PIX ou cartão</div>
+      </div>
+      <div class="jornada-item">
+        <div class="jornada-icon">📩</div>
+        <div class="jornada-title">5. Acesso</div>
+        <div class="jornada-desc">Recebe email automático com link de acesso ao guia completo</div>
+      </div>
+      <div class="jornada-item">
+        <div class="jornada-icon">⭐</div>
+        <div class="jornada-title">6. Fidelização</div>
+        <div class="jornada-desc">Deixa avaliação positiva e indica para amigos empreendedores</div>
+      </div>
+    </div>
+
+    <!-- ESTRATÉGIA DE PREÇO -->
+    <div style="margin-top:56px">
+      <h3 style="margin-bottom:8px">🏷️ Estratégia de Precificação Recomendada</h3>
+      <p style="color:var(--muted);font-size:15px;margin-bottom:28px">Escolha o modelo ideal para o seu objetivo:</p>
+      <div class="price-strategy-grid">
+        <div class="ps-card">
+          <div class="ps-tier">Isca</div>
+          <div class="ps-price">Grátis</div>
+          <div class="ps-range">Lead magnet / e-mail</div>
+          <ul class="ps-features">
+            <li>Capta emails</li>
+            <li>Sequência de e-mails</li>
+            <li>Upsell para serviços</li>
+            <li>Constrói audiência</li>
+          </ul>
+        </div>
+        <div class="ps-card featured">
+          <div class="ps-tier">Básico</div>
+          <div class="ps-price">R$ 47</div>
+          <div class="ps-range">Produto de entrada</div>
+          <ul class="ps-features">
+            <li>Alta conversão</li>
+            <li>PIX imediato</li>
+            <li>Baixa resistência</li>
+            <li>Volume alto</li>
+          </ul>
+        </div>
+        <div class="ps-card">
+          <div class="ps-tier">Padrão</div>
+          <div class="ps-price">R$ 97</div>
+          <div class="ps-range">Produto principal</div>
+          <ul class="ps-features">
+            <li>Guia + bônus extras</li>
+            <li>Template de outreach</li>
+            <li>Planilha de portfólio</li>
+            <li>Boa margem</li>
+          </ul>
+        </div>
+        <div class="ps-card">
+          <div class="ps-tier">Premium</div>
+          <div class="ps-price">R$ 297</div>
+          <div class="ps-range">Pack completo</div>
+          <ul class="ps-features">
+            <li>Guia + consultoria</li>
+            <li>Mentoria em grupo</li>
+            <li>Comunidade VIP</li>
+            <li>Updates vitalícios</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATAFORMAS DE VENDA -->
+    <div style="margin-top:48px">
+      <h3 style="margin-bottom:20px">🛒 Plataformas para Vender o Guia Digital (Brasil)</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🔥</div>
+          <h3>Hotmart</h3>
+          <p>Líder no Brasil para produtos digitais. Checkout com PIX, cartão, boleto. Programa de afiliados automático. Hotmart Club para área de membros.</p>
+          <span class="badge badge-green">Mais usado no BR</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">🥝</div>
+          <h3>Kiwify</h3>
+          <p>Alternativa moderna ao Hotmart com taxas menores. Interface simples, aprovação rápida. Ótimo para quem está começando.</p>
+          <span class="badge badge-blue">Taxas menores</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛒</div>
+          <h3>Eduzz / Monetizze</h3>
+          <p>Plataformas completas com afiliados, área de membros e integrações. Boa base de afiliados para impulsionar vendas.</p>
+          <span class="badge badge-yellow">Rede de afiliados</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>Gumroad</h3>
+          <p>Plataforma internacional. Perfeita para vender o guia em dólar para brasileiros no exterior ou para o mercado global.</p>
+          <span class="badge badge-purple">Internacional</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">💚</div>
+          <h3>WhatsApp + PIX</h3>
+          <p>O modelo mais simples: receba pelo PIX e envie o link do Google Drive ou Dropbox manualmente. Zero taxas, 100% no bolso.</p>
+          <span class="badge badge-green">Zero custo</span>
+        </div>
+        <div class="card">
+          <div class="card-icon">📧</div>
+          <h3>Mailchimp + Stripe</h3>
+          <p>Capture e-mails grátis no Mailchimp, cobre pela Stripe e entregue via sequência de e-mail automática. Mais técnico, mas escalável.</p>
+          <span class="badge badge-blue">Automação total</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:48px">
+      <h4>⚡ Plano de Ação: Do Zero à Primeira Venda em 48 Horas</h4>
+      <ul>
+        <li><strong>Hora 1:</strong> Suba o HTML no Netlify (grátis, 5 minutos) — você tem seu link público</li>
+        <li><strong>Hora 2:</strong> Crie produto no Hotmart ou Kiwify, defina preço R$ 47, copie o link de checkout</li>
+        <li><strong>Hora 3:</strong> Adicione o botão de compra e o botão flutuante de WhatsApp no HTML (use o código desta seção)</li>
+        <li><strong>Hora 4:</strong> Grave um Reels de 60s mostrando o guia no celular. Publique no Instagram/TikTok com #empreendedorismo</li>
+        <li><strong>Hora 5:</strong> Compartilhe o link em 5 grupos de WhatsApp ou Telegram de empreendedores</li>
+        <li><strong>Hora 6–48:</strong> Responda dúvidas, faça follow-up, ajuste o preço se necessário. Sua primeira venda vem do esforço nas primeiras 48h.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">💰 Guia Domínios</div>
+    <p>Guia criado para <strong>empreendedores digitais brasileiros</strong> que querem lucrar com domínios.</p>
+    <p style="margin-top:10px;font-size:13px;opacity:0.5">Preços podem variar conforme câmbio e promoções dos registradores. Sempre verifique os preços atuais antes de registrar.</p>
+  </div>
+</footer>
+
+<script>
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+  }
+  function calcular() {
+    const qty = parseFloat(document.getElementById('qty').value) || 0;
+    const cost = parseFloat(document.getElementById('cost').value) || 0;
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    const rate = parseFloat(document.getElementById('rate').value) / 100 || 0;
+    const commission = parseFloat(document.getElementById('commission').value) / 100 || 0;
+    const strategy = document.getElementById('strategy').value;
+    const totalInvest = qty * cost;
+    const domainsSold = Math.round(qty * rate);
+    let receita = 0;
+    if (strategy === 'parking') {
+      receita = qty * price * 12;
+    } else if (strategy === 'aluguel') {
+      receita = domainsSold * price * 12;
+    } else {
+      receita = domainsSold * price * (1 - commission);
+    }
+    const lucro = receita - totalInvest;
+    document.getElementById('rInvest').textContent = 'R$ ' + totalInvest.toLocaleString('pt-BR', {minimumFractionDigits: 0});
+    document.getElementById('rReceita').textContent = 'R$ ' + receita.toLocaleString('pt-BR', {minimumFractionDigits: 0});
+    document.getElementById('rLucro').textContent = 'R$ ' + lucro.toLocaleString('pt-BR', {minimumFractionDigits: 0});
+    document.getElementById('rLucro').style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('calcResult').style.transform = 'scale(1.02)';
+    setTimeout(() => document.getElementById('calcResult').style.transform = 'scale(1)', 200);
+  }
+  window.addEventListener('load', calcular);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.profit-bar-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0';
+          setTimeout(() => bar.style.width = w, 100);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.profit-card').forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
