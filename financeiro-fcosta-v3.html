@@ -388,6 +388,70 @@ body{
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(59,155,214,.35);border-radius:10px;}
+
+/* ── CAMPO EDITÁVEL (título) ── */
+.campo-lbl-edit{
+  font-size:.55rem;font-weight:900;text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:4px;
+  border:none;background:transparent;width:100%;
+  font-family:'Nunito',sans-serif;cursor:text;
+  border-bottom:1px dashed transparent;
+  transition:.15s;padding:1px 2px;border-radius:2px;
+}
+.campo-lbl-edit:focus{
+  outline:none;border-bottom-color:currentColor;
+  background:rgba(0,0,0,.04);
+}
+.campo-wrap.sh .campo-lbl-edit{color:var(--sh-c);}
+.campo-wrap.ro .campo-lbl-edit{color:var(--ro-c);}
+.campo-wrap.se .campo-lbl-edit{color:var(--se-c);}
+
+/* ── BOTÃO ADICIONAR EXTRA ── */
+.btn-add-extra{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.05);border:1.5px dashed rgba(0,0,0,.18);
+  border-radius:8px;padding:7px 12px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.62rem;font-weight:800;
+  color:var(--muted);transition:.15s;margin-top:4px;
+}
+.btn-add-extra:hover{background:rgba(0,0,0,.09);color:var(--text);}
+.btn-add-extra.sh{border-color:var(--gold);color:var(--sh-c);}
+.btn-add-extra.ro{border-color:var(--blue2);color:var(--ro-c);}
+.btn-add-extra.se{border-color:var(--green2);color:var(--se-c);}
+
+/* ── BOTÃO REMOVER CAMPO EXTRA ── */
+.btn-rm-extra{
+  position:absolute;top:4px;right:4px;
+  background:none;border:none;cursor:pointer;
+  font-size:.7rem;color:rgba(200,0,0,.45);
+  line-height:1;padding:2px;transition:.15s;
+  border-radius:4px;
+}
+.btn-rm-extra:hover{color:var(--red);background:rgba(220,38,38,.1);}
+
+/* ── INTERNET FALTOU ── */
+.campo-wrap.net-faltou{
+  background:#FFF7ED;border-color:rgba(234,88,12,.4);
+}
+.campo-wrap.net-faltou::after{
+  content:"FALTOU";position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);
+  border:2px solid rgba(234,88,12,.55);color:rgba(234,88,12,.65);
+  padding:2px 8px;font-weight:900;font-size:.8rem;
+  border-radius:5px;letter-spacing:1.5px;
+  background:rgba(255,255,255,.7);pointer-events:none;
+  font-family:'Arial Black',sans-serif;
+}
+.campo-wrap.net-faltou input{color:var(--orange);opacity:.5;pointer-events:none;}
+.net-btn{
+  border:none;font-size:.55rem;font-weight:800;padding:3px 9px;
+  border-radius:5px;cursor:pointer;transition:.15s;letter-spacing:.3px;
+  background:rgba(0,0,0,.06);color:var(--muted);font-family:'Nunito',sans-serif;
+  text-transform:uppercase;margin-top:2px;
+}
+.net-btn:hover{background:var(--orange);color:#fff;}
+.campo-wrap.net-faltou .net-btn{background:#FED7AA;color:var(--orange);}
+.campo-wrap.net-faltou .net-btn:hover{background:var(--orange);color:#fff;}
 </style>
 </head>
 <body>
@@ -496,13 +560,14 @@ const MESES=["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO","JULHO","AGOS
 const sharedCols=[
   {id:"luz",  label:"Luz",       cls:"sh",isShared:true},
   {id:"agua", label:"Água",      cls:"sh",isShared:true},
-  {id:"net",  label:"Internet",  cls:"sh",isShared:true},
+  {id:"net",  label:"Internet",  cls:"sh",isShared:true,hasNet:true},
   {id:"amil", label:"Amil",      cls:"sh",isShared:true},
   {id:"smig", label:"S. Miguel", cls:"sh",isShared:true},
 ];
 const rodrigoCols=[
-  {id:"das",  label:"DAS MEI",cls:"ro"},
-  {id:"outr", label:"Outros", cls:"ro"},
+  {id:"das",  label:"MEI Rodrigo",  cls:"ro"},
+  {id:"dasl", label:"MEI Leiliana", cls:"ro"},
+  {id:"outr", label:"Outros",       cls:"ro",isOtros:true},
 ];
 const sergioCols=[
   {id:"cser", label:"Cel Sérgio", cls:"se"},
@@ -510,8 +575,18 @@ const sergioCols=[
   {id:"cart", label:"Cartão",     cls:"se"},
   {id:"merc", label:"Mercado",    cls:"se"},
   {id:"diz",  label:"Dízimo",     cls:"se"},
-  {id:"outs", label:"Outros",     cls:"se"},
+  {id:"outs", label:"Outros",     cls:"se",isOtros:true},
 ];
+// campos extras dinamicos por secao e mes
+const extraCols={sh:{},ro:{},se:{}};
+let extraCounter=0;
+function getExtras(tipo,mIdx){if(!extraCols[tipo][mIdx])extraCols[tipo][mIdx]=[];return extraCols[tipo][mIdx];}
+function allColsDynamic(mIdx){
+  const shE=getExtras('sh',mIdx).map(e=>({...e,cls:'sh',isShared:true,isExtra:true}));
+  const roE=getExtras('ro',mIdx).map(e=>({...e,cls:'ro',isExtra:true}));
+  const seE=getExtras('se',mIdx).map(e=>({...e,cls:'se',isExtra:true}));
+  return[...sharedCols,...shE,...rodrigoCols,...roE,...sergioCols,...seE];
+}
 const allCols=[...sharedCols,...rodrigoCols,...sergioCols];
 let curPrintMes=null,curPrintPessoa=null,_pendLoad=null;
 
@@ -537,8 +612,13 @@ function mostrarStatus(msg,warn){
 
 /* ── RECALCULAR ── */
 function recalcTotals(mIdx){
+  const dynCols=allColsDynamic(mIdx);
+  const dynShared=dynCols.filter(c=>c.isShared);
+  const dynRo=dynCols.filter(c=>c.cls==='ro'&&!c.isShared);
+  const dynSe=dynCols.filter(c=>c.cls==='se'&&!c.isShared);
+
   let totSh=0,paidSh=0;
-  sharedCols.forEach(c=>{
+  dynShared.forEach(c=>{
     const v=parseVal(`in-${mIdx}-${c.id}`);
     totSh+=v; if(isPaid(mIdx,c.id))paidSh+=v;
     const h=document.getElementById(`hint-${mIdx}-${c.id}`);
@@ -548,12 +628,12 @@ function recalcTotals(mIdx){
 
   // Total Rodrigo
   let totRo=each,paidRo=eachPaid;
-  rodrigoCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totRo+=v;if(isPaid(mIdx,c.id))paidRo+=v;});
+  dynRo.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totRo+=v;if(isPaid(mIdx,c.id))paidRo+=v;});
   const pendRo=totRo-paidRo;
 
   // Total Sérgio
   let totSe=each,paidSe=eachPaid;
-  sergioCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSe+=v;if(isPaid(mIdx,c.id))paidSe+=v;});
+  dynSe.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSe+=v;if(isPaid(mIdx,c.id))paidSe+=v;});
   const pendSe=totSe-paidSe;
 
   // Atualiza totais no card
@@ -592,10 +672,11 @@ function recalcTotals(mIdx){
 function recalcResumoAnual(){
   let aSh=0,aRo=0,aSe=0;
   MESES.forEach((_,i)=>{
-    let sh=0;sharedCols.forEach(c=>sh+=parseVal(`in-${i}-${c.id}`));
+    const dc=allColsDynamic(i);
+    let sh=0;dc.filter(c=>c.isShared).forEach(c=>sh+=parseVal(`in-${i}-${c.id}`));
     const each=sh/2;
-    let ro=each;rodrigoCols.forEach(c=>ro+=parseVal(`in-${i}-${c.id}`));
-    let se=each;sergioCols.forEach(c=>se+=parseVal(`in-${i}-${c.id}`));
+    let ro=each;dc.filter(c=>c.cls==='ro'&&!c.isShared).forEach(c=>ro+=parseVal(`in-${i}-${c.id}`));
+    let se=each;dc.filter(c=>c.cls==='se'&&!c.isShared).forEach(c=>se+=parseVal(`in-${i}-${c.id}`));
     aSh+=sh;aRo+=ro;aSe+=se;
   });
   document.getElementById('res-sh').textContent=fmt(aSh);
@@ -615,14 +696,37 @@ function togglePago(mIdx,colId){
 }
 
 /* ── CRIAR CAMPO ── */
-function criarCampo(mIdx,col){
+function criarCampo(mIdx,col,gridEl){
   const wrap=document.createElement('div');
   wrap.className=`campo-wrap ${col.cls}`;
   wrap.id=`td-${mIdx}-${col.id}`;
+  wrap.style.position='relative';
 
-  const lbl=document.createElement('div');
-  lbl.className='campo-lbl'; lbl.textContent=col.label;
-  wrap.appendChild(lbl);
+  // Label editável para todos os campos (não-fixos mostram como input editável)
+  const isFixed=['luz','agua','net','amil','smig','das','dasl','cser','ckat','cart','merc','diz'].includes(col.id);
+  if(isFixed){
+    const lbl=document.createElement('div');
+    lbl.className='campo-lbl'; lbl.textContent=col.label;
+    wrap.appendChild(lbl);
+  } else {
+    // label editável (Outros ou campo extra)
+    const lbl=document.createElement('input');
+    lbl.type='text';
+    lbl.className='campo-lbl-edit';
+    lbl.id=`lbl-${mIdx}-${col.id}`;
+    lbl.value=col.label;
+    lbl.placeholder='Nome...';
+    lbl.title='Clique para editar o título';
+    wrap.appendChild(lbl);
+    // botão remover (só para extras, não para o "Outros" padrão)
+    if(col.isExtra){
+      const rm=document.createElement('button');
+      rm.className='btn-rm-extra'; rm.textContent='✕';
+      rm.title='Remover campo';
+      rm.onclick=()=>removerExtraCampo(mIdx,col,gridEl,wrap);
+      wrap.appendChild(rm);
+    }
+  }
 
   const inp=document.createElement('input');
   inp.className='campo-inp'; inp.type='text';
@@ -630,10 +734,37 @@ function criarCampo(mIdx,col){
   inp.oninput=function(){recalcTotals(mIdx);};
   wrap.appendChild(inp);
 
+  // Lembrete CNPJ MEI
+  if(col.id==='das'){
+    const cnpj=document.createElement('div');
+    cnpj.style.cssText='font-size:.5rem;color:#94a3b8;text-align:center;margin-top:2px;letter-spacing:.3px;';
+    cnpj.textContent='15.323.633/0001-08';
+    wrap.appendChild(cnpj);
+  }
+  if(col.id==='dasl'){
+    const cnpj=document.createElement('div');
+    cnpj.style.cssText='font-size:.5rem;color:#94a3b8;text-align:center;margin-top:2px;letter-spacing:.3px;';
+    cnpj.textContent='43.046.728/0001-67';
+    wrap.appendChild(cnpj);
+  }
+
   if(col.isShared){
     const h=document.createElement('div');
     h.className='campo-hint'; h.id=`hint-${mIdx}-${col.id}`;
     wrap.appendChild(h);
+  }
+
+  // Botão "Faltou" para Internet
+  if(col.hasNet){
+    const netDiv=document.createElement('div');
+    netDiv.className='campo-pagar';
+    const netBtn=document.createElement('button');
+    netBtn.className='net-btn';
+    netBtn.textContent='📵 Faltou';
+    netBtn.title='Marcar que a internet faltou este mês';
+    netBtn.onclick=()=>toggleNetFaltou(mIdx,col.id);
+    netDiv.appendChild(netBtn);
+    wrap.appendChild(netDiv);
   }
 
   const pagar=document.createElement('div');
@@ -644,6 +775,42 @@ function criarCampo(mIdx,col){
   pagar.appendChild(btn); wrap.appendChild(pagar);
 
   return wrap;
+}
+
+/* ── TOGGLE INTERNET FALTOU ── */
+function toggleNetFaltou(mIdx,colId){
+  const td=document.getElementById(`td-${mIdx}-${colId}`);
+  if(!td) return;
+  td.classList.toggle('net-faltou');
+  autoSaveLS();
+  toast(td.classList.contains('net-faltou')?'📵 Internet marcada como FALTOU':'🌐 Internet restaurada');
+}
+
+/* ── REMOVER CAMPO EXTRA ── */
+function removerExtraCampo(mIdx,col,gridEl,wrap){
+  const tipo=col.cls==='sh'?'sh':col.cls==='ro'?'ro':'se';
+  extraCols[tipo][mIdx]=(extraCols[tipo][mIdx]||[]).filter(e=>e.id!==col.id);
+  wrap.remove();
+  recalcTotals(mIdx);
+  toast('🗑️ Campo removido');
+}
+
+/* ── ADICIONAR CAMPO EXTRA ── */
+function adicionarExtraCampo(mIdx,tipo,gridEl){
+  extraCounter++;
+  const id=`ext_${tipo}_${mIdx}_${extraCounter}`;
+  const label=tipo==='sh'?'Extra (dividido)':tipo==='ro'?'Extra Rodrigo':'Extra Sérgio';
+  const col={id,label,cls:tipo==='sh'?'sh':tipo==='ro'?'ro':'se',isExtra:true,isShared:tipo==='sh'};
+  getExtras(tipo,mIdx).push({id,label,cls:col.cls,isShared:col.isShared});
+  const campo=criarCampo(mIdx,col,gridEl);
+  // Inserir antes do botão +
+  const btnAdd=gridEl.querySelector('.btn-add-extra');
+  if(btnAdd) gridEl.insertBefore(campo,btnAdd);
+  else gridEl.appendChild(campo);
+  // Focar no label para editar
+  const lbl=campo.querySelector('.campo-lbl-edit');
+  if(lbl){lbl.select(); lbl.focus();}
+  autoSaveLS();
 }
 
 /* ── CRIAR CARD MÊS ── */
@@ -676,7 +843,12 @@ function criarCardMes(mIdx){
   tshTitle.className='sec-titulo sh'; tshTitle.innerHTML='🤝 AMBOS pagam — 50% cada';
   secSh.appendChild(tshTitle);
   const gridSh=document.createElement('div'); gridSh.className='campos-grid';
-  sharedCols.forEach(c=>gridSh.appendChild(criarCampo(mIdx,c)));
+  sharedCols.forEach(c=>gridSh.appendChild(criarCampo(mIdx,c,gridSh)));
+  getExtras('sh',mIdx).forEach(e=>gridSh.appendChild(criarCampo(mIdx,{...e,cls:'sh',isShared:true,isExtra:true},gridSh)));
+  const btnAddSh=document.createElement('button');
+  btnAddSh.className='btn-add-extra sh'; btnAddSh.innerHTML='＋ Adicionar campo';
+  btnAddSh.onclick=()=>adicionarExtraCampo(mIdx,'sh',gridSh);
+  gridSh.appendChild(btnAddSh);
   secSh.appendChild(gridSh); body.appendChild(secSh);
 
   // Seção RODRIGO
@@ -685,7 +857,12 @@ function criarCardMes(mIdx){
   troTitle.className='sec-titulo ro'; troTitle.innerHTML='👤 Só RODRIGO paga';
   secRo.appendChild(troTitle);
   const gridRo=document.createElement('div'); gridRo.className='campos-grid';
-  rodrigoCols.forEach(c=>gridRo.appendChild(criarCampo(mIdx,c)));
+  rodrigoCols.forEach(c=>gridRo.appendChild(criarCampo(mIdx,c,gridRo)));
+  getExtras('ro',mIdx).forEach(e=>gridRo.appendChild(criarCampo(mIdx,{...e,cls:'ro',isExtra:true},gridRo)));
+  const btnAddRo=document.createElement('button');
+  btnAddRo.className='btn-add-extra ro'; btnAddRo.innerHTML='＋ Adicionar campo';
+  btnAddRo.onclick=()=>adicionarExtraCampo(mIdx,'ro',gridRo);
+  gridRo.appendChild(btnAddRo);
   secRo.appendChild(gridRo); body.appendChild(secRo);
 
   // Seção SÉRGIO
@@ -694,7 +871,12 @@ function criarCardMes(mIdx){
   tseTitle.className='sec-titulo se'; tseTitle.innerHTML='👤 Só SÉRGIO paga';
   secSe.appendChild(tseTitle);
   const gridSe=document.createElement('div'); gridSe.className='campos-grid';
-  sergioCols.forEach(c=>gridSe.appendChild(criarCampo(mIdx,c)));
+  sergioCols.forEach(c=>gridSe.appendChild(criarCampo(mIdx,c,gridSe)));
+  getExtras('se',mIdx).forEach(e=>gridSe.appendChild(criarCampo(mIdx,{...e,cls:'se',isExtra:true},gridSe)));
+  const btnAddSe=document.createElement('button');
+  btnAddSe.className='btn-add-extra se'; btnAddSe.innerHTML='＋ Adicionar campo';
+  btnAddSe.onclick=()=>adicionarExtraCampo(mIdx,'se',gridSe);
+  gridSe.appendChild(btnAddSe);
   secSe.appendChild(gridSe); body.appendChild(secSe);
 
   // Totais do mês
@@ -784,13 +966,25 @@ function autoSaveLS(){
 
 /* ── COLETAR DADOS ── */
 function coletarTodosDados(){
-  const dados={versao:'fcosta_fin_v2',exportadoEm:new Date().toISOString(),ano:new Date().getFullYear(),meses:{}};
+  const dados={versao:'fcosta_fin_v3',exportadoEm:new Date().toISOString(),ano:new Date().getFullYear(),meses:{},extras:{}};
+  // Salvar estrutura de extras
+  ['sh','ro','se'].forEach(tipo=>{
+    dados.extras[tipo]={};
+    Object.entries(extraCols[tipo]).forEach(([mIdx,arr])=>{
+      dados.extras[tipo][mIdx]=arr.map(e=>({id:e.id,label:e.label}));
+    });
+  });
   MESES.forEach((_,mIdx)=>{
     dados.meses[mIdx]={nome:MESES[mIdx],cols:{}};
-    allCols.forEach(c=>{
+    // colunas base + labels editáveis
+    allColsDynamic(mIdx).forEach(c=>{
+      const inp=document.getElementById(`in-${mIdx}-${c.id}`);
+      const lblEl=document.getElementById(`lbl-${mIdx}-${c.id}`);
       dados.meses[mIdx].cols[c.id]={
-        value:document.getElementById(`in-${mIdx}-${c.id}`)?.value||'',
-        paid:isPaid(mIdx,c.id)
+        value:inp?.value||'',
+        paid:isPaid(mIdx,c.id),
+        netFaltou:document.getElementById(`td-${mIdx}-${c.id}`)?.classList.contains('net-faltou')||false,
+        label:lblEl?.value||c.label
       };
     });
   });
@@ -840,19 +1034,35 @@ function carregarArquivo(event){
 }
 
 function aplicarDados(dados,nomeArq){
+  // Restaurar extras primeiro
+  if(dados.extras){
+    ['sh','ro','se'].forEach(tipo=>{
+      extraCols[tipo]={};
+      Object.entries(dados.extras[tipo]||{}).forEach(([mIdx,arr])=>{
+        extraCols[tipo][mIdx]=arr.map(e=>({id:e.id,label:e.label}));
+      });
+    });
+    // Rebuild UI para restaurar campos extras
+    const wrap=document.getElementById('meses-wrap');
+    const selector=document.getElementById('mes-selector');
+    wrap.innerHTML=''; selector.innerHTML='';
+    buildUI();
+  }
   Object.entries(dados.meses).forEach(([mIdx,info])=>{
     Object.entries(info.cols||{}).forEach(([colId,inf])=>{
       const inp=document.getElementById(`in-${mIdx}-${colId}`);
       if(inp) inp.value=inf.value||'';
       const td=document.getElementById(`td-${mIdx}-${colId}`);
       if(td){
-        if(inf.paid) td.classList.add('is-paid');
-        else td.classList.remove('is-paid');
+        if(inf.paid) td.classList.add('is-paid'); else td.classList.remove('is-paid');
+        if(inf.netFaltou) td.classList.add('net-faltou'); else td.classList.remove('net-faltou');
       }
+      // restaurar label editável
+      const lblEl=document.getElementById(`lbl-${mIdx}-${colId}`);
+      if(lblEl&&inf.label) lblEl.value=inf.label;
     });
     recalcTotals(parseInt(mIdx));
   });
-  // Atualiza nome do arquivo
   const nomeSemExt=nomeArq.replace(/\.json$/i,'');
   document.getElementById('nome-arq').value=nomeSemExt;
   localStorage.setItem('fcosta_fin_v2',JSON.stringify(dados));
@@ -869,10 +1079,13 @@ function abrirSalvarMes(){
 function salvarMesEspecifico(){
   const mIdx=parseInt(document.getElementById('sel-mes').value);
   const dados={versao:'fcosta_mes_v2',mes:MESES[mIdx],mIdx,cols:{}};
-  allCols.forEach(c=>{
+  allColsDynamic(mIdx).forEach(c=>{
+    const lblEl=document.getElementById(`lbl-${mIdx}-${c.id}`);
     dados.cols[c.id]={
       value:document.getElementById(`in-${mIdx}-${c.id}`)?.value||'',
-      paid:isPaid(mIdx,c.id)
+      paid:isPaid(mIdx,c.id),
+      netFaltou:document.getElementById(`td-${mIdx}-${c.id}`)?.classList.contains('net-faltou')||false,
+      label:lblEl?.value||c.label
     };
   });
   const blob=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});
@@ -890,6 +1103,9 @@ function loadFromLS(){
   try{
     const dados=JSON.parse(raw);
     if(!dados.meses) return;
+    if(dados.versao==='fcosta_fin_v3'||dados.extras){
+      aplicarDados(dados,'(localStorage)'); return;
+    }
     Object.entries(dados.meses).forEach(([mIdx,info])=>{
       Object.entries(info.cols||{}).forEach(([colId,inf])=>{
         const inp=document.getElementById(`in-${mIdx}-${colId}`);
@@ -900,7 +1116,6 @@ function loadFromLS(){
       recalcTotals(parseInt(mIdx));
     });
   }catch(e){}
-  // compatibilidade v1
   if(!raw.includes('fcosta_fin_v2')) loadLegacyLS();
 }
 
@@ -919,28 +1134,40 @@ function loadLegacyLS(){
 }
 
 /* ── BUILD REPORT ── */
+function getCampLabel(mIdx,col){
+  const el=document.getElementById(`lbl-${mIdx}-${col.id}`);
+  return el?el.value:col.label;
+}
 function buildReport(mIdx,pessoa){
   const isRod=pessoa==='rodrigo';
   const mn=MESES[mIdx];
+  const dynCols=allColsDynamic(mIdx);
+  const dynShared=dynCols.filter(c=>c.isShared);
+  const dynProBase=isRod?rodrigoCols:sergioCols;
+  const dynProExtra=dynCols.filter(c=>c.cls===(isRod?'ro':'se')&&!c.isShared&&c.isExtra);
+  const proCols=[...dynProBase,...dynProExtra];
   let totSh=0,paidSh=0;
-  sharedCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSh+=v;if(isPaid(mIdx,c.id))paidSh+=v;});
+  dynShared.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totSh+=v;if(isPaid(mIdx,c.id))paidSh+=v;});
   const each=totSh/2,eachPaid=paidSh/2,eachPend=each-eachPaid;
-  const proCols=isRod?rodrigoCols:sergioCols;
   let totPro=0,paidPro=0;
   proCols.forEach(c=>{const v=parseVal(`in-${mIdx}-${c.id}`);totPro+=v;if(isPaid(mIdx,c.id))paidPro+=v;});
   const totG=each+totPro,paidG=eachPaid+paidPro,pendG=totG-paidG;
   const pc=isRod?'#1D4ED8':'#15803D',pb=isRod?'#3B82F6':'#22C55E',pbg=isRod?'#EFF6FF':'#F0FDF4';
   const pLabel=isRod?'RODRIGO':'SÉRGIO';
-  const shRows=sharedCols.map(c=>{
+  const shRows=dynShared.map(c=>{
     const v=parseVal(`in-${mIdx}-${c.id}`),paid=isPaid(mIdx,c.id);
-    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${c.label}</td>
+    const netFalt=document.getElementById(`td-${mIdx}-${c.id}`)?.classList.contains('net-faltou');
+    const lbl=getCampLabel(mIdx,c);
+    const netTag=netFalt?'<span style="color:#EA580C;font-size:.6rem;font-weight:900;margin-left:4px;border:1px solid #EA580C;border-radius:3px;padding:1px 4px">FALTOU</span>':'';
+    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${lbl}${netTag}</td>
       <td style="padding:9px 13px;text-align:center;color:#64748b;border-bottom:1px solid #E2EDF5">${v>0?fmt(v):'—'}</td>
       <td style="padding:9px 13px;text-align:center;font-weight:900;color:#B8860B;border-bottom:1px solid #E2EDF5">${v>0?fmt(v/2):'—'}</td>
       <td style="padding:9px 13px;text-align:center;border-bottom:1px solid #E2EDF5">${paid?'<span style="color:#EF4444;font-weight:900;font-size:.7rem;border:1.5px solid #EF4444;border-radius:4px;padding:1px 7px;display:inline-block">PAGO</span>':'<span style="color:#94a3b8;font-size:.75rem">Pendente</span>'}</td></tr>`;
   }).join('');
   const proRows=proCols.map(c=>{
     const v=parseVal(`in-${mIdx}-${c.id}`),paid=isPaid(mIdx,c.id);
-    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${c.label}</td>
+    const lbl=getCampLabel(mIdx,c);
+    return`<tr><td style="padding:9px 13px;font-weight:700;border-bottom:1px solid #E2EDF5">${lbl}</td>
       <td colspan="2" style="padding:9px 13px;text-align:center;font-weight:900;color:${pc};border-bottom:1px solid #E2EDF5">${v>0?fmt(v):'—'}</td>
       <td style="padding:9px 13px;text-align:center;border-bottom:1px solid #E2EDF5">${paid?'<span style="color:#EF4444;font-weight:900;font-size:.7rem;border:1.5px solid #EF4444;border-radius:4px;padding:1px 7px;display:inline-block">PAGO</span>':'<span style="color:#94a3b8;font-size:.75rem">Pendente</span>'}</td></tr>`;
   }).join('');
