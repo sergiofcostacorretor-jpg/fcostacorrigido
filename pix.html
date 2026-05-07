@@ -428,12 +428,10 @@ tfoot td{padding:9px 10px;font-size:.88rem;color:#1e293b;font-weight:600;}
   <label>Saldo Anterior R$</label>
   <input type="text" id="inp-ant" style="width:110px" placeholder="0,00" oninput="salvarAnt()" onfocus="this.select()">
   <button class="btn-nm" onclick="abrirModal()">+ Novo Período</button>
+  <button class="btn-nm" onclick="pedirExcluirPeriodoAtual()" style="background:#7f1d1d;color:#fff;border:1px solid #991b1b" title="Excluir o período selecionado">🗑 Excluir Mês</button>
   <div class="sv"></div>
-  <button onclick="salvarNoSistema()" id="btn-salvar-int" title="Salvar dados dentro do próprio arquivo HTML — substitua o arquivo antigo pelo novo baixado" style="background:#166534;color:#bbf7d0;border:1.5px solid #16a34a;border-radius:5px;padding:5px 13px;font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;letter-spacing:.3px;transition:all .2s;">💾 Salvar</button>
-  <span id="salvo-status" style="font-size:.6rem;color:rgba(255,255,255,.45);white-space:nowrap;display:none;"></span>
-  <div class="sv"></div>
-  <button onclick="exportarJSON()" title="Salvar todos os dados como arquivo JSON no PC" style="background:#1a4a7a;color:#e0b84a;border:1.5px solid #c49a1e;border-radius:5px;padding:5px 13px;font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;letter-spacing:.3px;">⬇ JSON</button>
-  <button onclick="document.getElementById('inp-importar-json-mbar').click()" title="Carregar backup JSON salvo no PC" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:5px;padding:5px 13px;font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;letter-spacing:.3px;">📂 JSON</button>
+  <button onclick="exportarJSON()" title="Salvar todos os dados como arquivo JSON no PC" style="background:#1a4a7a;color:#e0b84a;border:1.5px solid #c49a1e;border-radius:5px;padding:5px 13px;font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;letter-spacing:.3px;">💾 Salvar JSON</button>
+  <button onclick="document.getElementById('inp-importar-json-mbar').click()" title="Carregar backup JSON salvo no PC" style="background:#166534;color:#bbf7d0;border:1.5px solid #16a34a;border-radius:5px;padding:5px 13px;font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;letter-spacing:.3px;">📂 Carregar JSON</button>
   <input type="file" id="inp-importar-json-mbar" accept=".json" style="display:none" onchange="importarJSON(this)">
 </div>
 
@@ -800,7 +798,35 @@ tfoot td{padding:9px 10px;font-size:.88rem;color:#1e293b;font-weight:600;}
   </div>
 </div>
 
-<!-- MODAL Excluir Arquivo -->
+<!-- MODAL Excluir Arquivo --><!-- MODAL Excluir Período Atual -->
+<div class="overlay" id="modal-del-periodo">
+  <div class="modal">
+    <h3 style="color:var(--verm)">🗑 Excluir Período</h3>
+    <div style="background:var(--verm2);border:1px solid #fca5a5;border-radius:6px;padding:11px 14px;font-size:.78rem;color:var(--verm);margin-bottom:11px;line-height:1.7">
+      ⚠️ Excluir permanentemente o período <strong><span id="del-periodo-label"></span></strong>?<br>
+      <strong>Todos os lançamentos, despesas e extratos serão perdidos. Ação irreversível.</strong>
+    </div>
+    <div class="mac">
+      <button class="btn bcz" onclick="document.getElementById('modal-del-periodo').classList.remove('on')">Cancelar</button>
+      <button class="btn bvm" onclick="confirmarExcluirPeriodoAtual()">🗑 Excluir Definitivamente</button>
+    </div>
+  </div>
+</div><!-- MODAL Excluir Período Atual -->
+<div class="overlay" id="modal-del-periodo">
+  <div class="modal">
+    <h3 style="color:var(--verm)">🗑 Excluir Período</h3>
+    <div style="background:var(--verm2);border:1px solid #fca5a5;border-radius:6px;padding:11px 14px;font-size:.78rem;color:var(--verm);margin-bottom:11px;line-height:1.7">
+      ⚠️ Excluir permanentemente o período <strong><span id="del-periodo-label"></span></strong>?<br>
+      <strong>Todos os lançamentos, despesas e extratos serão perdidos. Ação irreversível.</strong>
+    </div>
+    <div class="mac">
+      <button class="btn bcz" onclick="document.getElementById('modal-del-periodo').classList.remove('on')">Cancelar</button>
+      <button class="btn bvm" onclick="confirmarExcluirPeriodoAtual()">🗑 Excluir Definitivamente</button>
+    </div>
+  </div>
+</div>
+
+
 <div class="overlay" id="modal-del-arq">
   <div class="modal">
     <h3 style="color:var(--verm)">🗑 Excluir Relatório Arquivado</h3>
@@ -900,9 +926,6 @@ tfoot td{padding:9px 10px;font-size:.88rem;color:#1e293b;font-weight:600;}
 </div>
 
 <script>
-/* OBPC_DATA_START */
-var __OBPC_DADOS_EMBUTIDOS__ = null;
-/* OBPC_DATA_END */
 (function(){
 'use strict';
 const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -920,12 +943,6 @@ function mostrarNotif(msg,dur){
 window.mostrarNotif=mostrarNotif;
 
 function load(){
-  // 1. Dados embutidos no próprio arquivo (salvo via "Salvar no Sistema")
-  if(typeof __OBPC_DADOS_EMBUTIDOS__==='object' && __OBPC_DADOS_EMBUTIDOS__ && Object.keys(__OBPC_DADOS_EMBUTIDOS__).length>0){
-    // Também sincroniza com localStorage para edições futuras
-    try{localStorage.setItem(LS_KEY,JSON.stringify(__OBPC_DADOS_EMBUTIDOS__));}catch(e){}
-    return __OBPC_DADOS_EMBUTIDOS__;
-  }
   var d=null;
   try{d=JSON.parse(localStorage.getItem(LS_KEY)||'null');}catch(e){}
   if(d&&Object.keys(d).length>0)return d;
@@ -944,64 +961,7 @@ function load(){
   }catch(e){}
   return {};
 }
-function save(d){
-  try{
-    localStorage.setItem(LS_KEY,JSON.stringify(d));
-    var el=document.getElementById('salvo-status');
-    if(el){
-      var agora=new Date();
-      var hh=String(agora.getHours()).padStart(2,'0');
-      var mm=String(agora.getMinutes()).padStart(2,'0');
-      var ss=String(agora.getSeconds()).padStart(2,'0');
-      el.textContent='✓ salvo '+hh+':'+mm+':'+ss;
-      el.style.display='inline';
-      el.style.color='#86efac';
-      clearTimeout(el._t);
-      el._t=setTimeout(function(){el.style.color='rgba(255,255,255,.45)';},2500);
-    }
-  }catch(e){mostrarNotif('⚠️ Erro ao salvar: armazenamento cheio?');}
-}
-
-function salvarNoSistema(){
-  try{
-    // Lê o HTML completo da página atual via fetch do próprio arquivo
-    // Usa o conteúdo do documento atual como base
-    var htmlAtual=document.documentElement.outerHTML;
-    var jsonDados=JSON.stringify(dados);
-    // Substitui o bloco de dados embutidos pelo atual
-    var novoHtml=htmlAtual.replace(
-      /\/\* OBPC_DATA_START \*\/[\s\S]*?\/\* OBPC_DATA_END \*\//,
-      '/* OBPC_DATA_START */\nvar __OBPC_DADOS_EMBUTIDOS__ = '+jsonDados+';\n/* OBPC_DATA_END */'
-    );
-    // Garante <!DOCTYPE html> no início
-    if(!novoHtml.startsWith('<!DOCTYPE')){
-      novoHtml='<!DOCTYPE html>\n'+novoHtml;
-    }
-    var blob=new Blob([novoHtml],{type:'text/html;charset=utf-8'});
-    var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');
-    a.href=url;
-    a.download='obpc_financeiro_v4.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function(){URL.revokeObjectURL(url);},3000);
-    var btn=document.getElementById('btn-salvar-int');
-    if(btn){
-      var orig=btn.innerHTML;
-      btn.innerHTML='✅ Arquivo salvo!';
-      btn.style.background='#14532d';
-      setTimeout(function(){btn.innerHTML=orig;btn.style.background='#166534';},2500);
-    }
-    mostrarNotif('✅ Sistema salvo! Substitua o arquivo anterior pelo novo.',5000);
-  }catch(e){
-    mostrarNotif('❌ Erro ao salvar: '+e.message,5000);
-  }
-}
-window.salvarNoSistema=salvarNoSistema;
-
-function salvarInternamente(){salvarNoSistema();}
-window.salvarInternamente=salvarInternamente;
+function save(d){try{localStorage.setItem(LS_KEY,JSON.stringify(d));}catch(e){mostrarNotif('⚠️ Erro ao salvar: armazenamento cheio?');}}
 
 var dados=load();
 var mes='';
@@ -2125,7 +2085,36 @@ function renderArquivo(){
 function pedirExcluirArquivo(k){mesParaExcluir=k;document.getElementById('del-arq-label').textContent='"'+periodoLabel(k)+'"';document.getElementById('modal-del-arq').classList.add('on');}
 window.pedirExcluirArquivo=pedirExcluirArquivo;
 function confirmarExcluirArquivo(){if(!mesParaExcluir)return;delete dados[mesParaExcluir];save(dados);mesParaExcluir=null;document.getElementById('modal-del-arq').classList.remove('on');renderArquivo();popularSelect();mostrarNotif('🗑️ Período excluído.');}
-window.confirmarExcluirArquivo=confirmarExcluirArquivo;
+window.confirmarExcluirArquivo=confirmarExcluirArquivo;function pedirExcluirPeriodoAtual(){
+  if(!mes){mostrarNotif('Selecione um período.',3000);return;}
+  document.getElementById('del-periodo-label').textContent=periodoLabel(mes);
+  document.getElementById('modal-del-periodo').classList.add('on');
+}
+window.pedirExcluirPeriodoAtual=pedirExcluirPeriodoAtual;
+
+function confirmarExcluirPeriodoAtual(){
+  if(!mes)return;
+  var nomeExcluido=periodoLabel(mes);
+  delete dados[mes];
+  save(dados);
+  mes='';
+  document.getElementById('modal-del-periodo').classList.remove('on');
+  popularSelect();
+  var chaves=Object.keys(dados).filter(function(k){return !k.startsWith('_');});
+  if(chaves.length){
+    var ultimo=chaves.sort(function(a,b){
+      var da=dados[a]&&dados[a]._inicio||'',db=dados[b]&&dados[b]._inicio||'';
+      return db.localeCompare(da);
+    })[0];
+    carregarMes(ultimo);
+  }else{
+    document.getElementById('tbody').innerHTML='<tr><td colspan="10" class="vazio"><span>📋</span>Nenhum período. Crie um novo.</td></tr>';
+    document.getElementById('fc-body').innerHTML='<div class="vazio"><span>🗂</span>Selecione um período.</div>';
+    renderCards();renderDespesas();
+  }
+  mostrarNotif('🗑️ Período "'+nomeExcluido+'" excluído.',4000);
+}
+window.confirmarExcluirPeriodoAtual=confirmarExcluirPeriodoAtual;
 
 function trocarLogo(inp){
   if(!inp.files[0])return;
@@ -2239,141 +2228,71 @@ window.renderOficio=renderOficio;
 function copiarOficio(){var el=document.getElementById('oficio-wrap');navigator.clipboard.writeText(el.innerText||el.textContent).then(function(){mostrarNotif('📋 Ofício copiado!',3000);});}
 window.copiarOficio=copiarOficio;
 
-function gerarHTMLRelatorioAssinado(){
-  if(!mes||!dados[mes])return null;
-  garantir(mes);
-  var res=calcSaldos(mes);
-  var ant=res.ant,ent=res.ent,sai=res.sai,sal=res.sal,rows=res.rows,despTotal=res.despTotal,saiMov=res.saiMov;
-  var desps=dados[mes].despesas||[];
-  var periodo=periodoLabel(mes);
-  var logo=localStorage.getItem(LS_LOGO)||'';
-  var ass=localStorage.getItem(LS_ASS)||'';
-  var byCat={};
-  rows.filter(function(r){return r.tipo==='entrada';}).forEach(function(r){
-    var c=r.tipoDep||'Outros';byCat[c]=(byCat[c]||0)+(Number(r.valor)||0);
-  });
-  var logoHTML=logo
-    ?'<img src="'+logo+'" style="height:70px;max-width:220px;object-fit:contain;margin-bottom:6px;">'
-    :'';
-  // Assinatura embutida diretamente no bloco — não depende de arrastar
-  var assImgHTML=ass
-    ?'<img src="'+ass+'" style="max-height:80px;max-width:200px;object-fit:contain;display:block;margin:0 auto 6px;">'
-    :'<div style="height:70px;"></div>';
-  var rowsHTML=rows.map(function(r){
-    return '<tr>'
-      +'<td>'+r.dia+'</td>'
-      +'<td><span style="display:inline-block;padding:1px 7px;border-radius:20px;font-size:8pt;font-weight:700;background:'+(r.tipo==='entrada'?'#dcfce7':'#fee2e2')+';color:'+(r.tipo==='entrada'?'#166534':'#991b1b')+'">'+(r.tipo==='entrada'?'⬆ Dep.':'⬇ Saída')+'</span></td>'
-      +'<td>'+r.nome+'</td>'
-      +'<td>'+(r.motivo||'—')+'</td>'
-      +'<td>'+(r.tipoDep||'—')+'</td>'
-      +'<td style="font-family:monospace;font-size:8.5pt">'+(r.nrec||'—')+'</td>'
-      +'<td style="text-align:right;font-family:monospace;color:#166534;font-weight:600">'+(r.tipo==='entrada'?fmt(r.valor):'')+'</td>'
-      +'<td style="text-align:right;font-family:monospace;color:#991b1b;font-weight:600">'+(r.tipo==='saida'?fmt(r.valor):'')+'</td>'
-      +'<td style="text-align:right;font-family:monospace;font-weight:700;color:#0d2a4a">'+fmt(r.sc)+'</td>'
-      +'</tr>';
-  }).join('');
-  var despsHTML='';
-  if(desps.length){
-    despsHTML='<h3 style="font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#0d2a4a;margin:18px 0 6px;padding-bottom:4px;border-bottom:2px solid #0d2a4a;">2 — DESPESAS COM NOTA FISCAL</h3>'
-      +'<table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:12px;">'
-      +'<thead><tr style="background:#0d2a4a;color:#fff;"><th style="padding:7px 10px;text-align:left;font-size:9pt;">Dia</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Categoria</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Descrição / Fornecedor</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">NF</th><th style="padding:7px 10px;text-align:right;font-size:9pt;">Valor</th></tr></thead>'
-      +'<tbody>'+desps.map(function(d,i){
-        return '<tr style="background:'+(i%2===0?'#f8faff':'#fff')+';">'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;">'+d.dia+'</td>'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;"><span style="background:#b45309;color:#fff;padding:2px 7px;border-radius:20px;font-size:8pt;font-weight:700;">'+d.cat+'</span></td>'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;">'+d.desc+(d.emissora?' — <em style="color:#94a3b8">'+d.emissora+'</em>':'')+'</td>'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;font-family:monospace;font-size:8.5pt;">'+(d.nf?(d.nf+(d.serie?' / '+d.serie:'')):'—')+'</td>'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;text-align:right;font-family:monospace;color:#991b1b;font-weight:600;">'+fmt(d.valor)+'</td>'
-          +'</tr>';
-      }).join('')+'</tbody>'
-      +'<tfoot><tr style="background:#e8f0fa;"><td colspan="4" style="padding:8px 10px;font-weight:700;border-top:2px solid #0d2a4a;color:#0d2a4a;font-size:10.5pt;">TOTAL DESPESAS</td>'
-      +'<td style="padding:8px 10px;text-align:right;font-family:monospace;font-weight:700;color:#991b1b;border-top:2px solid #0d2a4a;font-size:11pt;">'+fmt(despTotal)+'</td></tr></tfoot></table>';
-  }
-  var catHTML='';
-  if(Object.keys(byCat).length){
-    var secN=desps.length?3:2;
-    catHTML='<h3 style="font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#0d2a4a;margin:18px 0 6px;padding-bottom:4px;border-bottom:2px solid #0d2a4a;">'+secN+' — RESUMO POR CATEGORIA</h3>'
-      +'<table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:12px;">'
-      +'<thead><tr style="background:#0d2a4a;color:#fff;"><th style="padding:7px 10px;text-align:left;font-size:9pt;">Categoria</th><th style="padding:7px 10px;text-align:right;font-size:9pt;">Total</th></tr></thead>'
-      +'<tbody>'+Object.entries(byCat).map(function(e,i){
-        return '<tr style="background:'+(i%2===0?'#f8faff':'#fff')+';">'
-          +'<td style="padding:7px 10px;border-bottom:1px solid #eef2f7;">'+e[0]+'</td>'
-          +'<td style="padding:7px 10px;text-align:right;font-family:monospace;color:#166534;font-weight:600;border-bottom:1px solid #eef2f7;">'+fmt(e[1])+'</td>'
-          +'</tr>';
-      }).join('')+'</tbody></table>';
-  }
-  return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">'
-    +'<title>Relatório OBPC '+periodo+'</title>'
-    +'<style>'
-    +'*{box-sizing:border-box;margin:0;padding:0;}'
-    +'body{font-family:Arial,Helvetica,sans-serif;font-size:11pt;color:#111;background:#fff;padding:28px 32px;}'
-    +'@media print{body{padding:10px 14px;}@page{margin:1.2cm;}}'
-    +'</style>'
-    +'</head><body>'
-    // Cabeçalho
-    +(logoHTML?'<div style="text-align:center;padding-bottom:12px;border-bottom:2.5px solid #0d2a4a;margin-bottom:14px;">'+logoHTML+'<div style="font-size:13pt;font-weight:700;color:#0d2a4a;">OBPC — Igreja O Brasil para Cristo</div><div style="font-size:9pt;color:#555;">Congregação Jardim São Fernando · Carapicuíba-SP</div></div>':'<div style="padding-bottom:12px;border-bottom:2.5px solid #0d2a4a;margin-bottom:14px;"><div style="font-size:13pt;font-weight:700;color:#0d2a4a;">OBPC — Igreja O Brasil para Cristo</div><div style="font-size:9pt;color:#555;">Congregação Jardim São Fernando · Carapicuíba-SP</div></div>')
-    +'<h2 style="font-size:12pt;font-weight:700;color:#0d2a4a;margin-bottom:3px;">Relatório Financeiro — '+periodo+'</h2>'
-    +'<p style="font-size:8.5pt;color:#888;margin-bottom:14px;">Emitido em: '+hoje()+(dados[mes].fechado?' · <strong style="color:#166534;">✅ Período Fechado</strong>':' · <span style="color:#b45309;">🔓 Período Aberto</span>')+'</p>'
-    // Cards resumo
-    +'<table style="width:100%;border-collapse:collapse;margin-bottom:16px;">'
-    +'<tr>'
-    +'<td style="border:1px solid #dde3ea;border-radius:5px;padding:10px 12px;text-align:center;width:25%;"><div style="font-family:monospace;font-size:11pt;font-weight:700;color:#64748b;">'+fmt(ant)+'</div><div style="font-size:7.5pt;color:#888;text-transform:uppercase;margin-top:2px;">Saldo Anterior</div></td>'
-    +'<td style="border:1px solid #dde3ea;padding:10px 12px;text-align:center;width:25%;"><div style="font-family:monospace;font-size:11pt;font-weight:700;color:#166534;">'+fmt(ent)+'</div><div style="font-size:7.5pt;color:#888;text-transform:uppercase;margin-top:2px;">Total Depositado</div></td>'
-    +'<td style="border:1px solid #dde3ea;padding:10px 12px;text-align:center;width:25%;"><div style="font-family:monospace;font-size:11pt;font-weight:700;color:#991b1b;">'+fmt(sai)+'</div><div style="font-size:7.5pt;color:#888;text-transform:uppercase;margin-top:2px;">Total Despesas</div></td>'
-    +'<td style="border:1px solid #dde3ea;padding:10px 12px;text-align:center;width:25%;"><div style="font-family:monospace;font-size:11pt;font-weight:700;color:#c49a1e;">'+fmt(sal)+'</div><div style="font-size:7.5pt;color:#888;text-transform:uppercase;margin-top:2px;">Saldo / A Devolver</div></td>'
-    +'</tr></table>'
-    // Movimentações
-    +'<h3 style="font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#0d2a4a;margin:0 0 6px;padding-bottom:4px;border-bottom:2px solid #0d2a4a;">1 — MOVIMENTAÇÕES DETALHADAS</h3>'
-    +'<div style="overflow-x:auto;">'
-    +'<table style="width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:12px;">'
-    +'<thead><tr style="background:#0d2a4a;color:#fff;"><th style="padding:7px 10px;text-align:left;font-size:9pt;">Dia</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Tipo</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Origem/Destino</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Descrição</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Categoria</th><th style="padding:7px 10px;text-align:left;font-size:9pt;">Nº Doc.</th><th style="padding:7px 10px;text-align:right;font-size:9pt;">Depósito</th><th style="padding:7px 10px;text-align:right;font-size:9pt;">Saída</th><th style="padding:7px 10px;text-align:right;font-size:9pt;">Saldo</th></tr></thead>'
-    +'<tbody>'+rowsHTML+'</tbody>'
-    +'<tfoot><tr style="background:#e8f0fa;"><td colspan="6" style="padding:8px 10px;font-weight:700;border-top:2px solid #0d2a4a;color:#0d2a4a;font-size:10.5pt;">TOTAIS</td>'
-    +'<td style="padding:8px 10px;text-align:right;font-family:monospace;font-weight:700;color:#166534;border-top:2px solid #0d2a4a;font-size:11pt;">'+fmt(ent)+'</td>'
-    +'<td style="padding:8px 10px;text-align:right;font-family:monospace;font-weight:700;color:#991b1b;border-top:2px solid #0d2a4a;font-size:11pt;">'+fmt(saiMov)+'</td>'
-    +'<td style="padding:8px 10px;text-align:right;font-family:monospace;font-weight:700;color:#0d2a4a;border-top:2px solid #0d2a4a;font-size:11pt;">'+fmt(sal+despTotal)+'</td>'
-    +'</tr></tfoot></table></div>'
-    +despsHTML+catHTML
-    // Bloco de assinatura — imagem embutida diretamente
-    +'<div style="margin-top:36px;padding-top:16px;border-top:1.5px dashed #dde3ea;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;">'
-    +'<div style="text-align:center;min-width:220px;">'
-    +assImgHTML
-    +'<div style="border-top:1.5px solid #333;width:210px;margin:0 auto 6px;"></div>'
-    +'<div style="font-weight:700;font-size:11pt;color:#0d2a4a;">Sérgio Costa</div>'
-    +'<div style="font-size:9pt;color:#555;font-style:italic;">Dirigente Local — OBPC Jardim São Fernando</div>'
-    +'</div>'
-    +'<div style="text-align:right;font-size:8.5pt;color:#94a3b8;">Emitido em '+hoje()+'<br>OBPC Jd. São Fernando · Carapicuíba-SP</div>'
-    +'</div>'
-    +'</body></html>';
-}
-
 function imprimirRelatorioComAssinatura(){
   if(!mes){mostrarNotif('Selecione um período.',3000);return;}
-  var html=gerarHTMLRelatorioAssinado();
-  if(!html){mostrarNotif('⚠️ Sem dados para imprimir.',3000);return;}
-  var w=window.open('','_blank','width=950,height=750');
-  if(!w){mostrarNotif('⚠️ Popup bloqueado. Permita popups para este site.',5000);return;}
+  var fcBody=document.getElementById('fc-body');
+  // Clone the fc-body content including placed signatures
+  var clone=fcBody.cloneNode(true);
+  // Remove drag controls from placed signatures in clone
+  clone.querySelectorAll('.ass-del-btn,.ass-resize-handle').forEach(function(el){el.remove();});
+  // Remove the drop zone border/background from fc-ass-zona but keep position:relative
+  clone.querySelectorAll('.fc-ass-zona').forEach(function(el){
+    el.style.border='none';
+    el.style.background='transparent';
+    el.style.position='relative'; // essencial para manter ass-placed no lugar
+  });
+  // Garante que ass-placed dentro da zona mantenha position:absolute
+  clone.querySelectorAll('.ass-placed').forEach(function(el){
+    el.style.position='absolute';
+    el.style.cursor='default';
+    el.style.outline='none';
+  });
+  var logo=localStorage.getItem(LS_LOGO)||'';
+  var periodo=periodoLabel(mes);
+  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">'
+    +'<title>Relatório OBPC '+periodo+'</title>'
+    +'<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">'
+    +'<style>'
+    +'*{box-sizing:border-box;margin:0;padding:0;}'
+    +'body{font-family:Arial,Helvetica,sans-serif;font-size:12pt;color:#111;background:#fff;}'
+    +'.balancete-section-title{display:flex;align-items:center;gap:8px;font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#0d2a4a;margin:14px 0 6px;padding-bottom:5px;border-bottom:2px solid #0d2a4a;}'
+    +'.balancete-section-title span{background:#0d2a4a;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;}'
+    +'.balancete-resumo-box{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0;}'
+    +'.brbox{border:1px solid #dde3ea;border-radius:5px;padding:9px 11px;text-align:center;}'
+    +'.brbox-val{font-family:monospace;font-size:1rem;font-weight:700;}'
+    +'.brbox-lbl{font-size:8pt;color:#555;text-transform:uppercase;margin-top:2px;}'
+    +'.brbox.ent .brbox-val{color:#166534;}'
+    +'.brbox.sai .brbox-val{color:#991b1b;}'
+    +'.brbox.sal .brbox-val{color:#c49a1e;}'
+    +'.brbox.ant .brbox-val{color:#64748b;}'
+    +'.tbl-balancete{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:11pt;}'
+    +'.tbl-balancete thead th{background:#0d2a4a;color:#fff;padding:7px 10px;text-align:left;font-size:9.5pt;}'
+    +'.tbl-balancete tbody tr:nth-child(odd){background:#f8faff;}'
+    +'.tbl-balancete tbody td{padding:7px 10px;border-bottom:1px solid #eef2f7;}'
+    +'.tbl-balancete tfoot td{background:#e8f0fa;font-weight:700;border-top:2px solid #0d2a4a;padding:8px 10px;font-size:11.5pt;color:#0d2a4a;}'
+    +'.cat-badge{display:inline-block;padding:1px 6px;border-radius:20px;font-size:8.5pt;font-weight:700;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}'
+    +'.fc-assinatura{display:flex;justify-content:space-between;margin-top:28px;padding-top:16px;border-top:1px solid #dde3ea;flex-wrap:wrap;gap:16px;}'
+    +'.fc-ass-bloco{text-align:center;min-width:180px;position:relative;}'
+    +'.fc-ass-nome{font-weight:700;font-size:11pt;color:#0d2a4a;}'
+    +'.fc-ass-cargo{font-size:9pt;color:#64748b;font-style:italic;}'
+    +'.fc-ass-zona{border:none!important;background:transparent!important;position:relative;min-height:90px;}'
+    +'.ass-placed{position:absolute!important;}'
+    +'.ass-placed img{display:block;}'
+    +'.ass-placed .ass-del-btn,.ass-placed .ass-resize-handle{display:none!important;}'
+    +'.divider-fc{border:none;border-top:2px dashed #dde3ea;margin:16px 0;}'
+    +'</style></head><body>'
+    +(logo?'<div style="text-align:center;padding:10px 0 14px;border-bottom:2px solid #0d2a4a;margin-bottom:16px"><img src="'+logo+'" style="height:70px;object-fit:contain"></div>':'')
+    +'<h2 style="font-family:Arial,sans-serif;font-size:13pt;color:#0d2a4a;margin-bottom:4px">OBPC Jardim São Fernando — Relatório Financeiro</h2>'
+    +'<p style="font-size:9pt;color:#555;margin-bottom:16px">Período: '+periodo+' · Emitido em: '+hojeISO()+'</p>'
+    +clone.innerHTML
+    +'</body></html>';
+  var w=window.open('','_blank','width=900,height=700');
   w.document.write(html);
   w.document.close();
   w.focus();
-  setTimeout(function(){w.print();},900);
+  setTimeout(function(){w.print();},800);
 }
 window.imprimirRelatorioComAssinatura=imprimirRelatorioComAssinatura;
-
-function baixarRelatorioHTML(){
-  if(!mes){mostrarNotif('Selecione um período.',3000);return;}
-  var html=gerarHTMLRelatorioAssinado();
-  if(!html){mostrarNotif('⚠️ Sem dados.',3000);return;}
-  var ml=periodoLabel(mes).replace(/[^a-zA-Z0-9]/g,'_');
-  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  a.href=url;a.download='Relatorio_OBPC_'+ml+'.html';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  setTimeout(function(){URL.revokeObjectURL(url);},3000);
-  mostrarNotif('✅ HTML baixado! Abra e use Ctrl+P para salvar como PDF.',6000);
-}
-window.baixarRelatorioHTML=baixarRelatorioHTML;
 
 function gerarHTMLRelatorio(){
   if(!mes||!dados[mes])return '<p>Sem dados.</p>';
@@ -2835,13 +2754,6 @@ function init(){
 }
 
 document.addEventListener('DOMContentLoaded',init);
-
-document.addEventListener('keydown',function(e){
-  if((e.ctrlKey||e.metaKey)&&e.key==='s'){
-    e.preventDefault();
-    salvarInternamente();
-  }
-});
 
 })();
 </script>
