@@ -178,6 +178,9 @@ h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:clamp(8.5pt,2.2vw,1
 .notif{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--azul);color:var(--ouro);padding:9px 18px;border-radius:4px;font-family:'Oswald',sans-serif;font-size:9.5pt;border:1px solid var(--ouro);z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center;}
 .notif.show{opacity:1;}
 
+/* ── RODAPÉ IMPRESSÃO ── */
+#rodape-print{display:none;}
+
 /* ── PLACEHOLDER ── */
 .placeholder-msg{text-align:center;padding:60px 20px;color:#aaa;font-family:'Oswald',sans-serif;letter-spacing:1px;}
 .placeholder-msg .icon{font-size:38pt;margin-bottom:12px;opacity:.3;}
@@ -240,12 +243,27 @@ h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:clamp(8.5pt,2.2vw,1
   .btn-ass-toggle,.ass-widget{display:none!important;}
   body{background:white;}
   .document-container{padding:0!important;}
-  .a4-page{box-shadow:none;width:100%!important;max-width:none!important;margin:0!important;padding:13mm 17mm 17mm!important;}
+  .a4-page{box-shadow:none;width:100%!important;max-width:none!important;margin:0!important;padding:20mm 17mm 25mm!important;}
   .campo-edit{border-bottom:none!important;background:transparent!important;box-shadow:none!important;display:inline!important;white-space:pre-wrap!important;}
   textarea.campo-expansivel{border:none!important;background:transparent!important;resize:none!important;overflow:visible!important;}
   p.clausula-texto::after{display:none!important;}
   .rb-mem-panel{display:none!important;}
   .recibo-canhoto{display:block!important;}
+
+  #rodape-print{
+    display:block!important;
+    position:fixed;
+    bottom:5mm;
+    left:0;
+    right:0;
+    text-align:center;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:6.5pt;
+    color:#999;
+    opacity:.5;
+    letter-spacing:.6px;
+    z-index:9999;
+  }
 }
 
 @media(max-width:640px){
@@ -1565,9 +1583,8 @@ window.addEventListener('load',()=>{
   initDropZone();
 });
 </script>
-<script src="fcosta_patch_v5.2.js"><script>
-// ... todo o conteúdo do fcosta_patch_v5.2.js aqui dentro ...
-</script>
-</body></script>
+<div id="rodape-print">
+  FCOSTA CORRETOR E AVALIADOR DE IMÓVEIS &nbsp;|&nbsp; CRECI-SP 294791-F &nbsp;|&nbsp; CNAI 52708
+</div>
 </body>
 </html>
