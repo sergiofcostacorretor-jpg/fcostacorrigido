@@ -473,24 +473,24 @@ function rodapeFcosta(){
 function cv(ph){return `<td>${campo('',ph)}</td>`;}
 function assinaturas(p1,p2,p3='',conjuge1=false,conjuge2=false){
   const terceiro=p3?`<div class="assinatura-box"><div class="linha-ass"></div>
-    <div class="ass-nome">${campo('','NOME COMPLETO')}</div>
-    <div class="ass-qualif">${p3}<br>CPF: ${campo('','000.000.000-00')}</div></div>`:'';
+    <div class="ass-nome">${campo('','')}</div>
+    <div class="ass-qualif">${p3}<br>CPF: ${campo('','')}</div></div>`:'';
   const bc1=conjuge1?`<div class="assinatura-box"><div class="linha-ass"></div>
-    <div class="ass-nome">${campo('','NOME DO CÔNJUGE')}</div>
-    <div class="ass-qualif">Cônjuge — ${p1}<br>CPF: ${campo('','000.000.000-00')}</div></div>`:'';
+    <div class="ass-nome">${campo('','')}</div>
+    <div class="ass-qualif">Cônjuge — ${p1}<br>CPF: ${campo('','')}</div></div>`:'';
   const bc2=conjuge2?`<div class="assinatura-box"><div class="linha-ass"></div>
-    <div class="ass-nome">${campo('','NOME DO CÔNJUGE')}</div>
-    <div class="ass-qualif">Cônjuge — ${p2}<br>CPF: ${campo('','000.000.000-00')}</div></div>`:'';
+    <div class="ass-nome">${campo('','')}</div>
+    <div class="ass-qualif">Cônjuge — ${p2}<br>CPF: ${campo('','')}</div></div>`:'';
   return `<div class="bloco-assinaturas">
     <div class="local-data">São Paulo, ${hoje()}</div>
     <div class="assinaturas" style="margin-top:36px;">
       <div class="assinatura-box"><div class="linha-ass"></div>
-        <div class="ass-nome">${campo('','NOME COMPLETO')}</div>
-        <div class="ass-qualif">${p1}<br>CPF: ${campo('','000.000.000-00')}</div></div>
+        <div class="ass-nome">${campo('','')}</div>
+        <div class="ass-qualif">${p1}<br>CPF: ${campo('','')}</div></div>
       ${bc1}
       <div class="assinatura-box"><div class="linha-ass"></div>
-        <div class="ass-nome">${campo('','NOME COMPLETO')}</div>
-        <div class="ass-qualif">${p2}<br>CPF: ${campo('','000.000.000-00')}</div></div>
+        <div class="ass-nome">${campo('','')}</div>
+        <div class="ass-qualif">${p2}<br>CPF: ${campo('','')}</div></div>
       ${bc2}${terceiro}
     </div>
     <div class="assinaturas" style="margin-top:16px;">
@@ -504,11 +504,11 @@ function assinaturas(p1,p2,p3='',conjuge1=false,conjuge2=false){
     <p style="text-align:center;margin-top:24px;font-size:9.5pt;font-family:'Oswald',sans-serif;letter-spacing:.5px;">TESTEMUNHAS</p>
     <div class="assinaturas">
       <div class="assinatura-box"><div class="linha-ass"></div>
-        <div class="ass-nome">${campo('','NOME COMPLETO')}</div>
-        <div class="ass-qualif">CPF: ${campo('','000.000.000-00')}</div></div>
+        <div class="ass-nome">${campo('','')}</div>
+        <div class="ass-qualif">CPF: ${campo('','')}</div></div>
       <div class="assinatura-box"><div class="linha-ass"></div>
-        <div class="ass-nome">${campo('','NOME COMPLETO')}</div>
-        <div class="ass-qualif">CPF: ${campo('','000.000.000-00')}</div></div>
+        <div class="ass-nome">${campo('','')}</div>
+        <div class="ass-qualif">CPF: ${campo('','')}</div></div>
     </div>
   </div>${rodapeFcosta()}`;
 }
@@ -1028,9 +1028,9 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 422 do CC/2002:</strong> Os contratantes são obrigados a guardar os princípios de probidade e boa-fé.',
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
-`<strong>LOCADOR(A):</strong> ${campo('','NOME COMPLETO')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','ENDEREÇO COMPLETO DO LOCADOR')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
-<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
-<strong>LOCATÁRIO(A):</strong> ${campo('','NOME COMPLETO')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','ENDEREÇO ATUAL DO LOCATÁRIO')}, doravante <strong>LOCATÁRIO(A)</strong>.`,[])}
+`<strong>LOCADOR(A):</strong> ${campo('','')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','ENDEREÇO COMPLETO DO LOCADOR')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
+<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>LOCATÁRIO(A):</strong> ${campo('','')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','ENDEREÇO ATUAL DO LOCATÁRIO')}, doravante <strong>LOCATÁRIO(A)</strong>.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO E DESTINAÇÃO',
 `O(A) LOCADOR(A) cede ao(à) LOCATÁRIO(A), para fins <strong>EXCLUSIVAMENTE RESIDENCIAIS</strong>, o imóvel ${campo('','CASA / APARTAMENTO / SOBRADO')}, situado na ${campo('','LOGRADOURO, Nº, COMPLEMENTO, BAIRRO, CIDADE, CEP')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}, IPTU nº ${campo('','XXXXXXXX')}.<br><br>
 Composição: ${campo('','sala, X quartos, X banheiros, cozinha, área de serviço, X vaga(s)')}.<br><br>
@@ -1068,7 +1068,7 @@ ${clausula('CLÁUSULA VIII — DA RESCISÃO E PENALIDADES',
 ${clausula('CLÁUSULA IX — DA GARANTIA LOCATÍCIA',
 `Modalidade: <strong>${campo('','Caução / Fiança / Seguro Fiança / Título de Capitalização')}</strong>.<br><br>
 <strong>Caução em Dinheiro:</strong> R$ ${campo('','0.000,00')} (${campo('','3')} aluguéis), Banco ${campo('','XXX')}, Ag. ${campo('','XXXX')}, Poupança ${campo('','XXXXX-X')}.<br><br>
-<strong>FIADOR(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, proprietário(a) do imóvel em ${campo('','ENDEREÇO DO BEM DO FIADOR')}, Matrícula nº ${campo('','XXXXX')}, <strong>renunciando ao benefício de ordem</strong> (Art. 827 CC), respondendo solidariamente.`,
+<strong>FIADOR(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, proprietário(a) do imóvel em ${campo('','ENDEREÇO DO BEM DO FIADOR')}, Matrícula nº ${campo('','XXXXX')}, <strong>renunciando ao benefício de ordem</strong> (Art. 827 CC), respondendo solidariamente.`,
 ['<strong>Art. 37 da Lei 8.245/91:</strong> Modalidades: caução, fiança, seguro ou cessão fiduciária.',
  '<strong>Art. 38, §2º:</strong> A caução em dinheiro não pode exceder três meses de aluguel.'])}
 ${clausula('CLÁUSULA X — DISPOSIÇÕES GERAIS',
@@ -1091,10 +1091,10 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 56 da Lei 8.245/91:</strong> Nos demais casos de locação não residencial, o contrato por prazo determinado cessa, de pleno direito, findo o prazo estipulado.',
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
-`<strong>LOCADOR(A):</strong> ${campo('','NOME COMPLETO / RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ nº 00.000.000/0001-00')}, residente/sede em ${campo('','ENDEREÇO COMPLETO')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
-<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
-<strong>LOCATÁRIO(A):</strong> ${campo('','NOME COMPLETO / RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ nº 00.000.000/0001-00')}, residente/sede em ${campo('','ENDEREÇO ATUAL')}, doravante <strong>LOCATÁRIO(A)</strong>.<br><br>
-<strong>RESPONSÁVEL LEGAL (PJ):</strong> ${campo('','NOME DO SÓCIO/REPRESENTANTE')}, CPF nº ${campo('','000.000.000-00')}, cargo: ${campo('','CARGO')}.`,[])}
+`<strong>LOCADOR(A):</strong> ${campo('',' / RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ nº 00.000.000/0001-00')}, residente/sede em ${campo('','ENDEREÇO COMPLETO')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
+<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>LOCATÁRIO(A):</strong> ${campo('',' / RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ nº 00.000.000/0001-00')}, residente/sede em ${campo('','ENDEREÇO ATUAL')}, doravante <strong>LOCATÁRIO(A)</strong>.<br><br>
+<strong>RESPONSÁVEL LEGAL (PJ):</strong> ${campo('','NOME DO SÓCIO/REPRESENTANTE')}, CPF nº ${campo('','')}, cargo: ${campo('','CARGO')}.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO E DESTINAÇÃO',
 `O(A) LOCADOR(A) cede ao(à) LOCATÁRIO(A) o imóvel ${campo('','SALA COMERCIAL / LOJA / GALPÃO')}, situado na ${campo('','ENDEREÇO COMPLETO, Nº, SALA/ANDAR, BAIRRO, CIDADE, CEP')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}.<br><br>
 <strong>DESTINAÇÃO EXCLUSIVA:</strong> ${campo('','ATIVIDADE COMERCIAL / RAMO ESPECÍFICO')}, sendo <strong>VEDADO</strong> uso residencial, sublocação ou mudança de ramo sem anuência prévia e escrita.`,
@@ -1119,7 +1119,7 @@ ${clausula('CLÁUSULA VII — DA RESCISÃO',
 ['<strong>Art. 4º da Lei 8.245/91:</strong> O locatário pode devolver o imóvel pagando a multa pactuada.'])}
 ${clausula('CLÁUSULA VIII — DA GARANTIA',
 `Modalidade: <strong>${campo('','Caução / Fiança / Seguro Fiança')}</strong>.<br><br>
-<strong>FIADOR(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, imóvel em ${campo('','ENDEREÇO DO BEM')}, Matrícula nº ${campo('','XXXXX')}, renunciando ao benefício de ordem, respondendo solidariamente.`,[])}
+<strong>FIADOR(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, imóvel em ${campo('','ENDEREÇO DO BEM')}, Matrícula nº ${campo('','XXXXX')}, renunciando ao benefício de ordem, respondendo solidariamente.`,[])}
 ${clausula('CLÁUSULA IX — DO FORO',`Foro da Comarca de <strong>${campo('','CIDADE/ESTADO')}</strong>. Firmado em <strong>${campo('','2 (duas)')} vias</strong>.`,[])}
 ${assinaturas('LOCADOR(A)','LOCATÁRIO(A)','',true,false)}`,
 
@@ -1132,9 +1132,9 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 50:</strong> Permanência sem oposição por mais de 30 dias presume prorrogação por prazo indeterminado.',
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
-`<strong>LOCADOR(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO DO LOCADOR')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
-<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
-<strong>LOCATÁRIO(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO ATUAL')}, doravante <strong>LOCATÁRIO(A)</strong>.`,[])}
+`<strong>LOCADOR(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO DO LOCADOR')}, doravante <strong>LOCADOR(A)</strong>.<br><br>
+<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>LOCATÁRIO(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO ATUAL')}, doravante <strong>LOCATÁRIO(A)</strong>.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO',
 `Imóvel ${campo('','CASA / APARTAMENTO / CHÁCARA')}, situado na ${campo('','ENDEREÇO COMPLETO')}, com ${campo('','X quartos, X banheiros')}.<br><br>
 <strong>Finalidade:</strong> ${campo('','Lazer / Tratamento de saúde / Obras / Curso')}.`,[])}
@@ -1168,9 +1168,9 @@ ${leiBloco('FUNDAMENTO LEGAL',[
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
 `<strong>LOCADOR(A)/INCORPORADOR(A):</strong> ${campo('','NOME/RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ')}, sede em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
 <strong>LOCATÁRIO(A)/ENCOMENDANTE:</strong> ${campo('','NOME/RAZÃO SOCIAL')}, ${campo('','CPF/CNPJ')}, sede em ${campo('','ENDEREÇO ATUAL')}.<br><br>
-<strong>REPRESENTANTE LEGAL:</strong> ${campo('','NOME')}, CPF nº ${campo('','000.000.000-00')}, cargo: ${campo('','CARGO')}.`,[])}
+<strong>REPRESENTANTE LEGAL:</strong> ${campo('','NOME')}, CPF nº ${campo('','')}, cargo: ${campo('','CARGO')}.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO E ESPECIFICAÇÕES',
 `O(A) LOCADOR(A) compromete-se a ${campo('','construir / adquirir e reformar substancialmente')} o imóvel em ${campo('','ENDEREÇO COMPLETO')}, conforme especificações do <strong>Memorial Descritivo (Anexo I)</strong>.<br><br>
 Área: ${campo('','0.000,00')} m² | Prazo de entrega: <strong>${campo('','DD/MM/AAAA')}</strong>.`,[])}
@@ -1196,9 +1196,9 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 581 do CC:</strong> Se o comodato não tiver prazo convencional, presumir-se-á o necessário para o uso concedido.',
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
-`<strong>COMODANTE:</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO DO COMODANTE')}.<br><br>
-<strong>CÔNJUGE DO(A) COMODANTE:</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
-<strong>COMODATÁRIO(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO ATUAL')}.`,[])}
+`<strong>COMODANTE:</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO DO COMODANTE')}.<br><br>
+<strong>CÔNJUGE DO(A) COMODANTE:</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>COMODATÁRIO(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO ATUAL')}.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO',
 `O(A) COMODANTE cede, a título de empréstimo <strong>gratuito e precário</strong>, o imóvel ${campo('','CASA / APARTAMENTO')}, situado na ${campo('','ENDEREÇO COMPLETO')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}, IPTU nº ${campo('','XXXXXXXX')}.`,[])}
 ${clausula('CLÁUSULA III — DO PRAZO',
@@ -1225,8 +1225,8 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 725 do CC:</strong> A remuneração é devida ao corretor uma vez que tenha conseguido o resultado previsto, ainda que o negócio não se efetive por arrependimento das partes.',
 ])}
 ${clausula('CLÁUSULA I — DO OUTORGANTE',
-`<strong>OUTORGANTE/PROPRIETÁRIO(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) OUTORGANTE:</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}, concordando com esta autorização.`,[])}
+`<strong>OUTORGANTE/PROPRIETÁRIO(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
+<strong>CÔNJUGE DO(A) OUTORGANTE:</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}, concordando com esta autorização.`,[])}
 ${clausula('CLÁUSULA II — DO IMÓVEL E PREÇO',
 `Imóvel ${campo('','CASA / APARTAMENTO / TERRENO / SALA')}, situado na ${campo('','ENDEREÇO COMPLETO')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}.<br><br>
 <strong>Preço mínimo:</strong> R$ ${campo('','0.000.000,00')} (${campo('','valor por extenso')}).<br>
@@ -1239,7 +1239,7 @@ ${clausula('CLÁUSULA IV — DA COMISSÃO',
 `<strong>Comissão:</strong> <strong>${campo('','6')}%</strong> sobre o valor efetivo da venda, de responsabilidade do(a) OUTORGANTE, paga na assinatura do contrato de compra e venda.`,
 ['<strong>Tabela CRECI-SP:</strong> Comissão para imóveis urbanos: 6% a 8%.'])}
 ${clausula('CLÁUSULA V — DO FORO',`Foro da Comarca de <strong>${campo('','São Paulo/SP')}</strong>. Firmado em <strong>2 (duas) vias</strong>.`,[])}
-${assinaturas('OUTORGANTE/PROPRIETÁRIO(A)','FCOSTA CORRETOR — INTERVENIENTE','',true,false)}`,
+${assinaturas('OUTORGANTE/PROPRIETÁRIO(A)','','',false,false)}`,
 
 venda_sem_exclusividade:()=>`
 <h2 class="titulo-contrato">Autorização de Venda sem Exclusividade</h2>
@@ -1249,8 +1249,8 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Art. 726 do CC:</strong> Sem exclusividade, nenhuma remuneração é devida se o negócio for iniciado e concluído diretamente entre as partes.',
 ])}
 ${clausula('CLÁUSULA I — DO OUTORGANTE E DO IMÓVEL',
-`<strong>OUTORGANTE/PROPRIETÁRIO(A):</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) OUTORGANTE:</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+`<strong>OUTORGANTE/PROPRIETÁRIO(A):</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
+<strong>CÔNJUGE DO(A) OUTORGANTE:</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
 <strong>IMÓVEL:</strong> ${campo('','TIPO')}, situado na ${campo('','ENDEREÇO COMPLETO')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}.<br><br>
 <strong>PREÇO MÍNIMO:</strong> R$ ${campo('','0.000.000,00')}.`,[])}
 ${clausula('CLÁUSULA II — SEM EXCLUSIVIDADE',
@@ -1266,8 +1266,8 @@ autorizacao_locacao:()=>`
 <p class="subtitulo-contrato">Instrumento Particular de Administração Locatícia<br>
 Lei nº 6.530/78 | Lei nº 8.245/1991 | Art. 722 do CC/2002</p>
 ${clausula('CLÁUSULA I — DO PROPRIETÁRIO E DO IMÓVEL',
-`<strong>PROPRIETÁRIO(A)/OUTORGANTE:</strong> ${campo('','NOME COMPLETO')}, CPF nº ${campo('','000.000.000-00')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) PROPRIETÁRIO(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+`<strong>PROPRIETÁRIO(A)/OUTORGANTE:</strong> ${campo('','')}, CPF nº ${campo('','')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
+<strong>CÔNJUGE DO(A) PROPRIETÁRIO(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
 <strong>IMÓVEL A LOCAR:</strong> ${campo('','TIPO')}, situado na ${campo('','ENDEREÇO COMPLETO')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}.`,[])}
 ${clausula('CLÁUSULA II — DA AUTORIZAÇÃO',
 `O(A) PROPRIETÁRIO(A) autoriza o Corretor <strong>F. COSTA — ${CRECI} | ${CNAI}</strong> a:<br>
@@ -1295,10 +1295,10 @@ ${leiBloco('FUNDAMENTO LEGAL',[
   '<strong>Arts. 417 e 418 do CC:</strong> Arras confirmatórias — desistência do comprador: perda do sinal; do vendedor: devolução em dobro.',
 ])}
 ${clausula('CLÁUSULA I — DAS PARTES',
-`<strong>PROMITENTE VENDEDOR(A):</strong> ${campo('','NOME COMPLETO')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) VENDEDOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
-<strong>PROMITENTE COMPRADOR(A):</strong> ${campo('','NOME COMPLETO')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
-<strong>CÔNJUGE DO(A) COMPRADOR(A):</strong> ${campo('','NOME COMPLETO DO CÔNJUGE')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+`<strong>PROMITENTE VENDEDOR(A):</strong> ${campo('','')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
+<strong>CÔNJUGE DO(A) VENDEDOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
+<strong>PROMITENTE COMPRADOR(A):</strong> ${campo('','')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','ENDEREÇO COMPLETO')}.<br><br>
+<strong>CÔNJUGE DO(A) COMPRADOR(A):</strong> ${campo('',' DO CÔNJUGE')}, CPF nº ${campo('','')}, regime: ${campo('','COMUNHÃO PARCIAL / UNIVERSAL / SEPARAÇÃO')}.<br><br>
 <strong>CORRETOR INTERVENIENTE:</strong> F. COSTA — FCOSTA CORRETOR E AVALIADOR, ${CRECI} | ${CNAI}.`,[])}
 ${clausula('CLÁUSULA II — DO OBJETO',
 `Imóvel ${campo('','TIPO')}, situado na ${campo('','ENDEREÇO COMPLETO')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}, IPTU nº ${campo('','XXXXXXXX')}.<br><br>
@@ -1355,7 +1355,7 @@ recibo_aluguel:()=>`
     <div class="rb-valor-destaque" id="rb_valor_destaque">R$ 0,00</div>
     <div style="font-size:9pt;font-family:Arial,sans-serif;margin-top:4px;">
       <strong>RECEBI</strong> de <strong><span class="campo-edit" id="rb_loc_nome" contenteditable="true" data-placeholder="NOME DO LOCATÁRIO">NOME DO LOCATÁRIO</span></strong>,
-      CPF <span class="campo-edit" id="rb_loc_cpf" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span>,
+      CPF <span class="campo-edit" id="rb_loc_cpf" contenteditable="true" data-placeholder=""></span>,
       ref. aluguel do imóvel em
       <strong><span class="campo-edit" id="rb_loc_end" contenteditable="true" data-placeholder="ENDEREÇO DO IMÓVEL">ENDEREÇO DO IMÓVEL</span></strong>,
       mês: <span class="campo-edit" contenteditable="true" data-placeholder="JANEIRO/2026">JANEIRO/2026</span>,
@@ -1407,7 +1407,7 @@ recibo_aluguel:()=>`
     <div class="rb-ass-box">
       <div class="rb-ass-linha">
         <div class="rb-ass-nome"><span class="campo-edit" contenteditable="true" data-placeholder="NOME DO LOCATÁRIO">NOME DO LOCATÁRIO</span></div>
-        <div class="rb-ass-qualif">Locatário(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span></div>
+        <div class="rb-ass-qualif">Locatário(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder=""></span></div>
       </div>
     </div>
     <div class="rb-ass-box">
@@ -1420,7 +1420,7 @@ recibo_aluguel:()=>`
     <div class="rb-ass-box">
       <div class="rb-ass-linha">
         <div class="rb-ass-nome"><span class="campo-edit" contenteditable="true" data-placeholder="NOME DO PROPRIETÁRIO">NOME DO PROPRIETÁRIO</span></div>
-        <div class="rb-ass-qualif">Proprietário(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span></div>
+        <div class="rb-ass-qualif">Proprietário(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder=""></span></div>
       </div>
     </div>
   </div>
@@ -1473,7 +1473,7 @@ recibo_compras:()=>`
     <div class="rb-valor-destaque"><span class="campo-edit" contenteditable="true" data-placeholder="R$ 0.000,00" style="font-size:14pt;font-family:'Oswald',sans-serif;font-weight:700;">R$ 0.000,00</span></div>
     <div style="font-size:10pt;font-family:Arial,sans-serif;margin-top:6px;">
       <strong>RECEBI</strong> de <strong><span class="campo-edit" contenteditable="true" data-placeholder="NOME DO PAGADOR">NOME DO PAGADOR</span></strong>,
-      CPF <span class="campo-edit" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span>,
+      CPF <span class="campo-edit" contenteditable="true" data-placeholder=""></span>,
       a importância de <strong><span class="campo-edit" contenteditable="true" data-placeholder="R$ 0.000,00 (valor por extenso)">R$ 0.000,00 (valor por extenso)</span></strong>,
       referente a: <strong><span class="campo-edit" contenteditable="true" data-placeholder="descrição do serviço / comissão">descrição do serviço / comissão</span></strong>.
     </div>
@@ -1504,7 +1504,7 @@ recibo_compras:()=>`
     <div class="rb-ass-box">
       <div class="rb-ass-linha">
         <div class="rb-ass-nome"><span class="campo-edit" contenteditable="true" data-placeholder="NOME DO PAGADOR">NOME DO PAGADOR</span></div>
-        <div class="rb-ass-qualif">Pagador(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span></div>
+        <div class="rb-ass-qualif">Pagador(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder=""></span></div>
       </div>
     </div>
     <div class="rb-ass-box">
@@ -1517,7 +1517,7 @@ recibo_compras:()=>`
     <div class="rb-ass-box">
       <div class="rb-ass-linha">
         <div class="rb-ass-nome"><span class="campo-edit" contenteditable="true" data-placeholder="NOME DO RECEBEDOR">NOME DO RECEBEDOR</span></div>
-        <div class="rb-ass-qualif">Recebedor(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder="000.000.000-00">000.000.000-00</span></div>
+        <div class="rb-ass-qualif">Recebedor(a) | CPF: <span class="campo-edit" contenteditable="true" data-placeholder=""></span></div>
       </div>
     </div>
   </div>
@@ -1565,5 +1565,9 @@ window.addEventListener('load',()=>{
   initDropZone();
 });
 </script>
+<script src="fcosta_patch_v5.2.js"><script>
+// ... todo o conteúdo do fcosta_patch_v5.2.js aqui dentro ...
+</script>
+</body></script>
 </body>
 </html>
