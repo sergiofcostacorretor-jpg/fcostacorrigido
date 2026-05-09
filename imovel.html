@@ -168,7 +168,6 @@ function ytEmbed(url) {
   var mS=url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_\-]{6,15})/);
   if(mS) id=mS[1];
   if(!id){ try { var u=new URL(url); id=u.hostname.includes('youtu.be')?u.pathname.slice(1):(u.searchParams.get('v')||''); } catch(e){} }
-  var mS=url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_\-]{6,15})/); if(mS) id=mS[1];
   if(!id){ var m=url.match(/(?:v=|youtu\.be\/)([\w-]{6,15})/); if(m) id=m[1]; }
   return id ? '<iframe src="https://www.youtube.com/embed/'+id+'" frameborder="0" allowfullscreen></iframe>' : '';
 }
