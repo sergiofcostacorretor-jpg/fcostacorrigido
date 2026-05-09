@@ -617,7 +617,7 @@ img{max-width:100%;display:block;}
       <div class="fg"><label>Cidade / UF</label><input type="text" id="f-cidade" value="São Paulo — SP"/></div>
       <div class="fg full"><label>Endereço Completo</label><input type="text" id="f-endereco" placeholder="Ex: Rua das Flores, 123"/></div>
       <div class="fg full"><label>Descrição</label><textarea id="f-descricao" placeholder="Descreva o imóvel..." oninput="atuPrev()"></textarea></div>
-      <div class="fg"><label>Link do Vídeo (YouTube)</label><input type="text" id="f-video" placeholder="https://youtube.com/watch?v=..."/></div>
+      <div class="fg full"><label>Link do Vídeo (YouTube — watch ou /shorts/)</label><input type="text" id="f-video" placeholder="https://youtube.com/watch?v=... ou https://youtube.com/shorts/ID" oninput="prevVideo()"/><div id="video-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(59,155,214,.4);position:relative;padding-top:56.25%;"><iframe id="video-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe><button onclick="limparVideo()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">✕ Remover</button></div><div id="video-erro" style="display:none;margin-top:6px;font-size:.68rem;color:#FFD5D5;background:rgba(160,21,21,.2);border:1px solid rgba(160,21,21,.4);border-radius:6px;padding:6px 10px;">⚠️ Link inválido. Use youtube.com/watch?v=... ou youtube.com/shorts/ID</div></div>
       <div class="fg"><label>Destaque na Home?</label><select id="f-destaque"><option value="false">Não</option><option value="true">✅ Sim</option></select></div>
       <div class="fg"><label>Publicado no Site?</label><select id="f-publicado"><option value="true">✅ Sim</option><option value="false">🚫 Não</option></select></div>
     </div>
@@ -963,7 +963,9 @@ function gerarSlugAuto(){
   var bairro = document.getElementById('f-bairro').value;
   var numcod = document.getElementById('f-numcod').value.trim();
   var isNovo = !document.getElementById('f-id').value;
-  var num = numcod||(st&&isNovo?proxNum(st):'001');
+  var num = numcod
+    ? String(numcod).padStart(3,'0')
+    : (isNovo ? proxNum(st) : '001');
   var sig = SG[st]||'';
   var cod = sig?(sig+num):'';
   var partes = [], pg = SLUG_PAG[st]||st||'';
@@ -1148,6 +1150,39 @@ document.getElementById('lista').addEventListener('click', function(e){
    ============================================================ */
 
 /* === TIPO === */
+function getYtEmbed(url){
+  if(!url) return '';
+  // Shorts: youtube.com/shorts/ID
+  var mS = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_\-]{6,15})/);
+  if(mS) return 'https://www.youtube.com/embed/'+mS[1];
+  // Watch: youtube.com/watch?v=ID
+  var mW = url.match(/[?&]v=([a-zA-Z0-9_\-]{6,15})/);
+  if(mW) return 'https://www.youtube.com/embed/'+mW[1];
+  // youtu.be/ID
+  var mB = url.match(/youtu\.be\/([a-zA-Z0-9_\-]{6,15})/);
+  if(mB) return 'https://www.youtube.com/embed/'+mB[1];
+  return '';
+}
+function prevVideo(){
+  var url = document.getElementById('f-video').value.trim();
+  var prev = document.getElementById('video-prev');
+  var iframe = document.getElementById('video-iframe');
+  var erro = document.getElementById('video-erro');
+  if(!url){ prev.style.display='none'; erro.style.display='none'; return; }
+  var embed = getYtEmbed(url);
+  if(embed){
+    iframe.src = embed+'?rel=0&modestbranding=1';
+    prev.style.display='block'; erro.style.display='none';
+  } else {
+    prev.style.display='none'; erro.style.display='block';
+  }
+}
+function limparVideo(){
+  document.getElementById('f-video').value='';
+  document.getElementById('video-prev').style.display='none';
+  document.getElementById('video-erro').style.display='none';
+  document.getElementById('video-iframe').src='';
+}
 function onTipo(){
   var sel=document.getElementById('f-tipo'), wrap=document.getElementById('outro-wrap');
   if(sel.value==='__outro__'){ wrap.style.display='block'; document.getElementById('f-tipo-outro').focus(); }
@@ -1225,8 +1260,21 @@ function updateSlugUI(){
 }
 function atuSlug(){
   var box=document.getElementById('slug-box'), inp=document.getElementById('slug-inp');
-  if(_slugManual){ updateSlugUI(); return; }
   var slug=gerarSlugAuto();
+  if(_slugManual){
+    /* Mesmo em modo manual, valida se o slug bate com o código atual */
+    var st=document.getElementById('f-status').value;
+    var nc=document.getElementById('f-numcod').value.trim();
+    if(st&&nc){
+      var _cod=(SG[st]||'FCV')+nc.padStart(3,'0');
+      var _inp=inp.value||'';
+      if(_inp.toLowerCase().indexOf(_cod.toLowerCase())===-1){
+        /* Slug manual não bate com código — força regeneração */
+        _slugManual=false;
+      }
+    }
+  }
+  if(_slugManual){ updateSlugUI(); return; }
   if(slug){ _slugAtual='https://fcostacorretor.com'+slug; box.style.display='block'; inp.value=slug; }
   else { _slugAtual=''; box.style.display='none'; inp.value=''; }
   updateSlugUI();
@@ -1290,11 +1338,14 @@ function gpcLbl(id,n,min,max,lbl){ var el=document.getElementById(id); if(!el) r
 /* === ON STATUS CHANGE === */
 function onStatusChange(){
   var s=document.getElementById('f-status').value, id=document.getElementById('f-id').value;
+  /* Só limpa numcod se for imóvel NOVO — nunca limpa ao editar */
   if(s&&!id) document.getElementById('f-numcod').value='';
   esconderDup(); atuRefPainel(s,id); atuPrev();
 }
 function onNumCod(){
-  esconderDup(); atuPrev();
+  esconderDup(); 
+  _slugManual=false;
+  atuPrev();
   var st=document.getElementById('f-status').value, nc=document.getElementById('f-numcod').value.trim(), id=document.getElementById('f-id').value;
   if(!st||!nc) return;
   var np=nc.padStart(3,'0'), conf=verDup(st,np,id);
@@ -1322,6 +1373,9 @@ function limpar(){
   document.getElementById('form-h').textContent='➕ Adicionar Novo Imóvel';
   document.getElementById('f-numcod').style.borderColor='';
   var ok=document.getElementById('salv-ok'); if(ok) ok.style.display='none';
+  var vp=document.getElementById('video-prev'); if(vp) vp.style.display='none';
+  var vi=document.getElementById('video-iframe'); if(vi) vi.src='';
+  var ve=document.getElementById('video-erro'); if(ve) ve.style.display='none';
 }
 function novoImovel(){ limpar(); goTab('adicionar',document.querySelector('[data-p=adicionar]')); window.scrollTo({top:0,behavior:'smooth'}); }
 function editarImovel(id){
@@ -1339,15 +1393,18 @@ function editarImovel(id){
   });
   document.getElementById('f-destaque').value=im.destaque?'true':'false';
   document.getElementById('f-publicado').value=im.publicado===false?'false':'true';
-  if(im.slug){ document.getElementById('slug-inp').value=im.slug; _slugManual=true; }
+  var _codEsp=(SG[im.status]||'FCV')+String(im.numeroCodigo||'').padStart(3,'0');
+  var _slugOk=im.slug&&im.slug.toLowerCase().indexOf(_codEsp.toLowerCase())!==-1;
+  if(_slugOk){ document.getElementById('slug-inp').value=im.slug; _slugManual=true; }
+  else { document.getElementById('slug-inp').value=''; _slugManual=false; }
   if(im.seoTitle){ document.getElementById('seo-t').value=im.seoTitle; _seoTM=true; }
   if(im.seoDesc){ document.getElementById('seo-d').value=im.seoDesc; _seoDM=true; }
   _fotosEx=getFotos(im); renderFotos();
   atuPrev();
+  setTimeout(function(){ if(document.getElementById('f-video').value) prevVideo(); },100);
   goTab('adicionar',document.querySelector('[data-p=adicionar]'));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 /* === SALVAR === */
 function setSalvando(sim){
   _salvando=sim; var btn=document.getElementById('btn-salvar'), txt=document.getElementById('btn-s-txt');
