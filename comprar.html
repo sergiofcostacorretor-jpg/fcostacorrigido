@@ -235,7 +235,12 @@ db.ref('fcosta_imoveis').on('value',function(snap){
   var d=snap.val()||{};
   _todos=Object.entries(d).map(function(e){return Object.assign({id:e[0]},e[1]);})
     .filter(function(i){return i.status===FILTRO_STATUS&&i.publicado!==false;})
-    .sort(function(a,b){return(b.destaque?1:0)-(a.destaque?1:0);});
+    .sort(function(a,b){
+  var ca=cod(a),cb=cod(b);
+  var na=parseInt(ca.replace(/[^0-9]/g,''))||0;
+  var nb=parseInt(cb.replace(/[^0-9]/g,''))||0;
+  return na-nb;
+});
   filtrar();
 });
 
