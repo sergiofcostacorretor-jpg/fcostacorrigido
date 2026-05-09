@@ -1092,7 +1092,9 @@ function render(lista){
   var ord = lista.slice().sort(function(a,b){
     var sa=SG[a.status]||'FCV', sb=SG[b.status]||'FCV';
     if(sa!==sb) return sa.localeCompare(sb);
-    return (parseInt(b.numeroCodigo)||0)-(parseInt(a.numeroCodigo)||0);
+    var na=parseInt((a.codigo||'').replace(/[^0-9]/g,''))||parseInt(a.numeroCodigo)||0;
+    var nb=parseInt((b.codigo||'').replace(/[^0-9]/g,''))||parseInt(b.numeroCodigo)||0;
+    return na-nb;
   });
   g.innerHTML = ord.map(function(i){
     var fs = getFotos(i), f0 = i.fotoDestaque||fs[0]||'';
