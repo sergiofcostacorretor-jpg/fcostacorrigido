@@ -56,8 +56,8 @@ img{max-width:100%;display:block;}
 .imoveis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
 .im-card{background:#fff;border-radius:var(--r);border:1.5px solid var(--borda);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);animation:fadeUp .4s ease both;}
 .im-card:hover{transform:translateY(-6px);box-shadow:var(--sh2);border-color:var(--ceu);}
-.im-foto{position:relative;height:200px;background:linear-gradient(135deg,#dce8f4,#c5dbee);overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.im-foto img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.im-foto{position:relative;height:220px;background:#1a2a3a;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.im-foto img{width:100%;height:100%;object-fit:contain;background:#1a2a3a;transition:transform .4s;}
 .im-card:hover .im-foto img{transform:scale(1.06);}
 .im-foto-ph{font-size:2.8rem;opacity:.22;}
 .im-fn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);border:none;width:28px;height:28px;border-radius:50%;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;opacity:0;transition:opacity var(--tr);color:var(--escuro);}
