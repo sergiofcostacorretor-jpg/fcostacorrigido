@@ -1090,8 +1090,9 @@ function render(lista){
   var g = document.getElementById('lista');
   if(!lista.length){ g.innerHTML='<div class="loading"><p>Nenhum imóvel encontrado.</p></div>'; return; }
   var ord = lista.slice().sort(function(a,b){
+    var ordem={'FCV':1,'FCA':2,'FCL':3,'FCP':4};
     var sa=SG[a.status]||'FCV', sb=SG[b.status]||'FCV';
-    if(sa!==sb) return sa.localeCompare(sb);
+    if(sa!==sb) return (ordem[sa]||9)-(ordem[sb]||9);
     var na=parseInt((a.codigo||'').replace(/[^0-9]/g,''))||parseInt(a.numeroCodigo)||0;
     var nb=parseInt((b.codigo||'').replace(/[^0-9]/g,''))||parseInt(b.numeroCodigo)||0;
     return na-nb;
