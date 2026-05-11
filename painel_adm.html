@@ -606,7 +606,7 @@ img{max-width:100%;display:block;}
     <div class="fgrid">
       <div class="fg full"><label>Título do Imóvel *</label><input type="text" id="f-titulo" placeholder="Ex: Apartamento 2 quartos Itaim Paulista" oninput="atuPrev()"/></div>
       <div class="fg"><label>Status / Categoria *</label><select id="f-status" onchange="onStatusChange()"><option value="">Selecione...</option><option value="venda">FCV — À Venda</option><option value="aluguel">FCA — Aluguel</option><option value="lancamento">FCL — Lançamento</option><option value="panfleto">FCP — Panfleto</option><option value="vendido">Vendido</option></select></div>
-      <div class="fg"><label>Número do Código</label><input type="text" id="f-numcod" placeholder="Automático" maxlength="6" oninput="onNumCod()"/><small style="font-size:.6rem;color:var(--sec);margin-top:2px;">Deixe em branco = próximo disponível</small></div>
+      <div class="fg"><label>Número do Código</label><input type="text" id="f-numcod" placeholder="Automático" maxlength="6" oninput="onNumCod()"/><small id="numcod-hint" style="font-size:.6rem;color:var(--sec);margin-top:2px;">Deixe em branco = próximo disponível</small></div>
       <div class="fg"><label>Tipo</label><select id="f-tipo" onchange="onTipo()"><option value="">Selecione...</option><option>Apartamento</option><option>Casa</option><option>Sobrado</option><option>Terreno</option><option>Sala Comercial</option><option>Galpão</option><option>Studio</option><option>Kitnet</option><option>Chácara</option><option>Sítio</option><option>Flat</option><option>Cobertura</option><option>Loja</option><option>Fazenda</option><option value="__outro__">✏️ Outro</option></select><div class="outro-wrap" id="outro-wrap"><input type="text" id="f-tipo-outro" placeholder="Ex: Haras, Rancho..." oninput="atuPrev()"/></div></div>
       <div class="fg"><label>Preço (R$)</label><input type="text" id="f-preco" placeholder="Ex: 280.000" oninput="atuPrev()"/></div>
       <div class="fg"><label>Área (m²)</label><input type="text" id="f-area" placeholder="Ex: 65" oninput="atuPrev()"/></div>
@@ -1346,14 +1346,20 @@ function onStatusChange(){
   esconderDup(); atuRefPainel(s,id); atuPrev();
 }
 function onNumCod(){
-  esconderDup(); 
+  var id=document.getElementById('f-id').value;
+  if(id) return; /* bloqueado ao editar */
+  esconderDup();
   _slugManual=false;
   atuPrev();
-  var st=document.getElementById('f-status').value, nc=document.getElementById('f-numcod').value.trim(), id=document.getElementById('f-id').value;
+  var st=document.getElementById('f-status').value, nc=document.getElementById('f-numcod').value.trim();
   if(!st||!nc) return;
   var np=nc.padStart(3,'0'), conf=verDup(st,np,id);
   if(conf){ var sig=SG[st]||'FCV'; mostrarDup(sig+np,conf.titulo||'Sem título',sig+proxNum(st)); document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)'; }
-  else { document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)'; setTimeout(function(){ document.getElementById('f-numcod').style.borderColor=''; },2000); }
+  else { document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)'; setTimeout(function(){ document.getElementById('f-numcod').style.borderColor='';
+  document.getElementById('f-numcod').readOnly=false;
+  document.getElementById('f-numcod').style.opacity='';
+  document.getElementById('f-numcod').style.cursor='';
+  var nh=document.getElementById('numcod-hint'); if(nh) nh.textContent='Deixe em branco = próximo disponível'; },2000); }
   atuRefPainel(st,id);
 }
 function atuPrev(){ atuRefPainel(document.getElementById('f-status').value, document.getElementById('f-id').value); atuSlug(); seoAtualizar(); }
@@ -1375,6 +1381,10 @@ function limpar(){
   esconderDup();
   document.getElementById('form-h').textContent='➕ Adicionar Novo Imóvel';
   document.getElementById('f-numcod').style.borderColor='';
+  document.getElementById('f-numcod').readOnly=false;
+  document.getElementById('f-numcod').style.opacity='';
+  document.getElementById('f-numcod').style.cursor='';
+  var nh=document.getElementById('numcod-hint'); if(nh) nh.textContent='Deixe em branco = próximo disponível';
   var ok=document.getElementById('salv-ok'); if(ok) ok.style.display='none';
   var vp=document.getElementById('video-prev'); if(vp) vp.style.display='none';
   var vi=document.getElementById('video-iframe'); if(vi) vi.src='';
@@ -1390,6 +1400,10 @@ function editarImovel(id){
   document.getElementById('f-titulo').value=im.titulo||'';
   document.getElementById('f-status').value=im.status||'';
   document.getElementById('f-numcod').value=im.numeroCodigo||'';
+  document.getElementById('f-numcod').readOnly=true;
+  document.getElementById('f-numcod').style.opacity='.5';
+  document.getElementById('f-numcod').style.cursor='not-allowed';
+  var nh=document.getElementById('numcod-hint'); if(nh) nh.textContent='🔒 Código fixo — não pode ser alterado ao editar';
   carregarTipo(im.tipo||'');
   ['preco','area','quartos','banheiros','vagas','bairro','cidade','endereco','descricao','video'].forEach(function(k){
     var el=document.getElementById('f-'+k); if(el) el.value=im[k]||'';
@@ -1446,7 +1460,7 @@ function salvar(){
   };
   if(isNovo) dados.criado=new Date().toISOString();
   var ref=isNovo?db.ref('fcosta_imoveis').push():db.ref('fcosta_imoveis/'+id);
-  var p=isNovo?ref.set(dados):ref.update(dados);
+  var p=isNovo?ref.set(dados):ref.set(dados);
   p.then(function(){
     setSalvando(false); toast('✅ Imóvel '+(isNovo?'adicionado':'atualizado')+'!');
     var ok=document.getElementById('salv-ok'); if(ok){ ok.style.display='inline'; setTimeout(function(){ ok.style.display='none'; },3000); }
@@ -1724,7 +1738,7 @@ function carregarPaginas(){
   _pagsOk = true;
   /* Firebase adiciona páginas CUSTOM criadas pelo usuário */
   db.ref('fcosta_imoveis_paginas').on('value', function(snap){
-    var d = snap.val()||{};
+    var d = snap.val()||{}; 
     _paginasSite = Object.entries(d).map(function(e){ return Object.assign({id:e[0]}, e[1]); });
     renderPaginas(_paginasSite);
   });
