@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado – Linguagem Verbal e Não Verbal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #151820;
+    --card: #1c2030;
+    --border: #2a2f45;
+    --accent: #5b8dee;
+    --accent2: #e8c547;
+    --correct: #3ecf74;
+    --wrong: #f05c5c;
+    --text: #e8eaf2;
+    --muted: #7b82a0;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 60px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.88rem;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .meta-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .badge {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .badge span {
+    color: var(--accent2);
+    font-weight: 700;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    width: 100%;
+    max-width: 680px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 10px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px 24px;
+    max-width: 680px;
+    width: 100%;
+    animation: fadeUp 0.35s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .round-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .question-text {
+    font-size: clamp(0.97rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 18px;
+    text-align: left;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.12s;
+    line-height: 1.5;
+  }
+
+  .opt-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #1f2540;
+    transform: translateX(3px);
+  }
+
+  .opt-btn.correct {
+    border-color: var(--correct);
+    background: rgba(62,207,116,0.1);
+    color: var(--correct);
+    font-weight: 500;
+  }
+
+  .opt-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(240,92,92,0.1);
+    color: var(--wrong);
+  }
+
+  .opt-btn:disabled { cursor: default; }
+
+  .feedback {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    display: none;
+  }
+
+  .feedback.show { display: block; animation: fadeUp 0.25s ease; }
+  .feedback.ok { background: rgba(62,207,116,0.08); border: 1px solid rgba(62,207,116,0.3); color: var(--correct); }
+  .feedback.fail { background: rgba(240,92,92,0.08); border: 1px solid rgba(240,92,92,0.3); color: #f4a4a4; }
+
+  .next-btn {
+    margin-top: 20px;
+    background: linear-gradient(135deg, var(--accent), #3a6dd4);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.93rem;
+    cursor: pointer;
+    display: none;
+    transition: opacity 0.2s, transform 0.12s;
+    letter-spacing: 0.5px;
+  }
+
+  .next-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .next-btn.show { display: inline-block; }
+
+  /* Score screen */
+  .score-screen {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 28px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    animation: fadeUp 0.4s ease;
+    display: none;
+  }
+
+  .score-screen.show { display: block; }
+
+  .big-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .score-label {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+  }
+
+  .score-msg {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .restart-btn {
+    background: linear-gradient(135deg, var(--accent2), #c8a030);
+    color: #0d0f14;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.2s;
+    margin-top: 8px;
+  }
+  .restart-btn:hover { transform: scale(1.03); opacity: 0.9; }
+
+  .round-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .rs-dot {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+  }
+  .rs-dot.good { background: var(--correct); }
+  .rs-dot.mid { background: var(--accent2); color: #111; }
+  .rs-dot.bad { background: var(--wrong); }
+
+  /* Intro */
+  #intro {
+    max-width: 580px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .intro-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    margin-bottom: 0;
+  }
+
+  .intro-icon { font-size: 3rem; margin-bottom: 14px; }
+  .intro-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+  .intro-desc { color: var(--muted); line-height: 1.65; font-size: 0.93rem; margin-bottom: 24px; }
+
+  .intro-stats {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 28px;
+  }
+  .istat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .istat strong { display: block; font-size: 1.3rem; font-family: 'Syne', sans-serif; color: var(--accent2); }
+
+  .start-btn {
+    background: linear-gradient(135deg, var(--accent), #3a6dd4);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 40px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s, opacity 0.2s;
+  }
+  .start-btn:hover { transform: scale(1.03); }
+</style>
+</head>
+<body>
+
+<h1>Linguagem Verbal e Não Verbal</h1>
+<p class="subtitle">Semiótica · 10 Rodadas · Quiz Completo</p>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-card">
+    <div class="intro-icon">🧠</div>
+    <div class="intro-title">Simulado para Prova</div>
+    <div class="intro-desc">
+      Teste seus conhecimentos de forma exaustiva sobre todos os tópicos da apostila:
+      origem da linguagem, linguagem verbal e não verbal, semiótica, tipos de signo,
+      linguagem gestual, visual, sincrética, tecnologias digitais e muito mais.
+    </div>
+    <div class="intro-stats">
+      <div class="istat"><strong>10</strong> Rodadas</div>
+      <div class="istat"><strong>100+</strong> Questões</div>
+      <div class="istat"><strong>4</strong> Alternativas</div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">▶ Começar Simulado</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-area" style="display:none; width:100%; max-width:680px;">
+  <div class="meta-bar">
+    <div class="badge">Rodada <span id="roundNum">1</span>/10</div>
+    <div class="badge">Questão <span id="qNum">1</span>/<span id="qTotal">10</span></div>
+    <div class="badge">Acertos <span id="scoreDisplay">0</span></div>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div class="card" id="questionCard">
+    <div class="round-label" id="roundLabel">Rodada 1 — Origem da Linguagem</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsArea"></div>
+    <div class="feedback" id="feedbackBox"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Próxima →</button>
+  </div>
+</div>
+
+<!-- SCORE SCREEN -->
+<div class="score-screen" id="scoreScreen">
+  <div class="big-score" id="bigScore">0</div>
+  <div class="score-label">pontos de <span id="totalPossible">0</span></div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <div class="round-summary" id="roundSummary"></div>
+  <button class="restart-btn" onclick="restartQuiz()">🔄 Reiniciar Simulado</button>
+</div>
+
+<script>
+const ROUNDS = [
+  {
+    title: "Rodada 1 — Origem da Linguagem",
+    questions: [
+      {
+        q: "Segundo Dondis (1997, p. 3), a linguagem pode ser definida como:",
+        opts: [
+          "Um sistema exclusivo de palavras escritas e faladas",
+          "Um recurso de comunicação próprio do homem, que evoluiu de forma auditiva, pura e primitiva",
+          "Um código formal utilizado apenas em sociedades letradas",
+          "Uma invenção moderna surgida com a escrita alfabética"
+        ],
+        ans: 1,
+        exp: "Dondis define a linguagem como recurso próprio do homem que evoluiu desde a forma auditiva, pura e primitiva até a capacidade de ler e escrever."
+      },
+      {
+        q: "Desde as cavernas, os grupos humanos utilizavam primeiramente como formas de expressão:",
+        opts: [
+          "Alfabeto fonético e gramática normativa",
+          "Sons, desenhos e rituais 'primitivos'",
+          "Escrita ideográfica e caligrafia",
+          "Linguagem digital e hipertextos"
+        ],
+        ans: 1,
+        exp: "A apostila destaca que desde as cavernas os grupos humanos se manifestavam com sons, desenhos e rituais 'primitivos', que em sua maioria envolviam música, dança e expressão corporal."
+      },
+      {
+        q: "O sistema de signos linguísticos desenvolvido desde a antiguidade chega, segundo o texto, até:",
+        opts: [
+          "A era renascentista",
+          "A Revolução Francesa",
+          "A cibernética",
+          "O século XIX"
+        ],
+        ans: 2,
+        exp: "O texto afirma que o sistema de signos linguísticos vem sendo estudado desde a antiguidade e chega até a cibernética."
+      },
+      {
+        q: "O século XX foi período de surgimento e consolidação de duas grandes ciências da linguagem. Quais são elas?",
+        opts: [
+          "Filosofia e Retórica",
+          "Linguística e Semiótica",
+          "Gramática e Fonologia",
+          "Pragmática e Morfologia"
+        ],
+        ans: 1,
+        exp: "O texto indica que o séc. XX consolidou a Linguística (ciência da linguagem verbal) e a Semiótica (ciência dos signos em qualquer linguagem)."
+      },
+      {
+        q: "Ferdinand de Saussure (1857-1913) definiu que a unidade mínima da língua é:",
+        opts: [
+          "A frase",
+          "A sílaba",
+          "O signo linguístico, constituído por significado e significante",
+          "O vocábulo isolado"
+        ],
+        ans: 2,
+        exp: "Saussure definiu que a unidade mínima da língua é o signo linguístico, constituído por significado e significante, sendo assim diádico."
+      },
+      {
+        q: "Charles Sanders Peirce (1839-1914) contribuiu principalmente para qual área?",
+        opts: [
+          "Linguagem verbal escrita",
+          "Linguagem não verbal, através da tricotomia fundamental do signo",
+          "Gramática normativa",
+          "Fonologia comparada"
+        ],
+        ans: 1,
+        exp: "Peirce aplicou seu modelo (tricotomia fundamental do signo) à linguagem não verbal, possibilitando analisar ícones, índices e símbolos."
+      },
+      {
+        q: "A linguagem é considerada heterogênea e diversificada porque:",
+        opts: [
+          "Ela só existe em forma escrita",
+          "Possui recursos exclusivamente orais",
+          "Tem recursos como a oralidade, a escrita e outras formas de expressão não convencionais",
+          "É uniforme em todas as culturas"
+        ],
+        ans: 2,
+        exp: "O texto destaca que a linguagem é heterogênea e diversificada, pois possui recursos como a oralidade, a escrita e outras formas de expressão não convencionais."
+      },
+      {
+        q: "A linguagem verbal utiliza:",
+        opts: [
+          "Imagens e gestos",
+          "Palavras",
+          "Sinais e símbolos visuais",
+          "Expressões corporais"
+        ],
+        ans: 1,
+        exp: "A linguagem verbal faz uso das palavras, diferentemente da não verbal que utiliza outras formas de expressão em que não há presença de palavras."
+      },
+      {
+        q: "Santaella e Nöth (2009) destacam que, ao falar de linguagem verbal, frequentemente deixa-se de fora:",
+        opts: [
+          "As linguagens digitais",
+          "As escritas surgidas da mímica e do gesto",
+          "A linguagem científica",
+          "Os idiomas estrangeiros"
+        ],
+        ans: 1,
+        exp: "Santaella e Nöth alertam que se deixa de fora, por esquecimento ou negligência, as formas de escrita que surgiram da mímica e do gesto."
+      },
+      {
+        q: "A invenção da imprensa por Gutenberg, por volta de 1450, transformou a civilização principalmente através de:",
+        opts: [
+          "Criação do rádio e televisão",
+          "Uso da escrita impressa em níveis nunca antes realizados, favorecendo educação e alfabetização",
+          "Desenvolvimento da internet",
+          "Criação do alfabeto grego"
+        ],
+        ans: 1,
+        exp: "A imprensa de Gutenberg usou a tipografia para reproduzir textos escritos rapidamente, favorecendo circulação de informações, educação e, principalmente, a alfabetização."
+      }
+    ]
+  },
+  {
+    title: "Rodada 2 — Linguagem Verbal",
+    questions: [
+      {
+        q: "A linguagem verbal configura-se em um pensamento dirigido, seguindo leis da lógica de escrita. Ela pode ser definida, segundo Aguiar (2004), como:",
+        opts: [
+          "Emocional, intuitiva, analógica e voltada ao sentimento",
+          "Objetiva, definidora, cerebral, lógica e analítica, voltada para a razão e a ciência",
+          "Visual, espacial, holística e sensorial",
+          "Abstrata, simbólica e não convencional"
+        ],
+        ans: 1,
+        exp: "Aguiar (2004) define a linguagem verbal como objetiva, definidora, cerebral, lógica e analítica, voltada para a razão, a ciência, a interpretação e a explicação."
+      },
+      {
+        q: "A língua é constituída por um conjunto de signos criados arbitrariamente e, a partir de uma convenção, são aceitos como corretos pelos falantes. Isso demonstra que a língua é:",
+        opts: [
+          "Um fenômeno natural e instintivo",
+          "Um instrumento coletivo e uma convenção social",
+          "Um código exclusivo da escrita",
+          "Uma herança biológica"
+        ],
+        ans: 1,
+        exp: "O texto reafirma a língua como instrumento coletivo, uma convenção social, já que os signos são criados arbitrariamente e aceitos por convenção."
+      },
+      {
+        q: "Quando se faz referência à linguagem verbal, via de regra, há duas formas de linguagem. Quais são elas?",
+        opts: [
+          "Formal e informal",
+          "Oral e escrita",
+          "Literária e científica",
+          "Nativa e estrangeira"
+        ],
+        ans: 1,
+        exp: "A linguagem verbal se manifesta em duas formas: a falada (oral) e a escrita."
+      },
+      {
+        q: "Na linguagem oral, ocorre um diálogo com o interlocutor e muitas vezes ambos ocupam um mesmo ambiente. A fala utiliza principalmente:",
+        opts: [
+          "Traço gráfico e pontuação",
+          "Altura, tom de voz e outras características para garantir clareza do diálogo",
+          "Signos escritos e gramática formal",
+          "Hipertextos e links"
+        ],
+        ans: 1,
+        exp: "A linguagem oral utiliza-se da altura, do tom de voz e de outras características para garantir principalmente a clareza do diálogo e a comunicação."
+      },
+      {
+        q: "Na linguagem escrita, a forma de comunicação se dá pelo traço. O sistema primordial da linguagem escrita do Ocidente é:",
+        opts: [
+          "O ideograma chinês",
+          "Os hieróglifos egípcios",
+          "O sistema de sinais (alfabeto), pois os fonemas são representados pelos sons da fala",
+          "Os pictogramas"
+        ],
+        ans: 2,
+        exp: "O sistema de sinais, o alfabeto, é o recurso primordial da linguagem escrita do Ocidente, pois os fonemas são representados pelos sons da fala."
+      },
+      {
+        q: "As palavras são decifradas por partes (um signo de cada vez). Só ao final de uma leitura ou audição temos:",
+        opts: [
+          "O signo isolado",
+          "A letra inicial",
+          "O texto completo e a mensagem que se quer passar",
+          "A impressão sonora"
+        ],
+        ans: 2,
+        exp: "Tanto na fala quanto na escrita, as palavras são decifradas por partes, e só ao final da leitura ou audição temos o texto completo com a mensagem."
+      },
+      {
+        q: "Os textos com linguagem figurada são geralmente utilizados em:",
+        opts: [
+          "Jornalismo e publicidade",
+          "Manuais técnicos",
+          "Literatura e poesia, com intenção de descrever situações fantásticas de forma complexa",
+          "Legislação e contratos"
+        ],
+        ans: 2,
+        exp: "Os textos com linguagem figurada são usados na literatura e na poesia, geralmente para descrever seres e situações fantásticas de forma complexa."
+      },
+      {
+        q: "Os textos jornalísticos têm a intenção de:",
+        opts: [
+          "Criar poesia abstrata",
+          "Passar a informação ao leitor, atraindo o público com jogo de palavras, orais, escritas e com imagens",
+          "Produzir textos exclusivamente figurados",
+          "Narrar histórias de ficção"
+        ],
+        ans: 1,
+        exp: "Os textos jornalísticos têm a intenção de passar a informação ao leitor, utilizando jogo de palavras, orais, escritas e com imagens estáticas ou animadas."
+      },
+      {
+        q: "Qual é o efeito da linguagem verbal no aspecto psicoemocional do ser humano, segundo Aguiar (2004)?",
+        opts: [
+          "Nenhum efeito, pois é apenas código formal",
+          "Afeta o estado de ânimo e as emoções (elogio → autoestima positiva; crítica → tristeza)",
+          "Apenas efeito cognitivo, sem impacto emocional",
+          "Influência somente nas decisões racionais"
+        ],
+        ans: 1,
+        exp: "A linguagem verbal tem influência psicoemocional: um elogio mexe com a autoestima positivamente; críticas geram tristeza. A área intelectual e afetiva são relacionadas."
+      },
+      {
+        q: "As onomatopeias são consideradas linguagem verbal porque:",
+        opts: [
+          "São imagens que representam sons",
+          "São palavras que expressam sons, apresentadas através da oralidade e da escrita",
+          "São gestos convencionados",
+          "São expressões corporais"
+        ],
+        ans: 1,
+        exp: "As onomatopeias são palavras que expressam os diversos sons, sendo consideradas linguagem verbal, apresentadas via oralidade e escrita."
+      }
+    ]
+  },
+  {
+    title: "Rodada 3 — Escrita Pictográfica e Ideográfica",
+    questions: [
+      {
+        q: "A escrita pictográfica é exemplificada no texto por:",
+        opts: [
+          "Caracteres chineses",
+          "Hieróglifos egípcios",
+          "Alfabeto latino",
+          "Escrita cuneiforme romana"
+        ],
+        ans: 1,
+        exp: "A Figura 1 da apostila mostra os hieróglifos egípcios como exemplo de escrita pictográfica."
+      },
+      {
+        q: "A escrita ideográfica é exemplificada por:",
+        opts: [
+          "Hieróglifos egípcios",
+          "Alfabeto fenício",
+          "Caracteres chineses",
+          "Escrita cuneiforme suméria"
+        ],
+        ans: 2,
+        exp: "A Figura 1 da apostila apresenta os caracteres chineses como exemplo de escrita ideográfica."
+      },
+      {
+        q: "A escrita cuneiforme é mencionada no texto como exemplo de:",
+        opts: [
+          "Escrita ideográfica moderna",
+          "Codificação alfabética a partir de pictogramas usada em civilizações antigas",
+          "Sistema de pontuação ocidental",
+          "Linguagem não verbal gestual"
+        ],
+        ans: 1,
+        exp: "O texto menciona a escrita cuneiforme como codificação alfabética a partir de pictogramas, usada em civilizações antigas e preterida pelo Ocidente."
+      },
+      {
+        q: "Os índices (sons expressos em onomatopeias) não têm semelhança com seus referentes. 'Zunzum' não lembra o inseto abelha. Isso caracteriza o índice como:",
+        opts: [
+          "Similar ao referente",
+          "Sem semelhança com o referente",
+          "Idêntico ao referente",
+          "Uma imagem do referente"
+        ],
+        ans: 1,
+        exp: "O texto destaca que os índices (sons expressos) não têm semelhança com seus referentes — 'zunzum' não lembra a abelha nem 'bii-bii' lembra carro."
+      },
+      {
+        q: "O bebê aprende a linguagem verbal:",
+        opts: [
+          "Por instrução formal desde o nascimento",
+          "Apropriando-se do código verbal a partir de sons interpretados pelos adultos como arremedo de fala infantil",
+          "Observando apenas a escrita",
+          "Por instinto biológico direto"
+        ],
+        ans: 1,
+        exp: "O bebê se apropria do código verbal a partir de sons que são interpretados pelos adultos como arremedo de fala infantil, surgindo um sentimento de naturalidade da linguagem infantil."
+      },
+      {
+        q: "Qual das onomatopeias abaixo está CORRETAMENTE associada ao seu referente?",
+        opts: [
+          "Atchim — buzina",
+          "Bang — mergulho",
+          "Splash — mergulho",
+          "Zum zum — relógio"
+        ],
+        ans: 2,
+        exp: "No Quadro 1 da apostila, 'splash' é associado a 'mergulho'. 'Atchim' é espirro; 'bang' é tiro; 'zum zum' é abelha."
+      },
+      {
+        q: "Qual onomatopeia corresponde a 'relógio' segundo o Quadro 1 da apostila?",
+        opts: [
+          "Bii bii",
+          "Quack quack",
+          "Tic tac",
+          "Nhac"
+        ],
+        ans: 2,
+        exp: "No Quadro 1, 'Tic tac' corresponde a relógio."
+      },
+      {
+        q: "'Cof cof' é a onomatopeia para:",
+        opts: [
+          "Tiro",
+          "Espirro",
+          "Choro",
+          "Mordida"
+        ],
+        ans: 2,
+        exp: "No Quadro 1 da apostila, 'cof cof' corresponde a 'choro'."
+      },
+      {
+        q: "A escrita ideográfica (ex.: escrita chinesa) ainda é usada atualmente em:",
+        opts: [
+          "Apenas no Egito antigo",
+          "Na China e no Japão",
+          "Exclusivamente em museus",
+          "Na Europa medieval"
+        ],
+        ans: 1,
+        exp: "O texto menciona que os ideogramas ainda são usados na escrita chinesa e japonesa."
+      },
+      {
+        q: "Saussure construiu as bases de suas proposições de Semiologia a partir de questões sobre:",
+        opts: [
+          "O pictograma sumérico",
+          "O signo linguístico",
+          "A linguagem corporal",
+          "Os emojis digitais"
+        ],
+        ans: 1,
+        exp: "Saussure (1970) construiu as bases de suas proposições de Semiologia a partir das questões sobre o signo linguístico."
+      }
+    ]
+  },
+  {
+    title: "Rodada 4 — Linguagem Não Verbal",
+    questions: [
+      {
+        q: "Segundo Aguiar (2004, p. 28), a linguagem não verbal pode ser definida como a linguagem:",
+        opts: [
+          "Das palavras e dos conceitos objetivos",
+          "Das imagens, das metáforas e dos símbolos, expressa em totalidades que não se decompõem analiticamente",
+          "Da escrita científica e lógica",
+          "Dos fonemas e morfemas"
+        ],
+        ans: 1,
+        exp: "Aguiar define a linguagem não verbal como a linguagem das imagens, das metáforas e dos símbolos, expressa sempre em totalidades que não se decompõem analiticamente."
+      },
+      {
+        q: "Na linguagem não verbal há presença de palavras?",
+        opts: [
+          "Sim, sempre",
+          "Apenas palavras escritas",
+          "Não há presença de palavras; ela utiliza imagens, gestos e sinais",
+          "Somente em contextos formais"
+        ],
+        ans: 2,
+        exp: "Na linguagem não verbal não há presença de palavras. Ela segue outro tipo de código, utilizando imagens, gestos e sinais."
+      },
+      {
+        q: "A manifestação corporal da pessoa que recebe uma mensagem (ex.: bocejo, expressão de dúvida) é considerada:",
+        opts: [
+          "Linguagem verbal oral",
+          "Linguagem não verbal, pois expressa corporalmente reações como atenção, agrado ou desagrado",
+          "Linguagem escrita",
+          "Linguagem científica"
+        ],
+        ans: 1,
+        exp: "A manifestação corporal do receptor (reações como atenção, agrado, desagrado) é considerada linguagem não verbal."
+      },
+      {
+        q: "Tanto o emissor quanto o receptor da linguagem não verbal apresentam os indícios de significados que devem ser:",
+        opts: [
+          "Escritos em forma de código",
+          "Compartilhados por quem passa ou recebe a mensagem",
+          "Traduzidos verbalmente",
+          "Ignorados na comunicação"
+        ],
+        ans: 1,
+        exp: "Os indícios de significados da linguagem não verbal devem ser compartilhados por quem passa ou recebe a mensagem."
+      },
+      {
+        q: "A Figura 3 da apostila exemplifica linguagem não verbal expressa corporalmente. Quais são os exemplos mostrados?",
+        opts: [
+          "Sorriso, choro e gargalhada",
+          "Bocejo, expressão de dúvida e olhar vago e distante",
+          "Aceno, aperto de mão e abraço",
+          "Escrita, leitura e digitação"
+        ],
+        ans: 1,
+        exp: "A Figura 3 mostra exemplos de linguagem expressa corporalmente: (a) bocejo, (b) expressão de dúvida e (c) olhar vago e distante."
+      },
+      {
+        q: "A linguagem gestual é uma forma de comunicação através de:",
+        opts: [
+          "Palavras escritas em papéis",
+          "Movimentos corporais e gestos de mãos e dedos",
+          "Sons e melodias",
+          "Imagens estáticas"
+        ],
+        ans: 1,
+        exp: "A linguagem gestual é comunicação através de movimentos corporais e gestos de mãos e dedos, como a Libras e a mímica."
+      },
+      {
+        q: "LIBRAS é:",
+        opts: [
+          "Linguagem Brasileira de Sons",
+          "Linguagem Brasileira de Sinais — linguagem dos sinais usada pelos surdos-mudos",
+          "Linguagem Básica de Representações Abstratas",
+          "Língua Binária de Reconhecimento Auditivo"
+        ],
+        ans: 1,
+        exp: "Libras é a Linguagem Brasileira de Sinais, usada pelos surdos-mudos, com vária regras, gramática, sinais e modos de usar esses sinais. É normativa."
+      },
+      {
+        q: "A Libras é frequentemente confundida como linguagem visual, mas é definida corretamente como:",
+        opts: [
+          "Linguagem verbal escrita",
+          "Linguagem visual artística",
+          "Linguagem gestual (apesar de ser uma língua visual)",
+          "Linguagem pictográfica"
+        ],
+        ans: 2,
+        exp: "Embora visual, a Libras é classificada como linguagem gestual, pois é composta de sinais, gestos e expressões a partir de uma convenção."
+      },
+      {
+        q: "A mímica, no contexto das linguagens não verbais, são:",
+        opts: [
+          "Palavras ditas em voz alta",
+          "Gestos ilustrativos desenhados no espaço, igualmente convencionados, que encena uma mensagem",
+          "Textos escritos em suporte físico",
+          "Sons guturais primitivos"
+        ],
+        ans: 1,
+        exp: "A mímica consiste em gestos ilustrativos desenhados no espaço, convencionados, que encena uma mensagem."
+      },
+      {
+        q: "As expressões faciais são classificadas como linguagem gestual porque:",
+        opts: [
+          "São produzidas por palavras escritas no rosto",
+          "Transmitem através do movimento dos músculos as satisfações e insatisfações do ser humano",
+          "São sons produzidos pela voz",
+          "São produções digitais"
+        ],
+        ans: 1,
+        exp: "As expressões faciais são linguagem gestual por transmitirem, através do movimento dos músculos, as satisfações e insatisfações sobre determinada coisa."
+      }
+    ]
+  },
+  {
+    title: "Rodada 5 — Linguagem Visual e Sincrética",
+    questions: [
+      {
+        q: "A linguagem visual inclui qual dos seguintes exemplos mostrados na Figura 5 da apostila?",
+        opts: [
+          "Palavras escritas e discursos",
+          "Fotografia, desenho, pintura e placas de trânsito",
+          "Música e sons",
+          "Gestos e mímica"
+        ],
+        ans: 1,
+        exp: "A Figura 5 exemplifica linguagem visual com: (a) fotografia, (b) desenho, (c) pintura e (d) placas de trânsito."
+      },
+      {
+        q: "O cinema mudo é considerado principalmente uma linguagem:",
+        opts: [
+          "Verbal escrita",
+          "Apenas sonora",
+          "Visual, que carrega muito da linguagem corporal para transmitir desejos e vontades dos personagens",
+          "Estritamente científica"
+        ],
+        ans: 2,
+        exp: "O cinema mudo além de ser uma linguagem visual, carrega muito de sua importância na linguagem corporal, usada para manifestar desejos, vontades e desagrados."
+      },
+      {
+        q: "Nos primórdios do cinema mudo, como eram considerados os primeiros filmes?",
+        opts: [
+          "'Cinema digital'",
+          "'Cinema puro', por não fazer uso da linguagem verbal",
+          "'Cinema falado'",
+          "'Cinema artístico'"
+        ],
+        ans: 1,
+        exp: "Os primeiros filmes eram chamados de 'cinema puro' por não fazerem uso da linguagem verbal (Aragão, 2006)."
+      },
+      {
+        q: "Com a inserção de letreiros curtos e explícitos entre as cenas (para informar espaço e tempo), o cinema mudo passou a ser considerado:",
+        opts: [
+          "Linguagem verbal pura",
+          "Linguagem visual pura",
+          "Linguagem sincrética — constituída por códigos de natureza distinta, misturando verbal e não verbal",
+          "Linguagem gestual exclusiva"
+        ],
+        ans: 2,
+        exp: "Com os letreiros, o cinema mudo passa a ser uma linguagem sincrética — forma de comunicação constituída por códigos de natureza distinta, misturando verbal e não verbal."
+      },
+      {
+        q: "As tecnologias digitais são consideradas um novo gênero de linguagem porque:",
+        opts: [
+          "Usam apenas linguagem verbal escrita",
+          "São sistemas exclusivamente orais",
+          "Combinam linguagem verbal e não verbal (e-mail, chats, redes sociais, emojis, hipertextos)",
+          "Existem somente no ambiente físico"
+        ],
+        ans: 2,
+        exp: "As tecnologias digitais (e-mail, chats, fóruns, redes sociais) combinam elementos verbais e não verbais, sendo um novo gênero de linguagem."
+      },
+      {
+        q: "Os emojis são definidos no texto como:",
+        opts: [
+          "Textos formais digitais",
+          "Ícones representados com carinhas que têm nome, significado oficial e são usados em aplicativos e redes sociais",
+          "Palavras criadas em código binário",
+          "Sons digitalizados"
+        ],
+        ans: 1,
+        exp: "Os emojis são ícones representados por carinhas com nome e significado oficial, utilizados principalmente no Facebook e WhatsApp."
+      },
+      {
+        q: "Os hipertextos constituem uma escrita:",
+        opts: [
+          "Linear e sequencial",
+          "Manuscrita e artesanal",
+          "Não sequencial e não linear, permitindo acesso a outros textos através de links",
+          "Exclusivamente formal e acadêmica"
+        ],
+        ans: 2,
+        exp: "Os hipertextos constituem uma escrita não sequencial e não linear, pois permitem acesso a outros textos via links, interagindo com outro espaço — o ciberespaço."
+      },
+      {
+        q: "A mímica utilizada no cinema mudo tinha como objetivo:",
+        opts: [
+          "Substituir completamente a trilha sonora",
+          "Expressar as convenções narrativas construindo enredos explicativos",
+          "Criar efeitos especiais visuais",
+          "Introduzir palavras escritas nas telas"
+        ],
+        ans: 1,
+        exp: "No cinema mudo, a mímica era utilizada para expressar convenções narrativas com intuito de construir enredos explicativos."
+      },
+      {
+        q: "A linguagem visual inclui placas de trânsito. Qual categoria semiótica as placas de trânsito melhor representam?",
+        opts: [
+          "Ícones, por terem semelhança direta com o objeto",
+          "Índices, por serem sons",
+          "Símbolos, por serem convenções sociais",
+          "Onomatopeias visuais"
+        ],
+        ans: 2,
+        exp: "As placas de trânsito são símbolos convencionados socialmente — sua forma e significado são definidos por convenção, sem relação natural obrigatória com o referente."
+      },
+      {
+        q: "Qual rede social NÃO é citada no texto como exemplo de tecnologia digital de linguagem verbal e não verbal?",
+        opts: [
+          "Facebook",
+          "Instagram",
+          "Twitter",
+          "LinkedIn"
+        ],
+        ans: 3,
+        exp: "O texto menciona Facebook, Instagram, Twitter, YouTube, Tumblr e WhatsApp. LinkedIn não é citado."
+      }
+    ]
+  },
+  {
+    title: "Rodada 6 — Semiótica e o Signo",
+    questions: [
+      {
+        q: "A semiótica é definida como:",
+        opts: [
+          "A ciência da linguagem verbal",
+          "A ciência dos signos em qualquer linguagem",
+          "O estudo exclusivo da escrita",
+          "A teoria dos sons musicais"
+        ],
+        ans: 1,
+        exp: "A semiótica é a ciência dos signos em qualquer linguagem (Santaella, 1983)."
+      },
+      {
+        q: "O signo é a base do sistema comunicativo na sociedade em dois níveis. Quais são eles?",
+        opts: [
+          "Oral e visual",
+          "Verbal e não verbal",
+          "No nível da comunicação e no nível da expressão",
+          "Escrito e digital"
+        ],
+        ans: 2,
+        exp: "O signo é a base do sistema comunicativo na sociedade, primeiro no nível da comunicação e outro no nível da expressão."
+      },
+      {
+        q: "A semiologia permitiu analisar todos os fenômenos culturais linguísticos partindo do pressuposto que:",
+        opts: [
+          "Todos os fenômenos são sons",
+          "Esses fenômenos são signos",
+          "Todos os fenômenos são palavras escritas",
+          "Os fenômenos são exclusivamente imagéticos"
+        ],
+        ans: 1,
+        exp: "A semiologia partiu do pressuposto que os fenômenos culturais linguísticos (verbal e não verbal) são signos."
+      },
+      {
+        q: "O signo linguístico de Saussure é chamado de diádico porque:",
+        opts: [
+          "Tem três partes: forma, conteúdo e contexto",
+          "É constituído por duas partes: significado e significante",
+          "Tem apenas uma dimensão sonora",
+          "Necessita de um emissor e um receptor"
+        ],
+        ans: 1,
+        exp: "O signo linguístico de Saussure é diádico porque é constituído por significado (conceito) e significante (imagem acústica)."
+      },
+      {
+        q: "A tricotomia fundamental do signo de Peirce classifica os signos em relação a seus objetos como:",
+        opts: [
+          "Oral, escrito e gestual",
+          "Ícone, índice e símbolo",
+          "Signo, significado e significante",
+          "Visual, sonoro e tátil"
+        ],
+        ans: 1,
+        exp: "A tricotomia de Peirce classifica os signos como ícone (semelhança), índice (indicação/conexão) e símbolo (convenção)."
+      },
+      {
+        q: "Na semiótica de Peirce, quando não há constituições simbólicas (convenções), ocorre outro processo através de:",
+        opts: [
+          "A vinculação de ícones com referentes e de índices com certos fenômenos",
+          "A criação de novas palavras",
+          "A substituição por gestos",
+          "A escrita pictográfica"
+        ],
+        ans: 0,
+        exp: "Sem constituições simbólicas, ocorre o processo cultural de vincular ícones com referentes e índices com certos fenômenos (Corrêa, 2002)."
+      },
+      {
+        q: "A linguística é definida como:",
+        opts: [
+          "A ciência dos signos em geral",
+          "A ciência da linguagem verbal",
+          "A ciência da comunicação não verbal",
+          "O estudo da linguagem corporal"
+        ],
+        ans: 1,
+        exp: "A linguística é a ciência da linguagem verbal, enquanto a semiótica é a ciência dos signos em qualquer linguagem."
+      },
+      {
+        q: "Os estudos de Semiótica são determinantes para:",
+        opts: [
+          "Apenas o ensino de gramática normativa",
+          "A compreensão e análise das diferentes formas de linguagem verbal e não verbal",
+          "Somente o estudo de línguas estrangeiras",
+          "A criação de novas línguas"
+        ],
+        ans: 1,
+        exp: "Os estudos de Semiótica são determinantes para a compreensão e análise das diferentes formas de linguagem verbal e não verbal."
+      },
+      {
+        q: "Qual livro fundamental de Saussure, publicado em 1970, é citado na apostila?",
+        opts: [
+          "O verbal e o não verbal",
+          "Sintaxe da linguagem visual",
+          "Curso de linguística geral",
+          "O que é semiótica"
+        ],
+        ans: 2,
+        exp: "A apostila cita 'Curso de linguística geral' de Saussure (Cultrix, 1970) nas referências."
+      },
+      {
+        q: "Santaella é autora do livro referenciado na apostila intitulado:",
+        opts: [
+          "Linguagem verbal e não verbal",
+          "O que é semiótica",
+          "Sintaxe da linguagem visual",
+          "O verbal e o não verbal"
+        ],
+        ans: 1,
+        exp: "Nas referências da apostila consta: SANTAELLA, L. O que é semiótica. São Paulo: Brasiliense, 1983."
+      }
+    ]
+  },
+  {
+    title: "Rodada 7 — Considerações Finais",
+    questions: [
+      {
+        q: "O entendimento da linguagem como sistema de signos foi consequência dos estudos de:",
+        opts: [
+          "Peirce (1839-1914)",
+          "Saussure (1970), que classificou a linguagem em fala e língua",
+          "Dondis (1997)",
+          "Santaella (1983)"
+        ],
+        ans: 1,
+        exp: "O entendimento da linguagem como sistema de signos foi consequência dos estudos de Saussure (1970), que a classificou em duas partes: fala e língua."
+      },
+      {
+        q: "Nos estudos de linguagem verbal, por causa da ênfase na língua:",
+        opts: [
+          "A oralidade se tornou mais relevante que a escrita",
+          "A escrita se tornou mais relevante que a oralidade",
+          "Ambas tiveram igual relevância",
+          "Nenhuma das duas foi valorizada"
+        ],
+        ans: 1,
+        exp: "Nos estudos de linguagem verbal, por causa da ênfase na língua, a escrita tornou-se mais relevante que a oralidade."
+      },
+      {
+        q: "Por que a escrita é considerada mais relevante que a linguagem oral nos estudos linguísticos?",
+        opts: [
+          "Porque a escrita é mais antiga",
+          "Não é porque a escrita usa normas mais complexas — a oralidade também pode ser mais elaborada dependendo do contexto",
+          "Porque a oralidade não transmite informações",
+          "Porque a escrita é exclusiva do ser humano"
+        ],
+        ans: 1,
+        exp: "O texto esclarece: não é porque a escrita usa normas mais complexas. Na oralidade há momentos em que se precisa de linguagem tão elaborada quanto a escrita."
+      },
+      {
+        q: "A centralidade da escrita influenciou a predominância da linguagem verbal sobre a não verbal. A Libras é citada como:",
+        opts: [
+          "Exemplo de linguagem oral",
+          "Exemplo de linguagem não verbal normativa, como a escrita",
+          "Exemplo de linguagem digital",
+          "Exemplo de linguagem pictográfica"
+        ],
+        ans: 1,
+        exp: "A Libras é citada como exemplo de linguagem não verbal normativa — cada tipo de linguagem não verbal tem sua forma de expressão, seus códigos e finalidades."
+      },
+      {
+        q: "Tanto a linguagem verbal como a não verbal são sistemas de signos que estão intrínsecos na sociedade e utilizados cotidianamente de acordo com:",
+        opts: [
+          "A regra imposta pelo governo",
+          "A necessidade de cada indivíduo, facilitando a vida em sociedade",
+          "O nível de escolaridade do falante",
+          "A tecnologia disponível"
+        ],
+        ans: 1,
+        exp: "Ambas as linguagens são utilizadas cotidianamente de acordo com a necessidade de cada indivíduo, facilitando a vida em sociedade."
+      },
+      {
+        q: "Qual foi o papel dos estudos de Saussure para o surgimento da semiologia?",
+        opts: [
+          "Criou diretamente a semiologia sem relação com o signo",
+          "A partir das questões sobre o signo linguístico, construiu as bases de suas proposições de Semiologia",
+          "Negou qualquer relação entre signo e linguagem",
+          "Limitou a semiologia ao estudo da escrita"
+        ],
+        ans: 1,
+        exp: "Saussure construiu as bases de suas proposições de Semiologia a partir das questões sobre o signo linguístico."
+      },
+      {
+        q: "A oralidade depende de qual fator para sua apreensão e compreensão?",
+        opts: [
+          "Apenas do código escrito paralelo",
+          "Do ambiente em que se encontra o falante, do objetivo, e de quem são os ouvintes",
+          "Exclusivamente do vocabulário formal",
+          "Do suporte físico como papel ou tela"
+        ],
+        ans: 1,
+        exp: "A compreensão da oralidade depende do ambiente em que se encontra o falante, do objetivo que se pretende atingir e de quem são os ouvintes."
+      },
+      {
+        q: "Quais ciências da linguagem foram consolidadas no século XX?",
+        opts: [
+          "Retórica e Dialética",
+          "Linguística e Semiótica",
+          "Gramática e Ortografia",
+          "Fonética e Morfologia"
+        ],
+        ans: 1,
+        exp: "O século XX consolidou a Linguística (linguagem verbal) e a Semiótica (signos em qualquer linguagem)."
+      },
+      {
+        q: "Segundo as considerações finais da apostila, as tecnologias digitais são um novo gênero de linguagem porque:",
+        opts: [
+          "Substituem completamente a linguagem oral",
+          "Eliminam a necessidade de escrita",
+          "Combinam elementos verbais (e-mail, chats) e não verbais (emojis, hipertextos)",
+          "Usam exclusivamente linguagem científica"
+        ],
+        ans: 2,
+        exp: "As tecnologias digitais são um novo gênero combinando verbal (e-mail, chats, fóruns) e não verbal (emojis, links de hipertexto)."
+      },
+      {
+        q: "O ciberespaço é definido no texto como:",
+        opts: [
+          "Um sistema de impressão gráfica",
+          "O espaço com que os hipertextos interagem — outro espaço chamado de ciberespaço",
+          "Uma forma de linguagem gestual digital",
+          "A memória física dos computadores"
+        ],
+        ans: 1,
+        exp: "Os hipertextos fazem interagir mensagens com outro espaço — o ciberespaço."
+      }
+    ]
+  },
+  {
+    title: "Rodada 8 — Tipos de Linguagem Não Verbal",
+    questions: [
+      {
+        q: "A linguagem corporal (expressão do corpo como forma de expressão artística) é abordada por qual obra nas referências?",
+        opts: [
+          "Soares (2014) — 'O corpo que dança: a linguagem artística como forma de expressão e tomada de consciência'",
+          "Dondis (1997) — 'Sintaxe da linguagem visual'",
+          "Dubois (1993) — 'O ato fotográfico'",
+          "Castro (2013) — 'Linguagem verbal e não verbal'"
+        ],
+        ans: 0,
+        exp: "Soares (2014) é o autor de 'O corpo que dança: a linguagem artística como forma de expressão e tomada de consciência', citado nas referências."
+      },
+      {
+        q: "A expressão facial é classificada como linguagem gestual. O rosto é:",
+        opts: [
+          "A parte menos expressiva do corpo humano",
+          "A região do corpo mais vulnerável a expressões, reagindo a situações como alegria, medo, insegurança e ânimo",
+          "Uma região que não transmite emoções",
+          "Relevante apenas na comunicação digital"
+        ],
+        ans: 1,
+        exp: "O rosto é a região do corpo mais vulnerável a expressões, reagindo a diferentes situações como alegria, medo, insegurança e ânimo."
+      },
+      {
+        q: "A Figura 4 da apostila exemplifica linguagem gestual com:",
+        opts: [
+          "Fotografia e pintura",
+          "Linguagem de sinais (a) e expressão facial (b)",
+          "Placas de trânsito e emojis",
+          "Escrita pictográfica e ideográfica"
+        ],
+        ans: 1,
+        exp: "A Figura 4 exemplifica linguagem gestual com: (a) linguagem de sinais e (b) expressão facial."
+      },
+      {
+        q: "Por que a Libras não é uma linguagem visual, mas sim gestual?",
+        opts: [
+          "Porque usa apenas sons",
+          "Porque é composta de sinais, gestos e expressões a partir de uma convenção — embora seja uma língua visual",
+          "Porque não tem gramática própria",
+          "Porque é exclusivamente oral"
+        ],
+        ans: 1,
+        exp: "Embora visual, a Libras é uma linguagem gestual por ser composta de sinais, gestos e expressões convencionados (Farias; Sanderson; Porto, 2013)."
+      },
+      {
+        q: "Qual livro de Dondis é citado nas referências da apostila?",
+        opts: [
+          "O que é semiótica",
+          "Curso de linguística geral",
+          "Sintaxe da linguagem visual",
+          "O verbal e o não verbal"
+        ],
+        ans: 2,
+        exp: "Nas referências consta: DONDIS, D. A. Sintaxe da linguagem visual. São Paulo: Martins Fontes, 1997."
+      },
+      {
+        q: "A linguagem não verbal sincrética mistura:",
+        opts: [
+          "Apenas imagens visuais",
+          "Apenas gestos e sons",
+          "Códigos de natureza distinta — verbal e não verbal simultaneamente",
+          "Apenas escrita formal e informal"
+        ],
+        ans: 2,
+        exp: "A linguagem sincrética é constituída por códigos de natureza distinta, misturando verbal e não verbal."
+      },
+      {
+        q: "Farias, Sanderson e Porto (2013) publicaram sobre:",
+        opts: [
+          "O ato fotográfico",
+          "Comunicação não verbal e Libras",
+          "A linguagem da mídia",
+          "Linguagem e comunicação social"
+        ],
+        ans: 1,
+        exp: "Farias, Sanderson e Porto (2013) publicaram sobre 'Comunicação não verbal e libras' na Revista Intercâmbio dos Congressos de Humanidades."
+      },
+      {
+        q: "A linguagem corporal no cinema mudo transmitia:",
+        opts: [
+          "Apenas informações geográficas",
+          "Os desejos, vontades e desagrados dos personagens",
+          "Apenas a data e o local das cenas",
+          "Os créditos dos filmes"
+        ],
+        ans: 1,
+        exp: "É através da linguagem corporal que se manifestam e transmitem os desejos, vontades e desagrados dos personagens no cinema mudo."
+      },
+      {
+        q: "Qual é o livro de Corrêa (2002) citado na apostila?",
+        opts: [
+          "O ato fotográfico",
+          "Sintaxe da linguagem visual",
+          "Linguagem e comunicação social: linguística para comunicadores",
+          "O que é semiótica"
+        ],
+        ans: 2,
+        exp: "Nas referências: CORRÊA, M. L. G. Linguagem e comunicação social: linguística para comunicadores. São Paulo: Parábola, 2002."
+      },
+      {
+        q: "A fotografia é mencionada na apostila como um exemplo de qual tipo de linguagem?",
+        opts: [
+          "Gestual",
+          "Verbal escrita",
+          "Visual",
+          "Oral"
+        ],
+        ans: 2,
+        exp: "A Figura 5 mostra a fotografia como exemplo de linguagem visual (item a)."
+      }
+    ]
+  },
+  {
+    title: "Rodada 9 — Referências e Autores",
+    questions: [
+      {
+        q: "Qual obra de Aguiar (2004) é citada na apostila?",
+        opts: [
+          "Linguagem e comunicação social",
+          "O verbal e o não verbal",
+          "Sintaxe da linguagem visual",
+          "Imagem: cognição, semiótica, mídia"
+        ],
+        ans: 1,
+        exp: "AGUIAR, V. T. de. O verbal e o não verbal. São Paulo: UNESP, 2004."
+      },
+      {
+        q: "Aragão (2006) é citado em relação a qual tema?",
+        opts: [
+          "Escrita pictográfica egípcia",
+          "Palavras escritas: do cinema mudo ao falado",
+          "Linguagem e comunicação social",
+          "Expressão facial e linguagem gestual"
+        ],
+        ans: 1,
+        exp: "ARAGÃO, I. R. Palavras escritas: do cinema mudo ao falado. In: Congresso Brasileiro de Ciências da Comunicação, 29., 2006, Brasília."
+      },
+      {
+        q: "Dubois (1993) é o autor de qual obra nas referências?",
+        opts: [
+          "Curso de linguística geral",
+          "O verbal e o não verbal",
+          "O ato fotográfico e outros ensaios",
+          "Sintaxe da linguagem visual"
+        ],
+        ans: 2,
+        exp: "DUBOIS, P. O ato fotográfico e outros ensaios. Campinas: Papirus, 1993."
+      },
+      {
+        q: "A obra 'Imagem: cognição, semiótica, mídia' foi publicada em que edição e por quem?",
+        opts: [
+          "3ª edição, por Santaella sozinha",
+          "4ª edição, por Santaella e Nöth",
+          "1ª edição, por Saussure",
+          "2ª edição, por Peirce"
+        ],
+        ans: 1,
+        exp: "SANTAELLA, L.; NÖTH, W. Imagem: cognição, semiótica, mídia. 4. ed. São Paulo: Iluminuras, 2009."
+      },
+      {
+        q: "A obra de Castro (2013) trata de:",
+        opts: [
+          "O ato fotográfico",
+          "Linguagem verbal e não verbal: o ensino de língua portuguesa",
+          "Comunicação não verbal e libras",
+          "Sintaxe da linguagem visual"
+        ],
+        ans: 1,
+        exp: "CASTRO, I. L. Linguagem verbal e não verbal: o ensino de língua portuguesa. Rio Verde: FAR, 2013."
+      },
+      {
+        q: "O DICIO é citado nas referências como fonte para qual período?",
+        opts: [
+          "c1800-1900",
+          "c2009-2017",
+          "c1970-1990",
+          "c1950-1960"
+        ],
+        ans: 1,
+        exp: "DICIO. Matosinhos: 7Graus, c2009-2017. Disponível em: https://www.dicio.com.br."
+      },
+      {
+        q: "Qual é a editora do livro 'O que é semiótica' de Santaella?",
+        opts: [
+          "UNESP",
+          "Cultrix",
+          "Brasiliense",
+          "Papirus"
+        ],
+        ans: 2,
+        exp: "SANTAELLA, L. O que é semiótica. São Paulo: Brasiliense, 1983."
+      },
+      {
+        q: "Soares (2014) publicou na revista:",
+        opts: [
+          "Revista Intercâmbio dos Congressos de Humanidades",
+          "Rev. Transformações em Psicologia",
+          "Revista Brasileira de Comunicação",
+          "Anais Intercom"
+        ],
+        ans: 1,
+        exp: "SOARES, M. O corpo que dança... Rev. Transformações em Psicologia, São Paulo, v. 5, n. 1, 2014."
+      },
+      {
+        q: "A 'Capa da Revista do Globo nº 21 - Revolução de 1930' é citada como fonte de qual Wikimedia?",
+        opts: [
+          "Wikimedia Commons 2011b",
+          "Wikimedia Commons 2011a",
+          "Wikimedia Commons 2009",
+          "Wikimedia Commons 2015"
+        ],
+        ans: 1,
+        exp: "WIKIMEDIA COMMONS. Capa da Revista do Globo nº 21 - Revolução de 1930. Wikimedia, 2011a."
+      },
+      {
+        q: "Qual é a editora do livro 'Curso de linguística geral' de Saussure?",
+        opts: [
+          "UNESP",
+          "Papirus",
+          "Martins Fontes",
+          "Cultrix"
+        ],
+        ans: 3,
+        exp: "SAUSSURE, F. Curso de linguística geral. São Paulo: Cultrix, 1970."
+      }
+    ]
+  },
+  {
+    title: "Rodada 10 — Revisão Geral",
+    questions: [
+      {
+        q: "Qual é a diferença fundamental entre linguagem verbal e não verbal?",
+        opts: [
+          "A verbal é mais antiga que a não verbal",
+          "A verbal faz uso das palavras; a não verbal utiliza outras formas de expressão sem presença de palavras",
+          "A não verbal é exclusiva dos animais",
+          "A verbal é sempre escrita; a não verbal é sempre oral"
+        ],
+        ans: 1,
+        exp: "A linguagem verbal faz uso das palavras, enquanto a não verbal utiliza outras formas de expressão (imagens, gestos, sinais) sem presença de palavras."
+      },
+      {
+        q: "A Libras tem vária regras, gramática, sinais e modos de usar esses sinais. Portanto, ela é:",
+        opts: [
+          "Informal e sem estrutura",
+          "Normativa, como qualquer outra língua",
+          "Apenas gestual sem gramática",
+          "Exclusivamente visual sem signos"
+        ],
+        ans: 1,
+        exp: "A Libras é normativa — como qualquer outra língua, tem vária regras, existe gramática, existem sinais e modos de usar esses sinais."
+      },
+      {
+        q: "Qual é a relação entre linguagem verbal e não verbal segundo as considerações finais?",
+        opts: [
+          "São opostas e nunca coexistem",
+          "Ambas são sistemas de signos carregados de significados, intrínsecos à sociedade",
+          "A verbal substitui completamente a não verbal",
+          "A não verbal é superior à verbal"
+        ],
+        ans: 1,
+        exp: "Tanto a linguagem verbal como a não verbal são sistemas de signos carregados de significados, intrínsecos na sociedade, utilizados cotidianamente."
+      },
+      {
+        q: "O sistema de signos linguísticos vem sendo estudado desde:",
+        opts: [
+          "O século XVIII",
+          "O século XX apenas",
+          "A antiguidade, chegando até a cibernética",
+          "A invenção da internet"
+        ],
+        ans: 2,
+        exp: "O sistema de signos linguísticos vem sendo estudado desde a antiguidade e chega até a cibernética."
+      },
+      {
+        q: "Qual exemplo melhor ilustra a linguagem sincrética?",
+        opts: [
+          "Uma fotografia sem texto",
+          "Um discurso oral sem imagens",
+          "Um jornal impresso com texto e imagens combinados",
+          "Uma música exclusivamente instrumental"
+        ],
+        ans: 2,
+        exp: "A linguagem sincrética combina verbal e não verbal. Um jornal impresso combina texto (verbal) e imagens (não verbal) — é o exemplo mais próximo."
+      },
+      {
+        q: "Qual é a função principal dos emojis nas tecnologias digitais?",
+        opts: [
+          "Substituir completamente as palavras",
+          "Servir como ícones comunicativos com nome e significado oficial em aplicativos e redes sociais",
+          "Criar novas línguas formais",
+          "Documentar a linguagem oral"
+        ],
+        ans: 1,
+        exp: "Os emojis são ícones com nome e significado oficial, utilizados como elementos comunicativos não verbais em aplicativos e redes sociais."
+      },
+      {
+        q: "A linguagem verbal tem duas formas. Na escrita, o interlocutor NÃO está fisicamente presente, ao contrário da:",
+        opts: [
+          "Linguagem gestual",
+          "Linguagem oral, onde muitas vezes ambos ocupam um mesmo ambiente",
+          "Linguagem visual",
+          "Linguagem sincrética"
+        ],
+        ans: 1,
+        exp: "Na escrita não há presença física do interlocutor; na oral, muitas vezes ambos ocupam um mesmo ambiente."
+      },
+      {
+        q: "Por que os estudos de Semiótica são importantes?",
+        opts: [
+          "Apenas para corrigir erros gramaticais",
+          "Por serem determinantes para compreender e analisar as diferentes formas de linguagem verbal e não verbal",
+          "Somente para o ensino de línguas estrangeiras",
+          "Para criar novas línguas formais"
+        ],
+        ans: 1,
+        exp: "Os estudos de Semiótica são determinantes para a compreensão e análise das diferentes formas de linguagem verbal e não verbal."
+      },
+      {
+        q: "Qual é o objetivo geral do capítulo 'Linguagem verbal e não verbal' segundo os objetivos de aprendizagem?",
+        opts: [
+          "Estudar apenas a gramática normativa",
+          "Reconhecer princípios, identificar tipos de linguagem verbal e indicar tipos de linguagem não verbal",
+          "Aprender sobre linguagens de programação",
+          "Estudar exclusivamente a linguagem gestual"
+        ],
+        ans: 1,
+        exp: "Os objetivos de aprendizagem são: reconhecer os princípios da linguagem verbal e não verbal; identificar os tipos de linguagem verbal; indicar os tipos de linguagem não verbal."
+      },
+      {
+        q: "Qual é a grande conclusão do texto sobre o uso cotidiano das linguagens?",
+        opts: [
+          "Apenas a linguagem verbal é usada no dia a dia",
+          "Apenas a linguagem não verbal é essencial",
+          "Ambas as linguagens são carregadas de significados, intrínsecas à sociedade e utilizadas de acordo com a necessidade de cada indivíduo, facilitando a vida em sociedade",
+          "As linguagens digitais substituíram ambas"
+        ],
+        ans: 2,
+        exp: "A conclusão final é que tanto a verbal como a não verbal são sistemas de signos carregados de significados, intrínsecos na sociedade, utilizados de acordo com a necessidade de cada indivíduo, facilitando a vida em sociedade."
+      }
+    ]
+  }
+];
+
+let currentRound = 0;
+let currentQ = 0;
+let score = 0;
+let totalAnswered = 0;
+let answered = false;
+let roundScores = [];
+
+function startQuiz() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  answered = false;
+  const round = ROUNDS[currentRound];
+  const q = round.questions[currentQ];
+  const total = round.questions.length;
+
+  document.getElementById('roundNum').textContent = currentRound + 1;
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qTotal').textContent = total;
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('roundLabel').textContent = round.title;
+  document.getElementById('questionText').textContent = q.q;
+
+  // Progress
+  const globalTotal = ROUNDS.reduce((a,r) => a + r.questions.length, 0);
+  const done = ROUNDS.slice(0, currentRound).reduce((a,r) => a + r.questions.length, 0) + currentQ;
+  document.getElementById('progressFill').style.width = (done / globalTotal * 100) + '%';
+
+  const opts = document.getElementById('optionsArea');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = (String.fromCharCode(65+i)) + ') ' + opt;
+    btn.onclick = () => selectAnswer(i, q.ans, q.exp);
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('feedbackBox').className = 'feedback';
+  document.getElementById('feedbackBox').textContent = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+
+  // Reanimate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+}
+
+function selectAnswer(chosen, correct, explanation) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedbackBox');
+
+  if (chosen === correct) {
+    score++;
+    btns[chosen].classList.add('correct');
+    fb.className = 'feedback ok show';
+    fb.innerHTML = '✅ Correto! ' + explanation;
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[correct].classList.add('correct');
+    fb.className = 'feedback fail show';
+    fb.innerHTML = '❌ Incorreto. A resposta correta é a letra <strong>' + String.fromCharCode(65+correct) + '</strong>. ' + explanation;
+  }
+
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  const round = ROUNDS[currentRound];
+  if (currentQ < round.questions.length - 1) {
+    currentQ++;
+    loadQuestion();
+  } else {
+    // End of round
+    const roundScore = round.questions.filter((q, i) => {
+      // Can't track per-question here easily, store differently
+      return false;
+    }).length;
+    // Move to next round or end
+    if (currentRound < ROUNDS.length - 1) {
+      currentRound++;
+      currentQ = 0;
+      loadQuestion();
+    } else {
+      showFinalScore();
+    }
+  }
+}
+
+function showFinalScore() {
+  document.getElementById('quiz-area').style.display = 'none';
+  const totalQ = ROUNDS.reduce((a, r) => a + r.questions.length, 0);
+
+  document.getElementById('bigScore').textContent = score;
+  document.getElementById('totalPossible').textContent = totalQ;
+
+  const pct = (score / totalQ * 100).toFixed(0);
+  let msg = '';
+  if (pct >= 90) msg = '🏆 Excelente! Você domina o conteúdo!';
+  else if (pct >= 70) msg = '👍 Muito bom! Revise os pontos errados.';
+  else if (pct >= 50) msg = '📚 Razoável. Vale revisar a apostila.';
+  else msg = '🔄 Continue estudando! Releia o material.';
+
+  document.getElementById('scoreMsg').textContent = `${pct}% de aproveitamento. ${msg}`;
+
+  const ss = document.getElementById('scoreScreen');
+  ss.className = 'score-screen show';
+}
+
+function restartQuiz() {
+  currentRound = 0;
+  currentQ = 0;
+  score = 0;
+  totalAnswered = 0;
+  roundScores = [];
+
+  document.getElementById('scoreScreen').className = 'score-screen';
+  document.getElementById('quiz-area').style.display = 'block';
+  loadQuestion();
+}
+</script>
+</body>
+</html>
