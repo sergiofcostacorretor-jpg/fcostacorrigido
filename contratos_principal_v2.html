@@ -58,17 +58,17 @@ body{background:#1a1a2e;font-family:'EB Garamond',Georgia,serif;font-size:12pt;c
 .campo-edit:empty::before{content:attr(data-placeholder);color:#b8a070;font-weight:400;font-style:italic;pointer-events:none;}
 textarea.campo-expansivel{display:block;width:100%;min-height:55px;overflow:hidden;resize:none;font-weight:700!important;color:#000;border:1.5px dashed var(--ouro);background:#fffdf5;font-size:11pt;font-family:Arial,Helvetica,sans-serif;outline:none;transition:border-color .2s;padding:6px 8px;line-height:1.6;border-radius:3px;box-sizing:border-box;}
 textarea.campo-expansivel:focus{border-color:var(--verde-edit);background:#f0fff4;}
-p.clausula-texto{text-align:justify;margin:0;padding:7px 10px 6px;font-size:11pt;font-family:Arial,Helvetica,sans-serif;line-height:1.6;border-left:3px solid var(--borda);border-right:3px solid var(--borda);background:#fefefe;position:relative;cursor:pointer;transition:background .2s;overflow-wrap:break-word;page-break-inside:avoid;break-inside:avoid;page-break-before:avoid;break-before:avoid;}
+p.clausula-texto{text-align:justify;margin:0;padding:8px 10px 8px;font-size:11pt;font-family:Arial,Helvetica,sans-serif;line-height:1.6;border-left:3px solid var(--borda);border-right:3px solid var(--borda);background:#fefefe;position:relative;cursor:pointer;transition:background .2s;overflow-wrap:break-word;page-break-inside:avoid;break-inside:avoid;page-break-before:avoid;break-before:avoid;}
 p.clausula-texto:not(.editando):hover::after{content:'\2702 clique para editar';position:absolute;top:4px;right:6px;font-size:7pt;color:#b8a070;font-family:'Oswald',sans-serif;pointer-events:none;}
 p.clausula-texto.editando{outline:none;background:#f0fff4;border-left:3px solid var(--verde-edit);border-right:3px solid var(--verde-edit);cursor:text;box-shadow:inset 0 0 0 1px #c3ebd1;}
 h2.titulo-contrato{font-family:'Oswald',sans-serif;text-align:center;text-transform:uppercase;font-size:14pt;margin-bottom:4px;color:var(--azul);letter-spacing:1.5px;border-bottom:2.5px solid var(--azul);padding-bottom:8px;}
 .subtitulo-contrato{text-align:center;font-size:8.5pt;color:#555;margin-bottom:0;font-style:italic;font-family:Arial,Helvetica,sans-serif;}
 .clausula-bloco{page-break-inside:avoid;break-inside:avoid;display:block;}
-h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:10pt;color:#fff;text-transform:uppercase;background:var(--azul);padding:5px 10px;margin:10px 0 0;letter-spacing:.7px;page-break-after:avoid;break-after:avoid;}
-.lei-bloco{background:#f0ede4;border-left:4px solid var(--ouro);border-bottom:2px solid #c8b87a;border-right:1px solid #c8b87a;border-top:1px solid #ddd4b0;padding:7px 10px 8px 12px;margin:0;page-break-inside:avoid;break-inside:avoid;}
+h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:10pt;color:#fff;text-transform:uppercase;background:var(--azul);padding:5px 10px;margin:14px 0 0;letter-spacing:.7px;page-break-after:avoid;break-after:avoid;}
+.lei-bloco{background:#f0ede4;border-left:4px solid var(--ouro);border-bottom:2px solid #c8b87a;border-right:1px solid #c8b87a;border-top:1px solid #ddd4b0;padding:7px 10px 8px 12px;margin:0 0 10px 0;page-break-inside:avoid;break-inside:avoid;}
 .lei-bloco .lei-header{font-family:'Oswald',sans-serif;font-size:8.5pt;color:#8a6b1a;letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:5px;font-weight:700;}
 .lei-bloco .lei-header::before{content:'\00A7';font-size:11pt;color:#8a6b1a;font-weight:700;}
-.lei-item{font-size:9pt;color:#1e2a38;margin-bottom:4px;padding-left:7px;border-left:2px solid #b8a050;line-height:1.5;font-family:Arial,Helvetica,sans-serif;overflow-wrap:break-word;}
+.lei-item{font-size:9pt;color:#1e2a38;margin-bottom:5px;padding-left:7px;border-left:2px solid #b8a050;line-height:1.6;font-family:Arial,Helvetica,sans-serif;overflow-wrap:break-word;}
 .lei-item strong{color:#0a1628;font-weight:700;}
 .header-fcosta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:4px double var(--ouro);padding-bottom:10px;margin-bottom:12px;}
 .logo-fcosta{width:62px;height:62px;border-radius:50%;border:2.5px solid var(--ouro);object-fit:cover;flex-shrink:0;}
@@ -172,6 +172,14 @@ h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:10pt;color:#fff;tex
 .ass-impressa{display:none;position:absolute;z-index:500;pointer-events:none;}
 /* v2.0: badge de versão */
 .badge-v2{display:inline-block;background:#27ae60;color:#fff;font-family:'Oswald',sans-serif;font-size:7pt;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:middle;letter-spacing:.5px;}
+/* Espaçamento entre blocos de cláusulas */
+.clausula-bloco + .clausula-bloco{margin-top:4px;}
+.lei-bloco + h3.clausula-titulo{margin-top:16px;}
+p.clausula-texto + .lei-bloco{margin-top:0;}
+/* Campos editáveis não quebram linha */
+.campo-edit{white-space:nowrap;}
+p.clausula-texto .campo-edit{white-space:normal;}
+strong .campo-edit{white-space:nowrap;}
 @page{size:A4 portrait;margin:0;}
 @media print{
   .toolbar,.toggle-arquivo,.arquivo-panel,.no-print,.modal-overlay,
@@ -437,7 +445,7 @@ function cla_desistencia(num){
   return clausula('CL&Aacute;USULA '+num+' &mdash; DA DESIST&Ecirc;NCIA INJUSTIFICADA',
     'Caso o(a) OUTORGANTE/PROPRIET&Aacute;RIO(A) desista injustificadamente <strong>ap&oacute;s o(a) CORRETOR(A) ter apresentado proposta ou interessado em condi&ccedil;&otilde;es compat&iacute;veis</strong> com as estabelecidas neste instrumento:<br><br>'
     +'(a) Ficar&aacute; obrigado(a) ao pagamento da <strong>comiss&atilde;o integral</strong> ao(&#224;) CORRETOR(A), conforme cl&aacute;usula de honor&aacute;rios;<br>'
-    +'(b) Em caso de desist&ecirc;ncia antes da apresenta&ccedil;&atilde;o de proposta, dever&aacute; comunicar por escrito com anteced&ecirc;ncia m&iacute;nima de <strong>'+campo('','5 (cinco)')+' dias</strong>;<br>'
+    +'(b) Em caso de desist&ecirc;ncia antes da apresenta&ccedil;&atilde;o de proposta, dever&aacute; comunicar por escrito com anteced&ecirc;ncia m&iacute;nima de <strong><span style=\'white-space:nowrap\'>'+campo('','5 (cinco)')+' dias</span></strong>;<br>'
     +'(c) A desist&ecirc;ncia motivada por caso fortuito ou for&ccedil;a maior devidamente comprovada isenta o(a) OUTORGANTE das penalidades desta cl&aacute;usula.',
     ['<strong>Art. 725 do CC/2002:</strong> A remunera&ccedil;&atilde;o &eacute; devida ao corretor mesmo que n&atilde;o celebrado o neg&oacute;cio, desde que tenha conseguido o resultado previsto.',
      '<strong>Art. 726 do CC/2002:</strong> Ajustada a exclusividade, o corretor tem direito &agrave; remunera&ccedil;&atilde;o integral mesmo que o neg&oacute;cio se realize sem sua media&ccedil;&atilde;o.']);}
