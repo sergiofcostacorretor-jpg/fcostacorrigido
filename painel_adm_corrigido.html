@@ -611,16 +611,47 @@ auth.onAuthStateChanged(function(user){
   if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}
   else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}
 });
+
+// ══ FIX 3: listener usa filtrar() — fonte única de verdade ══
+var _imovelRef=null;
+var _imovelListener=null;
+var _pausarListener=false; /* pausa o listener durante operações de exclusão */
+
 function iniciarFB(){
   if(_fbOk)return;_fbOk=true;
-  db.ref('fcosta_imoveis').on('value',function(snap){
+  _imovelRef=db.ref('fcosta_imoveis');
+  _imovelListener=_imovelRef.on('value',function(snap){
+    if(_pausarListener)return; /* ignora disparo durante exclusão */
     var d=snap.val()||{};
-    _todos=Object.entries(d).map(function(e){return Object.assign({id:e[0]},e[1]);});
-    atualizarStats();render(_todos);
+    var todos_raw=Object.entries(d).map(function(e){return Object.assign({},e[1],{id:e[0]});});
+    /* Limpa automaticamente nós _del do Firebase (remoção diferida) */
+    var excluidos=todos_raw.filter(function(i){return i._del===true||i._excluido===true;});
+    if(excluidos.length){
+      console.warn('[FCosta ADM] Firebase ainda contém '+excluidos.length+' nó(s) marcado(s) como excluído — tentando remover agora:',excluidos.map(function(i){return i.id;}));
+      excluidos.forEach(function(i){
+        db.ref('fcosta_imoveis/'+i.id).remove().then(function(){
+          console.log('[FCosta ADM] Nó _del removido com sucesso: '+i.id);
+        }).catch(function(e){
+          console.warn('[FCosta ADM] Não foi possível remover nó _del ('+i.id+'): '+(e&&e.message?e.message:e));
+        });
+      });
+    }
+    _todos=todos_raw.filter(function(i){return i._del!==true && i._excluido!==true;});
+    atualizarStats();
+    filtrar();
     var pc=document.getElementById('p-codigos');if(pc&&pc.classList.contains('on'))renderCodigos();
     var pr=document.getElementById('p-refs');if(pr&&pr.classList.contains('on'))refRender();
   });
 }
+
+function pararFB(){
+  if(_imovelRef&&_imovelListener){
+    _imovelRef.off('value',_imovelListener);
+    _imovelRef=null;_imovelListener=null;
+  }
+  _fbOk=false;
+}
+
 function fazerLogin(){
   var email=document.getElementById('l-email').value.trim(),senha=document.getElementById('l-senha').value,btn=document.getElementById('l-btn');
   document.getElementById('l-err').classList.remove('on');
@@ -630,7 +661,7 @@ function fazerLogin(){
 }
 function mostrarErrLogin(msg){var el=document.getElementById('l-err');el.textContent=msg;el.classList.add('on');}
 function trErr(code){var m={'auth/user-not-found':'❌ E-mail não cadastrado.','auth/wrong-password':'❌ Senha incorreta.','auth/invalid-email':'❌ E-mail inválido.','auth/user-disabled':'⛔ Usuário desativado.','auth/too-many-requests':'⚠️ Muitas tentativas.','auth/invalid-credential':'❌ Credenciais inválidas.','auth/network-request-failed':'❌ Sem conexão.','auth/email-already-in-use':'⚠️ E-mail já cadastrado.','auth/weak-password':'⚠️ Senha fraca (mín. 8).','auth/requires-recent-login':'⚠️ Faça login novamente.'};return m[code]||('❌ Erro: '+(code||'desconhecido'));}
-function fazerLogout(){if(!confirm('Deseja sair do Painel ADM?'))return;auth.signOut().then(function(){_fbOk=false;_ctrlOk=false;_pagsOk=false;_todos=[];_fotosEx=[];_paginasSite=[];_estadosHome={};_estadosHamb={};limpar();toast('✅ Saiu com segurança!','warn');});}
+function fazerLogout(){if(!confirm('Deseja sair do Painel ADM?'))return;auth.signOut().then(function(){pararFB();_ctrlOk=false;_pagsOk=false;_todos=[];_fotosEx=[];_paginasSite=[];_estadosHome={};_estadosHamb={};limpar();toast('✅ Saiu com segurança!','warn');});}
 var _tTimer=null;
 function toast(msg,tipo){var el=document.getElementById('toast');el.textContent=msg;el.className='on'+(tipo===true?' err':tipo==='warn'?' warn':'');if(_tTimer)clearTimeout(_tTimer);_tTimer=setTimeout(function(){el.className='';},3200);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
@@ -654,7 +685,9 @@ function atualizarStats(){var c={total:0,venda:0,aluguel:0,lancamento:0,panfleto
 document.getElementById('cdel-bg').addEventListener('click',function(e){if(e.target===this)closeDel();});
 function closeDel(){document.getElementById('cdel-bg').classList.remove('on');}
 function pedirDel(id,nome,cb){document.getElementById('cdel-nome').textContent=nome;document.getElementById('cdel-bg').classList.add('on');var btn=document.getElementById('cdel-ok'),novo=btn.cloneNode(true);btn.parentNode.replaceChild(novo,btn);novo.onclick=function(){closeDel();if(cb)cb(id);};}
-function pedirDelImovel(id,nome){pedirDel(id,nome,function(xid){_todos=_todos.filter(function(x){return x.id!==xid;});atualizarStats();render(_todos);db.ref('fcosta_imoveis/'+xid).remove().then(function(){toast('✅ Imóvel excluído!');}).catch(function(e){toast('Erro ao excluir: '+msgErr(e),true);});});}
+
+/* pedirDelImovel definida abaixo (bloco fix) — esta posição reservada intencionalmente */
+
 function filtrar(){var b=(document.getElementById('busca').value||'').toLowerCase(),s=document.getElementById('filtro-s').value;render(_todos.filter(function(i){var txt=[i.titulo,i.bairro,i.tipo,getCod(i)].filter(Boolean).join(' ').toLowerCase();return(!b||txt.includes(b))&&(!s||i.status===s);}));}
 function render(lista){
   var g=document.getElementById('lista');
@@ -686,31 +719,18 @@ function seoTManual(){_seoTM=true;var v=document.getElementById('seo-t').value;d
 function seoDManual(){_seoDM=true;var v=document.getElementById('seo-d').value;document.getElementById('gp-desc').textContent=v||'—';document.getElementById('hc-desc').textContent=v;gpcLbl('gpc-d',v.length,120,160,'Desc');}
 function gpcLbl(id,n,min,max,lbl){var el=document.getElementById(id);if(!el)return;el.textContent=lbl+': '+n+'/'+max;el.className='gpc '+(n>max?'gerr':n>=min?'gok':'gwarn');}
 function onStatusChange(){var s=document.getElementById('f-status').value,id=document.getElementById('f-id').value;if(s&&!id)document.getElementById('f-numcod').value='';esconderDup();atuRefPainel(s,id);atuPrev();}
-
-/* ===== CORREÇÃO PRINCIPAL: onNumCod bloqueado ao editar ===== */
 function onNumCod(){
   var id=document.getElementById('f-id').value;
-  if(id) return;
-  esconderDup();
-  _slugManual=false;
-  atuPrev();
+  if(id)return;
+  esconderDup();_slugManual=false;atuPrev();
   var st=document.getElementById('f-status').value,nc=document.getElementById('f-numcod').value.trim();
-  if(!st||!nc) return;
+  if(!st||!nc)return;
   var np=nc.padStart(3,'0'),conf=verDup(st,np,id);
-  if(conf){
-    var sig=SG[st]||'FCV';
-    mostrarDup(sig+np,conf.titulo||'Sem título',sig+proxNum(st));
-    document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';
-  } else {
-    document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';
-    setTimeout(function(){ document.getElementById('f-numcod').style.borderColor=''; },2000);
-  }
+  if(conf){var sig=SG[st]||'FCV';mostrarDup(sig+np,conf.titulo||'Sem título',sig+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}
+  else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}
   atuRefPainel(st,id);
 }
-
 function atuPrev(){atuRefPainel(document.getElementById('f-status').value,document.getElementById('f-id').value);atuSlug();seoAtualizar();}
-
-/* ===== CORREÇÃO: limpar desbloqueia campo numcod ===== */
 function limpar(){
   ['f-titulo','f-status','f-numcod','f-tipo','f-tipo-outro','f-preco','f-area','f-quartos','f-banheiros','f-vagas','f-bairro','f-endereco','f-descricao','f-video','f-id','slug-inp','seo-t','seo-d'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f-cidade').value='São Paulo — SP';
@@ -737,10 +757,7 @@ function limpar(){
   var vi=document.getElementById('video-iframe');if(vi)vi.src='';
   var ve=document.getElementById('video-erro');if(ve)ve.style.display='none';
 }
-
 function novoImovel(){limpar();goTab('adicionar',document.querySelector('[data-p=adicionar]'));window.scrollTo({top:0,behavior:'smooth'});}
-
-/* ===== CORREÇÃO: editarImovel bloqueia campo numcod ===== */
 function editarImovel(id){
   var im=_todos.find(function(x){return x.id===id;});
   if(!im){toast('Imóvel não encontrado!',true);return;}
@@ -760,8 +777,7 @@ function editarImovel(id){
   document.getElementById('f-publicado').value=im.publicado===false?'false':'true';
   var _codEsp=(SG[im.status]||'FCV')+String(im.numeroCodigo||'').padStart(3,'0');
   var _slugOk=im.slug&&im.slug.toLowerCase().indexOf(_codEsp.toLowerCase())!==-1;
-  if(_slugOk){document.getElementById('slug-inp').value=im.slug;_slugManual=true;}
-  else{document.getElementById('slug-inp').value='';_slugManual=false;}
+  if(_slugOk){document.getElementById('slug-inp').value=im.slug;_slugManual=true;}else{document.getElementById('slug-inp').value='';_slugManual=false;}
   if(im.seoTitle){document.getElementById('seo-t').value=im.seoTitle;_seoTM=true;}
   if(im.seoDesc){document.getElementById('seo-d').value=im.seoDesc;_seoDM=true;}
   _fotosEx=getFotos(im);renderFotos();atuPrev();
@@ -769,7 +785,6 @@ function editarImovel(id){
   goTab('adicionar',document.querySelector('[data-p=adicionar]'));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function setSalvando(sim){_salvando=sim;var btn=document.getElementById('btn-salvar'),txt=document.getElementById('btn-s-txt');if(!btn)return;if(sim){btn.classList.add('saving');btn.disabled=true;if(txt)txt.textContent='Salvando...';}else{btn.classList.remove('saving');btn.disabled=false;if(txt)txt.textContent='Salvar Imóvel';}}
 function mostrarErrSalv(msg){var b=document.getElementById('salv-err');document.getElementById('salv-err-msg').textContent=msg;b.classList.add('on');b.scrollIntoView({behavior:'smooth',block:'nearest'});setTimeout(function(){b.classList.remove('on');},8000);}
 function salvar(){
@@ -826,8 +841,232 @@ function refCopiar(){if(!_refNumAtual){toast('Selecione uma categoria!','warn');
 function refUsarForm(){if(!_refNumAtual){toast('Selecione uma categoria!','warn');return;}var stMap={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'},sigla=_refNumAtual.replace(/[0-9]/g,''),num=_refNumAtual.replace(/[^0-9]/g,''),st=stMap[sigla]||'venda';var fS=document.getElementById('f-status'),fN=document.getElementById('f-numcod');if(fS)fS.value=st;if(fN)fN.value=num;onStatusChange();goTab('adicionar',document.querySelector('[data-p=adicionar]'));toast('✅ '+_refNumAtual+' aplicado no formulário!');}
 function renderMinhaConta(){var el=document.getElementById('minha-conta');if(!el||!_usuarioAtual)return;var email=_usuarioAtual.email||'',uid=_usuarioAtual.uid||'';el.innerHTML='<div class="user-row"><div class="u-av">'+email.charAt(0).toUpperCase()+'</div><div style="flex:1;min-width:0;"><div class="u-email">'+esc(email)+'</div><div class="u-uid">UID: '+esc(uid.slice(0,20))+'...</div></div><span class="u-badge ubadge-adm">ADM</span></div>';}
 function alterarPw(){var nova=document.getElementById('nova-pw').value,conf=document.getElementById('conf-pw').value;if(!nova||nova.length<8){toast('⚠️ Mínimo 8 caracteres.','warn');return;}if(nova!==conf){toast('❌ Senhas não coincidem!',true);return;}if(!_usuarioAtual){toast('❌ Não autenticado!',true);return;}_usuarioAtual.updatePassword(nova).then(function(){toast('✅ Senha alterada!');document.getElementById('nova-pw').value='';document.getElementById('conf-pw').value='';document.getElementById('pw-bar1').className='pw-bar pw0';document.getElementById('pw-txt1').textContent='';}).catch(function(e){toast(trErr(e.code),true);if(e.code==='auth/requires-recent-login')setTimeout(function(){fazerLogout();},2000);});}
-function addUsuario(){var email=document.getElementById('nu-email').value.trim(),pw=document.getElementById('nu-pw').value,conf=document.getElementById('nu-conf').value;if(!email){toast('⚠️ Informe o e-mail.','warn');return;}if(!pw||pw.length<8){toast('⚠️ Mínimo 8 caracteres.','warn');return;}if(pw!==conf){toast('❌ Senhas não coincidem!',true);return;}var adminEmail=_usuarioAtual?_usuarioAtual.email:'',adminPw=prompt('Por segurança, confirme sua senha:');if(!adminPw)return;auth.createUserWithEmailAndPassword(email,pw).then(function(cred){db.ref('fcosta_config/admins/'+cred.user.uid).set({email:email,criado:new Date().toISOString()});return auth.signOut();}).then(function(){return auth.signInWithEmailAndPassword(adminEmail,adminPw);}).then(function(){toast('✅ Usuário "'+email+'" criado!');document.getElementById('nu-email').value='';document.getElementById('nu-pw').value='';document.getElementById('nu-conf').value='';document.getElementById('pw-bar2').className='pw-bar pw0';document.getElementById('pw-txt2').textContent='';}).catch(function(e){toast(trErr(e.code),true);});}
+
+// ══ FIX 1: addUsuario — segunda instância Firebase (sem tela preta) ══
+function addUsuario(){
+  var email=document.getElementById('nu-email').value.trim();
+  var pw=document.getElementById('nu-pw').value;
+  var conf=document.getElementById('nu-conf').value;
+  if(!email){toast('⚠️ Informe o e-mail.','warn');return;}
+  if(!pw||pw.length<8){toast('⚠️ Mínimo 8 caracteres.','warn');return;}
+  if(pw!==conf){toast('❌ Senhas não coincidem!',true);return;}
+  // Segunda instância: cria o user sem deslogar o admin
+  var app2;
+  try{app2=firebase.app('tcr');}
+  catch(e){app2=firebase.initializeApp(firebase.app().options,'tcr');}
+  var auth2=firebase.auth(app2);
+  auth2.createUserWithEmailAndPassword(email,pw)
+    .then(function(cred){
+      db.ref('fcosta_config/admins/'+cred.user.uid).set({email:email,criado:new Date().toISOString()});
+      return auth2.signOut();
+    })
+    .then(function(){
+      toast('✅ Usuário "'+email+'" criado! Você continua logado.');
+      document.getElementById('nu-email').value='';
+      document.getElementById('nu-pw').value='';
+      document.getElementById('nu-conf').value='';
+      document.getElementById('pw-bar2').className='pw-bar pw0';
+      document.getElementById('pw-txt2').textContent='';
+    })
+    .catch(function(e){toast(trErr(e.code),true);});
+}
+
 function forcaPw(pw,barId,txtId){var bar=document.getElementById(barId),txt=document.getElementById(txtId);if(!bar||!txt)return;var sc=0;if(pw.length>=8)sc++;if(/[A-Z]/.test(pw))sc++;if(/[0-9]/.test(pw))sc++;if(/[^A-Za-z0-9]/.test(pw))sc++;bar.className='pw-bar pw'+sc;txt.textContent=sc>0?'Força: '+(['','Fraca','Razoável','Boa','Forte'][sc]||''):'';}
+</script>
+
+<script>
+/* PATCH FCosta ADM v2 */
+
+/* filtrar ignora _del e _excluido */
+filtrar=function(){
+  var b=(document.getElementById('busca').value||'').toLowerCase();
+  var s=document.getElementById('filtro-s').value;
+  render(_todos.filter(function(i){
+    if(i._del===true)return false;
+    if(i._excluido===true)return false;
+    var txt=[i.titulo,i.bairro,i.tipo,getCod(i)].filter(Boolean).join(' ').toLowerCase();
+    return(!b||txt.includes(b))&&(!s||i.status===s);
+  }));
+};
+
+/* ══ DELETE DEFINITIVO ══
+   Estratégia: remove() → verifica se o nó ainda existe → se ainda existir,
+   usa set(null) → verifica de novo → se ainda existir, marca _del+_excluido.
+   O listener on('value') fica ativo mas vai ignorar nós com _del ou _excluido.
+*/
+pedirDelImovel=function(id,nome){
+  pedirDel(id,nome,function(xid){
+    var ref=db.ref('fcosta_imoveis/'+xid);
+
+    /* Pausa o listener para evitar que o Firebase re-renderize durante a operação */
+    _pausarListener=true;
+
+    /* Escurece o card visualmente */
+    var cards=document.querySelectorAll('[data-action][data-id="'+xid+'"]');
+    cards.forEach(function(b){var c=b.closest('.icard');if(c){c.style.opacity='.2';c.style.pointerEvents='none';}});
+
+    function removerLocal(){
+      _todos=_todos.filter(function(x){return x.id!==xid;});
+      filtrar();atualizarStats();
+      /* Reativa o listener após a UI estar atualizada */
+      setTimeout(function(){_pausarListener=false;},1500);
+    }
+
+    function restaurarCards(){
+      cards.forEach(function(b){var c=b.closest('.icard');if(c){c.style.opacity='';c.style.pointerEvents='';}});
+      _pausarListener=false;
+    }
+
+    /* PASSO 1: remove() e depois verifica se o nó realmente sumiu */
+    ref.remove().then(function(){
+      /* Confirma no servidor lendo o nó logo após */
+      ref.once('value').then(function(snap){
+        if(!snap.exists()){
+          /* Nó sumiu de verdade ✅ */
+          removerLocal();
+          toast('✅ Excluído!');
+        } else {
+          /* remove() prometeu sucesso mas o nó ainda está lá — tenta set(null) */
+          ref.set(null).then(function(){
+            ref.once('value').then(function(snap2){
+              if(!snap2.exists()){
+                removerLocal();
+                toast('✅ Excluído (set null)!');
+              } else {
+                /* Ainda existe — marca como oculto permanentemente */
+                ref.update({_del:true,_excluido:true}).then(function(){
+                  removerLocal();
+                  toast('⚠️ Item oculto. Exclusão bloqueada pelo Firebase — verifique as regras.','warn');
+                }).catch(function(e){
+                  restaurarCards();
+                  alert('❌ Não foi possível excluir nem ocultar.\nErro: '+(e&&e.message?e.message:e));
+                });
+              }
+            });
+          }).catch(function(e2){
+            ref.update({_del:true,_excluido:true}).then(function(){
+              removerLocal();
+              toast('⚠️ Item oculto (set null falhou).','warn');
+            }).catch(function(){restaurarCards();toast('❌ Falha total na exclusão!',true);});
+          });
+        }
+      });
+    }).catch(function(e1){
+      /* remove() rejeitado imediatamente — tenta set(null) */
+      ref.set(null).then(function(){
+        removerLocal();
+        toast('✅ Excluído (set null)!');
+      }).catch(function(e2){
+        ref.update({_del:true,_excluido:true}).then(function(){
+          removerLocal();
+          toast('⚠️ Item oculto — não será mais exibido.','warn');
+        }).catch(function(e3){
+          restaurarCards();
+          var msg=e1&&e1.message?e1.message:(e1&&e1.code?e1.code:'desconhecido');
+          alert('❌ Firebase recusou todas as tentativas!\nErro: '+msg+'\n\nVerifique as Regras do Firebase Realtime Database:\n{\n  "rules":{\n    ".read":"auth != null",\n    ".write":"auth != null"\n  }\n}');
+          toast('❌ Sem permissão!',true);
+        });
+      });
+    });
+  });
+};
+
+/* onNumCod verifica dup em edicao tambem */
+onNumCod=function(){
+  esconderDup();_slugManual=false;atuPrev();
+  var id=document.getElementById('f-id').value;
+  var st=document.getElementById('f-status').value;
+  var nc=document.getElementById('f-numcod').value.trim();
+  if(!st||!nc)return;
+  var np=nc.padStart(3,'0'),conf=verDup(st,np,id);
+  if(conf){mostrarDup((SG[st]||'FCV')+np,conf.titulo||'?',(SG[st]||'FCV')+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}
+  else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}
+  atuRefPainel(st,id);
+};
+
+/* editarImovel desbloqueia numero */
+var _oe=editarImovel;
+editarImovel=function(id){
+  _oe(id);
+  setTimeout(function(){
+    var el=document.getElementById('f-numcod');
+    if(el){el.readOnly=false;el.style.opacity='1';el.style.cursor='';}
+    var nh=document.getElementById('numcod-hint');
+    if(nh)nh.textContent='Pode alterar - duplicidade verificada ao salvar';
+  },60);
+};
+
+/* salvar verifica dup em edicao */
+var _os=salvar;
+salvar=function(){
+  var id=document.getElementById('f-id').value;
+  var status=document.getElementById('f-status').value;
+  var numcod=document.getElementById('f-numcod').value.trim();
+  if(id&&status&&numcod){
+    var sigla=SG[status]||'FCV';
+    var numFinal=numcod.padStart(3,'0');
+    var conf=verDup(status,numFinal,id);
+    if(conf){
+      mostrarDup(sigla+numFinal,conf.titulo||'?',sigla+proxNum(status));
+      document.getElementById('salv-err-msg').textContent='Codigo '+sigla+numFinal+' ja existe!';
+      document.getElementById('salv-err').classList.add('on');
+      return;
+    }
+  }
+  _os();
+};
+
+/* limpar duplicatas e vazios */
+function limparVaziosDup(){
+  var codMap={};
+  _todos.forEach(function(i){
+    var c=getCod(i);
+    if(!codMap[c])codMap[c]=[];
+    codMap[c].push(i);
+  });
+  var lista=[];
+  _todos.forEach(function(i){if(!i.titulo&&!i.status)lista.push(i);});
+  Object.values(codMap).forEach(function(g){
+    if(g.length<2)return;
+    g.sort(function(a,b){return((b.titulo?2:0)+(getFotos(b).length?1:0))-((a.titulo?2:0)+(getFotos(a).length?1:0));});
+    g.slice(1).forEach(function(i){if(!lista.find(function(x){return x.id===i.id;}))lista.push(i);});
+  });
+  if(!lista.length){toast('Nenhum vazio ou duplicado!');return;}
+  var msg='Excluir '+lista.length+' registro(s)?\n\n';
+  lista.forEach(function(i){msg+='- '+(i.titulo||'SEM TITULO')+' ('+getCod(i)+')\n';});
+  if(!confirm(msg))return;
+  var n=0,nOk=0;
+  function nx(i){
+    if(i>=lista.length){
+      toast(nOk+' excluído(s) de '+lista.length+'!');
+      _todos=_todos.filter(function(x){return!lista.find(function(y){return y.id===x.id;});});
+      filtrar();atualizarStats();return;
+    }
+    var r=db.ref('fcosta_imoveis/'+lista[i].id);
+    r.remove()
+      .then(function(){nOk++;n++;nx(i+1);})
+      .catch(function(){
+        /* fallback: marcar como excluído para não aparecer após F5 */
+        r.update({_del:true,_excluido:true})
+          .then(function(){nOk++;n++;nx(i+1);})
+          .catch(function(){n++;nx(i+1);});
+      });
+  }
+  nx(0);
+}
+
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    if(document.getElementById('btn-lv'))return;
+    var tb=document.querySelector('.toolbar');
+    if(!tb)return;
+    var btn=document.createElement('button');
+    btn.id='btn-lv';btn.className='btn bdel';
+    btn.textContent='Limpar Vazios/Dup.';
+    btn.onclick=limparVaziosDup;
+    tb.appendChild(btn);
+  },1500);
+});
 </script>
 </body>
 </html>
