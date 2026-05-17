@@ -1,3 +1,5 @@
+html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -425,6 +427,42 @@ img{max-width:100%;display:block;}
 #toast.warn{background:#E65100;}
 .loading{text-align:center;padding:40px;color:var(--sec);}
 .spin{width:30px;height:30px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--az);border-radius:50%;margin:0 auto 10px;animation:spin .8s linear infinite;}
+/* ═══ FCP — Módulo Panfletos ═══ */
+.fcp-sec{background:rgba(123,31,162,.08);border:2px solid rgba(171,71,188,.3);border-radius:16px;padding:20px 22px;margin-bottom:24px;display:none;}
+.fcp-sec.on{display:block;}
+.fcp-sec-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.fcp-sec-tit{font-family:var(--tit);font-size:1rem;font-weight:700;color:#CE93D8;display:flex;align-items:center;gap:8px;}
+.fcp-sec-sub{font-size:.65rem;color:rgba(255,255,255,.45);margin-top:2px;}
+.fcp-grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:12px;}
+.fcp-card{background:rgba(123,31,162,.15);border:1.5px solid rgba(171,71,188,.35);border-radius:12px;overflow:hidden;transition:border-color .2s,transform .2s;}
+.fcp-card:hover{border-color:#CE93D8;transform:translateY(-2px);}
+.fcp-thumb{height:130px;background:rgba(123,31,162,.25);display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative;overflow:hidden;}
+.fcp-thumb img{width:100%;height:100%;object-fit:cover;}
+.fcp-cod-b{position:absolute;top:6px;left:6px;font-family:var(--tit);font-size:.85rem;font-weight:900;letter-spacing:1.5px;color:#CE93D8;background:rgba(40,10,50,.85);padding:2px 8px;border-radius:5px;}
+.fcp-pub-b{position:absolute;top:6px;right:6px;font-size:.48rem;font-weight:800;padding:2px 8px;border-radius:5px;text-transform:uppercase;}
+.fcp-pub-sim{background:rgba(27,122,63,.85);color:#CAFCE0;}
+.fcp-pub-nao{background:rgba(160,21,21,.85);color:#FFD5D5;}
+.fcp-body{padding:10px 12px 12px;}
+.fcp-nome{font-size:.8rem;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-bottom:3px;}
+.fcp-local{font-size:.6rem;color:var(--sec);margin-bottom:6px;}
+.fcp-tipo-tag{display:inline-block;font-size:.5rem;font-weight:800;padding:2px 7px;border-radius:4px;background:rgba(171,71,188,.2);color:#CE93D8;border:1px solid rgba(171,71,188,.35);margin-bottom:6px;}
+.fcp-acts{display:flex;gap:5px;}
+.fcp-acts .btn{flex:1;justify-content:center;padding:6px 6px;font-size:.65rem;}
+.fcp-upload-area{border:2px dashed rgba(171,71,188,.4);border-radius:12px;padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(123,31,162,.07);}
+.fcp-upload-area:hover{border-color:#CE93D8;background:rgba(123,31,162,.15);}
+.fcp-upload-area input{display:none;}
+.fcp-upload-area .fcp-up-ic{font-size:2.2rem;margin-bottom:6px;}
+.fcp-upload-area p{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px;}
+.fcp-arq-prev{display:none;align-items:center;gap:12px;background:rgba(123,31,162,.12);border:1.5px solid rgba(171,71,188,.35);border-radius:10px;padding:10px 14px;margin-top:10px;}
+.fcp-arq-prev.on{display:flex;}
+.fcp-arq-ic{font-size:1.6rem;flex-shrink:0;}
+.fcp-arq-nome{font-size:.72rem;font-weight:600;color:#CE93D8;word-break:break-all;flex:1;}
+.fcp-arq-rm{font-size:.65rem;padding:4px 9px;border-radius:6px;background:rgba(160,21,21,.3);color:#FFD5D5;border:1px solid rgba(160,21,21,.5);cursor:pointer;}
+.fcp-prog{font-size:.7rem;color:#CE93D8;margin-top:8px;display:none;}
+.fcp-info-box{background:rgba(123,31,162,.12);border:1.5px solid rgba(171,71,188,.35);border-radius:10px;padding:12px 15px;margin-bottom:14px;font-size:.72rem;color:#E1BEE7;line-height:1.7;display:none;}
+.fcp-info-box.on{display:block;}
+.fcp-empty{text-align:center;padding:30px;color:rgba(206,147,216,.35);font-size:.78rem;}
+.fcp-empty span{font-size:2.5rem;display:block;margin-bottom:8px;opacity:.3;}
 @media(max-width:860px){.stats{grid-template-columns:repeat(3,1fr);}.ref-thead,.ref-linha{grid-template-columns:80px 1fr 100px 80px 50px 70px;}.fixas-grid{grid-template-columns:repeat(2,1fr);}.pag-fgrid{grid-template-columns:1fr;}}
 @media(max-width:600px){#top{padding:0 12px;height:52px;}.ttitle small{display:none;}.ttitle{font-size:.78rem;}.ueml{display:none;}#tabs{padding:0 8px;}.tab{font-size:.64rem;padding:11px 9px;}#main{padding:14px 10px 80px;}.stats{grid-template-columns:repeat(2,1fr);gap:7px;}.fgrid{grid-template-columns:1fr;}.fcard{padding:14px 12px;}.lbox{padding:32px 22px 28px;}.pub-bar{margin:28px -10px -80px;padding:10px;}.ref-thead,.ref-linha{grid-template-columns:70px 1fr 60px;}.ref-thead span:nth-child(n+4),.ref-linha>*:nth-child(n+4){display:none;}.fixas-grid{grid-template-columns:repeat(2,1fr);}.ctrl-minigrid{grid-template-columns:1fr 1fr;}.cdel-box{padding:20px 18px;}.pag-fgrid{grid-template-columns:1fr;}.auth-panel{padding:16px;}}
 @media(max-width:400px){.lbox{padding:28px 16px 24px;}.tab{font-size:.6rem;padding:10px 7px;}.stats{display:flex;overflow-x:auto;gap:7px;padding-bottom:4px;}.stat{flex:0 0 auto;min-width:90px;}}
@@ -482,6 +520,19 @@ img{max-width:100%;display:block;}
     <button class="btn bok" onclick="novoImovel()">➕ Novo Imóvel</button>
     <button class="btn bwarn" onclick="corrigirSlugs()">🔧 Corrigir Slugs</button>
   </div>
+  <!-- ═══ SEÇÃO FCP — acima dos cards FCV/FCA/FCL ═══ -->
+  <div class="fcp-sec" id="fcp-sec">
+    <div class="fcp-sec-hdr">
+      <div>
+        <div class="fcp-sec-tit">📄 FCP — Panfletos</div>
+        <div class="fcp-sec-sub">Upload de panfletos em PDF ou imagem · exibição exclusiva na home e página FCP</div>
+      </div>
+      <button class="btn" style="background:rgba(123,31,162,.3);color:#CE93D8;border:1.5px solid rgba(171,71,188,.45);font-size:.7rem;" onclick="novoFcp()">📤 Novo Panfleto</button>
+    </div>
+    <div class="fcp-grid-cards" id="fcp-grid"></div>
+  </div>
+  <!-- Separador quando há FCP e outros imóveis -->
+  <div id="lista-sep" style="display:none;font-size:.62rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;padding:0 2px;">🏠 FCV · FCA · FCL — Imóveis</div>
   <div class="im-grid" id="lista"><div class="loading"><div class="spin"></div><p>Carregando...</p></div></div>
 </div>
 <div class="painel" id="p-adicionar">
@@ -524,10 +575,32 @@ img{max-width:100%;display:block;}
       <div class="fg full"><label>Endereço Completo</label><input type="text" id="f-endereco" placeholder="Ex: Rua das Flores, 123"/></div>
       <div class="fg full"><label>Descrição</label><textarea id="f-descricao" placeholder="Descreva o imóvel..." oninput="atuPrev()"></textarea></div>
       <div class="fg full"><label>Link do Vídeo (YouTube — watch ou /shorts/)</label><input type="text" id="f-video" placeholder="https://youtube.com/watch?v=... ou https://youtube.com/shorts/ID" oninput="prevVideo()"/><div id="video-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(59,155,214,.4);position:relative;padding-top:56.25%;"><iframe id="video-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe><button onclick="limparVideo()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">✕ Remover</button></div><div id="video-erro" style="display:none;margin-top:6px;font-size:.68rem;color:#FFD5D5;background:rgba(160,21,21,.2);border:1px solid rgba(160,21,21,.4);border-radius:6px;padding:6px 10px;">⚠️ Link inválido. Use youtube.com/watch?v=... ou youtube.com/shorts/ID</div></div>
+      <!-- ═══ BLOCO FCP — aparece só quando status = panfleto ═══ -->
+      <div class="fcp-info-box full" id="fcp-info-box">
+        📄 <strong style="color:#CE93D8;">Modo Panfleto (FCP)</strong> — Preencha título, bairro e publicação. Faça upload do arquivo abaixo. Os demais campos são ocultados automaticamente.
+      </div>
+      <div class="fg full" id="fcp-upload-bloco" style="display:none;">
+        <label>📤 Arquivo do Panfleto (PDF ou Imagem)</label>
+        <div class="fcp-upload-area" onclick="document.getElementById('fcp-inp').click()">
+          <input type="file" id="fcp-inp" accept="image/*,application/pdf" onchange="onFcpArquivo(event)"/>
+          <div class="fcp-up-ic">📄</div>
+          <p>Clique para selecionar PDF ou imagem do panfleto</p>
+          <p style="font-size:.6rem;opacity:.5;margin-top:2px;">PDF · JPEG · PNG · WEBP</p>
+        </div>
+        <div class="fcp-arq-prev" id="fcp-arq-prev">
+          <span class="fcp-arq-ic" id="fcp-arq-ic">📄</span>
+          <span class="fcp-arq-nome" id="fcp-arq-nome">—</span>
+          <button class="fcp-arq-rm" onclick="removerFcpArq()">✕ Remover</button>
+        </div>
+        <div class="fcp-prog" id="fcp-prog">⬆️ Enviando panfleto...</div>
+        <input type="hidden" id="fcp-url"/>
+        <input type="hidden" id="fcp-tipo-arq"/>
+      </div>
+      <!-- ═══ FIM BLOCO FCP ═══ -->
       <div class="fg"><label>Destaque na Home?</label><select id="f-destaque"><option value="false">Não</option><option value="true">✅ Sim</option></select></div>
       <div class="fg"><label>Publicado no Site?</label><select id="f-publicado"><option value="true">✅ Sim</option><option value="false">🚫 Não</option></select></div>
     </div>
-    <div style="margin-bottom:24px;">
+    <div style="margin-bottom:24px;" id="fotos-bloco">
       <label style="font-size:.62rem;font-weight:700;color:var(--sec);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:8px;">📸 Fotos (até 30)</label>
       <div class="info-box" style="margin-bottom:10px;font-size:.66rem;padding:8px 12px;">⭐ <strong>A 1ª foto é o destaque.</strong> Arraste para reordenar.</div>
       <div class="foto-tabs"><button class="ftab on" id="ftab-pc" onclick="switchFoto('pc')">📁 Do Computador</button><button class="ftab cld" id="ftab-cld" onclick="switchFoto('cld')">☁️ Do Cloudinary</button></div>
@@ -606,59 +679,12 @@ var PAG_LABELS={venda:'FCV — Comprar',aluguel:'FCA — Alugar',lancamento:'FCL
 var ST_LABEL={venda:'À Venda',aluguel:'Aluguel',lancamento:'Lançamento',panfleto:'Panfleto',vendido:'Vendido'};
 var SLUG_PAG={venda:'comprar',aluguel:'alugar',lancamento:'lancamento',panfleto:'panfleto',vendido:'vendido'};
 var GRUPOS_COR={'Serviços':'rgba(59,155,214,.8)','Conteúdo':'rgba(105,240,174,.8)','Outros':'rgba(201,168,76,.8)'};
-
-auth.onAuthStateChanged(function(user){
-  if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}
-  else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}
-});
-
-// ══ FIX 3: listener usa filtrar() — fonte única de verdade ══
-var _imovelRef=null;
-var _imovelListener=null;
-var _pausarListener=false; /* pausa o listener durante operações de exclusão */
-
-function iniciarFB(){
-  if(_fbOk)return;_fbOk=true;
-  _imovelRef=db.ref('fcosta_imoveis');
-  _imovelListener=_imovelRef.on('value',function(snap){
-    if(_pausarListener)return; /* ignora disparo durante exclusão */
-    var d=snap.val()||{};
-    var todos_raw=Object.entries(d).map(function(e){return Object.assign({},e[1],{id:e[0]});});
-    /* Limpa automaticamente nós _del do Firebase (remoção diferida) */
-    var excluidos=todos_raw.filter(function(i){return i._del===true||i._excluido===true;});
-    if(excluidos.length){
-      console.warn('[FCosta ADM] Firebase ainda contém '+excluidos.length+' nó(s) marcado(s) como excluído — tentando remover agora:',excluidos.map(function(i){return i.id;}));
-      excluidos.forEach(function(i){
-        db.ref('fcosta_imoveis/'+i.id).remove().then(function(){
-          console.log('[FCosta ADM] Nó _del removido com sucesso: '+i.id);
-        }).catch(function(e){
-          console.warn('[FCosta ADM] Não foi possível remover nó _del ('+i.id+'): '+(e&&e.message?e.message:e));
-        });
-      });
-    }
-    _todos=todos_raw.filter(function(i){return i._del!==true && i._excluido!==true;});
-    atualizarStats();
-    filtrar();
-    var pc=document.getElementById('p-codigos');if(pc&&pc.classList.contains('on'))renderCodigos();
-    var pr=document.getElementById('p-refs');if(pr&&pr.classList.contains('on'))refRender();
-  });
-}
-
-function pararFB(){
-  if(_imovelRef&&_imovelListener){
-    _imovelRef.off('value',_imovelListener);
-    _imovelRef=null;_imovelListener=null;
-  }
-  _fbOk=false;
-}
-
-function fazerLogin(){
-  var email=document.getElementById('l-email').value.trim(),senha=document.getElementById('l-senha').value,btn=document.getElementById('l-btn');
-  document.getElementById('l-err').classList.remove('on');
-  if(!email||!senha){mostrarErrLogin('Preencha e-mail e senha.');return;}
-  btn.classList.add('loading');btn.disabled=true;
-  auth.signInWithEmailAndPassword(email,senha).then(function(){btn.classList.remove('loading');btn.disabled=false;}).catch(function(e){btn.classList.remove('loading');btn.disabled=false;mostrarErrLogin(trErr(e.code));});
-}
+auth.onAuthStateChanged(function(user){if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}});
+var _imovelRef=null,_imovelListener=null,_pausarListener=false;
+function iniciarFB(){if(_fbOk)return;_fbOk=true;_imovelRef=db.ref('fcosta_imoveis');_imovelListener=_imovelRef.on('value',function(snap){if(_pausarListener)return;var d=snap.val()||{};var todos_raw=Object.entries(d).map(function(e){return Object.assign({},e[1],{id:e[0]});});var excluidos=todos_raw.filter(function(i){return i._del===true||i._excluido===true;});if(excluidos.length){excluidos.forEach(function(i){db.ref('fcosta_imoveis/'+i.id).remove().catch(function(){});});}
+_todos=todos_raw.filter(function(i){return i._del!==true&&i._excluido!==true;});atualizarStats();filtrar();var pc=document.getElementById('p-codigos');if(pc&&pc.classList.contains('on'))renderCodigos();var pr=document.getElementById('p-refs');if(pr&&pr.classList.contains('on'))refRender();});}
+function pararFB(){if(_imovelRef&&_imovelListener){_imovelRef.off('value',_imovelListener);_imovelRef=null;_imovelListener=null;}_fbOk=false;}
+function fazerLogin(){var email=document.getElementById('l-email').value.trim(),senha=document.getElementById('l-senha').value,btn=document.getElementById('l-btn');document.getElementById('l-err').classList.remove('on');if(!email||!senha){mostrarErrLogin('Preencha e-mail e senha.');return;}btn.classList.add('loading');btn.disabled=true;auth.signInWithEmailAndPassword(email,senha).then(function(){btn.classList.remove('loading');btn.disabled=false;}).catch(function(e){btn.classList.remove('loading');btn.disabled=false;mostrarErrLogin(trErr(e.code));});}
 function mostrarErrLogin(msg){var el=document.getElementById('l-err');el.textContent=msg;el.classList.add('on');}
 function trErr(code){var m={'auth/user-not-found':'❌ E-mail não cadastrado.','auth/wrong-password':'❌ Senha incorreta.','auth/invalid-email':'❌ E-mail inválido.','auth/user-disabled':'⛔ Usuário desativado.','auth/too-many-requests':'⚠️ Muitas tentativas.','auth/invalid-credential':'❌ Credenciais inválidas.','auth/network-request-failed':'❌ Sem conexão.','auth/email-already-in-use':'⚠️ E-mail já cadastrado.','auth/weak-password':'⚠️ Senha fraca (mín. 8).','auth/requires-recent-login':'⚠️ Faça login novamente.'};return m[code]||('❌ Erro: '+(code||'desconhecido'));}
 function fazerLogout(){if(!confirm('Deseja sair do Painel ADM?'))return;auth.signOut().then(function(){pararFB();_ctrlOk=false;_pagsOk=false;_todos=[];_fotosEx=[];_paginasSite=[];_estadosHome={};_estadosHamb={};limpar();toast('✅ Saiu com segurança!','warn');});}
@@ -685,18 +711,8 @@ function atualizarStats(){var c={total:0,venda:0,aluguel:0,lancamento:0,panfleto
 document.getElementById('cdel-bg').addEventListener('click',function(e){if(e.target===this)closeDel();});
 function closeDel(){document.getElementById('cdel-bg').classList.remove('on');}
 function pedirDel(id,nome,cb){document.getElementById('cdel-nome').textContent=nome;document.getElementById('cdel-bg').classList.add('on');var btn=document.getElementById('cdel-ok'),novo=btn.cloneNode(true);btn.parentNode.replaceChild(novo,btn);novo.onclick=function(){closeDel();if(cb)cb(id);};}
-
-/* pedirDelImovel definida abaixo (bloco fix) — esta posição reservada intencionalmente */
-
-function filtrar(){var b=(document.getElementById('busca').value||'').toLowerCase(),s=document.getElementById('filtro-s').value;render(_todos.filter(function(i){var txt=[i.titulo,i.bairro,i.tipo,getCod(i)].filter(Boolean).join(' ').toLowerCase();return(!b||txt.includes(b))&&(!s||i.status===s);}));}
-function render(lista){
-  var g=document.getElementById('lista');
-  if(!lista.length){g.innerHTML='<div class="loading"><p>Nenhum imóvel encontrado.</p></div>';return;}
-  var ord=lista.slice().sort(function(a,b){var ordem={'FCV':1,'FCA':2,'FCL':3,'FCP':4};var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return(ordem[sa]||9)-(ordem[sb]||9);var na=parseInt((a.codigo||'').replace(/[^0-9]/g,''))||parseInt(a.numeroCodigo)||0;var nb=parseInt((b.codigo||'').replace(/[^0-9]/g,''))||parseInt(b.numeroCodigo)||0;return na-nb;});
-  g.innerHTML=ord.map(function(i){var fs=getFotos(i),f0=i.fotoDestaque||fs[0]||'';var c=getCod(i);var nomeA=(i.titulo||c).replace(/"/g,'&quot;').replace(/'/g,'&#39;');var urlInd='https://fcostacorretor.com/imovel?id='+i.id;var urlCat=PAG_LINKS[i.status]||'https://fcostacorretor.com/comprar';var lblCat=PAG_LABELS[i.status]||'Ver listagem';var urlSlug=i.slug?'https://fcostacorretor.com'+i.slug:'';
-    return '<div class="icard"><div class="icard-img"><div class="icard-rbadge"><span class="icard-cod '+codCls(i.status)+'">'+esc(c)+'</span><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span class="icard-sbadge '+stCls(i.status)+'">'+esc(ST_LABEL[i.status]||i.status)+'</span>'+(i.destaque?'<span style="font-size:.44rem;color:var(--ouro);font-weight:800;">⭐ DESTAQUE</span>':'')+'</div></div>'+(f0?'<img src="'+esc(f0)+'" loading="lazy"/>':'<div class="ph">🏠</div>')+'<span class="icard-sbadge '+(i.publicado===false?'pub-nao':'pub-sim')+'" style="position:absolute;bottom:6px;right:6px;font-size:.5rem;padding:3px 8px;border-radius:6px;">'+(i.publicado===false?'🚫 Oculto':'✅ Pub.')+'</span></div><div class="icard-body"><div class="icard-nome">'+esc(i.titulo||'Sem título')+'</div><div class="icard-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</div>'+(i.preco?'<div class="icard-preco">R$ '+esc(i.preco)+'</div>':'')+'<div class="icard-meta">'+(i.tipo?'<span class="icard-meta-item">'+esc(i.tipo)+'</span>':'')+(i.area?'<span class="icard-meta-item">'+esc(i.area)+'m²</span>':'')+(i.quartos?'<span class="icard-meta-item">'+esc(i.quartos)+' qts</span>':'')+(i.vagas?'<span class="icard-meta-item">'+esc(i.vagas)+' vaga'+(i.vagas>1?'s':'')+'</span>':'')+'</div><div class="icard-fotos">📸 <span>'+fs.length+'</span> foto'+(fs.length!==1?'s':'')+'</div><div class="icard-links"><a class="icard-link" href="'+urlCat+'" target="_blank" rel="noopener"><span class="icard-link-lbl">LISTA</span>'+esc(lblCat)+' →</a>'+(urlSlug?'<a class="icard-link" href="'+urlSlug+'" target="_blank" rel="noopener"><span class="icard-link-lbl">SLUG</span>Página '+esc(c)+' (slug) →</a>':'')+'<a class="icard-link" href="'+urlInd+'" target="_blank" rel="noopener"><span class="icard-link-lbl">ID</span>Página '+esc(c)+' (?id) →</a></div><div class="icard-acts"><button class="btn bwarn" data-action="editar" data-id="'+i.id+'">✏️ Editar</button><button class="btn bdel" data-action="excluir" data-id="'+i.id+'" data-nome="'+nomeA+'">🗑 Excluir</button></div></div></div>';
-  }).join('');
-}
+function filtrar(){var b=(document.getElementById('busca').value||'').toLowerCase(),s=document.getElementById('filtro-s').value;var validos=_todos.filter(function(i){return i._del!==true&&i._excluido!==true;});var filtrado=validos.filter(function(i){var txt=[i.titulo,i.bairro,i.tipo,getCod(i)].filter(Boolean).join(' ').toLowerCase();return(!b||txt.includes(b))&&(!s||i.status===s);});renderFcp();var semFcp=filtrado.filter(function(i){return i.status!=='panfleto';});render(semFcp);var sep=document.getElementById('lista-sep');if(sep){var temFcp=validos.some(function(i){return i.status==='panfleto';});sep.style.display=(temFcp&&semFcp.length&&!s)?'':'none';}}
+function render(lista){var g=document.getElementById('lista');if(!lista.length){g.innerHTML='<div class="loading"><p>Nenhum imóvel encontrado.</p></div>';return;}var ord=lista.slice().sort(function(a,b){var ordem={'FCV':1,'FCA':2,'FCL':3,'FCP':4};var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return(ordem[sa]||9)-(ordem[sb]||9);var na=parseInt((a.codigo||'').replace(/[^0-9]/g,''))||parseInt(a.numeroCodigo)||0;var nb=parseInt((b.codigo||'').replace(/[^0-9]/g,''))||parseInt(b.numeroCodigo)||0;return na-nb;});g.innerHTML=ord.map(function(i){var fs=getFotos(i),f0=i.fotoDestaque||fs[0]||'';var c=getCod(i);var nomeA=(i.titulo||c).replace(/"/g,'&quot;').replace(/'/g,'&#39;');var urlInd='https://fcostacorretor.com/imovel?id='+i.id;var urlCat=PAG_LINKS[i.status]||'https://fcostacorretor.com/comprar';var lblCat=PAG_LABELS[i.status]||'Ver listagem';var urlSlug=i.slug?'https://fcostacorretor.com'+i.slug:'';return'<div class="icard"><div class="icard-img"><div class="icard-rbadge"><span class="icard-cod '+codCls(i.status)+'">'+esc(c)+'</span><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span class="icard-sbadge '+stCls(i.status)+'">'+esc(ST_LABEL[i.status]||i.status)+'</span>'+(i.destaque?'<span style="font-size:.44rem;color:var(--ouro);font-weight:800;">⭐ DESTAQUE</span>':'')+'</div></div>'+(f0?'<img src="'+esc(f0)+'" loading="lazy"/>':'<div class="ph">🏠</div>')+'<span class="icard-sbadge '+(i.publicado===false?'pub-nao':'pub-sim')+'" style="position:absolute;bottom:6px;right:6px;font-size:.5rem;padding:3px 8px;border-radius:6px;">'+(i.publicado===false?'🚫 Oculto':'✅ Pub.')+'</span></div><div class="icard-body"><div class="icard-nome">'+esc(i.titulo||'Sem título')+'</div><div class="icard-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</div>'+(i.preco?'<div class="icard-preco">R$ '+esc(i.preco)+'</div>':'')+'<div class="icard-meta">'+(i.tipo?'<span class="icard-meta-item">'+esc(i.tipo)+'</span>':'')+(i.area?'<span class="icard-meta-item">'+esc(i.area)+'m²</span>':'')+(i.quartos?'<span class="icard-meta-item">'+esc(i.quartos)+' qts</span>':'')+(i.vagas?'<span class="icard-meta-item">'+esc(i.vagas)+' vaga'+(i.vagas>1?'s':'')+'</span>':'')+'</div><div class="icard-fotos">📸 <span>'+fs.length+'</span> foto'+(fs.length!==1?'s':'')+'</div><div class="icard-links"><a class="icard-link" href="'+urlCat+'" target="_blank" rel="noopener"><span class="icard-link-lbl">LISTA</span>'+esc(lblCat)+' →</a>'+(urlSlug?'<a class="icard-link" href="'+urlSlug+'" target="_blank" rel="noopener"><span class="icard-link-lbl">SLUG</span>Página '+esc(c)+' (slug) →</a>':'')+'<a class="icard-link" href="'+urlInd+'" target="_blank" rel="noopener"><span class="icard-link-lbl">ID</span>Página '+esc(c)+' (?id) →</a></div><div class="icard-acts"><button class="btn bwarn" data-action="editar" data-id="'+i.id+'">✏️ Editar</button><button class="btn bdel" data-action="excluir" data-id="'+i.id+'" data-nome="'+nomeA+'">🗑 Excluir</button></div></div></div>';}).join('');}
 document.getElementById('lista').addEventListener('click',function(e){var btn=e.target.closest('[data-action]');if(!btn)return;e.stopPropagation();var action=btn.dataset.action,id=btn.dataset.id,nome=btn.dataset.nome||id;if(action==='editar')editarImovel(id);else if(action==='excluir')pedirDelImovel(id,nome);});
 </script>
 <script>
@@ -718,91 +734,143 @@ function seoAtualizar(){var st=document.getElementById('f-status').value,seoBox=
 function seoTManual(){_seoTM=true;var v=document.getElementById('seo-t').value;document.getElementById('gp-title').textContent=v||'—';document.getElementById('hc-title').textContent=v;gpcLbl('gpc-t',v.length,50,70,'Título');}
 function seoDManual(){_seoDM=true;var v=document.getElementById('seo-d').value;document.getElementById('gp-desc').textContent=v||'—';document.getElementById('hc-desc').textContent=v;gpcLbl('gpc-d',v.length,120,160,'Desc');}
 function gpcLbl(id,n,min,max,lbl){var el=document.getElementById(id);if(!el)return;el.textContent=lbl+': '+n+'/'+max;el.className='gpc '+(n>max?'gerr':n>=min?'gok':'gwarn');}
-function onStatusChange(){var s=document.getElementById('f-status').value,id=document.getElementById('f-id').value;if(s&&!id)document.getElementById('f-numcod').value='';esconderDup();atuRefPainel(s,id);atuPrev();}
-function onNumCod(){
-  var id=document.getElementById('f-id').value;
-  if(id)return;
-  esconderDup();_slugManual=false;atuPrev();
-  var st=document.getElementById('f-status').value,nc=document.getElementById('f-numcod').value.trim();
-  if(!st||!nc)return;
-  var np=nc.padStart(3,'0'),conf=verDup(st,np,id);
-  if(conf){var sig=SG[st]||'FCV';mostrarDup(sig+np,conf.titulo||'Sem título',sig+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}
-  else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}
-  atuRefPainel(st,id);
+function onStatusChange(){
+  var s=document.getElementById('f-status').value,id=document.getElementById('f-id').value;
+  if(s&&!id)document.getElementById('f-numcod').value='';
+  esconderDup();atuRefPainel(s,id);atuPrev();
+  /* FCP: ocultar campos irrelevantes */
+  var isFcp=(s==='panfleto');
+  var ib=document.getElementById('fcp-info-box');if(ib)ib.classList.toggle('on',isFcp);
+  var ub=document.getElementById('fcp-upload-bloco');if(ub)ub.style.display=isFcp?'flex':'none';
+  var fb=document.getElementById('fotos-bloco');if(fb)fb.style.display=isFcp?'none':'';
+  ['f-area','f-quartos','f-banheiros','f-vagas','f-endereco','f-tipo','f-preco','f-video'].forEach(function(fid){
+    var field=document.getElementById(fid);if(!field)return;
+    var wrap=field.closest('.fg');if(wrap)wrap.style.display=isFcp?'none':'';
+  });
+  var ow=document.getElementById('outro-wrap');if(ow&&isFcp)ow.style.display='none';
 }
+function onNumCod(){var id=document.getElementById('f-id').value;esconderDup();_slugManual=false;atuPrev();var st=document.getElementById('f-status').value,nc=document.getElementById('f-numcod').value.trim();if(!st||!nc)return;var np=nc.padStart(3,'0'),conf=verDup(st,np,id);if(conf){var sig=SG[st]||'FCV';mostrarDup(sig+np,conf.titulo||'Sem título',sig+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}atuRefPainel(st,id);}
 function atuPrev(){atuRefPainel(document.getElementById('f-status').value,document.getElementById('f-id').value);atuSlug();seoAtualizar();}
 function limpar(){
   ['f-titulo','f-status','f-numcod','f-tipo','f-tipo-outro','f-preco','f-area','f-quartos','f-banheiros','f-vagas','f-bairro','f-endereco','f-descricao','f-video','f-id','slug-inp','seo-t','seo-d'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f-cidade').value='São Paulo — SP';
-  document.getElementById('f-publicado').value='true';
-  document.getElementById('f-destaque').value='false';
-  document.getElementById('f-tipo').value='';
+  document.getElementById('f-publicado').value='true';document.getElementById('f-destaque').value='false';document.getElementById('f-tipo').value='';
   document.getElementById('outro-wrap').style.display='none';
   _fotosEx=[];_slugManual=false;_seoTM=false;_seoDM=false;
-  document.getElementById('fotos-prev').innerHTML='';
-  document.getElementById('drag-hint').style.display='none';
-  document.getElementById('slug-box').style.display='none';
-  document.getElementById('seo-box').style.display='none';
-  document.getElementById('ref-master').style.display='none';
-  document.getElementById('salv-err').classList.remove('on');
-  esconderDup();
+  document.getElementById('fotos-prev').innerHTML='';document.getElementById('drag-hint').style.display='none';
+  document.getElementById('slug-box').style.display='none';document.getElementById('seo-box').style.display='none';document.getElementById('ref-master').style.display='none';
+  document.getElementById('salv-err').classList.remove('on');esconderDup();
   document.getElementById('form-h').textContent='➕ Adicionar Novo Imóvel';
-  document.getElementById('f-numcod').style.borderColor='';
-  document.getElementById('f-numcod').readOnly=false;
-  document.getElementById('f-numcod').style.opacity='';
-  document.getElementById('f-numcod').style.cursor='';
+  document.getElementById('f-numcod').style.borderColor='';document.getElementById('f-numcod').readOnly=false;document.getElementById('f-numcod').style.opacity='';document.getElementById('f-numcod').style.cursor='';
   var nh=document.getElementById('numcod-hint');if(nh)nh.textContent='Deixe em branco = próximo disponível';
   var ok=document.getElementById('salv-ok');if(ok)ok.style.display='none';
   var vp=document.getElementById('video-prev');if(vp)vp.style.display='none';
   var vi=document.getElementById('video-iframe');if(vi)vi.src='';
   var ve=document.getElementById('video-erro');if(ve)ve.style.display='none';
+  /* Limpar FCP */
+  var fu=document.getElementById('fcp-url');if(fu)fu.value='';
+  var ft=document.getElementById('fcp-tipo-arq');if(ft)ft.value='';
+  var fp=document.getElementById('fcp-arq-prev');if(fp)fp.classList.remove('on');
+  var fprog=document.getElementById('fcp-prog');if(fprog)fprog.style.display='none';
+  var fib=document.getElementById('fcp-info-box');if(fib)fib.classList.remove('on');
+  var fub=document.getElementById('fcp-upload-bloco');if(fub)fub.style.display='none';
+  var fb=document.getElementById('fotos-bloco');if(fb)fb.style.display='';
+  ['f-area','f-quartos','f-banheiros','f-vagas','f-endereco','f-tipo','f-preco','f-video'].forEach(function(fid){var field=document.getElementById(fid);if(!field)return;var wrap=field.closest('.fg');if(wrap)wrap.style.display='';});
 }
 function novoImovel(){limpar();goTab('adicionar',document.querySelector('[data-p=adicionar]'));window.scrollTo({top:0,behavior:'smooth'});}
 function editarImovel(id){
-  var im=_todos.find(function(x){return x.id===id;});
-  if(!im){toast('Imóvel não encontrado!',true);return;}
+  var im=_todos.find(function(x){return x.id===id;});if(!im){toast('Imóvel não encontrado!',true);return;}
   limpar();
   document.getElementById('form-h').textContent='✏️ Editando: '+(im.titulo||id);
-  document.getElementById('f-id').value=id;
-  document.getElementById('f-titulo').value=im.titulo||'';
-  document.getElementById('f-status').value=im.status||'';
-  document.getElementById('f-numcod').value=im.numeroCodigo||'';
-  document.getElementById('f-numcod').readOnly=true;
-  document.getElementById('f-numcod').style.opacity='.5';
-  document.getElementById('f-numcod').style.cursor='not-allowed';
-  var nh=document.getElementById('numcod-hint');if(nh)nh.textContent='🔒 Código fixo — não pode ser alterado ao editar';
+  document.getElementById('f-id').value=id;document.getElementById('f-titulo').value=im.titulo||'';document.getElementById('f-status').value=im.status||'';
+  document.getElementById('f-numcod').value=im.numeroCodigo||'';document.getElementById('f-numcod').readOnly=false;document.getElementById('f-numcod').style.opacity='1';document.getElementById('f-numcod').style.cursor='';
+  var nh=document.getElementById('numcod-hint');if(nh)nh.textContent='Pode alterar — duplicidade verificada ao salvar';
   carregarTipo(im.tipo||'');
   ['preco','area','quartos','banheiros','vagas','bairro','cidade','endereco','descricao','video'].forEach(function(k){var el=document.getElementById('f-'+k);if(el)el.value=im[k]||'';});
-  document.getElementById('f-destaque').value=im.destaque?'true':'false';
-  document.getElementById('f-publicado').value=im.publicado===false?'false':'true';
+  document.getElementById('f-destaque').value=im.destaque?'true':'false';document.getElementById('f-publicado').value=im.publicado===false?'false':'true';
   var _codEsp=(SG[im.status]||'FCV')+String(im.numeroCodigo||'').padStart(3,'0');
   var _slugOk=im.slug&&im.slug.toLowerCase().indexOf(_codEsp.toLowerCase())!==-1;
   if(_slugOk){document.getElementById('slug-inp').value=im.slug;_slugManual=true;}else{document.getElementById('slug-inp').value='';_slugManual=false;}
-  if(im.seoTitle){document.getElementById('seo-t').value=im.seoTitle;_seoTM=true;}
-  if(im.seoDesc){document.getElementById('seo-d').value=im.seoDesc;_seoDM=true;}
+  if(im.seoTitle){document.getElementById('seo-t').value=im.seoTitle;_seoTM=true;}if(im.seoDesc){document.getElementById('seo-d').value=im.seoDesc;_seoDM=true;}
   _fotosEx=getFotos(im);renderFotos();atuPrev();
+  /* Carregar FCP se for panfleto */
+  if(im.status==='panfleto'&&im.panfletoUrl){
+    var fu=document.getElementById('fcp-url');if(fu)fu.value=im.panfletoUrl;
+    var ft=document.getElementById('fcp-tipo-arq');if(ft)ft.value=im.panfletoTipo||'imagem';
+    var isPdf=(im.panfletoTipo||'')==='pdf';
+    var fic=document.getElementById('fcp-arq-ic');if(fic)fic.textContent=isPdf?'📄':'🖼️';
+    var fn=document.getElementById('fcp-arq-nome');if(fn)fn.textContent=isPdf?'Panfleto PDF':'Imagem do panfleto';
+    var fp=document.getElementById('fcp-arq-prev');if(fp)fp.classList.add('on');
+  }
   setTimeout(function(){if(document.getElementById('f-video').value)prevVideo();},500);
-  goTab('adicionar',document.querySelector('[data-p=adicionar]'));
-  window.scrollTo({top:0,behavior:'smooth'});
+  goTab('adicionar',document.querySelector('[data-p=adicionar]'));window.scrollTo({top:0,behavior:'smooth'});
 }
 function setSalvando(sim){_salvando=sim;var btn=document.getElementById('btn-salvar'),txt=document.getElementById('btn-s-txt');if(!btn)return;if(sim){btn.classList.add('saving');btn.disabled=true;if(txt)txt.textContent='Salvando...';}else{btn.classList.remove('saving');btn.disabled=false;if(txt)txt.textContent='Salvar Imóvel';}}
 function mostrarErrSalv(msg){var b=document.getElementById('salv-err');document.getElementById('salv-err-msg').textContent=msg;b.classList.add('on');b.scrollIntoView({behavior:'smooth',block:'nearest'});setTimeout(function(){b.classList.remove('on');},8000);}
 function salvar(){
-  if(_salvando)return;
-  document.getElementById('salv-err').classList.remove('on');
+  if(_salvando)return;document.getElementById('salv-err').classList.remove('on');
   var titulo=document.getElementById('f-titulo').value.trim(),status=document.getElementById('f-status').value,numcod=document.getElementById('f-numcod').value.trim(),id=document.getElementById('f-id').value,isNovo=!id;
   if(!titulo){mostrarErrSalv('O título do imóvel é obrigatório.');document.getElementById('f-titulo').focus();return;}
   if(!status){mostrarErrSalv('Selecione o status do imóvel.');document.getElementById('f-status').focus();return;}
   var sigla=SG[status]||'FCV',numFinal=numcod?numcod.padStart(3,'0'):proxNum(status);
-  if(isNovo){var conf=verDup(status,numFinal,id);if(conf){mostrarDup(sigla+numFinal,conf.titulo||'Sem título',sigla+proxNum(status));mostrarErrSalv('🚫 Código '+sigla+numFinal+' já existe!');return;}}
+  var conf=verDup(status,numFinal,id);if(conf){mostrarDup(sigla+numFinal,conf.titulo||'Sem título',sigla+proxNum(status));mostrarErrSalv('🚫 Código '+sigla+numFinal+' já existe!');return;}
   var slugVal=document.getElementById('slug-inp').value.trim();
   if(slugVal&&slugDup(slugVal)){mostrarErrSalv('⚠️ Este slug já está em uso por outro imóvel.');return;}
   setSalvando(true);
   var dados={titulo:titulo,status:status,numeroCodigo:numFinal,codigo:sigla+numFinal,tipo:getTipoReal(),preco:document.getElementById('f-preco').value.trim(),area:document.getElementById('f-area').value.trim(),quartos:parseInt(document.getElementById('f-quartos').value)||0,banheiros:parseInt(document.getElementById('f-banheiros').value)||0,vagas:parseInt(document.getElementById('f-vagas').value)||0,bairro:document.getElementById('f-bairro').value.trim(),cidade:document.getElementById('f-cidade').value.trim(),endereco:document.getElementById('f-endereco').value.trim(),descricao:document.getElementById('f-descricao').value.trim(),video:document.getElementById('f-video').value.trim(),destaque:document.getElementById('f-destaque').value==='true',publicado:document.getElementById('f-publicado').value!=='false',slug:slugVal||gerarSlugAuto()||'',seoTitle:document.getElementById('seo-t').value.trim(),seoDesc:document.getElementById('seo-d').value.trim(),fotos:_fotosEx,fotoDestaque:_fotosEx[0]||'',atualizado:new Date().toISOString()};
   if(isNovo)dados.criado=new Date().toISOString();
+  /* FCP: salvar panfletoUrl/Tipo */
+  if(status==='panfleto'){
+    var fcpUrl=document.getElementById('fcp-url').value;var fcpTipo=document.getElementById('fcp-tipo-arq').value||'imagem';
+    dados.panfletoUrl=fcpUrl;dados.panfletoTipo=fcpTipo;dados.fotos=[];dados.fotoDestaque=(fcpUrl&&fcpTipo!=='pdf')?fcpUrl:'';
+  }
   var ref=isNovo?db.ref('fcosta_imoveis').push():db.ref('fcosta_imoveis/'+id);
-  ref.set(dados).then(function(){setSalvando(false);toast('✅ Imóvel '+(isNovo?'adicionado':'atualizado')+'!');var ok=document.getElementById('salv-ok');if(ok){ok.style.display='inline';setTimeout(function(){ok.style.display='none';},3000);}if(isNovo)limpar();}).catch(function(e){setSalvando(false);mostrarErrSalv('Erro ao salvar: '+msgErr(e));toast('Erro ao salvar!',true);});
+  ref.set(dados).then(function(){setSalvando(false);toast('✅ '+(status==='panfleto'?'Panfleto':'Imóvel')+' '+(isNovo?'adicionado':'atualizado')+'!');var ok=document.getElementById('salv-ok');if(ok){ok.style.display='inline';setTimeout(function(){ok.style.display='none';},3000);}if(isNovo)limpar();}).catch(function(e){setSalvando(false);mostrarErrSalv('Erro ao salvar: '+msgErr(e));toast('Erro ao salvar!',true);});
 }
+/* ═══ FCP — Upload de Panfleto ═══ */
+function onFcpArquivo(event){
+  var file=event.target.files[0];if(!file)return;
+  var prog=document.getElementById('fcp-prog'),prev=document.getElementById('fcp-arq-prev'),nomeEl=document.getElementById('fcp-arq-nome'),icEl=document.getElementById('fcp-arq-ic'),urlEl=document.getElementById('fcp-url'),tipoEl=document.getElementById('fcp-tipo-arq');
+  var isPdf=file.type==='application/pdf';
+  prog.style.display='block';prog.textContent='⬆️ Enviando '+file.name+'...';prev.classList.remove('on');
+  var fd=new FormData();fd.append('file',file);fd.append('upload_preset',CLD_PRESET);fd.append('cloud_name',CLD);
+  var endpoint=isPdf?'https://api.cloudinary.com/v1_1/'+CLD+'/raw/upload':'https://api.cloudinary.com/v1_1/'+CLD+'/image/upload';
+  fetch(endpoint,{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){
+    prog.style.display='none';
+    if(d.secure_url){urlEl.value=d.secure_url;tipoEl.value=isPdf?'pdf':'imagem';icEl.textContent=isPdf?'📄':'🖼️';nomeEl.textContent=file.name+' ('+(isPdf?'PDF':'Imagem')+')';prev.classList.add('on');toast('✅ Panfleto enviado!');}
+    else{toast('⚠️ Falha: '+(d.error&&d.error.message?d.error.message:'erro desconhecido'),true);}
+  }).catch(function(e){prog.style.display='none';toast('❌ Erro: '+(e.message||e),true);});
+  event.target.value='';
+}
+function removerFcpArq(){document.getElementById('fcp-url').value='';document.getElementById('fcp-tipo-arq').value='';document.getElementById('fcp-arq-prev').classList.remove('on');document.getElementById('fcp-arq-nome').textContent='—';toast('Panfleto removido.','warn');}
+/* ═══ FCP — Seção na aba Imóveis ═══ */
+function renderFcp(){
+  var sec=document.getElementById('fcp-sec'),grid=document.getElementById('fcp-grid');if(!sec||!grid)return;
+  var fcpList=_todos.filter(function(i){return i.status==='panfleto'&&i._del!==true&&i._excluido!==true;});
+  fcpList.sort(function(a,b){return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});
+  if(fcpList.length){sec.classList.add('on');}else{sec.classList.remove('on');}
+  if(!fcpList.length){grid.innerHTML='<div class="fcp-empty"><span>📄</span>Nenhum panfleto. Clique em "Novo Panfleto".</div>';return;}
+  grid.innerHTML=fcpList.map(function(i){
+    var c=getCod(i),arqUrl=i.panfletoUrl||'',isPdf=(i.panfletoTipo||'imagem')==='pdf';
+    var thumb=arqUrl&&!isPdf?'<img src="'+esc(arqUrl)+'" loading="lazy"/>':'<div style="font-size:2.5rem;opacity:.5;">'+(arqUrl?'📄':'📄')+'</div>';
+    var idEsc=esc(i.id),nomeEsc=(i.titulo||c).replace(/"/g,'&quot;');
+    return'<div class="fcp-card">'
+      +'<div class="fcp-thumb">'+thumb+'<span class="fcp-cod-b">'+esc(c)+'</span><span class="fcp-pub-b '+(i.publicado===false?'fcp-pub-nao':'fcp-pub-sim')+'">'+(i.publicado===false?'🚫 Oculto':'✅ Pub.')+'</span></div>'
+      +'<div class="fcp-body"><div class="fcp-nome">'+esc(i.titulo||'Panfleto FCosta')+'</div>'
+      +'<div class="fcp-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</div>'
+      +'<span class="fcp-tipo-tag">'+(isPdf?'PDF':'Imagem')+'</span>'
+      +(arqUrl?'<br/><a href="'+esc(arqUrl)+'" target="_blank" rel="noopener" style="font-size:.62rem;color:#CE93D8;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;">'+(isPdf?'📄 Abrir PDF':'🖼️ Ver imagem')+'</a>':'')
+      +'<div class="fcp-acts"><button class="btn bwarn" data-action="editar" data-id="'+idEsc+'">✏️ Editar</button><button class="btn bdel" data-action="excluir" data-id="'+idEsc+'" data-nome="'+nomeEsc+'">🗑 Excluir</button></div>'
+      +'</div></div>';
+  }).join('');
+}
+/* Evento de clique nos cards FCP */
+document.getElementById('fcp-grid').addEventListener('click',function(e){
+  var btn=e.target.closest('[data-action]');if(!btn)return;e.stopPropagation();
+  var action=btn.dataset.action,id=btn.dataset.id,nome=btn.dataset.nome||id;
+  if(action==='editar')editarImovel(id);else if(action==='excluir')pedirDelImovel(id,nome);
+});
+function novoFcp(){novoImovel();setTimeout(function(){var sel=document.getElementById('f-status');if(sel){sel.value='panfleto';onStatusChange();}},80);}
 function switchFoto(origem){document.getElementById('farea-pc').style.display=origem==='pc'?'block':'none';document.getElementById('farea-cld').style.display=origem==='cld'?'block':'none';document.getElementById('ftab-pc').classList.toggle('on',origem==='pc');document.getElementById('ftab-cld').classList.toggle('on',origem==='cld');}
 function prevFotos(event){var files=Array.from(event.target.files||[]);if(!files.length)return;var prog=document.getElementById('prog');prog.style.display='block';prog.textContent='⬆️ Enviando '+files.length+' foto(s)...';var ps=files.map(function(f){return new Promise(function(res,rej){var fd=new FormData();fd.append('file',f);fd.append('upload_preset',CLD_PRESET);fd.append('cloud_name',CLD);fetch('https://api.cloudinary.com/v1_1/'+CLD+'/image/upload',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){res(d.secure_url||'');}).catch(rej);});});Promise.allSettled(ps).then(function(res){var ok=res.filter(function(r){return r.status==='fulfilled'&&r.value;}).map(function(r){return r.value;});var fail=res.filter(function(r){return r.status==='rejected';}).length;_fotosEx=_fotosEx.concat(ok).slice(0,30);renderFotos();prog.style.display='none';document.getElementById('inp-fotos').value='';if(ok.length)toast('✅ '+ok.length+' foto(s) enviada(s)!');if(fail)toast('⚠️ '+fail+' foto(s) falharam.','warn');});}
 function abrirCld(modoUp){var w=cloudinary.createUploadWidget({cloudName:CLD,uploadPreset:CLD_PRESET,sources:['local','url','camera'],multiple:true,maxFiles:30,language:'pt'},function(err,result){if(err){toast('Erro Cloudinary: '+(err.message||err),'warn');return;}if(result&&result.event==='success'){var url=result.info&&result.info.secure_url;if(url&&!_fotosEx.includes(url)){_fotosEx.push(url);if(_fotosEx.length>30)_fotosEx=_fotosEx.slice(0,30);renderFotos();var c=document.getElementById('cld-cnt');if(c)c.textContent=_fotosEx.length+' foto(s) adicionada(s)';}}});w.open();}
@@ -832,241 +900,19 @@ function limparImgPag(){document.getElementById('pag-img-url').value='';document
 function carregarGalPag(){var galEl=document.getElementById('pag-galeria');if(!galEl)return;_galFotos=[];_todos.forEach(function(im){getFotos(im).forEach(function(url){if(url&&!_galFotos.find(function(x){return x.url===url;}))_galFotos.push({url:url,nome:im.titulo||getCod(im),cod:getCod(im)});});});filtrarGalPag();}
 function filtrarGalPag(){var busca=(document.getElementById('pag-gal-busca').value||'').toLowerCase(),galEl=document.getElementById('pag-galeria');if(!galEl)return;var fi=busca?_galFotos.filter(function(x){return x.nome.toLowerCase().includes(busca)||x.cod.toLowerCase().includes(busca);}):_galFotos;if(!fi.length){galEl.innerHTML='<div style="font-size:.68rem;color:var(--sec);padding:14px;text-align:center;">Nenhuma foto encontrada.</div>';return;}galEl.innerHTML=fi.slice(0,60).map(function(f){return'<div onclick="selImgPag(\''+esc(f.url)+'\')" title="'+esc(f.nome)+'" style="cursor:pointer;position:relative;width:72px;height:56px;border-radius:7px;overflow:hidden;border:2px solid rgba(255,255,255,.1);transition:border-color .15s;flex-shrink:0;" onmouseover="this.style.borderColor=\'var(--ouro)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.1)\'"><img src="'+esc(f.url)+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/><div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);font-size:.44rem;color:#fff;padding:2px 3px;overflow:hidden;white-space:nowrap;">'+esc(f.cod)+'</div></div>';}).join('');}
 function selImgPag(url){document.getElementById('pag-img-url').value=url;document.getElementById('pag-img-prev').src=url;document.getElementById('pag-img-wrap').style.display='block';toast('✅ Imagem selecionada!');}
-function seedPaginas(){if(!confirm('Importar páginas padrão FCosta? Não sobrescreve as que já existem.'))return;var defaults=[{ic:'🏠',nome:'Comprar',url:'https://fcostacorretor.com/comprar',tipo:'default',fixa:true},{ic:'🔑',nome:'Alugar',url:'https://fcostacorretor.com/alugar',tipo:'default',fixa:true},{ic:'🏗️',nome:'Lançamentos',url:'https://fcostacorretor.com/lancamentos',tipo:'default',fixa:true},{ic:'📄',nome:'Panfletos',url:'https://fcostacorretor.com/panfletos',tipo:'default',fixa:true},{ic:'💰',nome:'Financiamento',url:'https://fcostacorretor.com/financiamento',tipo:'default'},{ic:'📊',nome:'Avaliação Gratuita',url:'https://fcostacorretor.com/avaliacao-fcosta',tipo:'default'},{ic:'📋',nome:'PTAM — Laudo',url:'https://fcostacorretor.com/ptam',tipo:'default'},{ic:'⚖️',nome:'Consultoria Judicial',url:'https://fcostacorretor.com/judicial',tipo:'default'},{ic:'📝',nome:'Blog',url:'https://fcostacorretor.com/blog',tipo:'default'},{ic:'🎬',nome:'Vídeos',url:'https://fcostacorretor.com/videos-imobiliarios',tipo:'default'},{ic:'📜',nome:'Legislação',url:'https://fcostacorretor.com/legislacaoimobiliaria',tipo:'default'}];var batch={};defaults.forEach(function(p){var existe=_paginasSite.find(function(x){return x.url===p.url;});if(!existe){var k=db.ref('fcosta_imoveis_paginas').push().key;batch['fcosta_imoveis_paginas/'+k]=p;}});if(!Object.keys(batch).length){toast('Todas as páginas padrão já existem!','warn');return;}db.ref().update(batch).then(function(){toast('✅ '+Object.keys(batch).length+' página(s) importada(s)!');}).catch(function(e){toast('Erro: '+msgErr(e),true);});}
-function refAtuStats(){var map={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'};['FCV','FCA','FCL','FCP'].forEach(function(sig){var st=map[sig],tot=_todos.filter(function(i){return(SG[i.status]||'FCV')===sig;}).length,id=sig.toLowerCase();var elT=document.getElementById('rst-'+id),elP=document.getElementById('rsp-'+id);if(elT)elT.textContent=tot;if(elP)elP.textContent='próximo: '+sig+proxNum(st);});}
-function refRender(){refAtuStats();var b=(document.getElementById('ref-busca').value||'').toLowerCase();var lista=_todos.filter(function(i){if(_refFiltSt&&i.status!==_refFiltSt)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.tipo,i.cidade].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});var corpo=document.getElementById('ref-corpo');if(!corpo)return;if(!lista.length){corpo.innerHTML='<div class="ref-vazia">Nenhum imóvel encontrado.</div>';return;}corpo.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status),url='https://fcostacorretor.com/imovel?id='+i.id;return'<div class="ref-linha"><span class="ref-c '+cl+'">'+esc(c)+'</span><span class="ref-nom">'+esc(i.titulo||'—')+'</span><span class="ref-loc">'+esc([i.bairro,i.cidade].filter(Boolean).join(' · '))+'</span><span class="ref-prc">'+(i.preco?'R$ '+esc(i.preco):'—')+'</span><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'🚫':'✅')+'</span><div class="ref-acts"><a href="'+url+'" target="_blank" class="ref-bcp" title="Abrir" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">🔗</a><button class="ref-bed" onclick="editarImovel(\''+i.id+'\')" title="Editar">✏️</button></div></div>';}).join('');}
-function refFilt(status,el){_refFiltSt=status;document.querySelectorAll('.ref-chip').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');refRender();}
-function refSig(sigla,btn){_refSigAtiva=sigla;document.querySelectorAll('.ref-sbtn').forEach(function(b){b.classList.remove('on');});if(btn)btn.classList.add('on');var stMap={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'},st=stMap[sigla]||'venda',prox=proxNum(st);_refNumAtual=sigla+prox;var corMap={FCV:'#5EC4FF',FCA:'#FFE07A',FCL:'#69f0ae',FCP:'#CE93D8'},cor=corMap[sigla]||'#fff';document.getElementById('ref-num-disp').innerHTML='<span class="rns" style="color:rgba(255,255,255,.3);">'+sigla.slice(0,2)+'</span><span class="rnn" style="color:'+cor+';">'+prox+'</span>';var nomes={FCV:'Venda / Comprar',FCA:'Aluguel / Locação',FCL:'Lançamentos',FCP:'Panfletos'},tot=_todos.filter(function(i){return(SG[i.status]||'FCV')===sigla;}).length;document.getElementById('ref-desc-disp').innerHTML='Próximo disponível para <strong>'+sigla+' — '+nomes[sigla]+'</strong><br/>'+tot+' imóve'+(tot!==1?'is registrados':'l registrado')+' nessa categoria.<br/><small style="color:rgba(255,255,255,.4);">Código gerado automaticamente, sem conflito.</small>';document.getElementById('ref-btn-cp').style.display='inline-flex';document.getElementById('ref-btn-us').style.display='inline-flex';refFilt(st,null);document.querySelectorAll('.ref-chip').forEach(function(c){c.classList.remove('on');});}
-function refCopiar(){if(!_refNumAtual){toast('Selecione uma categoria!','warn');return;}copiarTexto(_refNumAtual,function(){toast('📋 '+_refNumAtual+' copiado!');});}
-function refUsarForm(){if(!_refNumAtual){toast('Selecione uma categoria!','warn');return;}var stMap={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'},sigla=_refNumAtual.replace(/[0-9]/g,''),num=_refNumAtual.replace(/[^0-9]/g,''),st=stMap[sigla]||'venda';var fS=document.getElementById('f-status'),fN=document.getElementById('f-numcod');if(fS)fS.value=st;if(fN)fN.value=num;onStatusChange();goTab('adicionar',document.querySelector('[data-p=adicionar]'));toast('✅ '+_refNumAtual+' aplicado no formulário!');}
-function renderMinhaConta(){var el=document.getElementById('minha-conta');if(!el||!_usuarioAtual)return;var email=_usuarioAtual.email||'',uid=_usuarioAtual.uid||'';el.innerHTML='<div class="user-row"><div class="u-av">'+email.charAt(0).toUpperCase()+'</div><div style="flex:1;min-width:0;"><div class="u-email">'+esc(email)+'</div><div class="u-uid">UID: '+esc(uid.slice(0,20))+'...</div></div><span class="u-badge ubadge-adm">ADM</span></div>';}
-function alterarPw(){var nova=document.getElementById('nova-pw').value,conf=document.getElementById('conf-pw').value;if(!nova||nova.length<8){toast('⚠️ Mínimo 8 caracteres.','warn');return;}if(nova!==conf){toast('❌ Senhas não coincidem!',true);return;}if(!_usuarioAtual){toast('❌ Não autenticado!',true);return;}_usuarioAtual.updatePassword(nova).then(function(){toast('✅ Senha alterada!');document.getElementById('nova-pw').value='';document.getElementById('conf-pw').value='';document.getElementById('pw-bar1').className='pw-bar pw0';document.getElementById('pw-txt1').textContent='';}).catch(function(e){toast(trErr(e.code),true);if(e.code==='auth/requires-recent-login')setTimeout(function(){fazerLogout();},2000);});}
-
-// ══ FIX 1: addUsuario — segunda instância Firebase (sem tela preta) ══
-function addUsuario(){
-  var email=document.getElementById('nu-email').value.trim();
-  var pw=document.getElementById('nu-pw').value;
-  var conf=document.getElementById('nu-conf').value;
-  if(!email){toast('⚠️ Informe o e-mail.','warn');return;}
-  if(!pw||pw.length<8){toast('⚠️ Mínimo 8 caracteres.','warn');return;}
-  if(pw!==conf){toast('❌ Senhas não coincidem!',true);return;}
-  // Segunda instância: cria o user sem deslogar o admin
-  var app2;
-  try{app2=firebase.app('tcr');}
-  catch(e){app2=firebase.initializeApp(firebase.app().options,'tcr');}
-  var auth2=firebase.auth(app2);
-  auth2.createUserWithEmailAndPassword(email,pw)
-    .then(function(cred){
-      db.ref('fcosta_config/admins/'+cred.user.uid).set({email:email,criado:new Date().toISOString()});
-      return auth2.signOut();
-    })
-    .then(function(){
-      toast('✅ Usuário "'+email+'" criado! Você continua logado.');
-      document.getElementById('nu-email').value='';
-      document.getElementById('nu-pw').value='';
-      document.getElementById('nu-conf').value='';
-      document.getElementById('pw-bar2').className='pw-bar pw0';
-      document.getElementById('pw-txt2').textContent='';
-    })
-    .catch(function(e){toast(trErr(e.code),true);});
-}
-
-function forcaPw(pw,barId,txtId){var bar=document.getElementById(barId),txt=document.getElementById(txtId);if(!bar||!txt)return;var sc=0;if(pw.length>=8)sc++;if(/[A-Z]/.test(pw))sc++;if(/[0-9]/.test(pw))sc++;if(/[^A-Za-z0-9]/.test(pw))sc++;bar.className='pw-bar pw'+sc;txt.textContent=sc>0?'Força: '+(['','Fraca','Razoável','Boa','Forte'][sc]||''):'';}
-</script>
-
-<script>
-/* PATCH FCosta ADM v2 */
-
-/* filtrar ignora _del e _excluido */
-filtrar=function(){
-  var b=(document.getElementById('busca').value||'').toLowerCase();
-  var s=document.getElementById('filtro-s').value;
-  render(_todos.filter(function(i){
-    if(i._del===true)return false;
-    if(i._excluido===true)return false;
-    var txt=[i.titulo,i.bairro,i.tipo,getCod(i)].filter(Boolean).join(' ').toLowerCase();
-    return(!b||txt.includes(b))&&(!s||i.status===s);
-  }));
-};
-
-/* ══ DELETE DEFINITIVO ══
-   Estratégia: remove() → verifica se o nó ainda existe → se ainda existir,
-   usa set(null) → verifica de novo → se ainda existir, marca _del+_excluido.
-   O listener on('value') fica ativo mas vai ignorar nós com _del ou _excluido.
-*/
-pedirDelImovel=function(id,nome){
-  pedirDel(id,nome,function(xid){
-    var ref=db.ref('fcosta_imoveis/'+xid);
-
-    /* Pausa o listener para evitar que o Firebase re-renderize durante a operação */
-    _pausarListener=true;
-
-    /* Escurece o card visualmente */
-    var cards=document.querySelectorAll('[data-action][data-id="'+xid+'"]');
-    cards.forEach(function(b){var c=b.closest('.icard');if(c){c.style.opacity='.2';c.style.pointerEvents='none';}});
-
-    function removerLocal(){
-      _todos=_todos.filter(function(x){return x.id!==xid;});
-      filtrar();atualizarStats();
-      /* Reativa o listener após a UI estar atualizada */
-      setTimeout(function(){_pausarListener=false;},1500);
-    }
-
-    function restaurarCards(){
-      cards.forEach(function(b){var c=b.closest('.icard');if(c){c.style.opacity='';c.style.pointerEvents='';}});
-      _pausarListener=false;
-    }
-
-    /* PASSO 1: remove() e depois verifica se o nó realmente sumiu */
-    ref.remove().then(function(){
-      /* Confirma no servidor lendo o nó logo após */
-      ref.once('value').then(function(snap){
-        if(!snap.exists()){
-          /* Nó sumiu de verdade ✅ */
-          removerLocal();
-          toast('✅ Excluído!');
-        } else {
-          /* remove() prometeu sucesso mas o nó ainda está lá — tenta set(null) */
-          ref.set(null).then(function(){
-            ref.once('value').then(function(snap2){
-              if(!snap2.exists()){
-                removerLocal();
-                toast('✅ Excluído (set null)!');
-              } else {
-                /* Ainda existe — marca como oculto permanentemente */
-                ref.update({_del:true,_excluido:true}).then(function(){
-                  removerLocal();
-                  toast('⚠️ Item oculto. Exclusão bloqueada pelo Firebase — verifique as regras.','warn');
-                }).catch(function(e){
-                  restaurarCards();
-                  alert('❌ Não foi possível excluir nem ocultar.\nErro: '+(e&&e.message?e.message:e));
-                });
-              }
-            });
-          }).catch(function(e2){
-            ref.update({_del:true,_excluido:true}).then(function(){
-              removerLocal();
-              toast('⚠️ Item oculto (set null falhou).','warn');
-            }).catch(function(){restaurarCards();toast('❌ Falha total na exclusão!',true);});
-          });
-        }
-      });
-    }).catch(function(e1){
-      /* remove() rejeitado imediatamente — tenta set(null) */
-      ref.set(null).then(function(){
-        removerLocal();
-        toast('✅ Excluído (set null)!');
-      }).catch(function(e2){
-        ref.update({_del:true,_excluido:true}).then(function(){
-          removerLocal();
-          toast('⚠️ Item oculto — não será mais exibido.','warn');
-        }).catch(function(e3){
-          restaurarCards();
-          var msg=e1&&e1.message?e1.message:(e1&&e1.code?e1.code:'desconhecido');
-          alert('❌ Firebase recusou todas as tentativas!\nErro: '+msg+'\n\nVerifique as Regras do Firebase Realtime Database:\n{\n  "rules":{\n    ".read":"auth != null",\n    ".write":"auth != null"\n  }\n}');
-          toast('❌ Sem permissão!',true);
-        });
-      });
-    });
-  });
-};
-
-/* onNumCod verifica dup em edicao tambem */
-onNumCod=function(){
-  esconderDup();_slugManual=false;atuPrev();
-  var id=document.getElementById('f-id').value;
-  var st=document.getElementById('f-status').value;
-  var nc=document.getElementById('f-numcod').value.trim();
-  if(!st||!nc)return;
-  var np=nc.padStart(3,'0'),conf=verDup(st,np,id);
-  if(conf){mostrarDup((SG[st]||'FCV')+np,conf.titulo||'?',(SG[st]||'FCV')+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}
-  else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}
-  atuRefPainel(st,id);
-};
-
-/* editarImovel desbloqueia numero */
-var _oe=editarImovel;
-editarImovel=function(id){
-  _oe(id);
-  setTimeout(function(){
-    var el=document.getElementById('f-numcod');
-    if(el){el.readOnly=false;el.style.opacity='1';el.style.cursor='';}
-    var nh=document.getElementById('numcod-hint');
-    if(nh)nh.textContent='Pode alterar - duplicidade verificada ao salvar';
-  },60);
-};
-
-/* salvar verifica dup em edicao */
-var _os=salvar;
-salvar=function(){
-  var id=document.getElementById('f-id').value;
-  var status=document.getElementById('f-status').value;
-  var numcod=document.getElementById('f-numcod').value.trim();
-  if(id&&status&&numcod){
-    var sigla=SG[status]||'FCV';
-    var numFinal=numcod.padStart(3,'0');
-    var conf=verDup(status,numFinal,id);
-    if(conf){
-      mostrarDup(sigla+numFinal,conf.titulo||'?',sigla+proxNum(status));
-      document.getElementById('salv-err-msg').textContent='Codigo '+sigla+numFinal+' ja existe!';
-      document.getElementById('salv-err').classList.add('on');
-      return;
-    }
-  }
-  _os();
-};
-
-/* limpar duplicatas e vazios */
-function limparVaziosDup(){
-  var codMap={};
-  _todos.forEach(function(i){
-    var c=getCod(i);
-    if(!codMap[c])codMap[c]=[];
-    codMap[c].push(i);
-  });
-  var lista=[];
-  _todos.forEach(function(i){if(!i.titulo&&!i.status)lista.push(i);});
-  Object.values(codMap).forEach(function(g){
-    if(g.length<2)return;
-    g.sort(function(a,b){return((b.titulo?2:0)+(getFotos(b).length?1:0))-((a.titulo?2:0)+(getFotos(a).length?1:0));});
-    g.slice(1).forEach(function(i){if(!lista.find(function(x){return x.id===i.id;}))lista.push(i);});
-  });
-  if(!lista.length){toast('Nenhum vazio ou duplicado!');return;}
-  var msg='Excluir '+lista.length+' registro(s)?\n\n';
-  lista.forEach(function(i){msg+='- '+(i.titulo||'SEM TITULO')+' ('+getCod(i)+')\n';});
-  if(!confirm(msg))return;
-  var n=0,nOk=0;
-  function nx(i){
-    if(i>=lista.length){
-      toast(nOk+' excluído(s) de '+lista.length+'!');
-      _todos=_todos.filter(function(x){return!lista.find(function(y){return y.id===x.id;});});
-      filtrar();atualizarStats();return;
-    }
-    var r=db.ref('fcosta_imoveis/'+lista[i].id);
-    r.remove()
-      .then(function(){nOk++;n++;nx(i+1);})
-      .catch(function(){
-        /* fallback: marcar como excluído para não aparecer após F5 */
-        r.update({_del:true,_excluido:true})
-          .then(function(){nOk++;n++;nx(i+1);})
-          .catch(function(){n++;nx(i+1);});
-      });
-  }
-  nx(0);
-}
-
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    if(document.getElementById('btn-lv'))return;
-    var tb=document.querySelector('.toolbar');
-    if(!tb)return;
-    var btn=document.createElement('button');
-    btn.id='btn-lv';btn.className='btn bdel';
-    btn.textContent='Limpar Vazios/Dup.';
-    btn.onclick=limparVaziosDup;
-    tb.appendChild(btn);
-  },1500);
-});
+function seedPaginas(){if(!confirm('Importar páginas padrão FCosta? Não sobrescreve as que já existem.'))return;var defaults=[{ic:'🏠',nome:'Comprar',url:'https://fcostacorretor.com/comprar',tipo:'default',fixa:true},{ic:'🔑',nome:'Alugar',url:'https://fcostacorretor.com/alugar',tipo:'default',fixa:true},{ic:'🏗️',nome:'Lançamentos',url:'https://fcostacorretor.com/lancamentos',tipo:'default',fixa:true},{ic:'📄',nome:'Panfletos',url:'https://fcostacorretor.com/panfletos',tipo:'default',fixa:true},{ic:'💰',nome:'Financiamento',url:'https://fcostacorretor.com/financiamento',tipo:'default'},{ic:'📊',nome:'Avaliação Gratuita',url:'https://fcostacorretor.com/avaliacao-fcosta',tipo:'default'},{ic:'📋',nome:'PTAM — Laudo',url:'https://fcostacorretor.com/ptam',tipo:'default'},{ic:'⚖️',nome:'Consultoria Judicial',url:'https://fcostacorretor.com/judicial',tipo:'default'},{ic:'📝',nome:'Blog',url:'https://fcostacorretor.com/blog',tipo:'default'},{ic:'🎬',nome:'Vídeos',url:'https://fcostacorretor.com/videos-imobiliarios',tipo:'default'},{ic:'📜',nome:'Legislação',url:'https://fcostacorretor.com/legislacaoimobiliaria',tipo:'default'}];var batch={};
+defaults.forEach(function(p){var jaExiste=_paginasSite.find(function(x){return x.url===p.url;});if(!jaExiste){var ref=db.ref('fcosta_imoveis_paginas').push();batch[ref.key]=p;}});if(!Object.keys(batch).length){toast('Todas as páginas padrão já existem!','warn');return;}var updates={};Object.entries(batch).forEach(function(e){updates['fcosta_imoveis_paginas/'+e[0]]=e[1];});db.ref().update(updates).then(function(){toast('✅ '+Object.keys(batch).length+' página(s) importada(s)!');}).catch(function(e){toast('Erro: '+msgErr(e),true);});}
+function refRender(){var b=(document.getElementById('ref-busca').value||'').toLowerCase();var lista=_todos.filter(function(i){if(_refFiltSt&&i.status!==_refFiltSt)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.cidade].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});var corpo=document.getElementById('ref-corpo');if(!lista.length){corpo.innerHTML='<div class="ref-vazia">Nenhuma referência encontrada.</div>';return;}corpo.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status);return'<div class="ref-linha"><span class="ref-c '+cl+'">'+esc(c)+'</span><div><div class="ref-nom">'+esc(i.titulo||'—')+'</div></div><div><div class="ref-loc">'+esc(i.bairro||'—')+'</div><div class="ref-loc">'+esc(i.cidade||'')+'</div></div><span class="ref-prc">'+(i.preco?'R$ '+esc(i.preco):'—')+'</span><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'🚫':'✅')+'</span><div class="ref-acts"><button class="ref-bcp" onclick="refCopiarCod(\''+esc(c)+'\')" title="Copiar código">📋</button><button class="ref-bed" onclick="editarImovel(\''+esc(i.id)+'\')" title="Editar">✏️</button></div></div>';}).join('');var map={venda:{sig:'FCV',id:'fcv'},aluguel:{sig:'FCA',id:'fca'},lancamento:{sig:'FCL',id:'fcl'},panfleto:{sig:'FCP',id:'fcp'}};Object.entries(map).forEach(function(e){var st=e[0],m=e[1],tot=_todos.filter(function(i){return(SG[i.status]||'FCV')===m.sig;}).length,prox=m.sig+proxNum(st);var te=document.getElementById('rst-'+m.id),pe=document.getElementById('rsp-'+m.id);if(te)te.textContent=tot;if(pe)pe.textContent='próximo: '+prox;});}
+function refFilt(st,el){_refFiltSt=st;document.querySelectorAll('.ref-chip').forEach(function(c){c.classList.remove('on');});if(el)el.classList.add('on');refRender();}
+function refSig(sig,el){if(el){document.querySelectorAll('.ref-sbtn').forEach(function(b){b.classList.remove('on');});el.classList.add('on');}var stMap={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'};var st=stMap[sig];_refSigAtiva=sig;_refNumAtual=sig+proxNum(st);document.getElementById('ref-num-disp').innerHTML='<span class="rnn">'+_refNumAtual+'</span>';document.getElementById('ref-desc-disp').innerHTML='Próximo disponível para <strong>'+sig+'</strong>. Copie ou use no formulário.';document.getElementById('ref-btn-cp').style.display='inline-flex';document.getElementById('ref-btn-us').style.display='inline-flex';}
+function refCopiar(){if(!_refNumAtual)return;copiarTexto(_refNumAtual,function(){toast('📋 '+_refNumAtual+' copiado!');});}
+function refCopiarCod(cod){copiarTexto(cod,function(){toast('📋 '+cod+' copiado!');});}
+function refUsarForm(){if(!_refSigAtiva||!_refNumAtual)return;var stMap={FCV:'venda',FCA:'aluguel',FCL:'lancamento',FCP:'panfleto'};var st=stMap[_refSigAtiva];var num=_refNumAtual.replace(_refSigAtiva,'');document.getElementById('f-status').value=st;document.getElementById('f-numcod').value=num;onStatusChange();goTab('adicionar',document.querySelector('[data-p=adicionar]'));toast('✅ Código '+_refNumAtual+' aplicado no formulário!');}
+function pedirDelImovel(id,nome){pedirDel(id,nome,function(xid){db.ref('fcosta_imoveis/'+xid).remove().then(function(){toast('✅ Excluído com sucesso!');}).catch(function(e){toast('Erro ao excluir: '+msgErr(e),true);});});}
+function renderMinhaConta(){var mc=document.getElementById('minha-conta');if(!mc||!_usuarioAtual)return;var em=_usuarioAtual.email||'';mc.innerHTML='<div class="user-row"><div class="u-av">'+(em.charAt(0)||'?').toUpperCase()+'</div><div style="flex:1;min-width:0;"><div class="u-email">'+esc(em)+'</div><div class="u-uid">UID: '+esc(_usuarioAtual.uid)+'</div></div><span class="u-badge ubadge-adm">ADM</span></div>';}
+function forcaPw(v,barId,txtId){var bar=document.getElementById(barId),txt=document.getElementById(txtId);if(!bar||!txt)return;var f=0,msgs=['','Muito fraca','Fraca','Média','Forte'];if(v.length>=8)f++;if(/[A-Z]/.test(v))f++;if(/[0-9]/.test(v))f++;if(/[^A-Za-z0-9]/.test(v))f++;bar.className='pw-bar pw'+f;txt.textContent=v?msgs[f]:'';}
+function alterarPw(){var np=document.getElementById('nova-pw').value,cp=document.getElementById('conf-pw').value;if(!np||np.length<8){toast('Mínimo 8 caracteres!','warn');return;}if(np!==cp){toast('Senhas não conferem!','warn');return;}if(!_usuarioAtual){toast('Não autenticado!',true);return;}_usuarioAtual.updatePassword(np).then(function(){toast('✅ Senha alterada!');document.getElementById('nova-pw').value='';document.getElementById('conf-pw').value='';}).catch(function(e){toast('Erro: '+trErr(e.code),true);});}
+function addUsuario(){var em=document.getElementById('nu-email').value.trim(),pw=document.getElementById('nu-pw').value,cp=document.getElementById('nu-conf').value;if(!em||!pw){toast('Preencha todos os campos!','warn');return;}if(pw.length<8){toast('Senha mínimo 8 caracteres!','warn');return;}if(pw!==cp){toast('Senhas não conferem!','warn');return;}auth.createUserWithEmailAndPassword(em,pw).then(function(){toast('✅ Usuário criado: '+em);document.getElementById('nu-email').value='';document.getElementById('nu-pw').value='';document.getElementById('nu-conf').value='';}).catch(function(e){toast('Erro: '+trErr(e.code),true);});}
 </script>
 </body>
 </html>
