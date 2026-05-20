@@ -1438,7 +1438,7 @@ function updCk(){
 function salvar(){
   const d={};
   document.querySelectorAll('input[id],select[id],textarea[id]').forEach(e=>{if(e.id)d[e.id]=e.value;});
-  localStorage.setItem('ptam_fcosta_v5',JSON.stringify(d));
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ptam_rascunho.json';a.click();URL.revokeObjectURL(a.href);
   toast('✅ Rascunho salvo!');
 }
 function carregar(){
@@ -1452,7 +1452,7 @@ function carregar(){
 }
 function novoLaudo(){
   if(!confirm('Limpar todos os dados e iniciar novo PTAM?'))return;
-  localStorage.removeItem('ptam_fcosta_v5');location.reload();
+  location.reload();
 }
 
 // ── PREVIEW ──
