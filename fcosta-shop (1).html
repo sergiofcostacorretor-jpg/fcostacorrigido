@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCosta Shop | Loja Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #3B9BD6;
+    --azul-escuro: #1E3A5F;
+    --branco: #FFFFFF;
+    --cinza-claro: #F4F7FB;
+    --cinza-medio: #E2EAF4;
+    --texto: #1a2a3a;
+    --destaque: #3B9BD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cinza-claro);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* NAVBAR */
+  nav {
+    background: var(--azul-escuro);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    height: 40px;
+    border-radius: 50%;
+  }
+  .nav-logo span {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--branco);
+    letter-spacing: 0.5px;
+  }
+  .nav-logo small {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--azul);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .nav-back {
+    color: var(--azul);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: opacity 0.2s;
+  }
+  .nav-back:hover { opacity: 0.75; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, #2a527a 60%, #3B9BD6 100%);
+    padding: 4rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(59,155,214,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(59,155,214,0.25);
+    border: 1px solid rgba(59,155,214,0.5);
+    color: #7dd3f8;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--branco);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--azul); }
+  .hero p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* FILTROS */
+  .filtros {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 1rem 0;
+  }
+  .filtro-btn {
+    background: var(--branco);
+    border: 2px solid var(--cinza-medio);
+    color: var(--texto);
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filtro-btn:hover,
+  .filtro-btn.ativo {
+    background: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+    color: var(--branco);
+  }
+
+  /* GRID DE PRODUTOS */
+  .loja-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+  .section-titulo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-titulo::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--cinza-medio);
+  }
+
+  .produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* CARD DE PRODUTO */
+  .card {
+    background: var(--branco);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(30,58,95,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cinza-medio);
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(30,58,95,0.15);
+  }
+  .card-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+  }
+  .card-thumb.curso   { background: linear-gradient(135deg, #1E3A5F, #3B9BD6); }
+  .card-thumb.ebook   { background: linear-gradient(135deg, #0f5132, #198754); }
+  .card-thumb.contrato{ background: linear-gradient(135deg, #4a1a5e, #9333ea); }
+  .card-thumb.consult { background: linear-gradient(135deg, #7a3500, #e07b00); }
+
+  .card-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .card-badge.novo { background: rgba(34,197,94,0.8); }
+  .card-badge.hot  { background: rgba(239,68,68,0.8); }
+
+  .card-body {
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .card-categoria {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--azul);
+  }
+  .card-nome {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: #5a6e84;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .card-footer {
+    padding: 1rem 1.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--cinza-medio);
+  }
+  .card-preco {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--azul-escuro);
+  }
+  .card-preco small {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: #8a9db0;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .card-preco.gratis {
+    color: #198754;
+  }
+  .btn-comprar {
+    background: var(--azul);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .btn-comprar:hover {
+    background: var(--azul-escuro);
+    transform: scale(1.03);
+  }
+  .btn-comprar.em-breve {
+    background: var(--cinza-medio);
+    color: #8a9db0;
+    cursor: default;
+  }
+  .btn-comprar.em-breve:hover {
+    background: var(--cinza-medio);
+    transform: none;
+  }
+
+  /* CARD EM DESTAQUE */
+  .card-destaque {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(30,58,95,0.15);
+    border: 1px solid var(--cinza-medio);
+    background: var(--branco);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .card-destaque:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(30,58,95,0.2);
+  }
+  .destaque-visual {
+    background: linear-gradient(135deg, #1E3A5F 0%, #3B9BD6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2.5rem;
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .destaque-visual::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .destaque-visual .emoji { font-size: 4rem; }
+  .destaque-visual .plataforma {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .destaque-info {
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .destaque-info .tag-novo {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    width: fit-content;
+  }
+  .destaque-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--azul-escuro);
+    line-height: 1.2;
+  }
+  .destaque-info p {
+    font-size: 0.9rem;
+    color: #5a6e84;
+    line-height: 1.6;
+  }
+  .destaque-info .preco-destaque {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--azul-escuro);
+  }
+  .destaque-info .preco-destaque small {
+    font-size: 0.75rem;
+    color: #8a9db0;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    display: block;
+  }
+  .btn-hotmart {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #3B9BD6, #1E3A5F);
+    color: #fff;
+    padding: 0.8rem 1.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.1s;
+    width: fit-content;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-hotmart:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  /* BANNER EM BREVE */
+  .banner-embreve {
+    background: linear-gradient(135deg, var(--azul-escuro), #2a527a);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--branco);
+  }
+  .banner-embreve h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .banner-embreve p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: #fff;
+    padding: 0.75rem 1.75rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .whatsapp-btn:hover { opacity: 0.9; }
+
+  /* RODAPÉ */
+  footer {
+    background: var(--azul-escuro);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+  }
+  footer strong { color: var(--azul); }
+
+  /* RESPONSIVO */
+  @media (max-width: 680px) {
+    .card-destaque { grid-template-columns: 1fr; }
+    .destaque-visual { min-height: 160px; padding: 1.5rem; }
+    .destaque-info { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://res.cloudinary.com/dpquob8gh/image/upload/v1/fcosta_imoveis/logo_fcosta" 
+         onerror="this.style.display='none'" alt="FCosta">
+    <div>
+      <span>FCosta Shop</span>
+      <small>CRECI-SP 294791-F · CNAI 52708</small>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Voltar ao site</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🛒 Loja Digital</div>
+  <h1>FCosta <span>Shop</span></h1>
+  <p>Cursos, e-books, modelos de contratos e consultoria especializada em mercado imobiliário.</p>
+</div>
+
+<!-- FILTROS -->
+<div class="filtros">
+  <button class="filtro-btn ativo" onclick="filtrar('todos', this)">Todos</button>
+  <button class="filtro-btn" onclick="filtrar('curso', this)">🎓 Cursos</button>
+  <button class="filtro-btn" onclick="filtrar('ebook', this)">📖 E-books</button>
+  <button class="filtro-btn" onclick="filtrar('contrato', this)">📄 Contratos</button>
+  <button class="filtro-btn" onclick="filtrar('consult', this)">💼 Consultoria</button>
+</div>
+
+<!-- LOJA -->
+<div class="loja-section">
+
+  <h2 class="section-titulo">⭐ Destaque</h2>
+  <div class="produtos-grid">
+
+    <!-- PRODUTO HOTMART EM DESTAQUE -->
+    <div class="card-destaque" data-cat="curso">
+      <div class="destaque-visual">
+        <span class="emoji">🎓</span>
+        <span class="plataforma">Hotmart</span>
+      </div>
+      <div class="destaque-info">
+        <span class="tag-novo">Disponível agora</span>
+        <h2>Curso Imobiliário FCosta</h2>
+        <p>Treinamento completo para corretores e investidores. Aprenda técnicas de captação, avaliação de imóveis e gestão de contratos com quem atua no mercado.</p>
+        <div class="preco-destaque">
+          Ver valor
+          <small>Acesso imediato via Hotmart</small>
+        </div>
+        <a href="https://go.hotmart.com/K105907114J" target="_blank" class="btn-hotmart">
+          🚀 Acessar no Hotmart
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EM BREVE -->
+  <h2 class="section-titulo" style="margin-top:2.5rem">🔜 Em breve</h2>
+  <div class="produtos-grid" id="grid-embreve">
+
+    <!-- E-BOOK -->
+    <div class="card" data-cat="ebook">
+      <div class="card-thumb ebook">
+        <span>📖</span>
+        <span class="card-badge">Em breve</span>
+      </div>
+      <div class="card-body">
+        <span class="card-categoria">E-book</span>
+        <span class="card-nome">Guia do Inquilino Consciente</span>
+        <p class="card-desc">Tudo que você precisa saber antes de alugar: documentos, direitos, deveres e como evitar problemas.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-preco gratis">Gratuito<small>PDF para download</small></div>
+        <span class="btn-comprar em-breve">Em breve</span>
+      </div>
+    </div>
+
+    <!-- CONTRATO -->
+    <div class="card" data-cat="contrato">
+      <div class="card-thumb contrato">
+        <span>📄</span>
+        <span class="card-badge">Em breve</span>
+      </div>
+      <div class="card-body">
+        <span class="card-categoria">Modelos de Contratos</span>
+        <span class="card-nome">Pack Contratos Imobiliários</span>
+        <p class="card-desc">Modelos prontos de contratos de locação, compra e venda, procuração e vistoria — editáveis em Word.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-preco">R$ 47<small>acesso vitalício</small></div>
+        <span class="btn-comprar em-breve">Em breve</span>
+      </div>
+    </div>
+
+    <!-- CONSULTORIA -->
+    <div class="card" data-cat="consult">
+      <div class="card-thumb consult">
+        <span>💼</span>
+        <span class="card-badge novo">Novo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-categoria">Consultoria</span>
+        <span class="card-nome">Consultoria Imobiliária Online</span>
+        <p class="card-desc">Sessão individual via vídeo para dúvidas sobre compra, venda, locação, avaliação ou regularização de imóveis.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-preco">R$ 150<small>por sessão (1h)</small></div>
+        <a href="https://wa.me/5511999999999?text=Olá!%20Quero%20agendar%20uma%20consultoria%20imobiliária." 
+           target="_blank" class="btn-comprar">📲 WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- E-BOOK 2 -->
+    <div class="card" data-cat="ebook">
+      <div class="card-thumb ebook">
+        <span>🏠</span>
+        <span class="card-badge">Em breve</span>
+      </div>
+      <div class="card-body">
+        <span class="card-categoria">E-book</span>
+        <span class="card-nome">Como Investir em Imóveis na Zona Leste</span>
+        <p class="card-desc">Análise de bairros, tendências de valorização e estratégias para quem quer começar a investir.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-preco">R$ 29<small>PDF completo</small></div>
+        <span class="btn-comprar em-breve">Em breve</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BANNER AVISE-ME -->
+  <div class="banner-embreve">
+    <h3>Quer ser avisado dos lançamentos? 🔔</h3>
+    <p>Entre em contato pelo WhatsApp e receba novidades da FCosta Shop em primeira mão.</p>
+    <a href="https://wa.me/5511999999999?text=Olá!%20Quero%20ser%20avisado%20dos%20lançamentos%20da%20FCosta%20Shop." 
+       target="_blank" class="whatsapp-btn">
+      💬 Me avise pelo WhatsApp
+    </a>
+  </div>
+
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+  <strong>FCosta Shop</strong> · Sergio Fernandes da Costa · CRECI-SP 294791-F · CNAI 52708<br>
+  Zona Leste de São Paulo · Produtos digitais para o mercado imobiliário
+</footer>
+
+<script>
+  function filtrar(cat, btn) {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+
+    document.querySelectorAll('[data-cat]').forEach(card => {
+      const pai = card.closest('.card, .card-destaque') || card;
+      if (cat === 'todos' || card.dataset.cat === cat) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>
