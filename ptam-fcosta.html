@@ -1248,7 +1248,7 @@ function abrirFotoAm(id){
 }
 function renderFotoAm(id){
   const w=document.getElementById('amft'+id);if(!w)return;
-  w.innerHTML=fotosAm[id].map((s,i)=>'<img class="am-thumb" src="'+s+'" onclick="abrirLb(this.src,'Amostra '+id+' Foto '+(i+1)+'')" title="Foto '+(i+1)+'">').join('')
+  w.innerHTML=fotosAm[id].map((s,i)=>{const cap='Amostra '+id+' Foto '+(i+1);return '<img class="am-thumb" src="'+s+'" onclick="abrirLb(this.src,\''+cap+'\')"> ';}).join('')
     +'<div class="am-foto-add" onclick="abrirFotoAm('+id+')" title="Mais fotos">📷</div>';
 }
 
@@ -1374,7 +1374,7 @@ function addQ(parte){
   div.innerHTML='<div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase">'+parte+' — Quesito '+qId+'</div>'
     +'<div class="g g2"><div class="f"><label>Quesito formulado</label><textarea placeholder="Texto exato do quesito..." style="min-height:70px"></textarea></div>'
     +'<div class="f"><label>Resposta Técnica do Perito</label><textarea placeholder="Resposta objetiva e fundamentada..." style="min-height:70px"></textarea></div></div>'
-    +'<button onclick="this.closest('.card').remove()" style="margin-top:6px;background:none;border:none;color:var(--err);cursor:pointer;font-size:.72rem">🗑 Remover quesito</button>';
+    +'<button onclick="this.closest(\'.card\').remove()" style="margin-top:6px;background:none;border:none;color:var(--err);cursor:pointer;font-size:.72rem">🗑 Remover quesito</button>';
   document.getElementById('quesitos-wrap').appendChild(div);
 }
 
@@ -1391,7 +1391,7 @@ function inserirFoto(gid,cat,src){
   const fid='fi'+(++fCnt);fotosGrid[gid].push({fid,src,leg:cat});
   const g=document.getElementById(gid);
   const s=document.createElement('div');s.className='foto-slot';s.id=fid;
-  s.innerHTML='<img src="'+src+'" onclick="abrirLb(this.src,''+cat+'')"><button class="foto-del" onclick="rmFoto(''+gid+'',''+fid+'')">✕</button><div class="foto-leg" ondblclick="editLeg(this)">'+cat+'</div>';
+  s.innerHTML='<img src="'+src+'" onclick="abrirLb(this.src,\''+cat+'\')"><button class="foto-del" onclick="rmFoto(\''+gid+'\',\''+fid+'\')">✕</button><div class="foto-leg" ondblclick="editLeg(this)">'+cat+'</div>';
   g.appendChild(s);updBdgFotos();
 }
 function editLeg(el){
@@ -1434,11 +1434,11 @@ function updCk(){
   document.getElementById('bdg-ck').textContent=done;
 }
 
-// ── SALVAR / CARREGAR ──
+// ── SALVAR / CARREGAR (GitHub Pages) ──
 function salvar(){
   const d={};
   document.querySelectorAll('input[id],select[id],textarea[id]').forEach(e=>{if(e.id)d[e.id]=e.value;});
-  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ptam_rascunho.json';a.click();URL.revokeObjectURL(a.href);
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ptam.json';a.click();
   toast('✅ Rascunho salvo!');
 }
 function carregar(){
