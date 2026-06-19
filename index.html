@@ -1442,7 +1442,9 @@ function leadSalvar(){
 var SG={venda:'FCV',aluguel:'FCA',lancamento:'FCL',panfleto:'FCP',vendido:'FCV'};
 var verLinks={venda:'https://fcostacorretor.com/comprar',aluguel:'https://fcostacorretor.com/alugar',lancamento:'https://fcostacorretor.com/lancamentos',vendido:'https://fcostacorretor.com/comprar'};
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+var CLD_OTIMIZAR=false; /* true = aplica f_auto,q_auto,w_ nas imagens. Deixe false até confirmar no Cloudinary (Settings > Security) que "Strict Transformations" está desativado, senão as fotos não carregam. */
 function cldUrl(u,w){
+  if(!CLD_OTIMIZAR)return u;
   if(!u||typeof u!=='string')return u;
   if(u.indexOf('/upload/')===-1)return u;
   if(/\/upload\/[^/]*w_\d/.test(u))return u;
@@ -1733,131 +1735,4 @@ function abrirModal(id){
     +(fs.length>1?'<div class="modal-thumbs">'+fs.map(function(f,j){return'<img class="mth'+(j===0?' on':'')+'" src="'+esc(cldUrl(f,120))+'" onclick="mThumb('+j+')" loading="lazy"/>';}).join('')+'</div>':'')
     +'<div class="modal-body">'
       +'<div class="modal-cod">'+esc(c)+'</div>'
-      +'<h2 class="modal-h2">'+esc(i.titulo||'Imóvel FCosta')+'</h2>'
-      +'<p class="modal-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</p>'
-      +(i.preco?'<div class="modal-preco">R$ '+esc(i.preco)+'</div>':'')
-      +'<div class="modal-chars">'
-        +(i.quartos?'<div class="mchar"><span>🛏</span><small>'+i.quartos+' Quarto'+(i.quartos>1?'s':'')+'</small></div>':'')
-        +(i.banheiros?'<div class="mchar"><span>🚿</span><small>'+i.banheiros+' Banheiro'+(i.banheiros>1?'s':'')+'</small></div>':'')
-        +(i.area?'<div class="mchar"><span>📐</span><small>'+i.area+' m²</small></div>':'')
-        +(i.vagas?'<div class="mchar"><span>🚗</span><small>'+i.vagas+' Vaga'+(i.vagas>1?'s':'')+'</small></div>':'')
-      +'</div>'
-      +(i.descricao?'<p class="modal-desc">'+esc(i.descricao)+'</p>':'')
-      +'<div class="modal-acoes">'
-        +'<a class="modal-wa" href="'+wa+'" target="_blank">💬 Tenho interesse</a>'
-        +'<button class="modal-pag" onclick="verImovel(\''+id+'\')">📄 Ver página</button>'
-      +'</div>'
-    +'</div>';
-  document.getElementById('modal-bg').classList.add('on');
-  document.body.style.overflow='hidden';
-}
-function fecharModal(){document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
-function mNav(d){
-  _mi=(_mi+d+_mf.length)%_mf.length;
-  var img=document.getElementById('mfimg');if(img)img.src=cldUrl(_mf[_mi],900);
-  var idx=document.getElementById('mfidx');if(idx)idx.textContent=_mi+1;
-  document.querySelectorAll('.mth').forEach(function(t,i){t.classList.toggle('on',i===_mi);});
-}
-function mThumb(i){
-  _mi=i;
-  var img=document.getElementById('mfimg');if(img)img.src=cldUrl(_mf[i],900);
-  var idx=document.getElementById('mfidx');if(idx)idx.textContent=i+1;
-  document.querySelectorAll('.mth').forEach(function(t,j){t.classList.toggle('on',j===i);});
-}
-function lbAbrir(i){
-  _li=i;
-  var thumbs=document.getElementById('lb-thumbs');
-  thumbs.innerHTML=_lf.map(function(f,j){
-    return'<img class="lbth'+(j===i?' on':'')+'" src="'+esc(cldUrl(f,120))+'" onclick="event.stopPropagation();lbIr('+j+')" loading="lazy"/>';
-  }).join('');
-  lbMostrar();
-  document.getElementById('lb').classList.add('on');
-  document.body.style.overflow='hidden';
-}
-function lbMostrar(){
-  var img=document.getElementById('lb-img');
-  img.style.opacity='0';img.src=cldUrl(_lf[_li],1600);
-  img.onload=function(){img.style.opacity='1';};
-  document.getElementById('lb-cnt').textContent=(_li+1)+' / '+_lf.length;
-  document.querySelectorAll('.lbth').forEach(function(t,i){t.classList.toggle('on',i===_li);});
-}
-function lbNav(d){_li=(_li+d+_lf.length)%_lf.length;lbMostrar();}
-function lbIr(i){_li=i;lbMostrar();}
-function lbFechar(){document.getElementById('lb').classList.remove('on');document.body.style.overflow='';}
-document.addEventListener('keydown',function(e){
-  if(!document.getElementById('lb').classList.contains('on'))return;
-  if(e.key==='ArrowLeft')lbNav(-1);
-  if(e.key==='ArrowRight')lbNav(1);
-});
-</script>
-
-<script>
-/* ══ HOSTINGER EMBED — corrige LARGURA e ALTURA ══
-   Problema: dentro de iframe, 100vw e o próprio body podem
-   ser mais largos que o iframe visível, causando scroll horizontal.
-   Solução: travar largura do html/body no offsetWidth do frameElement,
-   ou na largura do parent window quando acessível.
-══════════════════════════════════════════════════════ */
-(function(){
-  /* — Corrige largura — */
-  function fixWidth(){
-    try{
-      /* Dentro do iframe: trava no clientWidth do elemento iframe pai */
-      if(window.frameElement){
-        var fw = window.frameElement.clientWidth || window.frameElement.offsetWidth;
-        if(fw && fw > 0){
-          document.documentElement.style.maxWidth = fw + 'px';
-          document.documentElement.style.width    = '100%';
-          document.body.style.maxWidth            = fw + 'px';
-          document.body.style.width               = '100%';
-        }
-      }
-    }catch(e){
-      /* Cross-origin: usa window.innerWidth do próprio documento */
-      var w = window.innerWidth || document.documentElement.clientWidth;
-      document.documentElement.style.maxWidth = w + 'px';
-      document.body.style.maxWidth            = w + 'px';
-    }
-  }
-
-  /* — Calcula altura real — */
-  function getH(){
-    var footer = document.getElementById('footer');
-    if(footer){
-      var r = footer.getBoundingClientRect();
-      return Math.round(window.scrollY + r.bottom) + 8;
-    }
-    return Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.scrollHeight
-    );
-  }
-
-  /* — Envia altura ao pai — */
-  function sendHeight(){
-    var h = getH();
-    try{ window.parent.postMessage({type:'resize', height:h}, '*'); }catch(e){}
-    try{ window.parent.postMessage({frameHeight:h}, '*'); }catch(e){}
-    try{
-      if(window.frameElement){
-        window.frameElement.style.height    = h + 'px';
-        window.frameElement.style.minHeight = h + 'px';
-      }
-    }catch(e){}
-  }
-
-  function tick(){ fixWidth(); sendHeight(); }
-
-  window.addEventListener('load', function(){ setTimeout(tick, 200); });
-  window.addEventListener('resize', tick);
-  if(window.MutationObserver){
-    var obs = new MutationObserver(function(){ setTimeout(tick, 100); });
-    obs.observe(document.body, {childList:true, subtree:true, attributes:true});
-  }
-  /* Dispara nas primeiras iterações — Firebase carrega async */
-  var n = 0, iv = setInterval(function(){ tick(); if(++n >= 24) clearInterval(iv); }, 400);
-})();
-</script>
-</body>
-</html>
+      +'<h2 class="modal-h2">'+esc(i.titulo||'Imóvel FC
