@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade - FCosta Corretor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #003da5;
+            --vermelho: #dc1c2d;
+            --branco: #ffffff;
+            --cinza-claro: #f8f9fc;
+            --cinza-meio: #8a9bb5;
+            --cinza-escuro: #374561;
+            --borda: #e4e9f2;
+            --preto: #0d1829;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cinza-claro);
+            color: var(--cinza-escuro);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--branco);
+            border-bottom: 1px solid var(--borda);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 61, 165, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--azul);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cinza-escuro);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--vermelho);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--azul);
+            color: var(--branco);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #002280;
+        }
+
+        /* CONTEÚDO */
+        .content {
+            background: var(--branco);
+            padding: 60px 40px;
+            margin: 40px 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 61, 165, 0.08);
+        }
+
+        .content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--preto);
+        }
+
+        .content-meta {
+            font-size: 13px;
+            color: var(--cinza-meio);
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: var(--preto);
+        }
+
+        .content p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--cinza-escuro);
+        }
+
+        .content ul,
+        .content ol {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            color: var(--cinza-escuro);
+        }
+
+        .destaque {
+            background: rgba(0, 61, 165, 0.1);
+            border-left: 4px solid var(--azul);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--preto);
+            color: var(--branco);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 30px 20px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="navbar">
+            <a href="/" class="logo">
+                <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta">
+                <span>FCosta</span>
+            </a>
+            <nav>
+                <a href="/">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='/'">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+
+        <div class="content">
+            <h1>Política de Privacidade</h1>
+            <div class="content-meta">
+                <i class="fas fa-calendar-alt"></i> Última atualização: Março de 2026
+            </div>
+
+            <h2>1. Introdução</h2>
+            <p>A FCosta Corretor ("nós", "nosso" ou "empresa") valoriza a privacidade de seus usuários. Esta Política de Privacidade explica como coletamos, usamos, divulgamos e de outra forma tratamos as informações pessoais que coletamos de e sobre você.</p>
+
+            <h2>2. Informações que Coletamos</h2>
+            <p>Coletamos informações que você nos fornece diretamente, como:</p>
+            <ul>
+                <li>Nome e sobrenome</li>
+                <li>Endereço de e-mail</li>
+                <li>Número de telefone</li>
+                <li>Endereço residencial</li>
+                <li>Informações sobre seus interesses em imóveis</li>
+                <li>Mensagens e comunicações que você envia através de nosso site</li>
+            </ul>
+
+            <h2>3. Como Usamos Suas Informações</h2>
+            <p>Usamos as informações que coletamos para:</p>
+            <ul>
+                <li>Responder a suas perguntas e fornecer serviços de corretor imobiliário</li>
+                <li>Enviar informações sobre imóveis de seu interesse</li>
+                <li>Melhorar nosso site e serviços</li>
+                <li>Manter você atualizado sobre novas propriedades e ofertas</li>
+                <li>Cumprir nossas obrigações legais</li>
+            </ul>
+
+            <div class="destaque">
+                <strong>🔒 Segurança:</strong> Implementamos medidas técnicas apropriadas para proteger suas informações pessoais contra acesso não autorizado, alteração ou destruição.
+            </div>
+
+            <h2>4. Compartilhamento de Informações</h2>
+            <p>Não vendemos, alugamos ou compartilhamos suas informações pessoais com terceiros para fins de marketing. Podemos compartilhar informações quando legalmente obrigados ou quando necessário para fornecer nossos serviços.</p>
+
+            <h2>5. Cookies</h2>
+            <p>Nosso site pode usar cookies para melhorar sua experiência de navegação. Os cookies são pequenos arquivos armazenados em seu dispositivo que nos ajudam a entender suas preferências.</p>
+
+            <h2>6. Links para Websites de Terceiros</h2>
+            <p>Este site pode conter links para websites de terceiros. Não somos responsáveis pelas políticas de privacidade desses websites. Recomendamos que você revise suas políticas de privacidade antes de fornecer qualquer informação pessoal.</p>
+
+            <h2>7. Seus Direitos</h2>
+            <p>Você tem o direito de:</p>
+            <ul>
+                <li>Acessar suas informações pessoais</li>
+                <li>Corrigir informações imprecisas</li>
+                <li>Solicitar a exclusão de suas informações</li>
+                <li>Optar por não receber comunicações de marketing</li>
+            </ul>
+
+            <h2>8. Retenção de Dados</h2>
+            <p>Retemos suas informações pessoais apenas pelo tempo necessário para cumprir os propósitos para os quais foram coletadas, a menos que a lei exija retenção mais prolongada.</p>
+
+            <h2>9. Alterações a Esta Política</h2>
+            <p>Podemos atualizar esta Política de Privacidade de tempos em tempos. Publicaremos quaisquer alterações nesta página com uma data de atualização revisada.</p>
+
+            <h2>10. Entre em Contato Conosco</h2>
+            <p>Se tiver dúvidas ou preocupações sobre esta Política de Privacidade ou nossas práticas de privacidade, entre em contato conosco através do WhatsApp: <strong>(11) 99350-9109</strong></p>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 FCosta Corretor - Imóveis em São Paulo</p>
+    </footer>
+</body>
+</html>
