@@ -13,3 +13,38 @@
   from = "/cadastro"
   to = "/painel_adm"
   status = 301
+
+[[redirects]]
+  from = "/avaliacao-fcosta"
+  to = "/avaliacao"
+  status = 200
+
+[[redirects]]
+  from = "/legislacaoimobiliaria"
+  to = "/legislacao"
+  status = 200
+
+[[redirects]]
+  from = "/parceiros-fcosta"
+  to = "/parceria"
+  status = 200
+
+[[redirects]]
+  from = "/inquilinato"
+  to = "/inquilino"
+  status = 200
+
+[[redirects]]
+  from = "/sergioig"
+  to = "/sergio_ig"
+  status = 200
+
+[[redirects]]
+  from = "/politica-de-privacidade"
+  to = "/politica"
+  status = 200
+
+[[redirects]]
+  from = "/videos-imobiliarios"
+  to = "/tv_costa"
+  status = 200
