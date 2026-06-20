@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Registral e Notarial no Brasil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:       #1a7fc4;
+    --sky-light: #e6f3fb;
+    --sky-mid:   #4da6e0;
+    --sky-dark:  #0d5a8f;
+    --sky-deep:  #073a60;
+    --sky-pale:  #c8e8f8;
+    --cloud:     #f4faff;
+    --text:      #0d2a40;
+    --text-soft: #5a8aaa;
+    --white:     #ffffff;
+    --gold:      #c8961a;
+    --gold-light:#fdf4e0;
+    --gold-pale: #f5dfa0;
+    --border:    rgba(26,127,196,0.16);
+    --red:       #b83232;
+    --red-light: #fceaea;
+    --green:     #1a6e3c;
+    --green-light:#e8f6ee;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #ddeef9;
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(140deg, var(--sky-deep) 0%, var(--sky-dark) 45%, var(--sky) 100%);
+    padding: 72px 40px 68px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .hero-ring.r1 { width:500px;height:500px; top:-180px;right:-120px; }
+  .hero-ring.r2 { width:320px;height:320px; bottom:-140px;left:-80px; }
+  .hero-ring.r3 { width:200px;height:200px; top:40px;left:38%; }
+  .hero-inner { max-width:960px; margin:0 auto; position:relative;z-index:1; }
+  .hero-eyebrow {
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:24px;
+    padding:5px 16px 5px 10px;
+    margin-bottom:24px;
+  }
+  .hero-eyebrow .dot {
+    width:8px;height:8px;border-radius:50%;
+    background:var(--gold);flex-shrink:0;
+  }
+  .hero-eyebrow span {
+    font-size:11px;font-weight:700;
+    letter-spacing:1.8px;text-transform:uppercase;
+    color:rgba(255,255,255,0.88);
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.1rem,5.5vw,3.6rem);
+    font-weight:700;
+    line-height:1.14;
+    color:#fff;
+    margin-bottom:22px;
+    max-width:740px;
+  }
+  .hero h1 em {
+    font-style:italic;
+    color:var(--sky-pale);
+  }
+  .hero-desc {
+    font-size:1.08rem;
+    color:rgba(255,255,255,0.78);
+    font-weight:300;
+    max-width:620px;
+    line-height:1.78;
+    margin-bottom:34px;
+  }
+  .hero-pills { display:flex;flex-wrap:wrap;gap:10px; }
+  .hero-pill {
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.20);
+    border-radius:6px;
+    padding:6px 16px;
+    font-size:12.5px;
+    color:rgba(255,255,255,0.86);
+    font-weight:400;
+  }
+  .hero-pill.gold {
+    background:rgba(200,150,26,0.20);
+    border-color:rgba(200,150,26,0.45);
+    color:#fde68a;
+    font-weight:700;
+  }
+
+  /* ===== NAV TABS ===== */
+  .nav-bar {
+    background:var(--sky-dark);
+    position:sticky;top:0;z-index:100;
+    border-bottom:2px solid var(--sky);
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  .nav-inner { max-width:960px;margin:0 auto;display:flex;gap:0; }
+  .nav-link {
+    display:inline-block;
+    padding:14px 20px;
+    font-size:0.84rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:rgba(255,255,255,0.65);
+    text-decoration:none;
+    border-bottom:3px solid transparent;
+    transition:color 0.2s,border-color 0.2s;
+  }
+  .nav-link:hover { color:#fff; border-color:var(--sky-pale); }
+
+  /* ===== MAIN ===== */
+  .main { max-width:960px;margin:0 auto;padding:56px 24px 96px; }
+
+  /* ===== SECTION ===== */
+  .sec { margin-bottom:56px; }
+  .sec-title {
+    font-family:'Playfair Display',serif;
+    font-size:1.7rem;
+    font-weight:700;
+    color:var(--sky-dark);
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:8px;
+  }
+  .sec-title::before {
+    content:'';
+    display:inline-block;width:5px;height:32px;
+    background:linear-gradient(to bottom,var(--sky-mid),var(--sky-dark));
+    border-radius:3px;flex-shrink:0;
+  }
+  .sec-sub {
+    color:var(--text-soft);font-size:0.94rem;
+    margin-bottom:28px;padding-left:19px;
+  }
+
+  /* ===== SP DESTAQUE ===== */
+  .sp-banner {
+    background:linear-gradient(135deg,var(--sky-dark) 0%,var(--sky) 100%);
+    border-radius:16px;
+    padding:30px 36px;
+    margin-bottom:24px;
+    display:flex;align-items:flex-start;gap:20px;
+    position:relative;overflow:hidden;
+  }
+  .sp-banner::after {
+    content:'SP';
+    position:absolute;right:24px;bottom:-10px;
+    font-family:'Playfair Display',serif;
+    font-size:7rem;font-weight:700;
+    color:rgba(255,255,255,0.06);
+    line-height:1;pointer-events:none;
+    user-select:none;
+  }
+  .sp-icon {
+    width:52px;height:52px;border-radius:12px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.6rem;flex-shrink:0;
+  }
+  .sp-banner h3 {
+    font-family:'Playfair Display',serif;
+    font-size:1.12rem;color:#fff;margin-bottom:8px;font-weight:700;
+  }
+  .sp-banner p { font-size:0.92rem;color:rgba(255,255,255,0.82);line-height:1.75; }
+  .sp-banner ul { margin-left:16px;margin-top:6px; }
+  .sp-banner li { font-size:0.9rem;color:rgba(255,255,255,0.80);margin-bottom:5px; }
+
+  /* ===== CARD ===== */
+  .card {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px 30px;
+    margin-bottom:18px;
+    transition:box-shadow 0.2s;
+  }
+  .card:hover { box-shadow:0 4px 26px rgba(26,127,196,0.11); }
+  .card h3 {
+    font-family:'Playfair Display',serif;
+    font-size:1.1rem;color:var(--sky-dark);
+    margin-bottom:10px;font-weight:700;
+  }
+  .card h4 { font-weight:700;font-size:0.97rem;color:var(--sky-dark);margin-bottom:6px; }
+  .card p, .card li { font-size:0.93rem;color:var(--text);line-height:1.78; }
+  .card ul { margin-left:18px;margin-top:8px; }
+  .card li { margin-bottom:5px; }
+  .card-left { border-left:4px solid var(--sky);border-radius:0 14px 14px 0;background:var(--cloud); }
+  .card-gold { border-left:4px solid var(--gold);border-radius:0 14px 14px 0;background:var(--gold-light); }
+
+  /* ===== GRID ===== */
+  .g2 { display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;margin-bottom:18px; }
+  .g3 { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:18px; }
+
+  /* ===== MINI CARD ===== */
+  .mc {
+    background:var(--white);border:1px solid var(--border);
+    border-radius:12px;padding:20px 22px;
+  }
+  .mc h4 {
+    font-weight:700;font-size:0.94rem;color:var(--sky-dark);
+    margin-bottom:8px;display:flex;align-items:center;gap:9px;
+  }
+  .mc h4 .ic { font-size:1.05rem; }
+  .mc p, .mc li { font-size:0.87rem;color:var(--text);line-height:1.72; }
+  .mc ul { margin-left:14px;margin-top:6px; }
+  .mc li { margin-bottom:4px; }
+
+  /* ===== TABLE ===== */
+  .tbl-wrap { overflow-x:auto;margin-bottom:18px; }
+  table { width:100%;border-collapse:collapse;font-size:0.88rem; }
+  thead tr { background:var(--sky-dark);color:#fff; }
+  thead th { padding:12px 15px;text-align:left;font-weight:700;font-size:0.84rem; }
+  tbody tr:nth-child(even) { background:var(--sky-light); }
+  tbody td { padding:10px 15px;color:var(--text);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65; }
+  tbody tr:last-child td { border-bottom:none; }
+  td strong { color:var(--sky-dark); }
+
+  /* ===== ACCORDION ===== */
+  details {
+    background:var(--white);border:1px solid var(--border);
+    border-radius:12px;margin-bottom:11px;
+  }
+  details:hover { box-shadow:0 2px 14px rgba(26,127,196,0.08); }
+  summary {
+    padding:16px 24px;cursor:pointer;
+    font-weight:700;font-size:0.94rem;color:var(--sky-dark);
+    list-style:none;display:flex;
+    justify-content:space-between;align-items:center;
+    user-select:none;
+  }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:'+';font-size:1.3rem;color:var(--sky-mid);font-weight:300; }
+  details[open] summary::after { content:'−'; }
+  details[open] summary { border-bottom:1px solid var(--border); }
+  .db { padding:20px 26px;font-size:0.92rem;color:var(--text);line-height:1.78; }
+  .db p { margin-bottom:10px; }
+  .db p:last-child { margin-bottom:0; }
+  .db ul { margin-left:18px;margin-top:6px; }
+  .db li { margin-bottom:5px; }
+
+  /* ===== CHIP ROW ===== */
+  .chips { display:flex;flex-wrap:wrap;gap:10px;margin:18px 0; }
+  .chip {
+    background:var(--sky-light);border:1px solid var(--sky-pale);
+    border-radius:40px;padding:7px 18px;
+    font-size:0.86rem;font-weight:700;color:var(--sky-dark);
+    display:flex;align-items:center;gap:7px;
+  }
+  .chip .dot { width:7px;height:7px;border-radius:50%;background:var(--sky);flex-shrink:0; }
+  .chip.gold-chip {
+    background:var(--gold-light);border-color:var(--gold-pale);color:#7a5000;
+  }
+  .chip.gold-chip .dot { background:var(--gold); }
+
+  /* ===== ALERT ===== */
+  .alert {
+    border-radius:12px;padding:16px 20px;
+    margin-bottom:16px;font-size:0.91rem;
+    display:flex;gap:14px;align-items:flex-start;line-height:1.72;
+  }
+  .alert-ic { font-size:1.1rem;flex-shrink:0;margin-top:1px; }
+  .alert-warn { background:var(--gold-light);border:1px solid var(--gold-pale);color:#6a4400; }
+  .alert-info { background:var(--sky-light);border:1px solid var(--sky-pale);color:var(--sky-deep); }
+  .alert-ok   { background:var(--green-light);border:1px solid #a8dfc0;color:var(--green); }
+  .alert-err  { background:var(--red-light);border:1px solid #f5b8b3;color:var(--red); }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display:inline-block;border-radius:6px;
+    padding:3px 11px;font-size:0.76rem;font-weight:700;
+    margin:0 4px 4px 0;letter-spacing:0.4px;
+  }
+  .badge-blue { background:var(--sky-light);color:var(--sky-dark);border:1px solid var(--sky-pale); }
+  .badge-gold { background:var(--gold-light);color:#7a5000;border:1px solid var(--gold-pale); }
+  .badge-dark { background:var(--sky-dark);color:#fff; }
+
+  /* ===== FLOW STEP ===== */
+  .steps { display:flex;flex-direction:column; }
+  .step { display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border);position:relative; }
+  .step:last-child { border-bottom:none; }
+  .step:not(:last-child)::after {
+    content:'';position:absolute;left:17px;top:46px;bottom:-2px;
+    width:2px;background:var(--sky-pale);
+  }
+  .step-n {
+    width:36px;height:36px;border-radius:50%;
+    background:var(--sky);color:#fff;
+    font-weight:700;font-size:0.9rem;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;z-index:1;
+  }
+  .step-b h4 { font-weight:700;font-size:0.97rem;color:var(--sky-dark);margin-bottom:4px;margin-top:6px; }
+  .step-b p { font-size:0.89rem;color:var(--text);line-height:1.7; }
+
+  /* ===== DIVIDER ===== */
+  .divider { height:1px;background:var(--border);margin:48px 0; }
+
+  /* ===== HIGHLIGHT BAR ===== */
+  .hl {
+    background:linear-gradient(135deg,var(--sky-dark),var(--sky));
+    border-radius:14px;padding:28px 32px;margin-bottom:20px;
+  }
+  .hl h3 { font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;margin-bottom:10px; }
+  .hl p, .hl li { font-size:0.92rem;color:rgba(255,255,255,0.83);line-height:1.75; }
+  .hl ul { margin-left:18px;margin-top:8px; }
+  .hl li { margin-bottom:5px; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background:var(--sky-deep);
+    color:rgba(255,255,255,0.68);
+    text-align:center;
+    padding:32px 24px;
+    font-size:0.81rem;line-height:1.9;
+  }
+  .footer strong { color:rgba(255,255,255,0.95); }
+
+  @media(max-width:640px){
+    .hero { padding:40px 20px 46px; }
+    .main { padding:32px 16px 64px; }
+    .card,.hl { padding:20px; }
+    .sp-banner { padding:22px; }
+    .g2,.g3 { grid-template-columns:1fr; }
+    .nav-link { padding:12px 14px;font-size:0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ring r1"></div>
+  <div class="hero-ring r2"></div>
+  <div class="hero-ring r3"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <div class="dot"></div>
+      <span>Lei 6.015/1973 · Lei 8.935/1994 · CNJ · TJSP</span>
+    </div>
+    <h1>Sistema Registral e Notarial<br><em>no Brasil</em></h1>
+    <p class="hero-desc">Estrutura, atribuições, legislação, procedimentos e cartórios de São Paulo — o guia completo para profissionais do direito imobiliário, avaliadores e corretores.</p>
+    <div class="hero-pills">
+      <div class="hero-pill gold">★ Foco em São Paulo</div>
+      <div class="hero-pill">Registro de Imóveis</div>
+      <div class="hero-pill">Tabelionato de Notas</div>
+      <div class="hero-pill">Registro Civil</div>
+      <div class="hero-pill">Protestos</div>
+      <div class="hero-pill">CNJ · ARISP · TJSP</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-link" href="#estrutura">Estrutura</a>
+    <a class="nav-link" href="#registro-imoveis">Registro de Imóveis</a>
+    <a class="nav-link" href="#tabelionato">Tabelionato</a>
+    <a class="nav-link" href="#outros">Outros Cartórios</a>
+    <a class="nav-link" href="#sp">São Paulo</a>
+    <a class="nav-link" href="#atos">Atos Registrais</a>
+    <a class="nav-link" href="#digital">Serviços Digitais</a>
+    <a class="nav-link" href="#refs">Referências</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- 1. ESTRUTURA GERAL -->
+  <div class="sec" id="estrutura">
+    <div class="sec-title">Estrutura do Sistema Extrajudicial Brasileiro</div>
+    <p class="sec-sub">Como o sistema notarial e de registro está organizado no Brasil</p>
+
+    <div class="card">
+      <p>O sistema extrajudicial brasileiro é composto por <strong>serviços notariais e de registro</strong> exercidos em caráter privado, por delegação do Poder Público. Estão disciplinados pela <strong>Lei 8.935/1994</strong> (Lei dos Notários e Registradores) e pela <strong>Lei 6.015/1973</strong> (Lei dos Registros Públicos), sob fiscalização do <strong>Conselho Nacional de Justiça (CNJ)</strong> e dos Tribunais de Justiça estaduais.</p>
+      <p style="margin-top:12px;">O ingresso na atividade ocorre exclusivamente por <strong>concurso público de provas e títulos</strong> (CF/88, art. 236, §3º). Os titulares são denominados <em>notários</em> (tabeliães) ou <em>registradores</em>, conforme a espécie de serviço delegado.</p>
+    </div>
+
+    <div class="g3">
+      <div class="mc">
+        <h4><span class="ic">⚖️</span>Natureza Jurídica</h4>
+        <p>Serviço público delegado a particulares (CF/88, art. 236). O titular exerce fé pública em nome do Estado, mas responde pessoalmente pelos atos praticados.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">🏛️</span>Fiscalização</h4>
+        <p>CNJ (âmbito federal), Corregedoria do TJSP e Corregedoria Permanente (âmbito local). Inspeções periódicas, provimentos normativos e correições.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">📋</span>Responsabilidade</h4>
+        <p>O notário/registrador responde civil e criminalmente pelos atos que praticar, de acordo com a Lei 8.935/1994. Não há responsabilidade do Estado por atos culposos do delegatário.</p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Tipo de Serviço</th><th>Denominação do Titular</th><th>Função Principal</th><th>Lei Base</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tabelionato de Notas</strong></td><td>Tabelião / Notário</td><td>Lavrar escrituras públicas, reconhecer firmas, autenticar documentos</td><td>Lei 8.935/1994</td></tr>
+          <tr><td><strong>Registro de Imóveis</strong></td><td>Oficial de Registro de Imóveis</td><td>Matrícula, registro e averbação de atos sobre imóveis</td><td>Lei 6.015/1973</td></tr>
+          <tr><td><strong>Registro Civil das PF</strong></td><td>Oficial de Registro Civil</td><td>Nascimentos, casamentos, óbitos, interdições</td><td>Lei 6.015/1973</td></tr>
+          <tr><td><strong>Tabelionato de Protestos</strong></td><td>Tabelião de Protestos</td><td>Protesto de títulos e documentos de dívida</td><td>Lei 9.492/1997</td></tr>
+          <tr><td><strong>Registro de Títulos e Documentos</strong></td><td>Oficial de RTD</td><td>Registro de contratos, notificações, cessões</td><td>Lei 6.015/1973</td></tr>
+          <tr><td><strong>Registro de PJ (RCPJ)</strong></td><td>Oficial do RCPJ</td><td>Registros de associações, fundações, partidos</td><td>Lei 6.015/1973</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-ic">ℹ</div>
+      <div><strong>Princípio da especialidade objetiva:</strong> cada imóvel possui uma única matrícula no Registro de Imóveis, com descrição precisa que o individualiza e o distingue de todos os demais. Qualquer ato que afete o imóvel deve ser registrado ou averbado nessa matrícula.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2. REGISTRO DE IMÓVEIS -->
+  <div class="sec" id="registro-imoveis">
+    <div class="sec-title">Registro de Imóveis</div>
+    <p class="sec-sub">O coração do sistema registral imobiliário — princípios, atos e funcionamento</p>
+
+    <div class="card">
+      <p>O <strong>Registro de Imóveis</strong> é o serviço público responsável pela publicidade, autenticidade, segurança e eficácia dos atos jurídicos referentes a bens imóveis. No Brasil, a <strong>transferência de propriedade imobiliária somente se perfaz com o registro</strong> (CC/2002, art. 1.245 — tradição jurídica). A escritura pública, isoladamente, não transfere a propriedade.</p>
+    </div>
+
+    <div class="sec-title" style="font-size:1.1rem;margin-bottom:16px;">Princípios do Registro de Imóveis</div>
+
+    <div class="g2">
+      <details open>
+        <summary>Princípio da Publicidade</summary>
+        <div class="db">
+          <p>Todos os atos registrados são públicos. Qualquer pessoa pode solicitar certidão de matrícula, independentemente de justificar interesse. A publicidade garante que terceiros de boa-fé possam confiar nos dados constantes do registro.</p>
+          <p><strong>Base:</strong> Lei 6.015/1973, art. 16 e 17; CC/2002, art. 1.245.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Legalidade</summary>
+        <div class="db">
+          <p>O oficial só pode registrar títulos que estejam de acordo com a lei. Cabe ao registrador realizar a <em>qualificação registral</em> — análise do título apresentado quanto à sua validade, forma, adequação e ausência de vícios.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Territorialidade</summary>
+        <div class="db">
+          <p>O imóvel deve ser registrado no cartório da circunscrição onde estiver localizado. Em São Paulo Capital, as circunscrições estão divididas entre os 15 Cartórios de Registro de Imóveis (1º ao 15º RI).</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Continuidade (Trato Sucessivo)</summary>
+        <div class="db">
+          <p>Nenhum registro pode ser feito sem que o imóvel esteja matriculado e sem que o transmitente figure como titular no registro anterior. Garante a cadeia dominial ininterrupta desde a origem.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Especialidade</summary>
+        <div class="db">
+          <p><strong>Objetiva:</strong> o imóvel deve ser individualmente descrito na matrícula (área, confrontações, localização).<br><strong>Subjetiva:</strong> as partes devem ser plenamente identificadas (nome, CPF/CNPJ, estado civil, qualificação).</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Unitariedade da Matrícula</summary>
+        <div class="db">
+          <p>Cada imóvel tem uma única matrícula. Unificações e desmembramentos alteram a organização matricial, mas sempre respeitando a correspondência biunívoca imóvel-matrícula.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Prioridade</summary>
+        <div class="db">
+          <p>O título apresentado primeiro ao cartório tem preferência sobre os apresentados posteriormente, mesmo que tratem do mesmo imóvel. A prioridade é fixada pelo número de ordem do protocolo.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Princípio da Fé Pública Registral</summary>
+        <div class="db">
+          <p>O adquirente de boa-fé que confia nas informações constantes do registro é protegido. O registro presume a titularidade dos direitos inscritos, sendo esta presunção <em>juris tantum</em> (relativa) no Brasil — diferente dos sistemas de presunção absoluta como o alemão.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- ATOS REGISTRAIS -->
+    <div class="sec-title" style="font-size:1.1rem;margin-top:30px;margin-bottom:16px;">Atos Registrais: Matrícula, Registro e Averbação</div>
+
+    <div class="g3">
+      <div class="mc">
+        <h4><span class="ic">📄</span>Matrícula</h4>
+        <p>Ato de abertura individualizada de cada imóvel no registro. Contém: localização, área, confrontações, titularidade e ônus. Toda escritura de imóvel sem matrícula gera a abertura prévia da matrícula (art. 228 da LRP).</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">✍️</span>Registro</h4>
+        <p>Ato que constitui, modifica ou extingue direitos reais. Ex.: registro de compra e venda (transferência de propriedade), hipoteca, usufruto, servidão, penhora, alienação fiduciária.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">🗒️</span>Averbação</h4>
+        <p>Ato que anota alterações relativas ao imóvel ou às partes, sem constituir ou extinguir direito real. Ex.: alteração de estado civil, construção, demolição, mudança de nome de rua, cancelamento de hipoteca.</p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Ato</th><th>Modalidade</th><th>Exemplos</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Registro</strong></td><td>Constitutivo de direito real</td><td>Compra e venda, doação, permuta, hipoteca, usufruto, servidão, alienação fiduciária, penhora, arresto</td></tr>
+          <tr><td><strong>Averbação</strong></td><td>Anotação de alteração</td><td>Construção (habite-se), demolição, desmembramento, unificação, casamento, divórcio, óbito do proprietário, cancelamento de hipoteca</td></tr>
+          <tr><td><strong>Matrícula</strong></td><td>Abertura de prontuário único</td><td>Primeiro registro do imóvel; abertura por força de titulação (escritura pública, carta de arrematação, formal de partilha)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3. TABELIONATO DE NOTAS -->
+  <div class="sec" id="tabelionato">
+    <div class="sec-title">Tabelionato de Notas</div>
+    <p class="sec-sub">Fé pública, escrituras, reconhecimento de firmas e autenticação de documentos</p>
+
+    <div class="card">
+      <p>O <strong>Tabelionato de Notas</strong> — ou <em>Cartório de Notas</em> — é o serviço notarial por excelência. O tabelião (notário) é profissional do direito dotado de <strong>fé pública</strong> para formalizar atos jurídicos, conferindo-lhes validade, publicidade e segurança jurídica.</p>
+    </div>
+
+    <div class="g2">
+      <div class="card card-left">
+        <h3>Atribuições Principais</h3>
+        <ul>
+          <li>Lavrar <strong>escrituras públicas</strong> (compra e venda, doação, permuta, procuração, testamento, divórcio, inventário extrajudicial)</li>
+          <li>Realizar <strong>reconhecimento de firmas</strong> (autenticidade da assinatura)</li>
+          <li>Autenticar <strong>cópias de documentos</strong></li>
+          <li>Lavrar <strong>atas notariais</strong> (constatação de fatos)</li>
+          <li>Realizar <strong>notificações extrajudiciais</strong></li>
+          <li>Processar <strong>inventários e divórcios extrajudiciais</strong> (Lei 11.441/2007)</li>
+          <li>Processar <strong>usucapião extrajudicial</strong> (NCPC, art. 1.071)</li>
+        </ul>
+      </div>
+      <div class="card card-left">
+        <h3>Escrituras Públicas Imobiliárias</h3>
+        <ul>
+          <li><strong>Compra e venda:</strong> obrigatória para imóveis acima de 30 salários mínimos (CC/2002, art. 108)</li>
+          <li><strong>Doação:</strong> bens imóveis exigem escritura pública</li>
+          <li><strong>Permuta:</strong> troca de imóveis com ou sem torna</li>
+          <li><strong>Promessa de compra e venda:</strong> pode ser escritura pública irretratável</li>
+          <li><strong>Hipoteca e anticrése</strong></li>
+          <li><strong>Dação em pagamento</strong></li>
+          <li><strong>Dissolução de condomínio</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-ic">⚠</div>
+      <div><strong>Regra geral:</strong> imóveis acima de 30 salários mínimos exigem <em>escritura pública</em> lavrada em Tabelionato de Notas — contratos particulares não são suficientes para o registro da transferência (CC/2002, art. 108). Abaixo desse valor, admite-se instrumento particular.</div>
+    </div>
+
+    <div class="card">
+      <h3>Reconhecimento de Firmas</h3>
+      <div class="g2" style="margin-top:10px;">
+        <div>
+          <h4>Por semelhança</h4>
+          <p>O tabelião compara a assinatura lançada no documento com o espécime de firma registrado no cartório. Não exige presença do signatário. Mais ágil e simples.</p>
+        </div>
+        <div>
+          <h4>Por autenticidade</h4>
+          <p>O signatário assina o documento na presença do tabelião ou preposto, que confere a identidade. Oferece maior segurança jurídica. Exigido em procurações para alienação de imóveis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. OUTROS CARTÓRIOS -->
+  <div class="sec" id="outros">
+    <div class="sec-title">Outros Serviços Registrais</div>
+    <p class="sec-sub">Registro Civil, Protestos, RTD e Registro de Pessoas Jurídicas</p>
+
+    <details>
+      <summary>Registro Civil das Pessoas Naturais (RCPN)</summary>
+      <div class="db">
+        <p>Responsável pelos atos do estado civil: nascimento, casamento, óbito, interdição, emancipação, ausência e tutela. É o serviço de maior capilaridade — presente em todos os municípios e distritos do país.</p>
+        <ul>
+          <li><strong>Registro de nascimento:</strong> gratuito (Lei 9.534/1997) — documento fundamental de identidade civil</li>
+          <li><strong>Habilitação e celebração de casamento:</strong> banhos, proclamas, certidões de inexistência de impedimento</li>
+          <li><strong>Averbação de divórcio:</strong> após sentença ou escritura pública</li>
+          <li><strong>Averbação de óbito:</strong> com certidão do SVO (serviço de verificação de óbito)</li>
+          <li>Em São Paulo, há cartórios de RCPN com jurisdição por distritos (subprefeituras)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Tabelionato de Protestos de Títulos</summary>
+      <div class="db">
+        <p>Disciplinado pela <strong>Lei 9.492/1997</strong>. O protesto é ato formal pelo qual se comprova a inadimplência e o descumprimento de obrigação constante de título ou documento de dívida.</p>
+        <ul>
+          <li>Títulos protestáveis: cheques, duplicatas, notas promissórias, letras de câmbio, contratos, certidões de dívida ativa</li>
+          <li>Prazo: apresentação até 3 dias úteis do vencimento para cheques; demais títulos não têm prazo fatal</li>
+          <li>Em São Paulo, a <strong>CERC</strong> (Central de Remessa de Arquivos) e o <strong>CRA-SP</strong> concentram e distribuem eletronicamente os títulos a protestar</li>
+          <li>Cancelamento: mediante pagamento do débito ou por ordem judicial</li>
+          <li>Certidão negativa de protesto: fundamental em financiamentos imobiliários e licitações</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Registro de Títulos e Documentos (RTD)</summary>
+      <div class="db">
+        <p>Confere data certa, publicidade e eficácia perante terceiros a contratos, notificações e cessões de crédito. É menos conhecido, mas essencial em diversas situações imobiliárias:</p>
+        <ul>
+          <li>Registro de contratos de locação para fins de vigência erga omnes</li>
+          <li>Registro de cessão de direitos hereditários ou de compromissos de compra e venda (quando não há matrícula aberta)</li>
+          <li>Notificações extrajudiciais com eficácia probatória</li>
+          <li>Registro de instrumentos particulares de valor acima de 30 SM não sujeitos a Registro de Imóveis</li>
+          <li>Em SP, os RTDs atendem por regiões, frequentemente reunidos com outros serviços em cartórios combinados</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Registro Civil de Pessoas Jurídicas (RCPJ)</summary>
+      <div class="db">
+        <p>Responsável pelo registro de entidades sem fins lucrativos (associações, fundações, partidos políticos, sindicatos, organizações religiosas). Não se confunde com a JUCESP (Junta Comercial), que registra empresas mercantis.</p>
+        <ul>
+          <li>Registro de estatutos, atas de eleição de diretoria, alterações contratuais</li>
+          <li>Certificado de regularidade jurídica para convênios e licitações</li>
+          <li>Em São Paulo, o RCPJ é frequentemente reunido ao RTD em cartório combinado</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5. SÃO PAULO — DESTAQUE -->
+  <div class="sec" id="sp">
+    <div class="sec-title">São Paulo — Sistema Registral e Notarial</div>
+    <p class="sec-sub">A maior praça cartorária do Brasil — estrutura, cartórios e organismos específicos</p>
+
+    <div class="sp-banner">
+      <div class="sp-icon">🏙️</div>
+      <div>
+        <h3>Capital e Estado com maior volume de atos extrajudiciais do país</h3>
+        <p>São Paulo concentra o maior número de cartórios, o maior volume de escrituras públicas e o maior acervo de matrículas de imóveis do Brasil. O TJSP, por meio de sua Corregedoria, regula e fiscaliza todos os serviços extrajudiciais do estado. A ARISP e o e-Notariado são plataformas pioneiras nacionais desenvolvidas em São Paulo.</p>
+        <ul>
+          <li>Mais de 2.800 serventias extrajudiciais no Estado de São Paulo</li>
+          <li>15 Cartórios de Registro de Imóveis só na Capital</li>
+          <li>Mais de 300 Tabelionatos de Notas no estado</li>
+          <li>Central eletrônica ARISP integra todos os Cartórios de RI do estado</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CARTÓRIOS DE RI EM SP -->
+    <div class="sec-title" style="font-size:1.1rem;margin-bottom:16px;">Os 15 Cartórios de Registro de Imóveis da Capital</div>
+
+    <div class="card">
+      <p>A cidade de São Paulo está dividida em <strong>15 circunscrições</strong> para fins de Registro de Imóveis. Cada imóvel da capital pertence à circunscrição correspondente à sua localização geográfica. O site da ARISP (arisp.com.br) permite identificar o cartório competente para qualquer endereço.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Cartório</th><th>Circunscrição / Bairros Atendidos (principais)</th><th>Referência</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1º RI</strong></td><td>Centro, Sé, República, Brás, Mooca, Pari</td><td>Centro histórico e leste próximo</td></tr>
+          <tr><td><strong>2º RI</strong></td><td>Consolação, Cerqueira César, Higienópolis, Bela Vista</td><td>Centro expandido oeste/norte</td></tr>
+          <tr><td><strong>3º RI</strong></td><td>Pinheiros, Itaim Bibi, Vila Olímpia, Jardim Europa</td><td>Zona Oeste / Faria Lima</td></tr>
+          <tr><td><strong>4º RI</strong></td><td>Vila Mariana, Saúde, Ipiranga, Cursino</td><td>Zona Sul próxima</td></tr>
+          <tr><td><strong>5º RI</strong></td><td>Santana, Tucuruvi, Mandaqui, Casa Verde</td><td>Zona Norte</td></tr>
+          <tr><td><strong>6º RI</strong></td><td>Lapa, Perdizes, Pompéia, Barra Funda</td><td>Zona Oeste/Lapa</td></tr>
+          <tr><td><strong>7º RI</strong></td><td>Penha, Ermelino Matarazzo, Artur Alvim</td><td>Zona Leste / Penha</td></tr>
+          <tr><td><strong>8º RI</strong></td><td>Tatuapé, Carrão, Vila Formosa, Anália Franco</td><td>Zona Leste / Tatuapé</td></tr>
+          <tr><td><strong>9º RI</strong></td><td>Santo André (RI limítrofe / área da capital próxima ABC)</td><td>Zona Sul/Leste fronteira</td></tr>
+          <tr><td><strong>10º RI</strong></td><td>Campo Limpo, Capão Redondo, Jardim São Luís</td><td>Zona Sul distante</td></tr>
+          <tr><td><strong>11º RI</strong></td><td>Jabaquara, Sacomã, Heliópolis</td><td>Zona Sul / Jabaquara</td></tr>
+          <tr><td><strong>12º RI</strong></td><td>São Mateus, Iguatemi, Cidade Tiradentes</td><td>Zona Leste extremo</td></tr>
+          <tr><td><strong>13º RI</strong></td><td>Pirituba, Jaraguá, Perus, Freguesia do Ó</td><td>Zona Norte/Noroeste</td></tr>
+          <tr><td><strong>14º RI</strong></td><td>Santo Amaro, Campo Belo, Granja Julieta</td><td>Zona Sul / Santo Amaro</td></tr>
+          <tr><td><strong>15º RI</strong></td><td>Itaim Paulista, São Miguel Paulista, Guaianases, Cidade Líder</td><td>Zona Leste extremo / Itaim Paulista</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-ic">⚠</div>
+      <div><strong>Atenção:</strong> a divisão de circunscrições é aproximada. Para verificar o cartório exato competente para um imóvel, consulte a plataforma <strong>ARISP</strong> (arisp.com.br) ou o Portal do Extrajudicial do TJSP, informando o endereço completo do imóvel.</div>
+    </div>
+
+    <!-- ARISP -->
+    <div class="sec-title" style="font-size:1.1rem;margin-top:36px;margin-bottom:16px;">ARISP — Associação dos Registradores de Imóveis de São Paulo</div>
+
+    <div class="sp-banner">
+      <div class="sp-icon">🔗</div>
+      <div>
+        <h3>Central de Serviços Digitais — arisp.com.br</h3>
+        <p>A ARISP é a associação que integra todos os Cartórios de Registro de Imóveis do Estado de SP em uma plataforma digital unificada, pioneira no Brasil.</p>
+        <ul>
+          <li><strong>Certidão de Matrícula Online:</strong> solicitação e recebimento 100% digital com validade jurídica (assinatura eletrônica ICP-Brasil)</li>
+          <li><strong>Busca de matrícula por endereço:</strong> localizar o cartório competente e o número de matrícula do imóvel</li>
+          <li><strong>Protocolo eletrônico de títulos:</strong> envio de escrituras e documentos para registro sem comparecer ao cartório</li>
+          <li><strong>Consulta de situação de protocolo:</strong> acompanhamento do andamento do registro em tempo real</li>
+          <li><strong>Central de Indisponibilidade:</strong> consulta de bloqueios judiciais e administrativos de imóveis</li>
+          <li><strong>Integração com ONR</strong> (Operador Nacional do Registro de Imóveis Eletrônico)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ORGANISMOS SP -->
+    <div class="sec-title" style="font-size:1.1rem;margin-top:36px;margin-bottom:16px;">Organismos e Plataformas Específicos de São Paulo</div>
+
+    <div class="g3">
+      <div class="mc">
+        <h4><span class="ic">🏢</span>TJSP — Corregedoria</h4>
+        <p>Fiscaliza e normatiza todos os cartórios extrajudiciais do estado por meio de Provimentos, Decisões e inspeções. Portal: tjsp.jus.br</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">📜</span>ANOREG-SP</h4>
+        <p>Associação dos Notários e Registradores do Estado de SP. Representa os tabeliães e registradores, produz normas de autorregulação e capacitação profissional.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">📡</span>CRA-SP</h4>
+        <p>Central de Remessa de Arquivos — distribui eletronicamente títulos a protestar entre os tabelionatos de protestos da capital e do interior de SP.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">🖥️</span>e-Notariado (CNJ)</h4>
+        <p>Plataforma nacional de escrituras públicas digitais. São Paulo é um dos estados com maior adesão — permite lavrar escrituras com assinatura eletrônica avançada.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">🔍</span>CRI — Central de Informações</h4>
+        <p>Plataforma do CNJ que integra dados de todos os Registros de Imóveis do país, com consulta por CPF/CNPJ para identificar imóveis registrados em nome de uma pessoa.</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">🏠</span>ITBI Digital — SP</h4>
+        <p>A Prefeitura de São Paulo implantou o ITBI Digital — guia eletrônico de recolhimento do imposto com integração direta ao sistema dos cartórios de RI da capital.</p>
+      </div>
+    </div>
+
+    <!-- ZONA LESTE / ITAIM PAULISTA -->
+    <div class="sec-title" style="font-size:1.1rem;margin-top:36px;margin-bottom:16px;">Zona Leste e Itaim Paulista — 15º RI e Cartórios da Região</div>
+
+    <div class="card card-gold">
+      <div class="badge badge-gold">★ Destaque Regional</div>
+      <h3>15º Cartório de Registro de Imóveis de São Paulo</h3>
+      <p>Responsável pelos imóveis situados nas subprefeituras de <strong>Itaim Paulista, São Miguel Paulista, Guaianases e Cidade Líder</strong> — área de intensa atividade imobiliária popular, programas MCMV e novos lançamentos. O 15º RI é referência para corretores e avaliadores que atuam na Zona Leste extrema.</p>
+      <ul style="margin-top:12px;">
+        <li>Certidões de matrícula disponíveis via ARISP online</li>
+        <li>Registro de escrituras e compromissos de incorporação da região</li>
+        <li>Averbações de habite-se e construção para empreendimentos MCMV</li>
+        <li>Registro de alienações fiduciárias (CAIXA, CDHU, bancos privados)</li>
+      </ul>
+    </div>
+
+    <div class="g2">
+      <div class="mc">
+        <h4><span class="ic">🗺️</span>Tabelionatos na Zona Leste</h4>
+        <p>A Zona Leste conta com diversos Tabelionatos de Notas distribuídos pelos bairros. Para localizar o tabelionato mais próximo, consulte o <strong>Portal do Extrajudicial do TJSP</strong> ou o buscador de serventias do CNJ (siel.cnj.jus.br).</p>
+      </div>
+      <div class="mc">
+        <h4><span class="ic">📍</span>RTD e RCPN na Zona Leste</h4>
+        <p>Registros de Títulos e Documentos e Registro Civil da Zona Leste atendem às subprefeituras locais. Para notificações extrajudiciais com eficácia no território, o RTD local é o serviço indicado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6. ATOS E PROCEDIMENTOS IMOBILIÁRIOS -->
+  <div class="sec" id="atos">
+    <div class="sec-title">Atos e Procedimentos Imobiliários Passo a Passo</div>
+    <p class="sec-sub">Como funciona na prática — da escritura ao registro</p>
+
+    <div class="sec-title" style="font-size:1.05rem;margin-bottom:14px;">Compra e Venda de Imóvel Urbano</div>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-b"><h4>Due diligence e certidões</h4><p>Levantamento de certidões do imóvel (matrícula atualizada, certidão negativa de ônus e ações reipersecutórias) e do vendedor (certidões cíveis, criminais, fiscais, trabalhistas, protesto). Prazo recomendado: certidões com até 30 dias.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-b"><h4>Instrumento particular / promessa</h4><p>Assinatura do contrato de promessa de compra e venda com sinal (arras). Pode ser levado a registro no RTD (para conferir publicidade) ou ao Registro de Imóveis (se for promessa irretratável com anuência do proprietário).</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-b"><h4>Recolhimento do ITBI</h4><p>Em São Paulo, pelo ITBI Digital (SP) ou guia na Prefeitura. Alíquota em SP: 3% sobre o maior valor entre o de transação e o venal de referência. Para imóveis financiados pelo SFH, a parte financiada tem alíquota de 0,5% (até R$ 183.755,57 em 2024).</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-b"><h4>Lavratura da Escritura Pública</h4><p>No Tabelionato de Notas (obrigatória para imóveis acima de 30 SM). Apresentar: documentos pessoais, matrícula atualizada, certidões, guia de ITBI pago, declaração do IR. O tabelião qualifica o título e lavra a escritura, que é lida, aprovada e assinada pelas partes.</p></div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-b"><h4>Apresentação ao Registro de Imóveis</h4><p>A escritura pública é levada ao Cartório de RI da circunscrição do imóvel. O oficial prenotará o título (protocolo), realizará a qualificação registral e, se aprovada, procederá ao registro. Prazo: 30 dias corridos após a prenotação (prorrogáveis).</p></div></div>
+      <div class="step"><div class="step-n">6</div><div class="step-b"><h4>Emissão da Certidão de Matrícula Atualizada</h4><p>Após o registro, a matrícula passa a indicar o novo proprietário. A certidão atualizada é a prova definitiva da titularidade. Em SP, disponível online via ARISP no mesmo dia do registro.</p></div></div>
+    </div>
+
+    <div class="alert alert-ok">
+      <div class="alert-ic">✔</div>
+      <div><strong>Dica prática para corretores:</strong> oriente os clientes a solicitar a certidão de matrícula com inteiro teor (não apenas a negativa de ônus) e com prazo de validade recente. Somente a matrícula completa revela a cadeia dominial, ônus, restrições e averbações.</div>
+    </div>
+
+    <!-- QUALIFICAÇÃO REGISTRAL -->
+    <div class="sec-title" style="font-size:1.05rem;margin-top:30px;margin-bottom:14px;">Qualificação Registral — Exigências e Suscitação de Dúvida</div>
+    <div class="card">
+      <p>O oficial do RI realiza a <strong>qualificação registral</strong> — análise de legalidade do título. Se encontrar irregularidade, pode:</p>
+      <ul>
+        <li><strong>Prenotação com exigência:</strong> o interessado tem 30 dias para sanar o vício; se não cumprir, o título caduca e perde a prioridade</li>
+        <li><strong>Suscitação de dúvida:</strong> se o interessado discordar da exigência, pode pedir ao oficial que suscite dúvida ao juiz competente (Vara de Registros Públicos em SP), que decidirá se o registro deve ou não ser feito</li>
+        <li><strong>Recurso administrativo:</strong> da decisão do juiz cabe recurso ao TJSP (Corregedoria)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 7. SERVIÇOS DIGITAIS -->
+  <div class="sec" id="digital">
+    <div class="sec-title">Serviços Digitais e Modernização Cartorária</div>
+    <p class="sec-sub">Inovações tecnológicas que transformaram o acesso aos serviços extrajudiciais</p>
+
+    <div class="g2">
+      <div class="card">
+        <h3>Plataformas Nacionais (CNJ)</h3>
+        <ul>
+          <li><strong>e-Notariado:</strong> escrituras públicas digitais com validade jurídica plena</li>
+          <li><strong>CRI (Central de Informações do RI):</strong> busca de imóveis por CPF/CNPJ em todo o Brasil</li>
+          <li><strong>ONR (Operador Nacional do RI Eletrônico):</strong> padronização do protocolo eletrônico</li>
+          <li><strong>RCPN Digital:</strong> registro de nascimentos hospitalares e certidões digitais</li>
+          <li><strong>Escritura Digital:</strong> assinatura com certificado ICP-Brasil sem deslocamento</li>
+          <li><strong>Inventário e Divórcio Online:</strong> lavratura de escritura extrajudicial à distância</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Plataformas Específicas de SP</h3>
+        <ul>
+          <li><strong>ARISP Online:</strong> certidões de matrícula digitais com QR Code de autenticação</li>
+          <li><strong>Portal Extrajudicial TJSP:</strong> busca de serventias, provimentos, normas e consulta de processos administrativos</li>
+          <li><strong>ITBI Digital SP:</strong> emissão e pagamento eletrônico da guia de ITBI da Capital</li>
+          <li><strong>CRA-SP Eletrônico:</strong> distribuição digital de títulos a protestar entre cartórios</li>
+          <li><strong>Protocolo eletrônico (e-Protocolo):</strong> apresentação de títulos ao RI sem comparecer ao cartório</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hl">
+      <h3>Como solicitar uma Certidão de Matrícula Online em São Paulo</h3>
+      <ul>
+        <li>Acesse <strong>arisp.com.br</strong> → "Certidões" → "Certidão de Imóvel"</li>
+        <li>Informe o número da matrícula ou o endereço completo do imóvel</li>
+        <li>Selecione o tipo: certidão de inteiro teor, ônus e ações, ou negativa de ônus</li>
+        <li>Realize o pagamento eletrônico (boleto ou cartão)</li>
+        <li>Receba o PDF assinado digitalmente (ICP-Brasil) — validade legal idêntica à certidão em papel</li>
+        <li>Autentique o documento pelo QR Code ou pelo portal da ARISP</li>
+      </ul>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-ic">ℹ</div>
+      <div><strong>Para avaliadores e corretores:</strong> a certidão de matrícula com inteiro teor é insumo indispensável para elaboração de laudos de avaliação (PTAM) e para a due diligence em transações imobiliárias. Mantenha sempre a certidão com data de até 30 dias da data do laudo.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8. CUSTAS E EMOLUMENTOS -->
+  <div class="sec">
+    <div class="sec-title">Custas e Emolumentos em São Paulo</div>
+    <p class="sec-sub">Como são calculados os emolumentos cartorários no Estado de SP</p>
+
+    <div class="card">
+      <p>Os <strong>emolumentos</strong> são as taxas cobradas pelos serviços notariais e de registro. Em São Paulo, são fixados pela <strong>Lei Estadual 11.331/2002</strong> e atualizados anualmente por Portaria da Corregedoria do TJSP. O valor depende do tipo de ato, do valor do imóvel e da faixa de enquadramento.</p>
+    </div>
+
+    <div class="g2">
+      <div class="card card-left">
+        <h3>Emolumentos no Tabelionato de Notas</h3>
+        <ul>
+          <li><strong>Escritura pública de compra e venda:</strong> calculado sobre o valor do negócio (tabela progressiva — em média 0,3% a 0,5% do valor)</li>
+          <li><strong>Reconhecimento de firma:</strong> por assinatura reconhecida (valor fixo por tabela anual)</li>
+          <li><strong>Autenticação de documento:</strong> por folha autenticada</li>
+          <li><strong>Ata notarial:</strong> valor fixo + adicional por hora/diligência</li>
+          <li><strong>Procuração pública:</strong> valor fixo por tabela</li>
+        </ul>
+      </div>
+      <div class="card card-left">
+        <h3>Emolumentos no Registro de Imóveis</h3>
+        <ul>
+          <li><strong>Registro de compra e venda:</strong> calculado sobre o valor do imóvel (tabela progressiva — em média 0,2% a 0,4%)</li>
+          <li><strong>Abertura de matrícula:</strong> valor fixo por tabela</li>
+          <li><strong>Averbação de construção:</strong> sobre o custo da obra (CUB/m²)</li>
+          <li><strong>Averbação de cancelamento:</strong> valor fixo</li>
+          <li><strong>Certidão de matrícula:</strong> valor fixo por certidão</li>
+          <li><strong>Registro de alienação fiduciária:</strong> sobre o valor do contrato</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-ic">⚠</div>
+      <div><strong>Gratuidade:</strong> o primeiro registro de nascimento e o assento de óbito são gratuitos. Beneficiários da Justiça Gratuita têm direito à isenção de emolumentos mediante declaração de hipossuficiência (Lei 1.060/1950 e Art. 5º, LXXIV da CF/88). Em SP, a isenção é processada mediante apresentação da declaração ao cartório.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BOAS PRÁTICAS -->
+  <div class="hl">
+    <h3>⚡ Boas Práticas para Corretores e Avaliadores Imobiliários</h3>
+    <ul>
+      <li>Sempre verifique a matrícula do imóvel antes de anunciar ou avaliar — ela revela proprietário, área real, ônus, penhoras e restrições urbanísticas</li>
+      <li>Solicite certidão de matrícula com <em>inteiro teor</em> (não apenas negativa de ônus) para ter acesso ao histórico completo</li>
+      <li>Para imóveis financiados com alienação fiduciária, consulte se houve quitação e averbação do cancelamento da garantia</li>
+      <li>Oriente compradores sobre o prazo entre a escritura e o registro — o imóvel só é do comprador após o registro no RI</li>
+      <li>Em lançamentos imobiliários, verifique o RRI (Registro de Incorporação) na matrícula do terreno antes de recomendar o empreendimento</li>
+      <li>Use a ARISP para localizar o cartório competente por endereço — evite protocolar no cartório errado</li>
+      <li>Para a Zona Leste (Itaim Paulista, São Miguel, Guaianases), o 15º RI é o competente — mantenha contato direto com a serventia para verificar prazos</li>
+      <li>Certidão negativa de protesto é exigida em financiamentos — oriente o cliente a providenciar com antecedência</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REFERÊNCIAS -->
+  <div class="sec" id="refs">
+    <div class="sec-title">Referências Legais e Fontes de Consulta</div>
+    <p class="sec-sub">Legislação, normas e portais indispensáveis</p>
+
+    <div class="g2">
+      <div class="card">
+        <div class="badge badge-blue">Legislação Federal</div>
+        <ul style="margin-top:12px;">
+          <li><strong>Lei 6.015/1973</strong> — Lei dos Registros Públicos</li>
+          <li><strong>Lei 8.935/1994</strong> — Lei dos Notários e Registradores</li>
+          <li><strong>CC/2002 — Arts. 1.227 a 1.247</strong> — Aquisição da propriedade imóvel</li>
+          <li><strong>Decreto-Lei 3.365/1941</strong> — Desapropriação</li>
+          <li><strong>Lei 9.492/1997</strong> — Protestos de Títulos</li>
+          <li><strong>Lei 4.591/1964</strong> — Incorporações Imobiliárias</li>
+          <li><strong>Lei 11.441/2007</strong> — Inventário e Divórcio extrajudicial</li>
+          <li><strong>NCPC, art. 1.071</strong> — Usucapião extrajudicial</li>
+          <li><strong>CF/88, art. 236</strong> — Serviços notariais e de registro</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="badge badge-gold">Normas e Portais SP</div>
+        <ul style="margin-top:12px;">
+          <li><strong>Lei Estadual 11.331/2002</strong> — Emolumentos em SP</li>
+          <li><strong>Provimentos CGJ-SP</strong> — Normativas da Corregedoria do TJSP</li>
+          <li><strong>arisp.com.br</strong> — Central de RI do Estado de SP</li>
+          <li><strong>tjsp.jus.br</strong> — Portal do Extrajudicial TJSP</li>
+          <li><strong>cnj.jus.br</strong> — CNJ / e-Notariado / CRI</li>
+          <li><strong>siel.cnj.jus.br</strong> — Busca de serventias extrajudiciais</li>
+          <li><strong>anoreg-sp.org.br</strong> — ANOREG-SP</li>
+          <li><strong>itbi.prefeitura.sp.gov.br</strong> — ITBI Digital SP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="badge badge-dark">Bibliografia</div>
+      <ul style="margin-top:12px;">
+        <li>CENEVIVA, Walter. <em>Lei dos Registros Públicos Comentada.</em> 20ª ed. Saraiva, 2010.</li>
+        <li>LOUREIRO, Luiz Guilherme. <em>Registros Públicos: Teoria e Prática.</em> 9ª ed. JusPodivm, 2018.</li>
+        <li>BRANDELLI, Leonardo. <em>Teoria Geral do Direito Notarial.</em> 4ª ed. Saraiva, 2011.</li>
+        <li>MELO, Marco Aurélio Bezerra de. <em>Direito das Coisas.</em> 2ª ed. Lumen Juris, 2009.</li>
+        <li>AGHIARIAN, Hércules. <em>Curso de Direito Imobiliário.</em> 12ª ed. Atlas, 2015.</li>
+        <li>DINIZ, Maria Helena. <em>Sistemas de Registro de Imóveis.</em> 11ª ed. Saraiva, 2016.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  <strong>Sistema Registral e Notarial no Brasil — Foco São Paulo</strong><br>
+  Material de referência profissional · Lei 6.015/1973 · Lei 8.935/1994 · CNJ · TJSP · ARISP<br>
+  <span style="font-size:0.74rem;opacity:0.55;">Conteúdo de caráter educacional. Consulte sempre a legislação vigente e os portais oficiais para informações atualizadas sobre emolumentos e circunscrições.</span>
+</div>
+
+</body>
+</html>

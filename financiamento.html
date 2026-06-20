@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financiamento Imobiliário | FCosta Corretor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d2440;--navy-mid:#163356;--blue:#1a4e8c;--sky:#2e82d4;--gold:#c8a84b;--gold-light:#e8c96e;--cream:#f8f4ee;--white:#ffffff;--gray:#8a8f9e;--gray-light:#f0f2f7;--text:#1c2535;--success:#1e7d5e;--warn:#b85c00;--danger:#c0392b;--shadow:0 4px 24px rgba(13,36,64,.12);--shadow-lg:0 12px 48px rgba(13,36,64,.18);--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);line-height:1.6}
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 100%);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-lg)}
+.header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo-block{display:flex;align-items:center;gap:14px}
+.logo-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-text{color:var(--white)}.logo-text strong{display:block;font-family:'Playfair Display',serif;font-size:17px}
+.logo-text span{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.8px;text-transform:uppercase}
+.header-cta{background:var(--gold);color:var(--navy);padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap}
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--blue) 100%);padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(200,168,75,.12) 0%,transparent 70%)}
+.hero h1{font-family:'Playfair Display',serif;color:var(--white);font-size:clamp(26px,5vw,44px);line-height:1.2;margin-bottom:14px;position:relative}
+.hero h1 em{color:var(--gold-light);font-style:normal}
+.hero p{color:rgba(255,255,255,.75);font-size:16px;max-width:580px;margin:0 auto 28px}
+.hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);padding:7px 16px;border-radius:24px;font-size:12px;font-weight:500}
+.badge strong{color:var(--gold-light)}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:52px 0}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,30px);color:var(--navy);margin-bottom:6px}
+.section-sub{color:var(--gray);font-size:14px;margin-bottom:32px}
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(13,36,64,.1),transparent)}
+.faixas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.faixa-card{background:var(--white);border-radius:var(--radius);padding:22px;border-left:5px solid var(--blue);box-shadow:var(--shadow);transition:transform .2s}
+.faixa-card:hover{transform:translateY(-3px)}
+.faixa-card.f1{border-color:#1e7d5e}.faixa-card.f2{border-color:#1a6fad}.faixa-card.f3{border-color:#7b5ea7}.faixa-card.f4{border-color:#c8a84b}.faixa-card.sfh{border-color:#0d2440}
+.faixa-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:6px}
+.faixa-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:10px}
+.faixa-renda{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.faixa-renda small{font-size:12px;font-weight:400;color:var(--gray)}
+.faixa-details{margin-top:12px;display:flex;flex-direction:column;gap:5px}
+.faixa-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--gray-light)}
+.faixa-row:last-child{border-bottom:none}
+.faixa-row .label{color:var(--gray)}.faixa-row .value{font-weight:600;color:var(--navy)}
+.taxa-tag{display:inline-block;background:var(--success);color:#fff;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin-top:8px}
+.taxa-tag.mid{background:var(--blue)}.taxa-tag.high{background:var(--warn)}.taxa-tag.premium{background:var(--navy)}
+.simulator-wrap{background:var(--white);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden}
+.sim-header{background:linear-gradient(135deg,var(--navy),var(--blue));padding:24px 30px;color:var(--white)}
+.sim-header h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:3px}
+.sim-header p{font-size:12px;color:rgba(255,255,255,.65)}
+.sim-body{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.sim-body{grid-template-columns:1fr}}
+.sim-form{padding:28px;border-right:1px solid var(--gray-light)}
+@media(max-width:800px){.sim-form{border-right:none;border-bottom:1px solid var(--gray-light)}}
+.sim-result{padding:28px;background:#fbfcff}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--navy);margin-bottom:5px}
+.form-group label .hint{font-weight:400;color:var(--gray);font-size:11px;margin-left:4px}
+.form-group input,.form-group select{width:100%;padding:11px 13px;border:1.5px solid #dde2ec;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--white)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.alert-info{background:#e8f4ff;border:1px solid #b3d7f5;border-radius:8px;padding:9px 13px;font-size:12px;color:#1a4e8c;margin-top:8px}
+.alert-warn{background:#fff3cd;border:1px solid #f0c040;border-radius:8px;padding:9px 13px;font-size:12px;color:#7a5400;margin-top:8px;display:none}
+.calc-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--navy),var(--blue));color:var(--white);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.result-placeholder{text-align:center;padding:48px 16px;color:var(--gray)}
+.result-placeholder .icon{font-size:44px;margin-bottom:10px}
+.result-card{display:none}
+.result-status{padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:18px;line-height:1.4}
+.result-status.ok{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.result-status.warn{background:#fff3cd;color:#856404;border:1px solid #ffeeba}
+.result-status.fail{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+.parcelas-destaque{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.parcela-box{border-radius:12px;padding:16px;text-align:center}
+.parcela-box.primeira{background:linear-gradient(135deg,var(--navy),var(--blue));color:var(--white)}
+.parcela-box.ultima{background:linear-gradient(135deg,var(--success),#27ae60);color:var(--white)}
+.parcela-box .pb-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.75;margin-bottom:4px}
+.parcela-box .pb-val{font-family:'Playfair Display',serif;font-size:clamp(18px,3.5vw,24px);font-weight:700;color:var(--gold-light)}
+.parcela-box.ultima .pb-val{color:#a8ffd4}
+.parcela-box .pb-sub{font-size:10px;opacity:.7;margin-top:2px}
+.renda-box{background:var(--cream);border-radius:12px;padding:14px;text-align:center;border:2px dashed var(--gold);margin-bottom:16px}
+.renda-box .rb-label{font-size:11px;color:var(--gray);margin-bottom:2px}
+.result-sec{font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:16px}
+.result-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--gray-light);font-size:13px}
+.result-row:last-child{border-bottom:none}
+.result-row .rl{color:var(--gray)}.result-row .rv{font-weight:700;color:var(--navy)}
+.result-row .rv.green{color:var(--success)}.result-row .rv.orange{color:var(--warn)}.result-row .rv.red{color:var(--danger)}
+.amort-bar{margin-top:12px}
+.amort-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-bottom:5px}
+.amort-bar-track{height:9px;background:#e2e8f0;border-radius:6px;overflow:hidden}
+.amort-bar-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--navy));border-radius:6px;transition:width .8s ease}
+.btn-tabela{width:100%;margin-top:16px;padding:12px;background:var(--cream);border:2px solid var(--navy);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-tabela:hover{background:var(--navy);color:var(--white)}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.comp-grid{grid-template-columns:1fr}}
+.comp-item{background:var(--white);border-radius:10px;padding:12px;border-left:4px solid var(--sky)}
+.comp-item h5{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.comp-item p{font-size:11px;color:var(--gray);line-height:1.5}
+.comp-item.destaque{border-left-color:var(--gold)}
+.comp-tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;margin-top:6px}
+.comp-tag.ok{background:#d4edda;color:#155724}.comp-tag.limit{background:#fff3cd;color:#856404}.comp-tag.no{background:#f8d7da;color:#721c24}
+.cards-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.info-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.info-card .ic-icon{font-size:26px;margin-bottom:10px}
+.info-card h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.info-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.info-card ul li{font-size:12px;color:var(--text);padding-left:18px;position:relative;line-height:1.5}
+.info-card ul li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700;font-size:11px;top:2px}
+.info-card ul li.x::before{content:'✗';color:var(--danger)}
+.info-card ul li.dot::before{content:'•';color:var(--sky)}
+.amort-explain{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:20px}
+.amort-explain h4{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:14px}
+.amort-tabs{display:flex;gap:4px;margin-bottom:16px}
+.amort-tab{padding:8px 18px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:var(--gray-light);color:var(--gray)}
+.amort-tab.active{background:var(--navy);color:var(--white)}
+.amort-panel{display:none}.amort-panel.active{display:block}
+.amort-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:500px){.amort-visual{grid-template-columns:1fr}}
+.amort-vis-box{background:var(--cream);border-radius:10px;padding:14px}
+.amort-vis-box h5{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.amort-bar-group{display:flex;flex-direction:column;gap:6px}
+.amort-bar-row{display:flex;align-items:center;gap:8px;font-size:11px}
+.amort-bar-row .alabel{width:60px;color:var(--gray);flex-shrink:0;text-align:right}
+.amort-mini-track{flex:1;height:7px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.amort-mini-fill{height:100%;border-radius:4px}
+.fill-amort{background:var(--sky)}.fill-juros{background:var(--gold)}
+.amort-legend{display:flex;gap:14px;font-size:11px;color:var(--gray);margin-top:8px}
+.amort-legend span{display:flex;align-items:center;gap:5px}
+.amort-legend span::before{content:'';width:12px;height:6px;border-radius:3px;display:inline-block}
+.leg-amort::before{background:var(--sky)}.leg-juros::before{background:var(--gold)}
+.amort-text p{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:8px}
+.highlight-text{background:var(--cream);border-left:4px solid var(--gold);padding:10px 14px;border-radius:0 8px 8px 0;font-size:12px;color:var(--navy);margin-top:10px}
+
+/* PTAM */
+.ptam-wrap{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:24px}
+.ptam-wrap h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:6px}
+.ptam-sub{font-size:13px;color:var(--gray);margin-bottom:20px}
+.ptam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:20px}
+.ptam-card{background:var(--cream);border-radius:10px;padding:16px;border-top:4px solid var(--sky)}
+.ptam-card.gold{border-top-color:var(--gold)}.ptam-card.red{border-top-color:var(--danger)}.ptam-card.green{border-top-color:var(--success)}
+.ptam-card h5{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.ptam-card p{font-size:12px;color:var(--text);line-height:1.6}
+.ptam-alerta{background:#fff3cd;border:1px solid #f0c040;border-radius:10px;padding:16px 20px;font-size:13px;color:#7a5400;display:flex;gap:12px;align-items:flex-start}
+.ptam-alerta .icon{font-size:22px;flex-shrink:0}
+
+/* STEPS CAIXA */
+.caixa-steps{display:flex;flex-direction:column;gap:0;position:relative}
+.caixa-steps::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--sky),var(--navy));z-index:0}
+.caixa-step{display:flex;gap:20px;position:relative;z-index:1;padding-bottom:28px}
+.caixa-step:last-child{padding-bottom:0}
+.caixa-step-num{width:48px;height:48px;background:var(--navy);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;border:3px solid var(--cream);box-shadow:var(--shadow)}
+.caixa-step-body{flex:1;padding-top:8px}
+.caixa-step-body h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.caixa-step-body p{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:6px}
+.step-detail{background:var(--gray-light);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text);line-height:1.6;margin-top:6px}
+.step-detail strong{color:var(--navy)}
+.step-prazo{display:inline-block;background:var(--navy);color:var(--white);padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;margin-top:6px}
+.step-prazo.gold{background:var(--gold);color:var(--navy)}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin:20px 0 8px}
+.faq-cat:first-child{margin-top:0}
+.faq-item{background:var(--white);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.faq-question{width:100%;background:none;border:none;padding:18px 20px;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-question:hover{background:var(--gray-light)}
+.faq-icon{font-size:20px;color:var(--sky);flex-shrink:0;transition:transform .3s;line-height:1}
+.faq-question.open .faq-icon{transform:rotate(45deg)}
+.faq-answer{display:none;padding:0 20px 18px;font-size:13px;color:var(--text);line-height:1.7}
+.faq-answer.open{display:block}
+.faq-answer p{margin-bottom:8px}
+.faq-answer p:last-child{margin-bottom:0}
+.faq-answer strong{color:var(--navy)}
+.faq-tip{background:#e8f4ff;border-left:4px solid var(--sky);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--blue);margin-top:8px}
+.faq-warn{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:#7a5400;margin-top:8px}
+
+.docs-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.docs-table th{background:var(--navy);color:var(--white);padding:11px 14px;text-align:left;font-size:12px;font-weight:600}
+.docs-table td{padding:10px 14px;font-size:12px;border-bottom:1px solid var(--gray-light)}
+.docs-table tr:last-child td{border-bottom:none}
+.docs-table tr:nth-child(even) td{background:#f8faff}
+.doc-tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700}
+.doc-tag.ob{background:#d4edda;color:#155724}.doc-tag.cond{background:#fff3cd;color:#856404}
+.modal-overlay{position:fixed;inset:0;background:rgba(13,36,64,.7);z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--white);border-radius:20px;width:100%;max-width:820px;box-shadow:var(--shadow-lg);margin:auto;overflow:hidden}
+.modal-header{background:linear-gradient(135deg,var(--navy),var(--blue));padding:20px 24px;display:flex;justify-content:space-between;align-items:center;color:var(--white)}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:18px}
+.modal-header p{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:16px 24px;background:var(--cream);border-bottom:1px solid var(--gray-light)}
+.mscard{text-align:center}
+.mscard .msl{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.mscard .msv{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy)}
+.modal-body{padding:0 24px 24px;max-height:60vh;overflow-y:auto}
+.tabela-wrap{overflow-x:auto;margin-top:16px}
+.tabela-parcelas{width:100%;border-collapse:collapse;font-size:12px}
+.tabela-parcelas th{background:var(--navy);color:var(--white);padding:10px;text-align:right;font-size:11px;font-weight:600;position:sticky;top:0}
+.tabela-parcelas th:first-child{text-align:center}
+.tabela-parcelas td{padding:8px 10px;border-bottom:1px solid #f0f2f7;text-align:right}
+.tabela-parcelas td:first-child{text-align:center;font-weight:700;color:var(--navy)}
+.tabela-parcelas tr:nth-child(even) td{background:#f8faff}
+.tabela-parcelas tr:last-child td{background:#d4edda;font-weight:700}
+.tabela-parcelas tr.anual td{background:#e8f4ff;font-weight:700;color:var(--blue)}
+.export-btn{margin:16px 0 0;padding:11px 20px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+footer{background:var(--navy);color:rgba(255,255,255,.65);text-align:center;padding:24px;font-size:11px;line-height:1.8}
+footer strong{color:var(--gold-light)}
+footer a{color:rgba(255,255,255,.55);text-decoration:none}
+.small-note{font-size:11px;color:var(--gray);margin-top:12px;line-height:1.6}
+.text-center{text-align:center}
+.mt12{margin-top:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <div class="logo-icon">🏠</div>
+      <div class="logo-text">
+        <strong>FCosta Corretor</strong>
+        <span>CRECI-SP 29479-F · CNAI 52708</span>
+      </div>
+    </div>
+    <a class="header-cta" href="https://wa.me/5511993509109?text=Ol%C3%A1%2C+quero+simular+um+financiamento!" target="_blank">💬 Falar com Especialista</a>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Financiamento Imobiliário<br><em>Caixa Econômica Federal</em></h1>
+  <p>Simule seu financiamento, entenda a composição de renda e confira todos os requisitos — guia completo atualizado para 2026.</p>
+  <div class="hero-badges">
+    <div class="badge">🏦 Caixa Econômica Federal</div>
+    <div class="badge">📅 Atualizado <strong>Abril 2026</strong></div>
+    <div class="badge">🏘️ MCMV + SBPE + SFH</div>
+  </div>
+</div>
+
+<!-- FAIXAS -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Faixas de Renda e Modalidades</h2>
+    <p class="section-sub">Qual programa se aplica à sua família? Dados atualizados com as regras vigentes em 2026.</p>
+    <div class="faixas-grid">
+      <div class="faixa-card f1">
+        <div class="faixa-label">MCMV · Faixa 1</div>
+        <div class="faixa-title">Social</div>
+        <div class="faixa-renda">Até R$ 3.200 <small>/mês</small></div>
+        <div class="faixa-details">
+          <div class="faixa-row"><span class="label">Imóvel máx.</span><span class="value">R$ 190.000</span></div>
+          <div class="faixa-row"><span class="label">Juros</span><span class="value">4,00% a.a.</span></div>
+          <div class="faixa-row"><span class="label">Prazo máx.</span><span class="value">360 meses</span></div>
+          <div class="faixa-row"><span class="label">Subsídio</span><span class="value">Até 95%</span></div>
+          <div class="faixa-row"><span class="label">FGTS</span><span class="value">✅ Sim</span></div>
+        </div>
+        <span class="taxa-tag">Subsídio máximo</span>
+      </div>
+      <div class="faixa-card f2">
+        <div class="faixa-label">MCMV · Faixa 2</div>
+        <div class="faixa-title">Popular</div>
+        <div class="faixa-renda">R$ 3.200 – 5.000 <small>/mês</small></div>
+        <div class="faixa-details">
+          <div class="faixa-row"><span class="label">Imóvel máx.</span><span class="value">R$ 264.000</span></div>
+          <div class="faixa-row"><span class="label">Juros</span><span class="value">4,75% – 6,5% a.a.</span></div>
+          <div class="faixa-row"><span class="label">Prazo máx.</span><span class="value">360 meses</span></div>
+          <div class="faixa-row"><span class="label">Subsídio</span><span class="value">Parcial</span></div>
+          <div class="faixa-row"><span class="label">FGTS</span><span class="value">✅ Sim</span></div>
+        </div>
+        <span class="taxa-tag mid">Juros reduzidos</span>
+      </div>
+      <div class="faixa-card f3">
+        <div class="faixa-label">MCMV · Faixa 3</div>
+        <div class="faixa-title">Intermediária</div>
+        <div class="faixa-renda">R$ 5.000 – 9.600 <small>/mês</small></div>
+        <div class="faixa-details">
+          <div class="faixa-row"><span class="label">Imóvel máx.</span><span class="value">R$ 400.000</span></div>
+          <div class="faixa-row"><span class="label">Juros</span><span class="value">8,16% – 9,16% a.a.</span></div>
+          <div class="faixa-row"><span class="label">Prazo máx.</span><span class="value">420 meses</span></div>
+          <div class="faixa-row"><span class="label">Subsídio</span><span class="value">Sem subsídio</span></div>
+          <div class="faixa-row"><span class="label">FGTS</span><span class="value">✅ Sim</span></div>
+        </div>
+        <span class="taxa-tag high">Sem subsídio</span>
+      </div>
+      <div class="faixa-card f4">
+        <div class="faixa-label">MCMV · Faixa 4 (NOVO 2026)</div>
+        <div class="faixa-title">Classe Média</div>
+        <div class="faixa-renda">R$ 9.600 – 13.000 <small>/mês</small></div>
+        <div class="faixa-details">
+          <div class="faixa-row"><span class="label">Imóvel máx.</span><span class="value">R$ 600.000</span></div>
+          <div class="faixa-row"><span class="label">Juros</span><span class="value">10,00% a.a.</span></div>
+          <div class="faixa-row"><span class="label">Prazo máx.</span><span class="value">420 meses</span></div>
+          <div class="faixa-row"><span class="label">Subsídio</span><span class="value">Sem subsídio</span></div>
+          <div class="faixa-row"><span class="label">FGTS</span><span class="value">✅ Sim</span></div>
+        </div>
+        <span class="taxa-tag" style="background:#c8a84b;color:#1c2535">Faixa nova 2026</span>
+      </div>
+      <div class="faixa-card sfh">
+        <div class="faixa-label">SBPE · SFH (Classe Média+)</div>
+        <div class="faixa-title">SFH Tradicional</div>
+        <div class="faixa-renda">Acima de R$ 13.000 <small>/mês</small></div>
+        <div class="faixa-details">
+          <div class="faixa-row"><span class="label">Imóvel máx.</span><span class="value">R$ 2.250.000</span></div>
+          <div class="faixa-row"><span class="label">Juros Caixa</span><span class="value">11,19% a.a.</span></div>
+          <div class="faixa-row"><span class="label">Prazo máx.</span><span class="value">420 meses</span></div>
+          <div class="faixa-row"><span class="label">Financ. máx.</span><span class="value">80% do imóvel</span></div>
+          <div class="faixa-row"><span class="label">FGTS</span><span class="value">✅ Sim (SFH)</span></div>
+        </div>
+        <span class="taxa-tag premium">Taxa de mercado</span>
+      </div>
+    </div>
+    <p class="small-note text-center">⚠️ Valores e taxas referentes a Abril/2026. Sujeitos a alteração pela Caixa Econômica Federal.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SIMULADOR -->
+<section id="simulador">
+  <div class="container">
+    <h2 class="section-title">Simulador de Financiamento</h2>
+    <p class="section-sub">Veja a 1ª e a última parcela, renda necessária e tabela completa — SAC e Price.</p>
+    <div class="simulator-wrap">
+      <div class="sim-header">
+        <h3>🏠 Simulador FCosta — Caixa Econômica Federal</h3>
+        <p>SAC e Price · Seguros MIP/DFI obrigatórios · Teto SFH R$ 2.250.000 (2026) · Regra dos 30% de renda</p>
+      </div>
+      <div class="sim-body">
+        <div class="sim-form">
+          <div class="form-group">
+            <label>Valor do Imóvel <span class="hint">R$</span></label>
+            <input type="text" id="fcc_valorImovel" placeholder="Ex: 350.000,00" oninput="fcc_formatMoney(this)" value="350.000,00">
+          </div>
+          <div class="form-group">
+            <label>Entrada <span class="hint">mín. 20% SFH</span></label>
+            <input type="text" id="fcc_valorEntrada" placeholder="Ex: 70.000,00" oninput="fcc_formatMoney(this);fcc_calcEntradaBar()" value="70.000,00">
+            <div style="margin-top:7px">
+              <div class="amort-bar-label"><span id="fcc_pctLabel">Entrada: 20,0%</span><span id="fcc_financiadoLabel">Financiado: R$ 280.000</span></div>
+              <div class="amort-bar-track"><div class="amort-bar-fill" id="fcc_entradaBar" style="width:20%"></div></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prazo <span class="hint">meses</span></label>
+              <select id="fcc_prazo">
+                <option value="60">60 (5 anos)</option><option value="120">120 (10 anos)</option><option value="180">180 (15 anos)</option>
+                <option value="240">240 (20 anos)</option><option value="300">300 (25 anos)</option>
+                <option value="360" selected>360 (30 anos)</option><option value="420">420 (35 anos)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Amortização</label>
+              <select id="fcc_sistema">
+                <option value="sac" selected>SAC (decrescente)</option>
+                <option value="price">Price (fixa)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Sua Idade <span class="hint">anos</span></label>
+              <input type="number" id="fcc_idade" min="18" max="80" value="35" oninput="fcc_checkIdade()">
+              <div class="alert-warn" id="fcc_alertIdade">⚠️ <span id="fcc_msgIdade"></span></div>
+            </div>
+            <div class="form-group">
+              <label>Taxa <span class="hint">% a.a.</span></label>
+              <select id="fcc_taxa">
+                <option value="4.00">4,00% — MCMV F1</option><option value="5.50">5,50% — MCMV F2</option>
+                <option value="8.16">8,16% — MCMV F3</option><option value="9.16">9,16% — F3 s/FGTS</option>
+                <option value="10.00">10,00% — F4</option><option value="11.19" selected>11,19% — SFH Caixa</option>
+                <option value="12.00">12,00% — SFH outros bancos</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Renda Familiar Bruta Total <span class="hint">R$</span></label>
+            <input type="text" id="fcc_renda" oninput="fcc_formatMoney(this)" value="8.000,00">
+          </div>
+          <div class="alert-info">👥 <strong>Composição de Renda:</strong> Some a renda de até 3 pessoas (cônjuge, filho, pai). Informe o total combinado.</div>
+          <button class="calc-btn" onclick="fcc_calcular()" style="margin-top:16px">🔢 Calcular Financiamento</button>
+        </div>
+        <div class="sim-result">
+          <div class="result-placeholder" id="fcc_placeholder">
+            <div class="icon">📊</div>
+            <p>Preencha os dados ao lado e clique em <strong>Calcular</strong>.</p>
+          </div>
+          <div class="result-card" id="fcc_result">
+            <div id="fcc_status" class="result-status"></div>
+            <div class="parcelas-destaque">
+              <div class="parcela-box primeira"><div class="pb-label" id="fcc_p1label">1ª Parcela</div><div class="pb-val" id="fcc_p1val">—</div><div class="pb-sub">Amort + Juros + Seguros</div></div>
+              <div class="parcela-box ultima"><div class="pb-label" id="fcc_pnlabel">Última Parcela</div><div class="pb-val" id="fcc_pnval">—</div><div class="pb-sub" id="fcc_pnsub">—</div></div>
+            </div>
+            <div class="renda-box">
+              <div class="rb-label">💰 Renda mínima necessária (regra 30%)</div>
+              <div id="fcc_rendaMin" style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)">—</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px" id="fcc_rendaSub">—</div>
+            </div>
+            <div class="result-sec">Detalhamento</div>
+            <div class="result-row"><span class="rl">Valor do imóvel</span><span class="rv" id="fcc_r_imovel">—</span></div>
+            <div class="result-row"><span class="rl">Entrada</span><span class="rv" id="fcc_r_entrada">—</span></div>
+            <div class="result-row"><span class="rl">Valor financiado</span><span class="rv" id="fcc_r_financiado">—</span></div>
+            <div class="result-row"><span class="rl">Modalidade / taxa</span><span class="rv" id="fcc_r_modal">—</span></div>
+            <div class="result-row"><span class="rl">Cota financ. (%)</span><span class="rv" id="fcc_r_cota">—</span></div>
+            <div class="result-row"><span class="rl">Prazo efetivo</span><span class="rv" id="fcc_r_prazo">—</span></div>
+            <div class="result-sec">Composição 1ª Parcela</div>
+            <div class="result-row"><span class="rl">Amortização</span><span class="rv" id="fcc_r_amort">—</span></div>
+            <div class="result-row"><span class="rl">Juros</span><span class="rv" id="fcc_r_juros">—</span></div>
+            <div class="result-row"><span class="rl">Seguro MIP</span><span class="rv" id="fcc_r_mip">—</span></div>
+            <div class="result-row"><span class="rl">Seguro DFI</span><span class="rv" id="fcc_r_dfi">—</span></div>
+            <div class="result-row"><span class="rl">Taxa adm.</span><span class="rv">R$ 25,00</span></div>
+            <div class="result-sec">Custo Total</div>
+            <div class="result-row"><span class="rl">Total pago no prazo</span><span class="rv" id="fcc_r_total">—</span></div>
+            <div class="result-row"><span class="rl">Total de juros</span><span class="rv red" id="fcc_r_tjuros">—</span></div>
+            <div class="result-row"><span class="rl">Comprometimento renda</span><span class="rv" id="fcc_r_compr">—</span></div>
+            <div class="amort-bar mt12">
+              <div class="amort-bar-label"><span>Comprometimento de renda</span><span id="fcc_comprLabel">—</span></div>
+              <div class="amort-bar-track"><div class="amort-bar-fill" id="fcc_comprBar" style="width:0%"></div></div>
+            </div>
+            <button class="btn-tabela" onclick="fcc_abrirModal()">📋 Ver tabela completa de parcelas</button>
+            <p class="small-note">* MIP e DFI variam com idade e valor. Taxa adm. R$ 25/mês. Consulte a Caixa para condições definitivas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VISTORIA E PTAM -->
+<section style="background:var(--gray-light);padding:52px 0">
+  <div class="container">
+    <h2 class="section-title">O Que a Caixa Faz no Processo?</h2>
+    <p class="section-sub">Vistoria, PTAM e todas as etapas que a Caixa realiza desde a análise até a liberação do dinheiro ao vendedor.</p>
+
+    <div class="ptam-wrap">
+      <h3>📋 Vistoria Técnica e PTAM — O que é e como funciona</h3>
+      <p class="ptam-sub">O <strong>PTAM — Parecer Técnico de Avaliação Mercadológica</strong> é o laudo oficial elaborado por um engenheiro ou arquiteto credenciado pela Caixa. Ele determina o valor real do imóvel para fins de financiamento — e é esse valor que a Caixa usa, não o preço pedido pelo vendedor.</p>
+      <div class="ptam-grid">
+        <div class="ptam-card">
+          <h5>🔍 O que o engenheiro avalia?</h5>
+          <p>Estado de conservação, área construída real, padrão de acabamento, localização, infraestrutura do bairro, idade do imóvel e comparativos com imóveis similares vendidos recentemente na mesma região.</p>
+        </div>
+        <div class="ptam-card gold">
+          <h5>💰 Quem paga o PTAM?</h5>
+          <p>O <strong>comprador paga</strong> a taxa de avaliação diretamente à Caixa ao solicitar a vistoria. O valor varia de <strong>R$ 800 a R$ 3.000</strong> conforme o valor do imóvel. Atenção: <strong>não é reembolsável</strong>, mesmo se o financiamento não for aprovado.</p>
+        </div>
+        <div class="ptam-card green">
+          <h5>✅ Se o PTAM bater com o preço</h5>
+          <p>Ótimo! A Caixa financia normalmente com base no menor valor entre o preço de venda e o PTAM. Não há nenhum problema — o processo segue normalmente.</p>
+        </div>
+        <div class="ptam-card red">
+          <h5>⚠️ Se o PTAM vier abaixo do preço</h5>
+          <p>A Caixa financia <strong>somente sobre o valor do PTAM</strong>. A diferença sai do bolso do comprador. Exemplo: imóvel por R$ 400.000, PTAM de R$ 370.000 → comprador arca com R$ 30.000 a mais.</p>
+        </div>
+        <div class="ptam-card">
+          <h5>⏱️ Quanto tempo leva?</h5>
+          <p>Após a solicitação, o engenheiro visita o imóvel em até 15 dias úteis. O laudo PTAM fica pronto em mais 5 a 10 dias úteis. Total estimado: <strong>20 a 25 dias úteis</strong>.</p>
+        </div>
+        <div class="ptam-card gold">
+          <h5>📄 Posso contestar o PTAM?</h5>
+          <p>Sim. A Caixa permite pedir revisão do laudo, mas o engenheiro deve ter cometido um erro concreto (área errada, padrão classificado errado). Na prática, contestações raramente mudam o valor de forma significativa.</p>
+        </div>
+      </div>
+      <div class="ptam-alerta">
+        <span class="icon">💡</span>
+        <div><strong>Dica do Corretor Sérgio Costa:</strong> Antes de pedir a vistoria, pesquise os preços de imóveis similares na mesma rua ou condomínio. Se o preço pedido estiver muito acima do mercado, o PTAM vai mostrar — e a diferença sai do seu bolso. Negocie o preço antes de protocolar o financiamento.</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:6px;margin-top:36px">Todas as Etapas que a Caixa Realiza</h3>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:28px">Do protocolo dos documentos até a liberação do recurso — o que acontece em cada fase.</p>
+
+    <div class="caixa-steps">
+      <div class="caixa-step">
+        <div class="caixa-step-num">1</div>
+        <div class="caixa-step-body">
+          <h4>Análise de Crédito do Comprador</h4>
+          <p>A Caixa consulta o CPF na Receita Federal, verifica restrições no SERASA/SPC, analisa renda comprovada, calcula o comprometimento de renda (limite 30%) e verifica se há outro financiamento ativo no SFH.</p>
+          <div class="step-detail"><strong>O que pode reprovar:</strong> Nome negativado, renda insuficiente, financiamento ativo no SFH (para uso do FGTS), dívidas com o governo federal, inconsistência entre renda declarada e extratos bancários.</div>
+          <span class="step-prazo">⏱️ 3 a 10 dias úteis</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">2</div>
+        <div class="caixa-step-body">
+          <h4>Vistoria Técnica + Elaboração do PTAM</h4>
+          <p>Engenheiro ou arquiteto credenciado visita o imóvel fisicamente, avalia condições estruturais, padrão construtivo, área real e valor de mercado. O resultado é o PTAM — laudo oficial que define o valor aceito pela Caixa.</p>
+          <div class="step-detail"><strong>O que pode reprovar:</strong> Imóvel com problemas estruturais graves, área real menor que a da matrícula, ausência de "habite-se", irregularidades construtivas ou valor de mercado muito abaixo do preço pedido.</div>
+          <span class="step-prazo">⏱️ 15 a 25 dias úteis</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">3</div>
+        <div class="caixa-step-body">
+          <h4>Análise Jurídica do Imóvel</h4>
+          <p>A Caixa verifica matrícula atualizada, cadeia dominial completa (histórico de proprietários), certidão negativa de ônus reais, situação do IPTU e existência de pendências ou disputas judiciais sobre o imóvel.</p>
+          <div class="step-detail">
+            <strong>Sobre escritura vs. contrato de C&V:</strong> A Caixa aceita <strong>escritura pública registrada</strong> ou <strong>contrato de compra e venda devidamente registrado/averbado na matrícula</strong>. Contrato apenas em mãos, sem registro em cartório, <strong>não é aceito</strong> — a cadeia dominial precisa constar na matrícula.<br><br>
+            <strong>O que pode reprovar:</strong> Penhora, hipoteca ou alienação fiduciária ativa, IPTU atrasado, matrícula desatualizada, ausência de "habite-se", imóvel em inventário sem partilha concluída.
+          </div>
+          <span class="step-prazo">⏱️ 10 a 20 dias úteis</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">4</div>
+        <div class="caixa-step-body">
+          <h4>Análise Jurídica do Vendedor</h4>
+          <p>A Caixa exige certidões pessoais do vendedor para afastar risco de fraude contra credores — garantindo que a venda não possa ser anulada judicialmente após a conclusão do financiamento.</p>
+          <div class="step-detail"><strong>Certidões exigidas:</strong> Ações cíveis, trabalhistas, Receita Federal, protestos, Justiça Federal e, se pessoa jurídica, certidões da empresa também. Todas com validade máxima de 30 dias.</div>
+          <span class="step-prazo">⏱️ Junto com análise jurídica do imóvel</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">5</div>
+        <div class="caixa-step-body">
+          <h4>Aprovação Final e Definição das Condições</h4>
+          <p>Com todas as análises aprovadas, a Caixa emite a carta de aprovação definitiva com: valor aprovado, taxa de juros, prazo, valor das parcelas, sistema de amortização e valor dos seguros obrigatórios.</p>
+          <div class="step-detail"><strong>Seguros obrigatórios (SFH):</strong> O <strong>MIP</strong> (Morte e Invalidez Permanente) garante a quitação do saldo em caso de falecimento ou invalidez do mutuário. O <strong>DFI</strong> (Danos Físicos ao Imóvel) cobre danos estruturais. Ambos são pagos mensalmente junto com a parcela.</div>
+          <span class="step-prazo gold">⏱️ Etapa final antes da assinatura</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">6</div>
+        <div class="caixa-step-body">
+          <h4>Assinatura do Contrato com Alienação Fiduciária</h4>
+          <p>Comprador e vendedor comparecem à agência Caixa para assinar o contrato. O imóvel fica formalmente em nome do comprador, porém <strong>gravado como garantia</strong> da Caixa até a quitação total.</p>
+          <div class="step-detail"><strong>Alienação fiduciária:</strong> O comprador tem posse e uso pleno do imóvel, mas não pode vendê-lo sem quitar ou transferir o financiamento. Em caso de inadimplência grave, a Caixa pode retomar o imóvel por via extrajudicial (leilão), sem precisar de ação judicial.</div>
+          <span class="step-prazo">⏱️ 1 a 3 dias após aprovação</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">7</div>
+        <div class="caixa-step-body">
+          <h4>Registro do Contrato em Cartório</h4>
+          <p>O contrato assinado é levado ao Cartório de Registro de Imóveis para averbação na matrícula. <strong>Somente após o registro</strong> a Caixa libera o recurso ao vendedor. Os custos (ITBI e emolumentos) são pagos pelo comprador.</p>
+          <div class="step-detail"><strong>Custos nesta etapa:</strong> ITBI — imposto municipal (geralmente 2% a 3% do valor do imóvel) + taxas cartoriais (emolumentos). Em São Paulo, o conjunto pode representar de 4% a 5% do valor do imóvel. <strong>Planeje essa reserva além da entrada!</strong></div>
+          <span class="step-prazo">⏱️ 5 a 15 dias úteis no cartório</span>
+        </div>
+      </div>
+      <div class="caixa-step">
+        <div class="caixa-step-num">8</div>
+        <div class="caixa-step-body">
+          <h4>Liberação do Recurso e Entrega das Chaves</h4>
+          <p>Após confirmação do registro, a Caixa deposita o valor financiado diretamente na conta do vendedor. O comprador recebe as chaves. A 1ª parcela vence em aproximadamente 30 dias após o registro.</p>
+          <div class="step-detail"><strong>Importante:</strong> A partir desse momento o comprador assume todas as despesas: IPTU, condomínio, água, luz e manutenção. Certifique-se de que não há nada em aberto antes de receber as chaves.</div>
+          <span class="step-prazo gold">⏱️ 1 a 3 dias após o registro</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Perguntas Frequentes dos Clientes</h2>
+    <p class="section-sub">As dúvidas mais comuns na hora de financiar — respondidas de forma clara e direta.</p>
+    <div class="faq-list">
+
+      <div class="faq-cat">💰 Entrada, Custos e FGTS</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Quanto preciso ter de entrada?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>No SFH (imóveis até R$ 2.250.000), a entrada mínima é <strong>20% do valor do imóvel</strong>. A Caixa financia no máximo 80%. Além da entrada, separe também: ITBI (2% a 3%), taxas de cartório e taxa de avaliação (PTAM). No total, conte com <strong>25% a 27% do valor do imóvel disponíveis</strong>.</p>
+          <div class="faq-tip">💡 Exemplo: imóvel de R$ 350.000 → entrada R$ 70.000 + aprox. R$ 22.000 em custos = R$ 92.000 disponíveis no total.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Posso usar o FGTS na entrada ou para abater parcelas?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim! O FGTS pode ser usado em três momentos: <strong>na entrada</strong> (reduz o valor financiado), para <strong>amortização</strong> do saldo devedor (reduz prazo ou parcela) ou para <strong>quitação total</strong>. Para usar: ter mínimo 3 anos de carteira assinada (não precisam ser seguidos), não ter outro financiamento ativo no SFH, e o imóvel deve estar no município onde mora ou trabalha há pelo menos 1 ano.</p>
+          <div class="faq-warn">⚠️ Já tem imóvel no mesmo município? Não pode usar o FGTS — mas pode financiar normalmente sem ele.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Quais são todos os custos além das parcelas mensais?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p><strong>Antes da assinatura:</strong> Taxa PTAM (R$ 800 a R$ 3.000) + certidões do imóvel e vendedor (R$ 300 a R$ 800).</p>
+          <p><strong>Na assinatura/registro:</strong> ITBI — imposto municipal (2% a 3%), emolumentos do cartório (0,5% a 1%).</p>
+          <p><strong>Mensalmente junto com a parcela:</strong> Seguro MIP, Seguro DFI e taxa de administração Caixa (R$ 25/mês).</p>
+          <div class="faq-tip">💡 Negocie com o vendedor quem paga as certidões. É comum o vendedor arcar com as certidões do imóvel e o comprador com ITBI e cartório.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Posso fazer amortizações extras ou pagar antecipado?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim, sem multa! A Caixa permite amortizações extraordinárias a qualquer momento pelo app ou na agência. Ao amortizar, você escolhe: <strong>reduzir o prazo</strong> (mantendo a parcela) ou <strong>reduzir a parcela</strong> (mantendo o prazo). Reduzir o prazo é mais vantajoso — você economiza muito em juros.</p>
+          <div class="faq-tip">💡 Use o 13º salário para amortizar. A economia em juros ao longo dos anos pode ser de dezenas de milhares de reais.</div>
+        </div>
+      </div>
+
+      <div class="faq-cat">📋 Aprovação e Documentação</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Estou negativado no SERASA. Consigo financiar?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p><strong>Não</strong>, enquanto o nome estiver negativado. A Caixa consulta CPF na Receita Federal e histórico no SERASA/SPC. Nome sujo é impedimento direto.</p>
+          <p>O caminho: regularizar as dívidas e aguardar a atualização nos sistemas — geralmente 5 a 30 dias úteis após o pagamento para o nome sair do SERASA.</p>
+          <div class="faq-warn">⚠️ Dívidas com o governo federal (Receita, FGTS) são consultadas separadamente e também podem bloquear a aprovação mesmo com SERASA limpo.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Sou autônomo ou MEI. Como comprovo renda?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim, autônomos e MEIs conseguem financiar! A comprovação é feita por: <strong>Declaração de IRPF</strong> (obrigatória), extrato bancário dos últimos 6 a 12 meses, decore (declaração comprobatória de rendimentos), contratos de serviço, e para MEI o DASN (declaração anual).</p>
+          <div class="faq-tip">💡 Mantenha sua conta bancária organizada e evite saques em espécie. Renda comprovada em conta facilita muito a análise.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Quanto tempo demora todo o processo de financiamento?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Em condições normais, de <strong>60 a 120 dias úteis</strong> do protocolo até as chaves. Por etapa: análise de crédito (3–10 dias) + vistoria/PTAM (15–25 dias) + análise jurídica (10–20 dias) + aprovação/assinatura (3–5 dias) + cartório (5–15 dias) + liberação do recurso (1–3 dias).</p>
+          <div class="faq-warn">⚠️ Documentação incompleta pode dobrar o prazo. Entregue tudo de uma vez e confira cada item com antecedência.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">O imóvel tem contrato de C&V, não escritura. A Caixa aceita?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim, desde que o contrato esteja <strong>devidamente registrado ou averbado na matrícula</strong> do imóvel no Cartório de Registro de Imóveis. O que importa é que a cadeia dominial conste na matrícula.</p>
+          <p>Contrato apenas em mãos, sem nenhum registro, <strong>não é aceito</strong>. A Caixa precisa ter certeza jurídica de quem é o titular atual do imóvel.</p>
+          <div class="faq-tip">💡 Solicite a matrícula atualizada antes de protocolar o financiamento. Se o nome do vendedor não constar como proprietário atual, regularize antes.</div>
+        </div>
+      </div>
+
+      <div class="faq-cat">🏠 Sobre o Imóvel</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">O imóvel não tem "habite-se". A Caixa financia?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Geralmente <strong>não</strong>. O "habite-se" atesta que a construção foi concluída conforme o projeto aprovado pela prefeitura. Sem ele, o imóvel é tecnicamente irregular e a Caixa costuma recusar.</p>
+          <p>Em imóveis muito antigos com construção consolidada pode haver análise especial, mas não é garantia de aprovação.</p>
+          <div class="faq-warn">⚠️ Imóvel sem habite-se pode gerar custos extras de regularização. Verifique antes de assinar qualquer contrato particular.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">O PTAM veio abaixo do preço pedido. O que faço?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Você tem três opções: <strong>1)</strong> Negociar com o vendedor para reduzir o preço ao valor do PTAM; <strong>2)</strong> Pagar a diferença do próprio bolso; <strong>3)</strong> Contestar o laudo (somente se houver erro concreto do engenheiro — área errada, padrão classificado incorretamente).</p>
+          <div class="faq-tip">💡 Por isso pesquise o valor de mercado ANTES de fechar o contrato particular. Pagar acima do mercado → o PTAM vai mostrar → diferença sai do seu bolso.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Posso financiar imóvel na planta ou em construção?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim! A Caixa financia na planta pelo sistema de <strong>liberações parciais</strong> conforme o avanço da obra. Durante a obra, o comprador paga apenas os juros sobre o valor já liberado (chamados "juros de obra"). As parcelas normais começam após a entrega com habite-se.</p>
+          <div class="faq-warn">⚠️ A construtora precisa ser credenciada pela Caixa e o empreendimento cadastrado no sistema. Confirme isso antes de assinar com a incorporadora.</div>
+        </div>
+      </div>
+
+      <div class="faq-cat">🔄 Financiamento em Andamento</div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Posso vender o imóvel que está financiado?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim! Chama-se <strong>transferência de financiamento</strong> (assunção de dívida). O comprador do imóvel assume o saldo devedor, desde que aprovado pela Caixa na análise de crédito — como se fosse um financiamento novo.</p>
+          <div class="faq-tip">💡 Transferir o financiamento pode ser vantajoso quando a taxa do contrato original é melhor que as taxas atuais do mercado. Vale a pena verificar!</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">O que acontece se eu atrasar as parcelas?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p><strong>1 parcela atrasada:</strong> Multa de 2% + juros de mora de 1% ao mês + nome no SERASA. A Caixa notifica o mutuário.</p>
+          <p><strong>3 ou mais parcelas em atraso:</strong> A Caixa pode iniciar a consolidação da propriedade — o imóvel volta para o nome da Caixa por via extrajudicial. O comprador tem prazo para quitar o atraso (purgar a mora). Se não quitar, o imóvel vai a leilão.</p>
+          <div class="faq-warn">⚠️ Dificuldade financeira? Procure a Caixa ANTES de atrasar para negociar carência ou renegociação. É muito mais fácil resolver antes do processo de execução.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="fcc_toggleFaq(this)">Posso fazer portabilidade para outro banco com taxa menor?<span class="faq-icon">+</span></button>
+        <div class="faq-answer">
+          <p>Sim! A <strong>portabilidade de crédito imobiliário</strong> é garantida por lei. O novo banco paga o saldo devedor para a Caixa e você passa a pagar para o novo banco — com a taxa menor. O banco novo não pode cobrar nada pela portabilidade. Os únicos custos são com o novo registro do contrato em cartório.</p>
+          <div class="faq-tip">💡 Vale a pena quando as taxas de mercado caírem 0,5% ou mais da sua taxa atual. A economia ao longo de 20 anos pode ser de dezenas de milhares de reais.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPOSIÇÃO DE RENDA -->
+<section style="background:var(--gray-light);padding:52px 0">
+  <div class="container">
+    <h2 class="section-title">Composição de Renda: Quem Pode Compor?</h2>
+    <p class="section-sub">Renda insuficiente sozinho? A Caixa permite somar a renda de outras pessoas — entenda as regras.</p>
+    <div class="comp-grid" style="margin-bottom:20px">
+      <div class="comp-item destaque"><h5>👫 Cônjuge / Companheiro(a)</h5><p>Sempre pode compor. A renda e o nome do(a) parceiro(a) entram automaticamente no financiamento conjunto.</p><span class="comp-tag ok">✅ Sempre permitido</span></div>
+      <div class="comp-item"><h5>👨‍👩‍👧 Filhos maiores de 18 anos</h5><p>Podem compor renda como co-devedor no contrato. O prazo máximo será limitado pela menor idade entre os proponentes.</p><span class="comp-tag ok">✅ Permitido</span></div>
+      <div class="comp-item"><h5>👴 Pais / Sogros</h5><p>Podem compor, mas a idade do mais velho reduz o prazo máximo (regra: idade + prazo ≤ 80 anos e 6 meses).</p><span class="comp-tag limit">⚠️ Atenção à idade</span></div>
+      <div class="comp-item"><h5>👥 Irmãos / Outros parentes</h5><p>A Caixa pode aceitar parentes próximos com análise de caso a caso. Serão co-devedores solidários.</p><span class="comp-tag limit">⚠️ Análise individual</span></div>
+      <div class="comp-item"><h5>👤 Amigos / Sócios</h5><p>Raramente aceito pela Caixa para imóvel residencial.</p><span class="comp-tag no">❌ Raramente aceito</span></div>
+      <div class="comp-item destaque"><h5>📊 Quantas rendas posso compor?</h5><p>A Caixa aceita <strong>até 3 proponentes</strong>. Todos ficam como co-devedores e co-proprietários.</p><span class="comp-tag ok">✅ Até 3 proponentes</span></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:var(--radius);padding:20px 24px;color:var(--white);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.7;margin-bottom:4px">Regra de Ouro</div><div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Parcela ≤ 30% da renda bruta</div><div style="font-size:12px;opacity:.75;margin-top:4px">A soma das rendas deve ser ao menos 3,33× o valor da parcela.</div></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.7;margin-bottom:4px">Regra da Idade</div><div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Idade + Prazo ≤ 80 anos e 6 meses</div><div style="font-size:12px;opacity:.75;margin-top:4px">Usa-se a idade do proponente <strong>mais velho</strong> do grupo.</div></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.7;margin-bottom:4px">Co-devedores</div><div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Todos são co-proprietários</div><div style="font-size:12px;opacity:.75;margin-top:4px">Quem compõe renda entra no contrato e na escritura.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AMORTIZAÇÃO -->
+<section>
+  <div class="container">
+    <h2 class="section-title">SAC vs Price: Qual Escolher?</h2>
+    <p class="section-sub">Entenda a diferença entre os dois sistemas e o que acontece com sua parcela ao longo do tempo.</p>
+    <div class="amort-explain">
+      <h4>📈 SAC vs Price</h4>
+      <div class="amort-tabs">
+        <button class="amort-tab active" onclick="fcc_showAmort('sac',this)">SAC</button>
+        <button class="amort-tab" onclick="fcc_showAmort('price',this)">Price</button>
+      </div>
+      <div class="amort-panel active" id="fcc_panel_sac">
+        <div class="amort-visual">
+          <div class="amort-vis-box">
+            <h5>Evolução das parcelas (SAC)</h5>
+            <div class="amort-bar-group">
+              <div class="amort-bar-row"><span class="alabel">1ª parc.</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:30%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:100%"></div></div></div>
+              <div class="amort-bar-row"><span class="alabel">Metade</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:30%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:50%"></div></div></div>
+              <div class="amort-bar-row"><span class="alabel">Últ. parc.</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:30%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:5%"></div></div></div>
+            </div>
+            <div class="amort-legend"><span class="leg-amort">Amortização (fixa)</span><span class="leg-juros">Juros (decrescente)</span></div>
+          </div>
+          <div class="amort-vis-box">
+            <h5>Resumo SAC</h5>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--sky);font-weight:700">→</span>Amortização <strong>fixa</strong> todo mês</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--sky);font-weight:700">→</span>Juros <strong>decrescem</strong> com o saldo</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--sky);font-weight:700">→</span>1ª parcela <strong>maior</strong>; última, bem menor</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--sky);font-weight:700">→</span>Paga <strong>menos juros</strong> no total</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--sky);font-weight:700">→</span><strong>Recomendado</strong> pela Caixa (padrão)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="amort-text"><p>No SAC, você paga todo mês a mesma fração do capital. Como o saldo cai mês a mês, os juros também diminuem — e a parcela fica cada vez menor.</p><div class="highlight-text">💡 <strong>Dica:</strong> Para imóveis acima de R$ 200.000 o SAC costuma ser a melhor opção: menos juros no total e parcelas decrescentes.</div></div>
+      </div>
+      <div class="amort-panel" id="fcc_panel_price">
+        <div class="amort-visual">
+          <div class="amort-vis-box">
+            <h5>Evolução das parcelas (Price)</h5>
+            <div class="amort-bar-group">
+              <div class="amort-bar-row"><span class="alabel">1ª parc.</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:10%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:100%"></div></div></div>
+              <div class="amort-bar-row"><span class="alabel">Metade</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:50%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:50%"></div></div></div>
+              <div class="amort-bar-row"><span class="alabel">Últ. parc.</span><div class="amort-mini-track"><div class="amort-mini-fill fill-amort" style="width:90%"></div></div><div class="amort-mini-track" style="flex:.6"><div class="amort-mini-fill fill-juros" style="width:5%"></div></div></div>
+            </div>
+            <div class="amort-legend"><span class="leg-amort">Amortização (cresce)</span><span class="leg-juros">Juros (decresce)</span></div>
+          </div>
+          <div class="amort-vis-box">
+            <h5>Resumo Price</h5>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">→</span>Parcela <strong>fixa</strong> mês a mês</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">→</span>Amortização <strong>cresce</strong> com o tempo</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">→</span>No início paga-se quase <strong>só juros</strong></li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">→</span>Paga <strong>mais juros</strong> no total</li>
+              <li style="font-size:12px;padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">→</span>Indicado para renda <strong>estável</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="amort-text"><p>No Price, a parcela é fixa durante todo o prazo. No começo quase tudo são juros — a amortização cresce gradualmente.</p><div class="highlight-text">⚠️ No Price você paga mais juros no total do que no SAC. A vantagem é a previsibilidade da parcela fixa.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REQUISITOS -->
+<section style="background:var(--gray-light);padding:52px 0">
+  <div class="container">
+    <h2 class="section-title">Requisitos para Financiar pela Caixa</h2>
+    <p class="section-sub">O que é exigido do comprador e do imóvel para a aprovação do crédito.</p>
+    <div class="cards-3">
+      <div class="info-card">
+        <div class="ic-icon">👤</div>
+        <h4>Do Comprador — Documentação Pessoal</h4>
+        <ul>
+          <li>Ser maior de 18 anos (ou emancipado)</li>
+          <li>CPF regular, sem pendências na Receita Federal</li>
+          <li>Nome limpo: sem restrições no SERASA/SPC</li>
+          <li>Renda compatível com as parcelas (máx. 30%)</li>
+          <li>Idade + prazo ≤ 80 anos e 6 meses</li>
+          <li>Não possuir financiamento ativo no SFH (para FGTS)</li>
+          <li>Comprovante de residência dos últimos 3 meses</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">💼</div>
+        <h4>Do Comprador — Renda e Emprego</h4>
+        <ul>
+          <li>Assalariado: holerites dos últimos 3 meses + CTPS</li>
+          <li>Autônomo: IRPF do último exercício + carnê-leão</li>
+          <li>MEI / PJ: contrato social + extrato bancário 6 meses</li>
+          <li>Renda informal: análise caso a caso (extrato bancário)</li>
+          <li>FGTS: 3 anos de carteira assinada (acumulado)</li>
+          <li class="dot">Declaração de IRPF é obrigatória para todos</li>
+          <li class="x">Estar desempregado no momento da análise</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🏘️</div>
+        <h4>Do Imóvel — Características Exigidas</h4>
+        <ul>
+          <li>Finalidade exclusivamente residencial</li>
+          <li>Matrícula atualizada no Cartório de Registro de Imóveis</li>
+          <li>Escritura pública registrada <strong>ou</strong> contrato de C&V registrado/averbado na matrícula — ambos aceitos</li>
+          <li class="x">Contrato de C&V sem registro em cartório ("em mãos") não é aceito</li>
+          <li>Dentro do limite do programa (SFH: R$ 2.250.000)</li>
+          <li>Aprovado na vistoria técnica da Caixa (PTAM)</li>
+          <li>Sem ônus reais: penhora, hipoteca, alienação fiduciária</li>
+          <li>IPTU em dia; situação cadastral regular</li>
+          <li>Habite-se / Certidão de conclusão de obra</li>
+          <li>Documentação do vendedor regular (certidões)</li>
+          <li class="x">Imóvel comercial ou misto não é financiável pelo SFH</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🚫</div>
+        <h4>Impedimentos Comuns</h4>
+        <ul>
+          <li class="x">Nome no SERASA ou SPC (negativado)</li>
+          <li class="x">Financiamento ativo no SFH (para usar FGTS)</li>
+          <li class="x">Proprietário de imóvel no mesmo município (MCMV)</li>
+          <li class="x">Comprometimento de renda acima de 30%</li>
+          <li class="x">Funcionário da Caixa ou cônjuge de funcionário</li>
+          <li class="x">Condenação judicial com bens bloqueados</li>
+          <li class="x">Dívidas com o governo federal (PGFN, Receita)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">⏳</div>
+        <h4>Regra da Idade — Prazo Máximo</h4>
+        <ul>
+          <li>Fórmula: Idade + prazo ≤ 80 anos e 6 meses</li>
+          <li class="dot">Aos 35 anos → até 420 meses (35 anos)</li>
+          <li class="dot">Aos 50 anos → até 366 meses (≈30 anos)</li>
+          <li class="dot">Aos 60 anos → até 246 meses (≈20 anos)</li>
+          <li class="dot">Aos 70 anos → até 126 meses (≈10 anos)</li>
+          <li>Com composição: usa a <strong>menor</strong> idade do grupo</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🏦</div>
+        <h4>Regras do FGTS</h4>
+        <ul>
+          <li>3 anos de carteira assinada (não precisam ser seguidos)</li>
+          <li>Não ter financiamento ativo no SFH em todo o Brasil</li>
+          <li>Não ser proprietário de imóvel residencial no município</li>
+          <li>Imóvel na cidade onde mora ou trabalha (há 1 ano)</li>
+          <li>Pode usar para entrada, amortização ou quitação</li>
+          <li class="x">FGTS não vale para imóveis acima do SFH (SFI/luxo)</li>
+          <li class="x">Imóvel comercial não permite uso do FGTS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DOCUMENTAÇÃO -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Documentação Necessária</h2>
+    <p class="section-sub">Tenha tudo pronto para agilizar a aprovação.</p>
+    <table class="docs-table">
+      <thead><tr><th>Documento</th><th>Quem apresenta</th><th>Obrigatoriedade</th></tr></thead>
+      <tbody>
+        <tr><td>RG / CNH (documento com foto)</td><td>Comprador (e cônjuge)</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>CPF</td><td>Comprador (e cônjuge)</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Certidão de nascimento ou casamento</td><td>Comprador</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Comprovante de residência (últimos 3 meses)</td><td>Comprador</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Holerites dos últimos 3 meses (assalariado)</td><td>Comprador</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Declaração de IRPF (último exercício)</td><td>Comprador</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Extrato do FGTS</td><td>Comprador</td><td><span class="doc-tag cond">Se usar FGTS</span></td></tr>
+        <tr><td>Carteira de Trabalho — CTPS</td><td>Comprador</td><td><span class="doc-tag cond">Assalariados</span></td></tr>
+        <tr><td>Contrato social / Extrato bancário 6 meses</td><td>Autônomo / MEI / PJ</td><td><span class="doc-tag cond">Autônomos/MEI</span></td></tr>
+        <tr><td>Matrícula atualizada do imóvel (30 dias)</td><td>Vendedor / Imóvel</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>IPTU do imóvel</td><td>Vendedor / Imóvel</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Habite-se / Certidão de conclusão de obra</td><td>Imóvel</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Certidão negativa de ônus reais</td><td>Imóvel</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Certidões pessoais do vendedor (cíveis, trabalhistas, fiscais)</td><td>Vendedor</td><td><span class="doc-tag ob">Obrigatório</span></td></tr>
+        <tr><td>Memorial descritivo / Projeto aprovado (imóvel novo)</td><td>Incorporadora</td><td><span class="doc-tag cond">Imóvel novo</span></td></tr>
+      </tbody>
+    </table>
+    <p class="small-note">⚠️ A Caixa pode solicitar documentos adicionais conforme o perfil. Esta lista é orientativa e não exaustiva.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>FCosta Corretor e Avaliador Imobiliário</strong></p>
+  <p>CRECI-SP 29479-F · CNAI 52708 · Zona Leste / Itaim Paulista · São Paulo - SP</p>
+  <p>📱 WhatsApp: <a href="https://wa.me/5511993509109">(11) 99350-9109</a></p>
+  <p style="margin-top:6px;font-size:10px">As informações desta página têm caráter orientativo, baseadas nas regras da Caixa Econômica Federal vigentes em Abril/2026. Para condições definitivas, consulte uma agência Caixa ou especialista credenciado.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="fcc_modal" onclick="fcc_fecharModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div><h3>📋 Tabela Completa de Parcelas</h3><p id="fcc_modal_sub">—</p></div>
+      <button class="modal-close" onclick="fcc_fecharModal()">×</button>
+    </div>
+    <div class="modal-summary" id="fcc_modal_summary"></div>
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap;gap:10px">
+        <p style="font-size:12px;color:var(--gray)">Destacadas em azul: marcos anuais.</p>
+        <button class="export-btn" onclick="fcc_exportarCSV()">📥 Exportar CSV</button>
+      </div>
+      <div class="tabela-wrap">
+        <table class="tabela-parcelas" id="fcc_tabela">
+          <thead><tr><th style="text-align:center">Nº</th><th>Parcela</th><th>Amortização</th><th>Juros</th><th>MIP</th><th>DFI</th><th>Saldo Dev.</th></tr></thead>
+          <tbody id="fcc_tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var fcc_dadosTabela=[];
+function fcc_formatMoney(el){var v=el.value.replace(/\D/g,'');if(!v){el.value='';return}v=(parseInt(v)/100).toFixed(2);el.value=Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fcc_parseMoney(s){if(!s)return 0;return parseFloat(s.replace(/\./g,'').replace(',','.'))||0;}
+function fcc_fmt(n){return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fcc_calcEntradaBar(){var imovel=fcc_parseMoney(document.getElementById('fcc_valorImovel').value);var entrada=fcc_parseMoney(document.getElementById('fcc_valorEntrada').value);if(!imovel)return;var pct=Math.min(100,(entrada/imovel)*100);var financiado=imovel-entrada;document.getElementById('fcc_pctLabel').textContent='Entrada: '+pct.toFixed(1)+'%';document.getElementById('fcc_financiadoLabel').textContent='Financiado: R$ '+Math.round(financiado).toLocaleString('pt-BR');var bar=document.getElementById('fcc_entradaBar');bar.style.width=pct+'%';bar.style.background=pct<20?'var(--danger)':pct<30?'var(--gold)':'var(--sky)';}
+function fcc_checkIdade(){var idade=parseInt(document.getElementById('fcc_idade').value)||0;var prazo=parseInt(document.getElementById('fcc_prazo').value)||360;var el=document.getElementById('fcc_alertIdade');var msg=document.getElementById('fcc_msgIdade');var maxM=Math.floor(80*12+6-idade*12);if(idade<18){el.style.display='block';msg.textContent='Idade mínima: 18 anos.';}else if(idade*12+prazo>80*12+6){el.style.display='block';msg.textContent='Com '+idade+' anos, prazo máximo: '+maxM+' meses (≈'+(maxM/12).toFixed(0)+' anos).';}else{el.style.display='none';}}
+function fcc_getMipRate(i){if(i<30)return 0.00018;if(i<35)return 0.00025;if(i<40)return 0.00035;if(i<45)return 0.00050;if(i<50)return 0.00075;if(i<55)return 0.00100;if(i<60)return 0.00130;if(i<65)return 0.00165;return 0.00200;}
+function fcc_calcular(){var imovel=fcc_parseMoney(document.getElementById('fcc_valorImovel').value);var entrada=fcc_parseMoney(document.getElementById('fcc_valorEntrada').value);var prazoM=parseInt(document.getElementById('fcc_prazo').value);var sistema=document.getElementById('fcc_sistema').value;var taxaAnual=parseFloat(document.getElementById('fcc_taxa').value)/100;var idade=parseInt(document.getElementById('fcc_idade').value)||35;var renda=fcc_parseMoney(document.getElementById('fcc_renda').value);if(!imovel||!entrada||imovel<=0){alert('Preencha o valor do imóvel e da entrada.');return;}if(entrada>=imovel){alert('A entrada não pode ser igual ou maior que o valor do imóvel.');return;}var financiado=imovel-entrada;var cotaPct=(financiado/imovel)*100;var taxaM=taxaAnual/12;var maxIdadeM=Math.floor(80*12+6-idade*12);var prazoEf=Math.min(prazoM,maxIdadeM);var mipRate=fcc_getMipRate(idade);var dfiM=imovel*0.00001337;var rows=[];var saldo=financiado;var totalPago=0,totalJuros=0;var pmtPrice=0;if(sistema==='price'){pmtPrice=financiado*(taxaM*Math.pow(1+taxaM,prazoEf))/(Math.pow(1+taxaM,prazoEf)-1);}for(var m=1;m<=prazoEf;m++){var jurosM=saldo*taxaM;var amortM=(sistema==='sac')?financiado/prazoEf:(pmtPrice-jurosM);var mipM=saldo*mipRate;var parcelaM=amortM+jurosM+mipM+dfiM+25;totalJuros+=jurosM;saldo-=amortM;if(saldo<0)saldo=0;totalPago+=parcelaM;rows.push({n:m,parcela:parcelaM,amort:amortM,juros:jurosM,mip:mipM,dfi:dfiM,saldo:saldo});}fcc_dadosTabela=rows;var p1=rows[0];var pn=rows[rows.length-1];var rendaMin=p1.parcela/0.30;var compr=renda>0?(p1.parcela/renda)*100:0;var statusEl=document.getElementById('fcc_status');var cotaOk=cotaPct<=80;var prazoOk=prazoM<=maxIdadeM;var rendaOk=renda<=0||compr<=30;if(!cotaOk){statusEl.className='result-status fail';statusEl.innerHTML='⛔ Cota de financiamento excede 80%. Aumente a entrada para ao menos 20% do imóvel.';}else if(!prazoOk){statusEl.className='result-status fail';statusEl.innerHTML='⛔ Prazo incompatível com a idade. Com '+idade+' anos, prazo máximo: '+maxIdadeM+' meses.';}else if(!rendaOk){statusEl.className='result-status warn';statusEl.innerHTML='⚠️ Renda pode ser insuficiente. A parcela comprometeria '+compr.toFixed(1)+'% da renda (limite: 30%).';}else{statusEl.className='result-status ok';statusEl.innerHTML='✅ Perfil compatível com financiamento. Comprometimento: '+(compr>0?compr.toFixed(1)+'%':'calculado abaixo')+'.';}document.getElementById('fcc_p1label').textContent='1ª Parcela ('+(sistema==='sac'?'SAC — maior':'Price — fixa')+')';document.getElementById('fcc_p1val').textContent=fcc_fmt(p1.parcela);document.getElementById('fcc_pnlabel').textContent='Última Parcela ('+prazoEf+'º mês)';document.getElementById('fcc_pnval').textContent=fcc_fmt(pn.parcela);document.getElementById('fcc_pnsub').textContent=sistema==='sac'?'Economia de '+fcc_fmt(p1.parcela-pn.parcela)+' vs 1ª':'Igual à 1ª (Price fixo)';document.getElementById('fcc_rendaMin').textContent=fcc_fmt(rendaMin)+'/mês';var rendaSub='';if(renda>0){if(compr<=30)rendaSub='✅ Sua renda de '+fcc_fmt(renda)+' é suficiente ('+compr.toFixed(1)+'% comprometido)';else rendaSub='⛔ Renda insuficiente — faltam '+fcc_fmt(rendaMin-renda)+'/mês (ou componha renda)';}else{rendaSub='Informe sua renda para verificar a elegibilidade';}document.getElementById('fcc_rendaSub').textContent=rendaSub;document.getElementById('fcc_r_imovel').textContent=fcc_fmt(imovel);document.getElementById('fcc_r_entrada').textContent=fcc_fmt(entrada)+' ('+cotaPct.toFixed(1)+'% financiado)';document.getElementById('fcc_r_financiado').textContent=fcc_fmt(financiado);var taxaLabel=document.getElementById('fcc_taxa').options[document.getElementById('fcc_taxa').selectedIndex].text.split('—')[1].trim();document.getElementById('fcc_r_modal').textContent=sistema.toUpperCase()+' · '+taxaLabel;document.getElementById('fcc_r_cota').textContent=cotaPct.toFixed(1)+'% '+(cotaOk?'✅':'⛔ Excede 80%');document.getElementById('fcc_r_prazo').textContent=prazoEf+' meses'+(prazoEf<prazoM?' (limitado pela idade)':'');document.getElementById('fcc_r_amort').textContent=fcc_fmt(p1.amort);document.getElementById('fcc_r_juros').textContent=fcc_fmt(p1.juros);document.getElementById('fcc_r_mip').textContent=fcc_fmt(p1.mip);document.getElementById('fcc_r_dfi').textContent=fcc_fmt(p1.dfi);document.getElementById('fcc_r_total').textContent=fcc_fmt(totalPago);document.getElementById('fcc_r_tjuros').textContent=fcc_fmt(totalJuros);var cLabel=document.getElementById('fcc_comprLabel');var cBar=document.getElementById('fcc_comprBar');var cEl=document.getElementById('fcc_r_compr');if(renda>0){cLabel.textContent=compr.toFixed(1)+'%';cBar.style.width=Math.min(100,compr)+'%';if(compr<=25){cBar.style.background='var(--success)';cEl.className='rv green';cEl.textContent=compr.toFixed(1)+'% ✅ Seguro';}else if(compr<=30){cBar.style.background='var(--warn)';cEl.className='rv orange';cEl.textContent=compr.toFixed(1)+'% ⚠️ Aceitável';}else{cBar.style.background='var(--danger)';cEl.className='rv red';cEl.textContent=compr.toFixed(1)+'% ⛔ Acima do limite';}}else{cLabel.textContent='—';cBar.style.width='0%';cEl.textContent='Informe a renda familiar';}document.getElementById('fcc_placeholder').style.display='none';document.getElementById('fcc_result').style.display='block';if(window.innerWidth<800){document.getElementById('fcc_result').scrollIntoView({behavior:'smooth',block:'start'});}}
+function fcc_abrirModal(){if(!fcc_dadosTabela.length){alert('Calcule primeiro o financiamento.');return;}var imovel=fcc_parseMoney(document.getElementById('fcc_valorImovel').value);var entrada=fcc_parseMoney(document.getElementById('fcc_valorEntrada').value);var financiado=imovel-entrada;var sistema=document.getElementById('fcc_sistema').value.toUpperCase();var prazoEf=fcc_dadosTabela.length;var p1=fcc_dadosTabela[0];var pn=fcc_dadosTabela[prazoEf-1];var totalPago=fcc_dadosTabela.reduce(function(a,r){return a+r.parcela;},0);var totalJuros=fcc_dadosTabela.reduce(function(a,r){return a+r.juros;},0);document.getElementById('fcc_modal_sub').textContent=sistema+' · '+prazoEf+' parcelas · Financiado: '+fcc_fmt(financiado);document.getElementById('fcc_modal_summary').innerHTML='<div class="mscard"><div class="msl">1ª Parcela</div><div class="msv">'+fcc_fmt(p1.parcela)+'</div></div><div class="mscard"><div class="msl">Última Parcela</div><div class="msv">'+fcc_fmt(pn.parcela)+'</div></div><div class="mscard"><div class="msl">Total Pago</div><div class="msv">'+fcc_fmt(totalPago)+'</div></div><div class="mscard"><div class="msl">Total Juros</div><div class="msv">'+fcc_fmt(totalJuros)+'</div></div><div class="mscard"><div class="msl">Prazo</div><div class="msv">'+prazoEf+' meses</div></div>';var tbody=document.getElementById('fcc_tbody');tbody.innerHTML='';fcc_dadosTabela.forEach(function(r){var tr=document.createElement('tr');var isAnual=(r.n%12===0);if(isAnual)tr.className='anual';tr.innerHTML='<td>'+r.n+(isAnual?' <small>('+Math.round(r.n/12)+'º ano)</small>':'')+'</td><td>'+fcc_fmt(r.parcela)+'</td><td>'+fcc_fmt(r.amort)+'</td><td>'+fcc_fmt(r.juros)+'</td><td>'+fcc_fmt(r.mip)+'</td><td>'+fcc_fmt(r.dfi)+'</td><td>'+fcc_fmt(r.saldo)+'</td>';tbody.appendChild(tr);});document.getElementById('fcc_modal').classList.add('open');document.body.style.overflow='hidden';}
+function fcc_fecharModal(){document.getElementById('fcc_modal').classList.remove('open');document.body.style.overflow='';}
+function fcc_fecharModalOutside(e){if(e.target===document.getElementById('fcc_modal'))fcc_fecharModal();}
+function fcc_exportarCSV(){var linhas=['Nº,Parcela Total,Amortização,Juros,MIP,DFI,Saldo Devedor'];fcc_dadosTabela.forEach(function(r){linhas.push([r.n,r.parcela.toFixed(2),r.amort.toFixed(2),r.juros.toFixed(2),r.mip.toFixed(2),r.dfi.toFixed(2),r.saldo.toFixed(2)].join(','));});var blob=new Blob([linhas.join('\n')],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='fcosta_financiamento.csv';a.click();URL.revokeObjectURL(url);}
+function fcc_showAmort(tipo,btn){document.querySelectorAll('.amort-tab').forEach(function(b){b.classList.remove('active')});document.querySelectorAll('.amort-panel').forEach(function(p){p.classList.remove('active')});btn.classList.add('active');document.getElementById('fcc_panel_'+tipo).classList.add('active');}
+function fcc_toggleFaq(btn){var answer=btn.nextElementSibling;var isOpen=answer.classList
+.contains('open');document.querySelectorAll('.faq-question').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!isOpen){btn.classList.add('open');answer.classList.add('open');}}
+window.addEventListener('load',function(){fcc_calcEntradaBar();fcc_checkIdade();});
+</script>
+</body>
+</html>
