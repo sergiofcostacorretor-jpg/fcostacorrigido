@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Contratos Particulares — Sem Intermediação</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{--ouro:#C9A84C;--ouro-claro:#e8c96a;--azul:#0a1628;--azul-medio:#112240;--texto:#1a1a1a;--borda:#d4c4a0;--verde-edit:#1a6b3c;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;max-width:100%;}
+body{background:#525659;font-family:'EB Garamond',Georgia,serif;font-size:12pt;color:var(--texto);line-height:1.7;}
+.toolbar{background:var(--azul);padding:6px 10px;position:fixed;width:100%;top:0;z-index:9999;display:flex;align-items:center;gap:6px;border-bottom:3px solid var(--ouro);flex-wrap:wrap;}
+.btn-home{background:var(--ouro);color:var(--azul);padding:6px 12px;border-radius:3px;text-decoration:none;font-weight:700;font-family:'Oswald',sans-serif;font-size:9pt;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;}
+.btn-home:hover{background:var(--ouro-claro);}
+.toolbar select{padding:6px 8px;font-size:9pt;border:1px solid var(--ouro);border-radius:3px;flex:1 1 200px;min-width:0;max-width:100%;font-family:'Oswald',sans-serif;background:var(--azul-medio);color:#fff;}
+.toolbar select option{background:var(--azul-medio);color:#fff;}
+.btn-toolbar{padding:6px 10px;cursor:pointer;font-weight:700;font-family:'Oswald',sans-serif;font-size:8.5pt;border:1.5px solid var(--ouro);border-radius:3px;background:transparent;color:var(--ouro);white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.btn-toolbar:hover,.btn-toolbar:active{background:var(--ouro);color:var(--azul);}
+.btn-toolbar.salvar{border-color:#27ae60;color:#27ae60;}.btn-toolbar.salvar:hover{background:#27ae60;color:#fff;}
+.btn-toolbar.pdf{border-color:#e74c3c;color:#e74c3c;}.btn-toolbar.pdf:hover{background:#e74c3c;color:#fff;}
+.btn-toolbar.pasta{border-color:#8e44ad;color:#8e44ad;}.btn-toolbar.pasta:hover{background:#8e44ad;color:#fff;}
+.dica-edicao{background:#fffbe6;border:1.5px solid var(--ouro);border-radius:4px;padding:5px 10px;font-family:'Oswald',sans-serif;font-size:8pt;color:#7a5c00;white-space:nowrap;}
+.barra-mobile{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--azul);border-top:2px solid var(--ouro);z-index:9998;padding:6px 8px;gap:6px;flex-wrap:wrap;justify-content:center;}
+.barra-mobile.ativa{display:flex;}
+.btn-mobile{padding:8px 12px;font-family:'Oswald',sans-serif;font-size:9pt;font-weight:700;border-radius:4px;border:1.5px solid var(--ouro);background:transparent;color:var(--ouro);cursor:pointer;flex:1 0 auto;min-width:60px;max-width:120px;text-align:center;}
+.btn-mobile:active{background:var(--ouro);color:var(--azul);}
+.btn-mobile.verde{border-color:#27ae60;color:#27ae60;}.btn-mobile.verde:active{background:#27ae60;color:#fff;}
+.btn-mobile.vermelho{border-color:#e74c3c;color:#e74c3c;}.btn-mobile.vermelho:active{background:#e74c3c;color:#fff;}
+.campo-ativo-label{width:100%;font-family:'Oswald',sans-serif;font-size:8pt;color:var(--ouro-claro);text-align:center;padding-bottom:2px;}
+.arquivo-panel{position:fixed;right:0;top:0;bottom:0;width:min(320px,92vw);background:var(--azul-medio);border-left:2px solid var(--ouro);overflow-y:auto;padding:54px 12px 12px;z-index:8000;transform:translateX(100%);transition:transform .3s;}
+.arquivo-panel.aberto{transform:translateX(0);}
+.arquivo-panel h4{font-family:'Oswald',sans-serif;color:var(--ouro);font-size:11pt;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid var(--ouro);padding-bottom:6px;}
+.arquivo-busca{width:100%;padding:7px;border:1px solid var(--ouro);border-radius:3px;background:#0d1b35;color:#fff;font-size:10pt;margin-bottom:8px;font-family:'EB Garamond',serif;}
+.arquivo-tabs{display:flex;gap:4px;margin-bottom:8px;}
+.arquivo-tab{flex:1;padding:5px;font-family:'Oswald',sans-serif;font-size:8pt;border:1px solid var(--ouro);background:transparent;color:var(--ouro);cursor:pointer;border-radius:3px;text-align:center;}
+.arquivo-tab.on{background:var(--ouro);color:var(--azul);}
+.arquivo-item{background:#0d1b35;border:1px solid #1e3a5f;border-radius:4px;padding:8px 10px;margin-bottom:6px;}
+.arquivo-item:hover{border-color:var(--ouro);}
+.arquivo-item .nome{color:#e8e8e8;font-size:10pt;font-weight:600;}
+.arquivo-item .meta{color:#aaa;font-size:8pt;margin-top:2px;}
+.tipo-badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:7pt;font-family:'Oswald',sans-serif;padding:1px 5px;border-radius:2px;margin-right:4px;}
+.arquivo-item .del-btn{float:right;color:#e74c3c;background:none;border:none;cursor:pointer;font-size:14px;}
+.arquivo-vazio{color:#888;font-size:10pt;text-align:center;padding:20px 0;}
+.toggle-arquivo{position:fixed;right:0;bottom:60px;background:var(--azul);border:2px solid var(--ouro);color:var(--ouro);padding:7px 12px;border-radius:4px 0 0 4px;cursor:pointer;z-index:8001;font-family:'Oswald',sans-serif;font-size:8pt;}
+.toggle-arquivo.arq-aberto{right:min(320px,92vw);}
+.pasta-info{background:#0d1b35;border:1px solid var(--ouro);border-radius:4px;padding:8px 10px;margin-bottom:10px;font-family:'Oswald',sans-serif;font-size:8pt;color:#e8c96a;line-height:1.6;}
+.pasta-info strong{color:#fff;}
+.btn-pasta-sel{width:100%;padding:8px;background:var(--ouro);color:var(--azul);border:none;border-radius:3px;font-family:'Oswald',sans-serif;font-weight:700;font-size:9pt;cursor:pointer;margin-bottom:6px;}
+.document-container{padding:48px 0 120px;width:100%;overflow-x:hidden;background:#2a2a2a;display:flex;flex-direction:column;align-items:center;gap:64px;}
+.a4-page{width:210mm;max-width:210mm;margin:0;background:#fff;padding:14mm 18mm 22mm;box-shadow:0 8px 48px rgba(0,0,0,.8);box-sizing:border-box;position:relative;font-family:Arial,Helvetica,sans-serif;font-size:11pt;line-height:1.6;overflow-wrap:break-word;counter-increment:folha;}
+.campo-edit{font-weight:700!important;color:#000;border:none;border-bottom:1.5px dashed var(--ouro);background:#fffdf5;font-size:inherit;font-family:inherit;line-height:inherit;outline:none;transition:border-color .2s,background .2s;padding:1px 3px 0;display:inline;white-space:pre-wrap;word-break:break-word;cursor:text;border-radius:2px;min-width:20px;max-width:100%;vertical-align:baseline;}
+.campo-edit:focus{border-bottom-color:var(--verde-edit);background:#f0fff4;box-shadow:0 2px 0 0 var(--verde-edit);}
+.campo-edit:empty::before{content:attr(data-placeholder);color:#b8a070;font-weight:400;font-style:italic;pointer-events:none;}
+textarea.campo-expansivel{display:block;width:100%;min-height:55px;overflow:hidden;resize:none;font-weight:700!important;color:#000;border:1.5px dashed var(--ouro);background:#fffdf5;font-size:11pt;font-family:Arial,Helvetica,sans-serif;outline:none;transition:border-color .2s;padding:6px 8px;line-height:1.6;border-radius:3px;box-sizing:border-box;}
+textarea.campo-expansivel:focus{border-color:var(--verde-edit);background:#f0fff4;}
+p.clausula-texto{text-align:justify;margin:0;padding:8px 10px 8px;font-size:11pt;font-family:Arial,Helvetica,sans-serif;line-height:1.6;border-left:3px solid var(--borda);border-right:3px solid var(--borda);background:#fefefe;position:relative;cursor:pointer;transition:background .2s;overflow-wrap:break-word;page-break-inside:avoid;break-inside:avoid;page-break-before:avoid;break-before:avoid;}
+p.clausula-texto:not(.editando):hover::after{content:'\2702 clique para editar';position:absolute;top:4px;right:6px;font-size:7pt;color:#b8a070;font-family:'Oswald',sans-serif;pointer-events:none;}
+p.clausula-texto.editando{outline:none;background:#f0fff4;border-left:3px solid var(--verde-edit);border-right:3px solid var(--verde-edit);cursor:text;box-shadow:inset 0 0 0 1px #c3ebd1;}
+h2.titulo-contrato{font-family:'Oswald',sans-serif;text-align:center;text-transform:uppercase;font-size:14pt;margin-bottom:4px;color:var(--azul);letter-spacing:1.5px;border-bottom:2.5px solid var(--azul);padding-bottom:8px;}
+.subtitulo-contrato{text-align:center;font-size:8.5pt;color:#555;margin-bottom:0;font-style:italic;font-family:Arial,Helvetica,sans-serif;}
+.clausula-bloco{page-break-inside:avoid;break-inside:avoid;display:block;}
+h3.clausula-titulo{font-family:'Oswald',sans-serif;font-size:10pt;color:#fff;text-transform:uppercase;background:var(--azul);padding:5px 10px;margin:14px 0 0;letter-spacing:.7px;page-break-after:avoid;break-after:avoid;}
+.lei-bloco{background:#f0ede4;border-left:4px solid var(--ouro);border-bottom:2px solid #c8b87a;border-right:1px solid #c8b87a;border-top:1px solid #ddd4b0;padding:7px 10px 8px 12px;margin:0 0 10px 0;page-break-inside:avoid;break-inside:avoid;}
+.lei-bloco .lei-header{font-family:'Oswald',sans-serif;font-size:8.5pt;color:#8a6b1a;letter-spacing:.7px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:5px;font-weight:700;}
+.lei-bloco .lei-header::before{content:'\00A7';font-size:11pt;color:#8a6b1a;font-weight:700;}
+.lei-item{font-size:9pt;color:#1e2a38;margin-bottom:5px;padding-left:7px;border-left:2px solid #b8a050;line-height:1.6;font-family:Arial,Helvetica,sans-serif;overflow-wrap:break-word;}
+.lei-item strong{color:#0a1628;font-weight:700;}
+.header-particular{text-align:center;border-bottom:4px double var(--ouro);padding-bottom:10px;margin-bottom:14px;}
+.header-particular .marca{font-family:'Oswald',sans-serif;font-size:13pt;color:var(--azul);letter-spacing:2px;font-weight:700;text-transform:uppercase;}
+.header-particular .subtag{font-size:8pt;color:#888;letter-spacing:.4px;margin-top:3px;font-style:italic;}
+.header-data{text-align:right;font-size:8pt;color:#777;font-style:italic;margin-bottom:6px;}
+.bloco-assinaturas{margin-top:16px;padding-bottom:8px;page-break-inside:avoid;break-inside:avoid;}
+.assinaturas{display:flex;justify-content:space-around;text-align:center;gap:18px;margin-top:18px;flex-wrap:wrap;}
+.assinatura-box{width:44%;min-width:130px;page-break-inside:avoid;break-inside:avoid;}
+.linha-ass{border-top:1.5px solid #000;margin-bottom:6px;padding-top:4px;}
+.ass-nome{font-size:9.5pt;font-weight:700;font-family:Arial,sans-serif;}
+.ass-qualif{font-size:8.5pt;color:#555;margin-top:2px;font-family:Arial,sans-serif;}
+.local-data{text-align:center;margin-top:20px;font-size:10.5pt;font-family:Arial,sans-serif;}
+.rodape-particular{margin-top:24px;font-family:Arial,Helvetica,sans-serif;font-size:8.5pt;color:#888;border-top:1px solid #ddd;padding-top:8px;text-align:center;font-style:italic;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:10px;}
+.modal-overlay.ativo{display:flex;}
+.modal-box{background:#fff;border-radius:6px;padding:20px 16px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.modal-box h4{font-family:'Oswald',sans-serif;color:var(--azul);font-size:13pt;margin-bottom:8px;}
+.modal-box p.modal-desc{font-size:10pt;color:#666;margin-bottom:12px;}
+.modal-box input,.modal-box select{width:100%;padding:9px;border:1.5px solid #ccc;border-radius:4px;font-size:10.5pt;margin-bottom:8px;box-sizing:border-box;}
+.modal-box input:focus{border-color:var(--ouro);outline:none;}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
+.modal-btns button{padding:8px 18px;border-radius:4px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:10pt;border:none;}
+.btn-cancelar{background:#eee;color:#555;}
+.btn-confirmar{background:var(--azul);color:var(--ouro);font-weight:700;}
+.modal-campo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99998;align-items:flex-end;justify-content:center;}
+.modal-campo.ativo{display:flex;}
+.modal-campo-box{background:#fff;border-radius:12px 12px 0 0;padding:16px;width:100%;max-width:600px;}
+.modal-campo-box label{font-family:'Oswald',sans-serif;font-size:9pt;color:#555;display:block;margin-bottom:6px;}
+.modal-campo-box textarea{width:100%;min-height:80px;padding:10px;font-size:14pt;font-family:Arial,sans-serif;border:2px solid var(--ouro);border-radius:6px;resize:none;outline:none;box-sizing:border-box;line-height:1.5;}
+.modal-campo-box textarea:focus{border-color:var(--verde-edit);}
+.modal-campo-btns{display:flex;gap:8px;margin-top:10px;}
+.modal-campo-btns button{flex:1;padding:12px;border-radius:6px;font-family:'Oswald',sans-serif;font-size:11pt;font-weight:700;border:none;cursor:pointer;}
+.btn-mc-cancel{background:#eee;color:#555;}
+.btn-mc-ok{background:var(--azul);color:var(--ouro);}
+.notif{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--azul);color:var(--ouro);padding:9px 18px;border-radius:4px;font-family:'Oswald',sans-serif;font-size:9.5pt;border:1px solid var(--ouro);z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center;}
+.notif.show{opacity:1;}
+.placeholder-msg{text-align:center;padding:60px 20px;color:#aaa;font-family:'Oswald',sans-serif;letter-spacing:1px;}
+.placeholder-msg .icon{font-size:38pt;margin-bottom:12px;opacity:.3;}
+.badge-part{display:inline-block;background:#27ae60;color:#fff;font-family:'Oswald',sans-serif;font-size:7pt;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:middle;letter-spacing:.5px;}
+.clausula-bloco + .clausula-bloco{margin-top:4px;}
+.lei-bloco + h3.clausula-titulo{margin-top:16px;}
+p.clausula-texto + .lei-bloco{margin-top:0;}
+.campo-edit{white-space:nowrap;}
+p.clausula-texto .campo-edit{white-space:normal;}
+strong .campo-edit{white-space:nowrap;}
+body{counter-reset:folha;}
+.a4-page::after{content:'Folha ' counter(folha);position:absolute;bottom:7mm;right:10mm;font-family:'Oswald',sans-serif;font-size:7.5pt;color:#aaa;letter-spacing:.6px;pointer-events:none;}
+.a4-page::before{content:'FOLHA ' counter(folha);position:absolute;top:-34px;left:50%;transform:translateX(-50%);font-family:'Oswald',sans-serif;font-size:9pt;font-weight:700;color:#e8c96a;letter-spacing:2px;pointer-events:none;white-space:nowrap;background:#1a1a1a;padding:5px 20px;border-radius:4px 4px 0 0;border:1.5px solid #C9A84C;border-bottom:none;}
+@media print{.a4-page::after{color:#999;}.a4-page::before{display:none;}}
+@page{size:A4 portrait;margin:0;}
+@media print{
+  .toolbar,.toggle-arquivo,.arquivo-panel,.no-print,.modal-overlay,
+  .notif,.barra-mobile{display:none!important;}
+  html,body{margin:0!important;padding:0!important;background:white!important;}
+  .document-container{padding:0!important;margin:0!important;background:white!important;display:block!important;gap:0!important;}
+  .a4-page{box-shadow:none!important;width:210mm!important;max-width:210mm!important;
+    margin:0!important;padding:14mm 18mm 22mm!important;
+    position:relative!important;font-size:11pt!important;line-height:1.6!important;
+    overflow:visible!important;page-break-after:always!important;break-after:page!important;}
+  .a4-page:last-child{page-break-after:auto!important;break-after:auto!important;}
+  .a4-page-extra{display:block!important;}
+  .pgx-cont{display:block!important;}
+  .campo-edit{border:none!important;border-bottom:none!important;
+    background:transparent!important;box-shadow:none!important;
+    display:inline!important;white-space:pre-wrap!important;min-width:0!important;}
+  .campo-edit::before{display:none!important;content:''!important;visibility:hidden!important;}
+  .campo-edit:empty::before{display:none!important;content:''!important;}
+  .campo-edit:empty{min-width:0!important;padding:0!important;}
+  textarea.campo-expansivel{border:none!important;background:transparent!important;
+    resize:none!important;overflow:visible!important;height:auto!important;}
+  p.clausula-texto::after{display:none!important;}
+  h3.clausula-titulo{page-break-after:avoid!important;break-after:avoid!important;}
+  p.clausula-texto{page-break-before:avoid!important;break-before:avoid!important;
+    page-break-inside:avoid!important;break-inside:avoid!important;}
+  .lei-bloco{page-break-inside:avoid!important;break-inside:avoid!important;}
+  .bloco-assinaturas{page-break-inside:avoid!important;break-inside:avoid!important;}
+  .assinaturas{page-break-inside:avoid!important;break-inside:avoid!important;}
+  .assinatura-box{page-break-inside:avoid!important;break-inside:avoid!important;}
+  p{orphans:3;widows:3;}
+}
+@media(max-width:640px){
+  .toolbar{padding:5px 7px;gap:5px;}
+  .dica-edicao{width:100%;order:10;font-size:7.5pt;padding:4px 8px;}
+  .a4-page{max-width:100%!important;width:100%!important;margin:0!important;padding:12px 12px 22px!important;box-shadow:0 1px 6px rgba(0,0,0,.4)!important;border-radius:0;font-size:10.5pt!important;}
+  .assinaturas{flex-direction:column;align-items:center;gap:14px;}
+  .assinatura-box{width:86%;min-width:unset;}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="tbEl">
+  <a href="https://fcostacorretor.com/" target="_top" class="btn-home">&#127968; In&iacute;cio</a>
+  <select id="selectModel" onchange="gerarConteudo()">
+    <option value="">&#8212; SELECIONE O CONTRATO &#8212;</option>
+    <optgroup label="&#128203; LOCA&#199;&#195;O">
+      <option value="loc_residencial_part">Loca&#231;&#227;o Residencial &mdash; Acordo Particular</option>
+    </optgroup>
+    <optgroup label="&#127968; COMPRA E VENDA">
+      <option value="compra_venda_part">Compromisso de Compra e Venda &mdash; Acordo Particular</option>
+    </optgroup>
+  </select>
+  <button class="btn-toolbar salvar" onclick="abrirModalSalvar()">&#128190; SALVAR</button>
+  <button class="btn-toolbar pdf" onclick="gerarPDF()">&#128196; PDF</button>
+  <button class="btn-toolbar" onclick="imprimirDocumento()">&#128424; IMPRIMIR</button>
+  <button class="btn-toolbar pasta" onclick="selecionarPasta()">&#128193; PASTA</button>
+  <button class="btn-toolbar" onclick="toggleArquivo()" id="btnArquivo">&#128194; ARQUIVO (0)</button>
+  <button class="btn-toolbar" onclick="importarArquivoJSON()" style="border-color:#2980b9;color:#2980b9;">&#128229; IMPORTAR</button>
+  <input type="file" id="inputImportar" accept=".json" style="display:none" onchange="processarImportacao(event)">
+  <span class="dica-edicao no-print">&#9999; Acordo particular entre as partes, sem corretagem &nbsp;|&nbsp; Toque/clique em campo amarelo ou cl&#225;usula para editar</span>
+</div>
+
+<div class="barra-mobile" id="barraMobile">
+  <div class="campo-ativo-label" id="campoAtivoLabel">Nenhum campo selecionado</div>
+  <button class="btn-mobile" onclick="navCampo(-1)">&#9664; ANT</button>
+  <button class="btn-mobile verde" onclick="confirmarCampoMobile()">&#10004; OK</button>
+  <button class="btn-mobile" onclick="navCampo(1)">PR&#211; &#9654;</button>
+  <button class="btn-mobile vermelho" onclick="fecharBarraMobile()">&#10005;</button>
+</div>
+
+<div class="modal-campo" id="modalCampo">
+  <div class="modal-campo-box">
+    <label id="modalCampoLabel">Editando campo:</label>
+    <textarea id="modalCampoInput" rows="3" autocomplete="off" autocorrect="on" spellcheck="true"></textarea>
+    <div class="modal-campo-btns">
+      <button class="btn-mc-cancel" onclick="fecharModalCampo()">&#10005; Cancelar</button>
+      <button class="btn-mc-ok" onclick="salvarModalCampo()">&#10004; Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="arquivo-panel" id="arquivoPanel">
+  <h4>&#128194; ARQUIVO</h4>
+  <div class="pasta-info" id="pastaInfo"><strong>&#128193; Pasta PC:</strong> N&#227;o selecionada<br><span style="font-size:7pt;color:#aaa;">Selecione uma pasta para salvar no seu computador</span></div>
+  <button class="btn-pasta-sel" onclick="selecionarPasta()">&#128193; Selecionar Pasta do PC</button>
+  <div class="arquivo-tabs">
+    <button class="arquivo-tab on" id="tab-memoria" onclick="mudarTab('memoria')">&#128190; Mem&#243;ria</button>
+    <button class="arquivo-tab" id="tab-pasta" onclick="mudarTab('pasta')">&#128193; Pasta PC</button>
+  </div>
+  <input type="text" class="arquivo-busca" id="arquivoBusca" placeholder="&#128269; Buscar..." oninput="renderArquivo()">
+  <div id="arquivoLista"></div>
+</div>
+
+<div class="toggle-arquivo" id="toggleArqBtn" onclick="toggleArquivo()">&#128194; ARQUIVO</div>
+
+<div class="document-container" id="docContainer">
+  <div class="a4-page" id="a4page">
+    <div class="header-particular">
+      <div class="marca">Instrumento Particular <span class="badge-part">SEM CORRETAGEM</span></div>
+      <div class="subtag">Documento celebrado por livre e espont&acirc;nea vontade entre as partes</div>
+    </div>
+    <div class="header-data" id="headerData"></div>
+    <div id="editor">
+      <div class="placeholder-msg">
+        <div class="icon">&#128203;</div>
+        <div>Selecione um contrato no menu acima para come&#231;ar</div>
+        <div style="font-size:9pt;margin-top:8px;color:#888;">Acordos particulares entre as partes, sem men&#231;&#227;o a corretagem</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalSalvar">
+  <div class="modal-box">
+    <h4>&#128190; Salvar Documento</h4>
+    <p class="modal-desc">Identifique o documento para localiza&#231;&#227;o futura.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="flex:0 0 auto;">
+        <label style="font-family:'Oswald',sans-serif;font-size:8pt;color:#888;display:block;margin-bottom:3px;">N&#186; *</label>
+        <input type="text" id="modalNumero" placeholder="001/2026" maxlength="20" style="width:130px;border:1.5px solid var(--ouro);font-weight:700;">
+      </div>
+      <div style="flex:1;min-width:140px;">
+        <label style="font-family:'Oswald',sans-serif;font-size:8pt;color:#888;display:block;margin-bottom:3px;">TIPO</label>
+        <input type="text" id="modalTipoDisplay" readonly style="background:#f5f5f5;color:#555;">
+      </div>
+    </div>
+    <input type="text" id="modalNome" placeholder="Nome do cliente *" maxlength="80" style="margin-top:8px;">
+    <input type="text" id="modalObs" placeholder="Observa&#231;&#227;o (endere&#231;o, etc.)" maxlength="100">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-family:'Oswald',sans-serif;font-size:8.5pt;color:#555;">
+      <input type="checkbox" id="salvarPastaChk" style="width:auto;margin:0;"> Tamb&#233;m salvar na pasta do PC
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancelar" onclick="fecharModal()">&#10005; Cancelar</button>
+      <button class="btn-confirmar" onclick="salvarContrato()">&#128190; Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const isMobile=()=>window.innerWidth<=640||('ontouchstart' in window);
+const hoje=()=>new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+const hojeISO=()=>new Date().toLocaleDateString('pt-BR');
+let arquivoAberto=false,modeloAtual='',_mem=null,_tabAtual='memoria',_dirHandle=null,_campoAtivo=null;
+
+function mostrarNotif(msg,dur=3500){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.remove('show'),dur);}
+function ajustarPadding(){const tb=document.getElementById('tbEl'),dc=document.getElementById('docContainer');if(tb&&dc)dc.style.paddingTop=(tb.offsetHeight+6)+'px';}
+window.addEventListener('load',ajustarPadding);
+window.addEventListener('resize',ajustarPadding);
+
+function campo(w,ph){const s=String(ph||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');return `<span class="campo-edit" contenteditable="true" spellcheck="false" data-placeholder="${s}"></span>`;}
+function campoArea(ph){return `<textarea class="campo-expansivel" spellcheck="false" placeholder="${ph}"></textarea>`;}
+function leiBloco(titulo,itens){return `<div class="lei-bloco"><div class="lei-header">${titulo}</div>${itens.map(i=>`<div class="lei-item">${i}</div>`).join('')}</div>`;}
+function clausula(titulo,corpo,leis=[]){return `<h3 class="clausula-titulo">${titulo}</h3><p class="clausula-texto">${corpo}</p>${leis.length?leiBloco('AMPARO LEGAL',leis):''}`;}
+function rodapeParticular(){return `<div class="rodape-particular">Este instrumento expressa a livre manifesta&ccedil;&atilde;o de vontade das partes, celebrado em car&aacute;ter particular, sem interven&ccedil;&atilde;o de terceiros.</div>`;}
+
+function assinaturas(p1,p2,c1=false,c2=false){
+  const b1=c1?`<div class="assinaturas" style="margin-top:10px;"><div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME DO CÔNJUGE')}</div><div class="ass-qualif">Cônjuge — ${p1}<br>CPF: ${campo('','000.000.000-00')}</div></div></div>`:'';
+  const b2=c2?`<div class="assinaturas" style="margin-top:10px;"><div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME DO CÔNJUGE')}</div><div class="ass-qualif">Cônjuge — ${p2}<br>CPF: ${campo('','000.000.000-00')}</div></div></div>`:'';
+  return `<div class="bloco-assinaturas"><div class="local-data">${campo('','São Paulo')}, ${hoje()}</div>
+    <div class="assinaturas" style="margin-top:36px;">
+      <div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME COMPLETO')}</div><div class="ass-qualif">${p1}<br>CPF: ${campo('','000.000.000-00')}</div></div>
+      <div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME COMPLETO')}</div><div class="ass-qualif">${p2}<br>CPF: ${campo('','000.000.000-00')}</div></div>
+    </div>
+    ${b1}${b2}
+    <p style="text-align:center;margin-top:24px;font-size:9.5pt;font-family:'Oswald',sans-serif;">TESTEMUNHAS</p>
+    <div class="assinaturas">
+      <div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME COMPLETO')}</div><div class="ass-qualif">CPF: ${campo('','000.000.000-00')}</div></div>
+      <div class="assinatura-box"><div class="linha-ass"></div><div class="ass-nome">${campo('','NOME COMPLETO')}</div><div class="ass-qualif">CPF: ${campo('','000.000.000-00')}</div></div>
+    </div>
+  </div>${rodapeParticular()}`;
+}
+
+// ══ CLÁUSULAS COMUNS (sem corretagem) ══
+function cla_boafe(num){return clausula(`CLÁUSULA ${num} — DA BOA-FÉ ENTRE AS PARTES`,`As partes declaram-se mutuamente cientes de seus direitos e obrigações, comprometendo-se a:<br>(a) Agir com transparência e lealdade na execução deste instrumento;<br>(b) Informar de imediato qualquer fato relevante que possa afetar o cumprimento do acordado;<br>(c) Não omitir circunstâncias que possam influenciar a decisão da outra parte.<br><br>Este instrumento foi celebrado <strong>sem intermediação de terceiros</strong>, resultando de negociação direta e particular entre as partes.`,['<strong>Art. 422 do CC/2002:</strong> Os contratantes são obrigados a guardar os princípios de probidade e boa-fé.']);}
+function cla_infoFalsas(num){return clausula(`CLÁUSULA ${num} — DA RESPONSABILIDADE POR INFORMAÇÕES FALSAS`,`As partes declaram que todas as informações prestadas neste instrumento são verdadeiras e completas, respondendo civil e criminalmente por qualquer omissão ou falsidade.<br><br>(a) A parte que prestar informação falsa ou omitir fato relevante responderá por todos os danos causados, inclusive honorários advocatícios e custas processuais;<br>(b) A parte prejudicada poderá rescindir o contrato imediatamente, com direito a perdas e danos.`,['<strong>Art. 186 do CC/2002:</strong> Aquele que causar dano a outrem, por ação ou omissão voluntária, comete ato ilícito.','<strong>Art. 927 do CC/2002:</strong> É obrigado a reparar o dano aquele que causar prejuízo a outrem.']);}
+
+// ══ EDIÇÃO MOBILE ══
+let _todosOsCampos=[];
+function indexarCampos(){_todosOsCampos=Array.from(document.querySelectorAll('.campo-edit,textarea.campo-expansivel'));}
+function mostrarBarraMobile(){document.getElementById('barraMobile').classList.add('ativa');}
+function fecharBarraMobile(){document.getElementById('barraMobile').classList.remove('ativa');if(_campoAtivo){_campoAtivo.blur();_campoAtivo=null;}document.getElementById('campoAtivoLabel').textContent='Nenhum campo selecionado';}
+function navCampo(dir){indexarCampos();const idx=_campoAtivo?_todosOsCampos.indexOf(_campoAtivo):-1;const nx=_todosOsCampos[idx+dir];if(!nx)return;nx.scrollIntoView({behavior:'smooth',block:'center'});if(isMobile())setTimeout(()=>abrirModalCampo(nx),200);else{nx.focus();if(nx.tagName!=='TEXTAREA'){const r=document.createRange(),s=window.getSelection();r.selectNodeContents(nx);s.removeAllRanges();s.addRange(r);}else nx.select();}}
+function confirmarCampoMobile(){if(_campoAtivo)_campoAtivo.blur();fecharBarraMobile();mostrarNotif('Campo salvo!',1500);}
+let _campoModalRef=null;
+function abrirModalCampo(el){_campoModalRef=el;_campoAtivo=el;const ph=el.getAttribute('data-placeholder')||el.placeholder||'Campo';const val=el.tagName==='TEXTAREA'?el.value:el.textContent;document.getElementById('modalCampoLabel').textContent='Editando: '+ph.substring(0,40);const ta=document.getElementById('modalCampoInput');ta.value=val;document.getElementById('modalCampo').classList.add('ativo');setTimeout(()=>{ta.focus();ta.select();},150);document.getElementById('campoAtivoLabel').textContent='Campo: '+ph.substring(0,30);mostrarBarraMobile();}
+function fecharModalCampo(){document.getElementById('modalCampo').classList.remove('ativo');_campoModalRef=null;}
+function salvarModalCampo(){if(!_campoModalRef)return;const val=document.getElementById('modalCampoInput').value;if(_campoModalRef.tagName==='TEXTAREA'){_campoModalRef.value=val;autoResize(_campoModalRef);}else _campoModalRef.textContent=val;fecharModalCampo();mostrarNotif('Salvo!',1500);agendarRepaginacao();}
+function bindCamposMobile(){if(!isMobile())return;document.querySelectorAll('.campo-edit').forEach(el=>{el.removeEventListener('click',el._mh||null);el._mh=e=>{e.preventDefault();e.stopPropagation();abrirModalCampo(el);};el.addEventListener('click',el._mh,{passive:false});});document.querySelectorAll('textarea.campo-expansivel').forEach(el=>{el.removeEventListener('focus',el._mfh||null);el._mfh=()=>{_campoAtivo=el;mostrarBarraMobile();document.getElementById('campoAtivoLabel').textContent='Área de texto em edição';};el.addEventListener('focus',el._mfh);});}
+
+// ══ ARQUIVO MEMÓRIA ══
+function getArquivo(){if(_mem!==null)return _mem;try{const r=localStorage.getItem('fcosta_part_v1');if(r){const p=JSON.parse(r);if(Array.isArray(p)){_mem=p;return p;}}}catch(e){}return _mem=[];}
+function setArquivo(arr){_mem=Array.isArray(arr)?arr:[];try{localStorage.setItem('fcosta_part_v1',JSON.stringify(_mem));}catch(e){}}
+function atualizarBotao(){document.getElementById('btnArquivo').textContent=`ARQUIVO (${getArquivo().length})`;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function renderArquivo(){if(_tabAtual==='pasta'){renderArquivoPasta();return;}const busca=(document.getElementById('arquivoBusca')?.value||'').toLowerCase();const arr=getArquivo();const filt=arr.filter(c=>(c.nome||'').toLowerCase().includes(busca)||(c.tipo||'').toLowerCase().includes(busca)||(c.numero||'').toLowerCase().includes(busca));const lista=document.getElementById('arquivoLista');if(!filt.length){lista.innerHTML='<div class="arquivo-vazio">Nenhum documento salvo.</div>';return;}lista.innerHTML=filt.slice().reverse().map(c=>{const ri=arr.findIndex(x=>x.id===c.id);return `<div class="arquivo-item"><button class="del-btn" onclick="deletarContrato(${ri})">&#10005;</button><div class="nome"><span class="tipo-badge">${esc(c.tipo||'DOC')}</span>${esc(c.nome)}</div><div class="meta">${c.numero?`<span style="color:var(--ouro);font-size:8pt;font-weight:700;margin-right:4px;">Nº ${esc(c.numero)}</span>`:''}${esc(c.data||'')}${c.obs?' — '+esc(c.obs):''}</div><div style="margin-top:6px;display:flex;gap:4px;"><button onclick="carregarContrato(${ri})" style="flex:1;padding:5px;font-size:8pt;background:var(--ouro);color:var(--azul);border:none;border-radius:2px;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;">ABRIR</button><button onclick="baixarUm(${ri})" style="padding:5px 8px;font-size:8pt;background:#2980b9;color:#fff;border:none;border-radius:2px;cursor:pointer;">&#11015;</button></div></div>`}).join('');}
+function toggleArquivo(){arquivoAberto=!arquivoAberto;document.getElementById('arquivoPanel').classList.toggle('aberto',arquivoAberto);document.getElementById('toggleArqBtn').classList.toggle('arq-aberto',arquivoAberto);if(arquivoAberto)renderArquivo();}
+function mudarTab(tab){_tabAtual=tab;document.getElementById('tab-memoria').classList.toggle('on',tab==='memoria');document.getElementById('tab-pasta').classList.toggle('on',tab==='pasta');if(tab==='pasta')renderArquivoPasta();else renderArquivo();}
+function proximoNum(){const arr=getArquivo(),ano=new Date().getFullYear();let max=0;arr.forEach(c=>{if(!c.numero)return;const m=String(c.numero).match(/^(\d+)/);if(m&&((c.numero||'').includes(String(ano))||(c.data||'').includes(String(ano)))){const n=parseInt(m[1]);if(n>max)max=n;}});return `${String(max+1).padStart(3,'0')}/${ano}`;}
+function nomeModelo(m){const mp={loc_residencial_part:'LOC RESIDENCIAL PART',compra_venda_part:'COMPRA VENDA PART'};return mp[m]||m.toUpperCase();}
+
+function capturarHtmlCompleto(){
+  const editor=document.getElementById('editor');
+  const wrap=document.createElement('div');
+  Array.from(editor.children).forEach(el=>wrap.appendChild(el.cloneNode(true)));
+  document.querySelectorAll('.a4-page-extra .pgx-cont').forEach(ec=>{
+    Array.from(ec.children).forEach(el=>wrap.appendChild(el.cloneNode(true)));
+  });
+  wrap.querySelectorAll('p.clausula-texto').forEach(p=>{p.classList.remove('editando');p.removeAttribute('contenteditable');});
+  const origTas=Array.from(document.querySelectorAll('#editor textarea,.pgx-cont textarea'));
+  wrap.querySelectorAll('textarea').forEach((ta,i)=>{if(origTas[i]){ta.textContent=origTas[i].value;ta.setAttribute('data-saved-value',origTas[i].value);}});
+  return wrap.innerHTML;
+}
+
+function abrirModalSalvar(){if(!modeloAtual){mostrarNotif('Selecione um documento antes de salvar.');return;}document.querySelectorAll('p.clausula-texto.editando').forEach(p=>fecharEdicaoClausula(p));document.getElementById('modalNumero').value=proximoNum();document.getElementById('modalTipoDisplay').value=nomeModelo(modeloAtual);document.getElementById('modalNome').value='';document.getElementById('modalObs').value='';document.getElementById('modalSalvar').classList.add('ativo');setTimeout(()=>document.getElementById('modalNumero').focus(),120);}
+function fecharModal(){document.getElementById('modalSalvar').classList.remove('ativo');}
+document.getElementById('modalSalvar').addEventListener('click',e=>{if(e.target===document.getElementById('modalSalvar'))fecharModal();});
+async function salvarContrato(){const num=(document.getElementById('modalNumero').value||'').trim();const nome=(document.getElementById('modalNome').value||'').trim();if(!num){mostrarNotif('Informe o número.');document.getElementById('modalNumero').focus();return;}if(!nome){mostrarNotif('Informe o nome.');document.getElementById('modalNome').focus();return;}const html=capturarHtmlCompleto();const arr=getArquivo();const obj={id:Date.now(),numero:num,nome,obs:(document.getElementById('modalObs').value||'').trim(),tipo:nomeModelo(modeloAtual),modelo:modeloAtual,data:hojeISO(),html};arr.push(obj);setArquivo(arr);fecharModal();renderArquivo();atualizarBotao();baixarJSON([obj],num,obj.tipo);const chk=document.getElementById('salvarPastaChk');if(_dirHandle&&chk&&chk.checked){const na=`${num.replace(/\//g,'-')}_${nome.replace(/[^a-zA-Z0-9]/g,'_')}`;const ok=await salvarNaPasta(na,html,obj);mostrarNotif(ok?'Salvo em memória e na pasta!':'Salvo em memória!',5000);}else mostrarNotif(`Nº ${num} — "${nome}" salvo!`,5000);}
+function baixarJSON(arr,num,tipo){try{const b=new Blob([JSON.stringify(arr,null,2)],{type:'application/json'});const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`PARTICULAR_${String(num||'').replace(/\//g,'-')}_${String(tipo||'DOC').replace(/[\s./]/g,'-').replace(/[^a-zA-Z0-9_-]/g,'')}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}catch(e){}}
+function baixarUm(idx){const c=getArquivo()[idx];if(c)baixarJSON([c],c.numero,c.tipo);}
+function importarArquivoJSON(){document.getElementById('inputImportar').click();}
+function processarImportacao(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(!Array.isArray(d))throw new Error();const ex=getArquivo();const novos=d.filter(c=>!ex.some(x=>x.id===c.id));setArquivo([...ex,...novos]);setTimeout(()=>{renderArquivo();atualizarBotao();},50);mostrarNotif(novos.length>0?`${novos.length} importado(s)!`:'Todos já existem.',4000);}catch(err){mostrarNotif('Arquivo inválido.');}e.target.value='';};r.readAsText(file);}
+function carregarContrato(idx){carregarContratoObj(getArquivo()[idx]);}
+function carregarContratoObj(c){if(!c)return;modeloAtual=c.modelo;document.getElementById('selectModel').value=c.modelo;limparFolhasExtras();const editor=document.getElementById('editor');editor.innerHTML=c.html;editor.querySelectorAll('textarea[data-saved-value]').forEach(ta=>ta.value=ta.getAttribute('data-saved-value'));editor.querySelectorAll('span.campo-edit').forEach(s=>{const t=s.textContent||'',ph=s.getAttribute('data-placeholder')||'';if(t===ph)s.textContent='';});editor.querySelectorAll('p.clausula-texto').forEach(p=>{p.contentEditable='false';p.classList.remove('editando');if(!p.hasAttribute('data-original'))p.setAttribute('data-original',p.innerHTML);});document.getElementById('headerData').textContent=esc(c.data)+(c.numero?` — Nº ${c.numero} — ${c.tipo||''}`:'');setTimeout(()=>{initCamposExpansiveis();initEdicaoClausulas();agruparClausulas();bindCamposMobile();indexarCampos();setTimeout(paginarEditor,700);},100);if(arquivoAberto)toggleArquivo();mostrarNotif(`"${c.nome}" carregado.`);window.scrollTo(0,0);}
+function deletarContrato(idx){const arr=getArquivo(),c=arr[idx];if(!c)return;if(!confirm(`Excluir "${c.nome}"?`))return;arr.splice(idx,1);setArquivo(arr);renderArquivo();atualizarBotao();mostrarNotif('Excluído.');}
+
+// ══ PASTA PC ══
+async function selecionarPasta(){if(!window.showDirectoryPicker){mostrarNotif('Use Chrome/Edge para salvar em pasta do PC',5000);return;}try{_dirHandle=await window.showDirectoryPicker({mode:'readwrite'});document.getElementById('pastaInfo').innerHTML=`<strong>Pasta PC:</strong> ${_dirHandle.name}<br><span style="color:#4fc3f7;font-size:7.5pt;">Conectada</span>`;const chk=document.getElementById('salvarPastaChk');if(chk)chk.checked=true;mostrarNotif(`Pasta "${_dirHandle.name}" conectada!`);if(_tabAtual==='pasta')renderArquivoPasta();}catch(e){if(e.name!=='AbortError')mostrarNotif('Erro ao selecionar pasta');}}
+async function salvarNaPasta(nome,html,json){if(!_dirHandle)return false;try{const jfh=await _dirHandle.getFileHandle(nome+'.json',{create:true});const jw=await jfh.createWritable();await jw.write(JSON.stringify(json,null,2));await jw.close();const hfh=await _dirHandle.getFileHandle(nome+'.html',{create:true});const hw=await hfh.createWritable();await hw.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${nome}</title></head><body style="font-family:Arial;max-width:800px;margin:0 auto;padding:20px;">${html}</body></html>`);await hw.close();return true;}catch(e){return false;}}
+async function renderArquivoPasta(){const lista=document.getElementById('arquivoLista');if(!_dirHandle){lista.innerHTML='<div class="arquivo-vazio">Nenhuma pasta selecionada.</div>';return;}lista.innerHTML='<div class="arquivo-vazio">Lendo...</div>';try{const itens=[];for await(const entry of _dirHandle.values()){if(entry.kind==='file'&&entry.name.endsWith('.json')){const file=await entry.getFile();try{const d=JSON.parse(await file.text());itens.push({...d,_entry:entry});}catch(e){}}}if(!itens.length){lista.innerHTML='<div class="arquivo-vazio">Nenhum documento na pasta.</div>';return;}lista.innerHTML=itens.slice().reverse().map((c,i)=>`<div class="arquivo-item"><div class="nome"><span class="tipo-badge">${esc(c.tipo||'DOC')}</span>${esc(c.nome)}</div><div class="meta">${esc(c.data||'')}${c.obs?' — '+esc(c.obs):''}</div><div style="margin-top:6px;"><button onclick="abrirDaPasta(${i})" style="width:100%;padding:5px;font-size:8pt;background:var(--ouro);color:var(--azul);border:none;border-radius:2px;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;">ABRIR</button></div></div>`).join('');window._pastaDocs=itens;}catch(e){lista.innerHTML='<div class="arquivo-vazio">Erro ao ler pasta.</div>';}}
+async function abrirDaPasta(idx){if(!window._pastaDocs)return;carregarContratoObj(window._pastaDocs[idx]);if(arquivoAberto)toggleArquivo();}
+
+// ══ EDIÇÃO CLÁUSULAS / AGRUPAMENTO POR FOLHA ══
+function agruparClausulas(){
+  const editor=document.getElementById('editor');if(!editor)return;
+  editor.querySelectorAll('.clausula-bloco').forEach(d=>{while(d.firstChild)d.parentNode.insertBefore(d.firstChild,d);d.remove();});
+  let children=Array.from(editor.childNodes);let i=0;
+  while(i<children.length){
+    const el=children[i];
+    if(el.nodeType===1&&el.tagName==='H3'&&el.classList.contains('clausula-titulo')){
+      const wrap=document.createElement('div');wrap.className='clausula-bloco';
+      el.parentNode.insertBefore(wrap,el);wrap.appendChild(el);
+      // Glue only the title to its own paragraph (the operative clause text).
+      // The "AMPARO LEGAL" box (.lei-bloco) is intentionally left OUTSIDE this
+      // unsplittable block: it is the bulkiest element and forcing it to stay
+      // attached to the title+paragraph was what created large blank gaps at
+      // the bottom of pages whenever the trio didn't fit together. Left as an
+      // independent sibling (still page-break-inside:avoid on its own), it can
+      // simply start the next page by itself instead of wasting space.
+      let next=wrap.nextSibling;
+      while(next&&next.nodeType===3){const tmp=next.nextSibling;wrap.appendChild(next);next=tmp;}
+      if(next&&next.nodeType===1&&next.tagName==='P'&&next.classList.contains('clausula-texto')){
+        const tmp=next.nextSibling;wrap.appendChild(next);next=tmp;
+      }
+      children=Array.from(editor.childNodes);i=0;continue;
+    }
+    i++;
+  }
+}
+function initEdicaoClausulas(){
+  document.querySelectorAll('p.clausula-texto').forEach(p=>{
+    if(p._claBound)return;
+    p._claBound=true;
+    if(!p.hasAttribute('data-original'))p.setAttribute('data-original',p.innerHTML);
+    p.addEventListener('click',()=>{if(!p.classList.contains('editando'))abrirEdicaoClausula(p);});
+    p.addEventListener('blur',()=>{setTimeout(()=>{if(!p.contains(document.activeElement))fecharEdicaoClausula(p);},150);});
+    p.addEventListener('keydown',e=>{if(e.key==='Escape'){const orig=p.getAttribute('data-original');if(orig!==null)p.innerHTML=orig;fecharEdicaoClausula(p);mostrarNotif('Cancelado',2000);e.preventDefault();agendarRepaginacao();}});
+  });
+}
+function abrirEdicaoClausula(p){p.classList.add('editando');p.contentEditable='true';p.focus();mostrarNotif('Editando — clique fora para salvar',2000);}
+function fecharEdicaoClausula(p){p.classList.remove('editando');p.contentEditable='false';p.setAttribute('data-original',p.innerHTML);}
+
+// ══ CAMPOS EXPANSÍVEIS ══
+function autoResize(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px';}
+function initCamposExpansiveis(){
+  document.querySelectorAll('textarea.campo-expansivel').forEach(el=>{el.removeEventListener('input',el._rh||null);el._rh=e=>autoResize(e.target);el.addEventListener('input',el._rh);autoResize(el);});
+  if(!isMobile()){document.querySelectorAll('span.campo-edit').forEach(el=>{
+    if(!el._keydownB){el._keydownB=function(e){if(e.key!=='Tab')return;e.preventDefault();indexarCampos();const i=_todosOsCampos.indexOf(e.target),nx=_todosOsCampos[i+(e.shiftKey?-1:1)];if(!nx)return;nx.focus();if(nx.tagName!=='TEXTAREA'){const r=document.createRange(),s=window.getSelection();r.selectNodeContents(nx);s.removeAllRanges();s.addRange(r);}else nx.select();};el.addEventListener('keydown',el._keydownB);}
+    if(!el._focusB){el._focusB=function(){_campoAtivo=el;setTimeout(()=>{if(document.activeElement!==el)return;const r=document.createRange(),s=window.getSelection();r.selectNodeContents(el);s.removeAllRanges();s.addRange(r);},0);};el.addEventListener('focus',el._focusB);}
+    if(!el._pasteB){el._pasteB=function(e){e.preventDefault();const t=(e.clipboardData||window.clipboardData).getData('text/plain');const s=window.getSelection();if(!s.rangeCount)return;s.deleteFromDocument();const rng=s.getRangeAt(0),tn=document.createTextNode(t);rng.insertNode(tn);rng.setStartAfter(tn);rng.setEndAfter(tn);s.removeAllRanges();s.addRange(rng);};el.addEventListener('paste',el._pasteB);}
+  });}
+  indexarCampos();
+}
+document.addEventListener('input',e=>{if(e.target.tagName==='TEXTAREA'&&e.target.classList.contains('campo-expansivel'))autoResize(e.target);});
+
+// ══ REPAGINAÇÃO DINÂMICA (dispara só ao SAIR do campo, nunca durante a digitação) ══
+let _repaginarTimer=null;
+function agendarRepaginacao(){
+  if(!modeloAtual)return;
+  clearTimeout(_repaginarTimer);
+  _repaginarTimer=setTimeout(()=>{
+    if(document.querySelector('.modal-overlay.ativo,.modal-campo.ativo'))return;
+    const ativo=document.activeElement;
+    if(ativo&&ativo.classList&&(ativo.classList.contains('campo-edit')||ativo.classList.contains('campo-expansivel')||ativo.classList.contains('clausula-texto'))){
+      agendarRepaginacao();
+      return;
+    }
+    paginarEditor();
+  },450);
+}
+document.getElementById('docContainer').addEventListener('focusout',e=>{
+  const t=e.target;
+  if(t&&t.classList&&(t.classList.contains('campo-edit')||t.classList.contains('campo-expansivel')||t.classList.contains('clausula-texto'))){
+    agendarRepaginacao();
+  }
+},true);
+
+// ══ PAGINAÇÃO EM FOLHAS A4 (altura útil medida de verdade, não um número fixo) ══
+function getPageAtScroll(){
+  const pages=document.querySelectorAll('.a4-page');
+  if(pages.length===1)return pages[0];
+  const tbH=(document.getElementById('tbEl')||{offsetHeight:60}).offsetHeight;
+  let best=pages[0],bestVis=0;
+  pages.forEach(pg=>{
+    const r=pg.getBoundingClientRect();
+    const vis=Math.max(0,Math.min(r.bottom,window.innerHeight)-Math.max(r.top,tbH));
+    if(vis>bestVis){bestVis=vis;best=pg;}
+  });
+  return best;
+}
+function _mkNovaFolha(){
+  const nova=document.createElement('div');
+  nova.className='a4-page a4-page-extra';
+  nova.innerHTML='<div class="header-particular"><div class="marca">Instrumento Particular <span class="badge-part">SEM CORRETAGEM</span></div><div class="subtag">Documento celebrado por livre e espontânea vontade entre as partes</div></div><div class="pgx-cont"></div>';
+  return nova;
+}
+function limparFolhasExtras(){
+  // Remove qualquer folha extra (.a4-page-extra) deixada por uma paginação
+  // anterior. Sem isso, ao gerar um novo contrato ou abrir um salvo, o
+  // paginarEditor() recolhia o conteúdo das folhas antigas de volta para
+  // #editor — duplicando cláusulas que já vinham no novo conteúdo.
+  document.querySelectorAll('.a4-page-extra').forEach(pg=>pg.remove());
+}
+function calcPageH(){
+  const pg=document.getElementById('a4page');
+  if(!pg||!pg.offsetWidth)return 886;
+  // .a4-page's WIDTH is fixed (210mm) regardless of overflow, so it's a safe
+  // anchor to derive the true mm->px ratio. Its HEIGHT is NOT fixed (the box
+  // auto-grows with content), so we must never measure pg's own height/bottom
+  // here — that was the bug that broke pagination entirely (the "page" always
+  // measured as exactly the size of its content, so nothing ever overflowed
+  // and a new folha was never created).
+  const pxPerMm=pg.offsetWidth/210;
+  const contentMm=297-14-22; // real, fixed A4 content height (folha inteira menos as margens)
+  const totalContentPx=contentMm*pxPerMm;
+  const header=pg.querySelector('.header-particular');
+  const headerData=document.getElementById('headerData');
+  const headerH=header?header.getBoundingClientRect().height:60;
+  const headerDataH=headerData?headerData.getBoundingClientRect().height:0;
+  const util=totalContentPx-headerH-headerDataH-6;
+  return util>200?util:886;
+}
+function paginarEditor(){
+  const container=document.getElementById('docContainer');
+  const firstPage=document.getElementById('a4page');
+  const editor=document.getElementById('editor');
+  if(!firstPage||!editor)return;
+  document.querySelectorAll('.a4-page-extra').forEach(pg=>{
+    const ec=pg.querySelector('.pgx-cont');
+    if(ec)Array.from(ec.children).forEach(el=>editor.appendChild(el));
+    pg.remove();
+  });
+  if(!editor.children.length)return;
+  const PAGE_H=calcPageH();
+  const filhos=Array.from(editor.children);
+  let alvo=editor;
+  let acum=0;
+  filhos.forEach(el=>{
+    const h=el.getBoundingClientRect().height||el.offsetHeight||30;
+    if(acum>0&&acum+h>PAGE_H){
+      const nova=_mkNovaFolha();
+      container.appendChild(nova);
+      alvo=nova.querySelector('.pgx-cont');
+      acum=0;
+    }
+    alvo.appendChild(el);
+    acum+=h;
+  });
+  setTimeout(()=>{initCamposExpansiveis();initEdicaoClausulas();bindCamposMobile();indexarCampos();},80);
+}
+
+// ══ PDF + IMPRESSÃO ══
+async function gerarPDF(){
+  if(!modeloAtual){mostrarNotif('Abra um documento antes de gerar PDF.');return;}
+  document.querySelectorAll('p.clausula-texto.editando').forEach(p=>fecharEdicaoClausula(p));
+  paginarEditor();
+  mostrarNotif('Gerando PDF...',15000);
+  const campos=document.querySelectorAll('.campo-edit');
+  campos.forEach(el=>{el._origBorder=el.style.borderBottom;el._origBg=el.style.background;el._origPH=el.getAttribute('data-placeholder');el.style.borderBottom='none';el.style.background='transparent';el.setAttribute('data-placeholder','');});
+  try{
+    const jsPDF=window.jspdf.jsPDF;
+    const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pgEls=Array.from(document.querySelectorAll('.a4-page'));
+    let _first=true;
+    for(let _pi=0;_pi<pgEls.length;_pi++){
+      const _pg=pgEls[_pi];
+      const canvas=await html2canvas(_pg,{
+        scale:2,useCORS:true,logging:false,backgroundColor:'#ffffff',
+        scrollX:0,scrollY:0,allowTaint:true,imageTimeout:15000,
+        onclone:doc=>{
+          doc.querySelectorAll('.no-print,.campo-ativo-label').forEach(el=>{el.style.display='none';});
+          doc.querySelectorAll('.campo-edit').forEach(el=>{el.removeAttribute('data-placeholder');el.style.borderBottom='none';el.style.background='transparent';});
+        }
+      });
+      const imgData=canvas.toDataURL('image/jpeg',.92);
+      if(!_first)pdf.addPage();
+      const canvasW=canvas.width,canvasH=canvas.height;
+      const pdfW=210,pdfH=Math.round((canvasH/canvasW)*pdfW);
+      if(pdfH<=297){
+        const yOff=Math.round((297-pdfH)/2);
+        pdf.addImage(imgData,'JPEG',0,yOff,pdfW,pdfH,undefined,'FAST');
+      } else {
+        pdf.addImage(imgData,'JPEG',0,0,pdfW,297,undefined,'FAST');
+      }
+      _first=false;
+    }
+    pdf.save(`PARTICULAR_${nomeModelo(modeloAtual)}_${hojeISO().replace(/\//g,'-')}.pdf`);
+    mostrarNotif('PDF gerado com sucesso!');
+  }catch(e){console.error(e);mostrarNotif('Erro ao gerar PDF. Use Imprimir → Salvar como PDF');}
+  finally{
+    campos.forEach(el=>{el.style.borderBottom=el._origBorder||'';el.style.background=el._origBg||'';if(el._origPH!==null&&el._origPH!==undefined)el.setAttribute('data-placeholder',el._origPH||'');});
+  }
+}
+async function imprimirDocumento(){
+  if(!modeloAtual){mostrarNotif('Selecione um documento primeiro.');return;}
+  document.querySelectorAll('p.clausula-texto.editando').forEach(p=>fecharEdicaoClausula(p));
+  paginarEditor();
+  const campos=document.querySelectorAll('.campo-edit');
+  campos.forEach(el=>{el._oPH=el.getAttribute('data-placeholder');el.setAttribute('data-placeholder','');});
+  document.querySelectorAll('.a4-page-extra').forEach(pg=>{pg.style.display='block';});
+  setTimeout(()=>{
+    window.print();
+    campos.forEach(el=>el.setAttribute('data-placeholder',el._oPH||''));
+  },200);
+}
+
+// ══ MODELOS — ACORDOS PARTICULARES, SEM CORRETAGEM ══
+const modelos={
+
+loc_residencial_part:()=>`
+<h2 class="titulo-contrato">Contrato de Locação Residencial</h2>
+<p class="subtitulo-contrato">Instrumento Particular — Acordo Direto entre as Partes, Sem Intermediação<br>Lei nº 8.245/1991 | Código Civil nº 10.406/2002</p>
+${leiBloco('FUNDAMENTO LEGAL',['<strong>Art. 46 da Lei 8.245/91:</strong> Nas locações ajustadas por escrito e por prazo igual ou superior a trinta meses, a resolução ocorre findo o prazo estipulado, independentemente de notificação.','<strong>Art. 565 do CC/2002:</strong> Na locação de coisas, uma das partes se obriga a ceder à outra o uso e gozo de coisa não fungível mediante retribuição.','<strong>Art. 422 do CC/2002:</strong> Os contratantes são obrigados a guardar os princípios de probidade e boa-fé.'])}
+${clausula('CLÁUSULA I — DAS PARTES',`<strong>LOCADOR(A):</strong> ${campo('','Nome completo')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','Endereço completo do locador')}.<br><br><strong>CÔNJUGE DO(A) LOCADOR(A):</strong> ${campo('','Nome do cônjuge')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','Comunhão Parcial / Universal / Separação')}.<br><br><strong>LOCATÁRIO(A):</strong> ${campo('','Nome completo')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, ${campo('','profissão')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0 SSP-SP')}, residente em ${campo('','Endereço atual do locatário')}.`,[])}
+${clausula('CLÁUSULA II — DO OBJETO',`Imóvel ${campo('','Casa / Apartamento / Sobrado')}, situado na ${campo('','Logradouro, Nº, Bairro, Cidade, CEP')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}, IPTU nº ${campo('','XXXXXXXX')}.<br><br>Composição: ${campo('','sala, X quartos, X banheiros, cozinha, área de serviço')}.<br><strong>VEDADO:</strong> sublocar, ceder, emprestar, fins comerciais ou ilícitos, obras sem autorização escrita.`,['<strong>Art. 23, I e II, da Lei 8.245/91:</strong> O locatário é obrigado a usar o imóvel para o uso convencionado.'])}
+${clausula('CLÁUSULA III — DO PRAZO',`Prazo: <strong>30 (trinta) meses</strong>, início em ${campo('','01/01/2026')} e término em ${campo('','01/07/2028')}.<br>Findo o prazo, o(a) LOCATÁRIO(A) desocupará <strong>independentemente de notificação</strong>.`,['<strong>Art. 46:</strong> Findo o prazo, o locador pode retomar o imóvel independentemente de notificação.'])}
+${clausula('CLÁUSULA IV — DO ALUGUEL E MORA',`Aluguel mensal: <strong>R$ ${campo('','0.000,00')} (${campo('','valor por extenso')})</strong>, pago até o dia <strong>${campo('','05 (cinco)')}</strong> via ${campo('','PIX / Banco XX Ag. XXXX CC XXXXX')}.<br><br><strong>Reajuste anual:</strong> índice ${campo('','IPCA/IBGE')}.<br><strong>Mora:</strong> multa 10%; juros 1%/mês pro rata; correção ${campo('','IPCA')}; honorários 20%.`,['<strong>Art. 17 da Lei 8.245/91:</strong> É livre a convenção do aluguel.'])}
+${clausula('CLÁUSULA V — DOS ENCARGOS',`Responsabilidade do(a) LOCATÁRIO(A): IPTU; Condomínio ordinário; Água, energia, gás, internet; Seguro incêndio (mínimo R$ ${campo('','000.000,00')}); Taxas vinculadas ao imóvel.`,[])}
+${clausula('CLÁUSULA VI — DA VISTORIA',`O(A) LOCATÁRIO(A) declara receber o imóvel conforme <strong>Laudo de Vistoria de Entrada (Anexo I)</strong>, obrigando-se a restituí-lo ao final nas mesmas condições, ressalvado o desgaste natural.`,[])}
+${clausula('CLÁUSULA VII — DAS BENFEITORIAS',`<strong>Necessárias:</strong> indenizáveis, com direito de retenção.<br><strong>Úteis:</strong> indenizáveis somente se autorizadas por escrito.<br><strong>Voluptuárias:</strong> não indenizáveis.`,['<strong>Art. 35 da Lei 8.245/91:</strong> Benfeitorias necessárias e úteis autorizadas são indenizáveis.'])}
+${clausula('CLÁUSULA VIII — DA RESCISÃO',`<strong>Rescisão antecipada pelo LOCATÁRIO(A):</strong> multa de <strong>3 (três) aluguéis</strong>, proporcional ao tempo restante.<br><strong>Infração:</strong> rescisão imediata, multa de 3 aluguéis e honorários de 20%.`,['<strong>Art. 4º da Lei 8.245/91:</strong> O locatário pode devolver o imóvel pagando a multa pactuada.'])}
+${clausula('CLÁUSULA IX — DA GARANTIA',`Modalidade: <strong>${campo('','Caução / Fiança / Seguro Fiança / Título de Capitalização')}</strong>.<br><br><strong>Caução em Dinheiro:</strong> R$ ${campo('','0.000,00')} (${campo('','3')} aluguéis), Banco ${campo('','XXX')}, Ag. ${campo('','XXXX')}, Poupança ${campo('','XXXXX-X')}.<br><br><strong>FIADOR(A):</strong> ${campo('','Nome completo')}, CPF nº ${campo('','000.000.000-00')}, proprietário(a) do imóvel em ${campo('','Endereço do bem')}, Matrícula nº ${campo('','XXXXX')}, <strong>renunciando ao benefício de ordem</strong>, respondendo solidariamente.`,['<strong>Art. 37 da Lei 8.245/91:</strong> Modalidades: caução, fiança, seguro ou cessão fiduciária.'])}
+${clausula('CLÁUSULA X — DAS VISITAS',`(a) As visitas ao imóvel, quando necessárias, serão agendadas diretamente entre LOCADOR(A) e LOCATÁRIO(A), com aviso prévio mínimo de <strong>${campo('','24 (vinte e quatro)')} horas</strong>;<br>(b) O(A) LOCADOR(A) poderá vistoriar o imóvel mediante prévio agendamento;<br>(c) O(A) LOCATÁRIO(A) manterá o imóvel em condições adequadas para eventuais vistorias.`,['<strong>Art. 23, IX, Lei 8.245/91:</strong> O locatário é obrigado a permitir a vistoria do imóvel pelo locador ou seu mandatário.'])}
+${cla_boafe('XI')}
+${clausula('CLÁUSULA XII — DISPOSIÇÕES GERAIS',`(a) Comunicações por escrito, e-mail ou WhatsApp;<br>(b) Animação: ${campo('','Permitidos / Vedados')};<br>(c) Nº máximo de moradores: ${campo('','X')}.`,[])}
+${cla_infoFalsas('XIII')}
+${clausula('CLÁUSULA XIV — DO FORO',`Foro da Comarca de <strong>${campo('','Cidade/Estado')}</strong>. Firmado em <strong>${campo('','2 (duas)')} vias</strong>.`,[])}
+${assinaturas('LOCADOR(A)','LOCATÁRIO(A)',true,false)}`,
+
+compra_venda_part:()=>`
+<h2 class="titulo-contrato">Compromisso de Compra e Venda de Imóvel</h2>
+<p class="subtitulo-contrato">Instrumento Particular Irrevogável e Irretratável — Acordo Direto entre as Partes, Sem Intermediação<br>Arts. 481, 1.417 e 1.418 do CC/2002</p>
+${leiBloco('FUNDAMENTO LEGAL',['<strong>Art. 481 do CC:</strong> Pelo contrato de compra e venda, um dos contratantes se obriga a transferir o domínio de certa coisa, e o outro, a pagar-lhe certo preço.','<strong>Art. 1.417 do CC:</strong> Mediante promessa de compra e venda irretratável, adquire o promitente comprador direito real à aquisição do imóvel.','<strong>Arts. 417 e 418 do CC:</strong> Arras confirmatórias — desistência do comprador: perda do sinal; do vendedor: devolução em dobro.'])}
+${clausula('CLÁUSULA I — DAS PARTES',`<strong>PROMITENTE VENDEDOR(A):</strong> ${campo('','Nome completo')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','Endereço completo')}.<br><br><strong>CÔNJUGE DO(A) VENDEDOR(A):</strong> ${campo('','Nome do cônjuge')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','Comunhão Parcial')}.<br><br><strong>PROMITENTE COMPRADOR(A):</strong> ${campo('','Nome completo')}, ${campo('','nacionalidade')}, ${campo('','estado civil')}, CPF nº ${campo('','000.000.000-00')}, RG nº ${campo('','00.000.000-0')}, residente em ${campo('','Endereço completo')}.<br><br><strong>CÔNJUGE DO(A) COMPRADOR(A):</strong> ${campo('','Nome do cônjuge')}, CPF nº ${campo('','000.000.000-00')}, regime: ${campo('','Comunhão Parcial')}.`,[])}
+${clausula('CLÁUSULA II — DO OBJETO',`Imóvel ${campo('','Tipo')}, situado na ${campo('','Endereço completo')}, área de ${campo('','00,00')} m², Matrícula nº ${campo('','XXXXX')}, IPTU nº ${campo('','XXXXXXXX')}.<br><br>O(A) VENDEDOR(A) declara que o imóvel é de sua exclusiva propriedade, <strong>LIVRE E DESEMBARAÇADO</strong> de quaisquer ônus.`,['<strong>Art. 502 do CC:</strong> O vendedor responde por todos os débitos que gravem a coisa até a tradição.'])}
+${clausula('CLÁUSULA III — DO PREÇO E PAGAMENTO',`Preço total: <strong>R$ ${campo('','0.000.000,00')} (${campo('','valor por extenso')})</strong>.<br><br>(a) Sinal/Arras: R$ ${campo('','0.000,00')} na assinatura;<br>(b) Parcelas: R$ ${campo('','0.000,00')} em ${campo('','X')} parcelas;<br>(c) Financiamento: R$ ${campo('','0.000.000,00')} — Banco ${campo('','XXX')};<br>(d) FGTS: R$ ${campo('','0,00')};<br>(e) Saldo na escritura: R$ ${campo('','0.000.000,00')}.`,['<strong>Arts. 417 e 418 do CC:</strong> Desistência do comprador: perda do sinal; do vendedor: devolução em dobro.'])}
+${clausula('CLÁUSULA IV — DA POSSE E ESCRITURA',`Posse transferida em ${campo('','DD/MM/AAAA')}. Escritura definitiva em até ${campo('','30 (trinta)')} dias após quitação ou aprovação do financiamento.<br>Custos do(a) COMPRADOR(A): ITBI, emolumentos, registro, certidões. Custos do(a) VENDEDOR(A): certidões pessoais.`,['<strong>Art. 1.245 do CC:</strong> Transfere-se a propriedade mediante registro no Registro de Imóveis.'])}
+${clausula('CLÁUSULA V — DA IRREVOGABILIDADE',`Este instrumento é <strong>IRREVOGÁVEL E IRRETRATÁVEL</strong>, obrigando as partes e seus herdeiros e sucessores ao fiel cumprimento de todas as suas cláusulas.`,[])}
+${cla_boafe('VI')}
+${clausula('CLÁUSULA VII — DA DOCUMENTAÇÃO NECESSÁRIA',`Para a realização do negócio, as partes se comprometem a trocar entre si, quando solicitado:<br>(a) Matrícula atualizada do imóvel (máximo 30 dias);<br>(b) Certidões negativas de ônus e ações reais;<br>(c) Certidão negativa de IPTU e comprovante de pagamento em dia;<br>(d) Comprovante de quitação do condomínio (se aplicável);<br>(e) Documentos pessoais: RG, CPF, comprovante de residência, certidão de estado civil;<br>(f) Demais documentos exigidos pelo banco financiador ou cartório.<br><br>A omissão ou falsidade de documentos acarretará as sanções previstas neste contrato e na legislação vigente.`,['<strong>Art. 502 do CC/2002:</strong> O vendedor responde pelos débitos existentes sobre a coisa até o momento da tradição.'])}
+${cla_infoFalsas('VIII')}
+${clausula('CLÁUSULA IX — DO FORO',`Foro da Comarca de <strong>${campo('','Cidade/Estado')}</strong>. Firmado em <strong>${campo('','3 (três)')} vias</strong>.`,[])}
+${assinaturas('PROMITENTE VENDEDOR(A)','PROMITENTE COMPRADOR(A)',true,true)}`
+
+};
+
+function gerarConteudo(){
+  const sel=document.getElementById('selectModel');
+  const m=sel?sel.value:'';
+  modeloAtual=m;
+  const editor=document.getElementById('editor');
+  if(!m){editor.innerHTML='<div class="placeholder-msg"><div class="icon">📋</div><div>Selecione um contrato no menu acima para começar</div></div>';document.getElementById('headerData').innerHTML='';limparFolhasExtras();return;}
+  document.getElementById('headerData').textContent=`${hojeISO()} — ${nomeModelo(m)}`;
+  limparFolhasExtras();
+  editor.innerHTML=modelos[m]?modelos[m]():'<div class="placeholder-msg">Modelo não encontrado.</div>';
+  setTimeout(()=>{
+    initCamposExpansiveis();initEdicaoClausulas();agruparClausulas();bindCamposMobile();indexarCampos();setTimeout(paginarEditor,700);
+  },100);
+}
+
+window.addEventListener('load',()=>{atualizarBotao();ajustarPadding();});
+</script>
+</body>
+</html>
