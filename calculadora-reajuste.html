@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCOSTA — Calculadora de Reajuste de Aluguel (IPCA / IGP-M)</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --azul:#3B9BD6;
+  --azul-escuro:#1E3A5F;
+  --branco:#FFFFFF;
+  --cinza:#f4f7fa;
+  --texto:#1c2b3a;
+  --verde:#1a8f4c;
+  --laranja:#c97b1e;
+  --borda:#dbe6ef;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',Arial,sans-serif;background:var(--cinza);color:var(--texto);line-height:1.6;padding-bottom:60px;}
+.topo{background:var(--azul-escuro);color:#fff;padding:22px 18px;text-align:center;}
+.topo h1{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:1px;font-weight:700;}
+.topo p{font-size:12.5px;color:#cfe3f2;margin-top:4px;}
+.container{max-width:760px;margin:0 auto;padding:24px 16px;}
+.cards-indices{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;}
+.card-indice{flex:1;min-width:220px;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:16px 18px;box-shadow:0 2px 10px rgba(30,58,95,.06);}
+.card-indice .nome{font-family:'Oswald',sans-serif;font-size:13px;color:var(--azul-escuro);letter-spacing:.5px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+.card-indice .valor{font-size:30px;font-weight:700;color:var(--azul);margin:8px 0 4px;font-family:'Oswald',sans-serif;}
+.card-indice .valor.loading{font-size:14px;color:#999;font-weight:400;}
+.card-indice .ref{font-size:11px;color:#777;}
+.badge-oficial{font-size:8.5px;background:#e8f4fd;color:var(--azul-escuro);padding:2px 7px;border-radius:10px;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.3px;}
+.bloco-calc{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:22px 22px 24px;box-shadow:0 2px 14px rgba(30,58,95,.06);}
+.bloco-calc h2{font-family:'Oswald',sans-serif;font-size:16px;color:var(--azul-escuro);margin-bottom:16px;letter-spacing:.3px;}
+.campo-grupo{margin-bottom:14px;}
+.campo-grupo label{display:block;font-size:12.5px;font-weight:600;color:var(--azul-escuro);margin-bottom:6px;}
+.campo-grupo input[type=number],.campo-grupo input[type=date]{width:100%;padding:11px 12px;border:1.5px solid var(--borda);border-radius:6px;font-size:15px;font-family:'Inter',sans-serif;}
+.campo-grupo input:focus{outline:none;border-color:var(--azul);}
+.opcoes-indice{display:flex;gap:10px;}
+.opt-indice{flex:1;border:1.5px solid var(--borda);border-radius:6px;padding:12px;text-align:center;cursor:pointer;font-weight:600;font-size:13.5px;color:#555;transition:all .15s;background:#fafcfe;}
+.opt-indice.ativo{border-color:var(--azul);background:#eaf5fc;color:var(--azul-escuro);}
+.opt-indice small{display:block;font-weight:400;font-size:10.5px;color:#888;margin-top:2px;}
+.btn-calcular{width:100%;background:var(--azul-escuro);color:#fff;border:none;padding:13px;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:6px;font-family:'Oswald',sans-serif;letter-spacing:.5px;transition:background .15s;}
+.btn-calcular:hover{background:#15293f;}
+.resultado{display:none;margin-top:20px;border-top:2px solid var(--borda);padding-top:18px;}
+.resultado.show{display:block;}
+.resultado .linha{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px dashed #e3edf5;}
+.resultado .linha span:first-child{color:#666;}
+.resultado .linha span:last-child{font-weight:600;}
+.resultado .final{background:var(--azul-escuro);color:#fff;border-radius:8px;padding:14px 16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;}
+.resultado .final .lbl{font-size:12.5px;font-family:'Oswald',sans-serif;letter-spacing:.4px;}
+.resultado .final .val{font-size:22px;font-weight:700;font-family:'Oswald',sans-serif;}
+.fonte-oficial{margin-top:22px;background:#f0f7fc;border-left:3px solid var(--azul);border-radius:0 6px 6px 0;padding:12px 14px;font-size:11.5px;color:#445;line-height:1.5;}
+.fonte-oficial a{color:var(--azul-escuro);font-weight:600;text-decoration:none;border-bottom:1px solid var(--azul);}
+.aviso-manual{display:none;background:#fff8ec;border:1px solid #f0c87a;border-radius:6px;padding:10px 12px;font-size:11.5px;color:#7a5c1a;margin-bottom:12px;}
+.aviso-manual.show{display:block;}
+.aviso-manual input{margin-top:6px;width:120px;padding:6px 8px;border:1.5px solid #f0c87a;border-radius:4px;}
+.rodape{text-align:center;font-size:11px;color:#8a99a8;margin-top:28px;padding:0 16px;}
+.rodape strong{color:var(--azul-escuro);}
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <h1>FCOSTA &mdash; CALCULADORA DE REAJUSTE DE ALUGUEL</h1>
+  <p>Dados oficiais e atualizados direto do Banco Central do Brasil</p>
+</div>
+
+<div class="container">
+
+  <div class="cards-indices">
+    <div class="card-indice">
+      <div class="nome">IPCA (12 meses) <span class="badge-oficial">BCB / IBGE</span></div>
+      <div class="valor loading" id="valorIpca">carregando...</div>
+      <div class="ref" id="refIpca">&nbsp;</div>
+    </div>
+    <div class="card-indice">
+      <div class="nome">IGP-M (12 meses) <span class="badge-oficial">BCB / FGV</span></div>
+      <div class="valor loading" id="valorIgpm">carregando...</div>
+      <div class="ref" id="refIgpm">&nbsp;</div>
+    </div>
+  </div>
+
+  <div class="bloco-calc">
+    <h2>Calcule o novo valor do seu aluguel</h2>
+
+    <div class="aviso-manual" id="avisoManual">
+      Não foi possível buscar o índice automaticamente agora (sem conexão ou instabilidade na API do Banco Central). Você pode digitar o percentual acumulado manualmente:
+      <br><input type="number" id="indiceManual" step="0.01" placeholder="Ex: 4,50">%
+    </div>
+
+    <div class="campo-grupo">
+      <label>Índice de reajuste do contrato</label>
+      <div class="opcoes-indice">
+        <div class="opt-indice ativo" id="optIpca" onclick="selecionarIndice('ipca')">IPCA<small>mais comum em residenciais</small></div>
+        <div class="opt-indice" id="optIgpm" onclick="selecionarIndice('igpm')">IGP-M<small>mais comum em comerciais</small></div>
+      </div>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Valor atual do aluguel (R$)</label>
+      <input type="number" id="aluguelAtual" step="0.01" placeholder="Ex: 2000,00">
+    </div>
+
+    <div class="campo-grupo">
+      <label>Data do último reajuste (opcional, apenas referência)</label>
+      <input type="date" id="dataUltimoReajuste">
+    </div>
+
+    <button class="btn-calcular" onclick="calcularReajuste()">CALCULAR NOVO ALUGUEL</button>
+
+    <div class="resultado" id="resultado">
+      <div class="linha"><span>Valor atual</span><span id="rAtual">R$ 0,00</span></div>
+      <div class="linha"><span>Índice aplicado</span><span id="rIndice">0,00%</span></div>
+      <div class="linha"><span>Acréscimo</span><span id="rAcrescimo">R$ 0,00</span></div>
+      <div class="final">
+        <span class="lbl">NOVO VALOR DO ALUGUEL</span>
+        <span class="val" id="rFinal">R$ 0,00</span>
+      </div>
+    </div>
+
+    <div class="fonte-oficial">
+      <strong>Fonte oficial:</strong> os valores de IPCA e IGP-M exibidos acima são obtidos em tempo real do
+      <a href="https://www3.bcb.gov.br/sgspub/" target="_blank" rel="noopener">Sistema Gerenciador de Séries Temporais (SGS) do Banco Central do Brasil</a>,
+      a mesma base oficial utilizada por bancos, cartórios e administradoras de imóveis em todo o país.
+      O IPCA é apurado pelo IBGE e o IGP-M pela FGV (Fundação Getulio Vargas); o Banco Central apenas consolida e divulga as séries históricas.
+    </div>
+  </div>
+
+  <div class="rodape">
+    <strong>FCOSTA CORRETOR E AVALIADOR DE IMÓVEIS</strong><br>
+    CRECI-SP 294791-F &nbsp;|&nbsp; CNAI 52708 &nbsp;|&nbsp; Sergio Fernandes da Costa<br>
+    Esta calculadora é uma ferramenta de apoio. Sempre confirme o índice e a cláusula de reajuste do seu contrato específico.
+  </div>
+
+</div>
+
+<script>
+var indiceEscolhido='ipca';
+var ipcaAcumulado=null, igpmAcumulado=null;
+
+function selecionarIndice(idx){
+  indiceEscolhido=idx;
+  document.getElementById('optIpca').classList.toggle('ativo',idx==='ipca');
+  document.getElementById('optIgpm').classList.toggle('ativo',idx==='igpm');
+}
+
+function formatarBRL(v){
+  return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+// IPCA acumulado 12 meses -- série SGS 13522 (já vem pronta, acumulada, do próprio Banco Central)
+async function buscarIPCA(){
+  try{
+    var r=await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados/ultimos/1?formato=json');
+    if(!r.ok) throw new Error('falha');
+    var d=await r.json();
+    var item=d[0];
+    ipcaAcumulado=parseFloat(item.valor.replace(',','.'));
+    document.getElementById('valorIpca').textContent=ipcaAcumulado.toFixed(2)+'%';
+    document.getElementById('valorIpca').classList.remove('loading');
+    document.getElementById('refIpca').textContent='Referência: '+item.data+' (acum. 12 meses)';
+  }catch(e){
+    document.getElementById('valorIpca').textContent='indisponível';
+    document.getElementById('valorIpca').classList.remove('loading');
+    document.getElementById('refIpca').textContent='Tente novamente mais tarde';
+    document.getElementById('avisoManual').classList.add('show');
+  }
+}
+
+// IGP-M acumulado 12 meses -- série SGS 189 é mensal; compõe-se os últimos 12 meses (juros compostos)
+async function buscarIGPM(){
+  try{
+    var r=await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.189/dados/ultimos/12?formato=json');
+    if(!r.ok) throw new Error('falha');
+    var d=await r.json();
+    var fator=1;
+    d.forEach(function(m){ fator*=(1+parseFloat(m.valor.replace(',','.'))/100); });
+    igpmAcumulado=(fator-1)*100;
+    document.getElementById('valorIgpm').textContent=igpmAcumulado.toFixed(2)+'%';
+    document.getElementById('valorIgpm').classList.remove('loading');
+    var ultimo=d[d.length-1];
+    document.getElementById('refIgpm').textContent='Referência: '+ultimo.data+' (acum. 12 meses)';
+  }catch(e){
+    document.getElementById('valorIgpm').textContent='indisponível';
+    document.getElementById('valorIgpm').classList.remove('loading');
+    document.getElementById('refIgpm').textContent='Tente novamente mais tarde';
+    document.getElementById('avisoManual').classList.add('show');
+  }
+}
+
+function calcularReajuste(){
+  var atual=parseFloat(document.getElementById('aluguelAtual').value)||0;
+  if(atual<=0){ alert('Informe o valor atual do aluguel.'); return; }
+
+  var indicePct;
+  if(indiceEscolhido==='ipca') indicePct=ipcaAcumulado;
+  else indicePct=igpmAcumulado;
+
+  // Se a busca automática falhou, usa o valor manual digitado
+  if(indicePct===null || indicePct===undefined){
+    var manual=parseFloat(document.getElementById('indiceManual').value);
+    if(!manual && manual!==0){ alert('O índice não pôde ser obtido automaticamente. Digite o percentual manualmente no campo indicado acima.'); return; }
+    indicePct=manual;
+  }
+
+  var novo=atual*(1+indicePct/100);
+  var acrescimo=novo-atual;
+
+  document.getElementById('rAtual').textContent=formatarBRL(atual);
+  document.getElementById('rIndice').textContent=indicePct.toFixed(2)+'% ('+(indiceEscolhido==='ipca'?'IPCA':'IGP-M')+')';
+  document.getElementById('rAcrescimo').textContent=formatarBRL(acrescimo);
+  document.getElementById('rFinal').textContent=formatarBRL(novo);
+  document.getElementById('resultado').classList.add('show');
+}
+
+buscarIPCA();
+buscarIGPM();
+</script>
+
+</body>
+</html>
