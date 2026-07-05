@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>FCosta Corretor - Documentação do Projeto</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #1E3A5F;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.6;
+  }
+  h1, h2 {
+    color: #1E3A5F;
+    border-bottom: 2px solid #3B9BD6;
+    padding-bottom: 6px;
+  }
+  h1 { font-size: 28px; }
+  h2 { font-size: 20px; margin-top: 35px; }
+  a { color: #3B9BD6; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    background-color: #f0f4f8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  ul { padding-left: 20px; }
+  .destaque {
+    background-color: #f0f4f8;
+    border-left: 4px solid #3B9BD6;
+    padding: 12px 16px;
+    margin: 20px 0;
+  }
+  footer {
+    margin-top: 50px;
+    font-size: 14px;
+    color: #555;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h1>FCosta Corretor - Site e Ferramentas Imobiliárias</h1>
+<p>Site institucional e ferramentas de gestão da FCosta, marca de atuação imobiliária de Sergio Fernandes da Costa (CRECI-SP 294791-F, CNAI 52708).</p>
+<p><strong>Site publicado:</strong> <a href="https://fcostacorretor.com">fcostacorretor.com</a></p>
+
+<h2>Sobre</h2>
+<p>Este repositório reúne o site imobiliário da FCosta e as ferramentas internas usadas na gestão de imóveis, contratos, painel administrativo e conteúdo publicado.</p>
+
+<h2>Estrutura principal</h2>
+
+<div class="destaque">
+<strong>Páginas do site:</strong> comprar (FCV), alugar (FCA), imovel (FCI), lancamentos (FCL), panfletos (FCP), portal-do-investidor, financiamento, chacara-para-eventos-em-suzano, ptam, avaliacao-fcosta, judicial, consultoria, sergioig, cadastro, inquilinato, contratos-fcosta, parceiros-fcosta, galeria, blog, legislacaoimobiliaria, documentacao-imobiliaria, cartorio, videos-imobiliarios, sermao, politica-de-privacidade, condicoes-de-uso.
+</div>
+
+<p><strong>contratos-fcosta.html</strong><br>
+Sistema de geração de contratos, organizado em 10 blocos identificados para facilitar manutenção (CSS, estrutura HTML, JS principal e modelos de contrato: locação, corretagem, compra e venda, vistorias, procurações, notificações, declarações, termos, propostas, administração e recibos). A assinatura manuscrita de Sergio está incorporada como imagem em base64.</p>
+
+<p><strong>painel_adm.html</strong><br>
+Painel administrativo com publicação automática no Hostinger, incluindo validação de slug, player de vídeos do YouTube e organização de conteúdo do site.</p>
+
+<h2>Tecnologia</h2>
+<ul>
+  <li>HTML, CSS e JavaScript puro</li>
+  <li>Firebase (projeto fcosta-31125)</li>
+  <li>Cloudinary (armazenamento de imagens dos imóveis, preset fcosta_imoveis)</li>
+  <li>Hospedagem: Netlify e Hostinger</li>
+  <li>Deploy automático via GitHub (repositório fcostacorrigido)</li>
+</ul>
+
+<h2>Identidade visual</h2>
+<p>Paleta oficial da FCosta: azul-céu <code>#3B9BD6</code> (cor primária), branco <code>#FFFFFF</code> (fundo) e azul-marinho escuro <code>#1E3A5F</code> (navbar e rodapé). Nunca usar vermelho ou dourado escuro.</p>
+
+<h2>Redes e contato</h2>
+<ul>
+  <li>WhatsApp: <a href="https://wa.me/5511993509109">wa.me/5511993509109</a></li>
+  <li>Instagram: @f.cost.a_corretor</li>
+  <li>YouTube: @fcostacorretor</li>
+  <li>TikTok: @fcosta.corretor</li>
+  <li>Facebook: SergioCostaRCM</li>
+  <li>LinkedIn: sergio-costa-corretor-b6a984371</li>
+  <li>X (Twitter): @fcosta_s87688</li>
+  <li>App: <a href="https://play.google.com/store/apps/details?id=meu.fcosta.app2026">play.google.com - meu.fcosta.app2026</a></li>
+</ul>
+
+<footer>
+Qualquer alteração neste projeto deve seguir os blocos já organizados no arquivo. Alterações pontuais são preferíveis a reescritas completas. Todo código HTML entregue deve estar pronto para colar no criador de código embed do Hostinger.
+</footer>
+
+</body>
+</html>
