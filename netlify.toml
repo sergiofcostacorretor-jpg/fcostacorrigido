@@ -48,3 +48,18 @@
   from = "/videos-imobiliarios"
   to = "/tv_costa"
   status = 200
+
+[[redirects]]
+  from = "/condicoes-de-uso"
+  to = "/certificado"
+  status = 200
+
+[[redirects]]
+  from = "/portal-do-investidor"
+  to = "/financiamento"
+  status = 200
+
+[[redirects]]
+  from = "/documentacao-imobiliaria"
+  to = "/cartorio"
+  status = 200

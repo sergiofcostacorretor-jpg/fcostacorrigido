@@ -159,6 +159,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--off);color:var(--text);mi
   <div class="acts">
     <button class="bt" onclick="salvar()">💾 Salvar</button>
     <button class="bt" onclick="carregar()">📂 Carregar</button>
+    <button class="bt" onclick="baixarBackup()">⬇️ Baixar Backup</button>
     <button class="bt" onclick="novoLaudo()">🗑 Novo</button>
     <button class="bt" onclick="abrirPreview()">👁 Visualizar</button>
     <button class="bt pri" onclick="gerarPDF()">📄 Gerar PDF</button>
@@ -1453,6 +1454,16 @@ function carregar(){
 function novoLaudo(){
   if(!confirm('Limpar todos os dados e iniciar novo PTAM?'))return;
   localStorage.removeItem('ptam_fcosta_v5');location.reload();
+}
+function baixarBackup(){
+  const d={};
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(e=>{if(e.id)d[e.id]=e.value;});
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='ptam-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  toast('⬇️ Backup baixado!');
 }
 
 // ── PREVIEW ──
