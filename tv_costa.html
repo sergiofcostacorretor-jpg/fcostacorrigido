@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Costa - FCosta Corretor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --vermelho: #dc1c2d;
+            --branco: #ffffff;
+            --preto: #070d18;
+            --cinza: #8a9bb5;
+            --altura-topo: 56px;
+            --altura-barra: 64px;
+        }
+
+        html, body { height: 100%; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--preto);
+            color: var(--branco);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOPO FINO */
+        header {
+            height: var(--altura-topo);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--vermelho);
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .topo-links { display: flex; gap: 8px; }
+
+        .topo-links a {
+            color: var(--branco);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.07);
+            transition: background 0.2s;
+        }
+
+        .topo-links a:hover { background: var(--vermelho); }
+
+        /* PALCO DO VÍDEO */
+        main {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 20px 0;
+        }
+
+        .palco {
+            position: relative;
+            width: 100%;
+            /* usa o máximo de altura possível sem precisar rolar a página */
+            max-width: calc((100vh - var(--altura-topo) - var(--altura-barra) - 24px) * 16 / 9);
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(220, 28, 45, 0.25);
+        }
+
+        .palco iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .btn-som {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--branco);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-som:hover { background: var(--vermelho); }
+
+        .aviso {
+            position: absolute;
+            inset: 0;
+            z-index: 6;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            text-align: center;
+            padding: 24px;
+            background: rgba(7, 13, 24, 0.95);
+        }
+
+        .aviso.ativo { display: flex; }
+        .aviso p { max-width: 460px; color: #d5dcea; line-height: 1.5; }
+
+        .aviso a {
+            background: var(--vermelho);
+            color: var(--branco);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 22px;
+            border-radius: 8px;
+        }
+
+        /* BARRA DE BAIXO */
+        .barra {
+            height: var(--altura-barra);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-shrink: 0;
+            width: 100%;
+            max-width: calc((100vh - var(--altura-topo) - var(--altura-barra) - 24px) * 16 / 9 + 40px);
+            margin: 0 auto;
+        }
+
+        .titulo {
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .controles { display: flex; gap: 8px; flex-shrink: 0; }
+
+        .controles button {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--branco);
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .controles button:hover { background: var(--vermelho); }
+
+        @media (max-width: 700px) {
+            header { padding: 0 12px; }
+            main { padding: 10px 0 0; }
+            .palco { border-radius: 0; max-width: 100%; }
+            .barra { padding: 0 12px; max-width: 100%; }
+            .controles button span { display: none; }
+            .topo-links a span { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png" alt="FCosta">
+            <span>TV Costa</span>
+        </a>
+        <div class="topo-links">
+            <a href="/"><i class="fas fa-arrow-left"></i> <span>Voltar ao site</span></a>
+            <a href="https://www.youtube.com/playlist?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> <span>YouTube</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="palco">
+            <div id="video-atual"></div>
+
+            <button class="btn-som" id="btn-som" onclick="ativarSom()"><i class="fas fa-volume-high"></i> Ativar som</button>
+
+            <div class="aviso" id="aviso">
+                <i class="fab fa-youtube" style="font-size: 44px; color: var(--vermelho);"></i>
+                <p id="aviso-texto">O vídeo não carregou aqui. Abra esta página pelo endereço do seu site (e não direto do arquivo no computador) ou assista pelo YouTube.</p>
+                <a href="https://www.youtube.com/playlist?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1" target="_blank" rel="noopener">Assistir no YouTube</a>
+            </div>
+        </div>
+    </main>
+
+    <div class="barra">
+        <div class="titulo" id="video-titulo-atual">TV Costa</div>
+        <div class="controles">
+            <button onclick="videoAnterior()" title="Anterior"><i class="fas fa-backward-step"></i> <span>Anterior</span></button>
+            <button onclick="pausarReproducao()" id="btn-pausa" title="Pausar"><i class="fas fa-pause"></i> <span>Pausar</span></button>
+            <button onclick="proximoVideo()" title="Próximo"><i class="fas fa-forward-step"></i> <span>Próximo</span></button>
+        </div>
+    </div>
+
+    <script>
+        const PLAYLIST_ID = 'PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1';
+
+        let ytPlayer = null;
+        let ytPronto = false;
+        let videos = [];          // vídeos cadastrados no painel (se houver)
+        let videoAtual = 0;
+        let modoPlaylist = true;  // sem vídeos cadastrados, toca a playlist do YouTube
+        let reproduzindo = true;
+        let tempoFalha = null;
+
+        const abertoPeloSite = location.protocol === 'http:' || location.protocol === 'https:';
+
+        // Carrega a API do YouTube
+        const tagYT = document.createElement('script');
+        tagYT.src = 'https://www.youtube.com/iframe_api';
+        if (abertoPeloSite) document.head.appendChild(tagYT);
+
+        function extrairIdYoutube(url) {
+            if (!url) return '';
+            url = url.trim();
+            if (url.length === 11 && !url.includes('/')) return url;
+            const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+            return m ? m[1] : '';
+        }
+
+        function mostrarAviso() {
+            document.getElementById('aviso').classList.add('ativo');
+            document.getElementById('btn-som').style.display = 'none';
+        }
+
+        // Aberta direto do celular/computador (não pelo site): o YouTube bloqueia o vídeo
+        if (!abertoPeloSite) {
+            document.getElementById('aviso-texto').textContent =
+                'Você abriu o arquivo direto do aparelho, e o YouTube não libera o vídeo assim. Publique a página no site (fcostacorretor.com) e abra pelo endereço. Enquanto isso, assista pelo YouTube.';
+            mostrarAviso();
+        }
+
+        // Vídeo indisponível/privado/sem incorporação: pula sozinho para o próximo
+        let errosSeguidos = 0;
+        function aoDarErro(codigo) {
+            const pulavel = (codigo === 100 || codigo === 101 || codigo === 150 || codigo === 5);
+            errosSeguidos++;
+            if (pulavel && errosSeguidos <= 30) {
+                setTimeout(proximoVideo, 400);
+                return;
+            }
+            mostrarErro(codigo);
+        }
+
+        function mostrarErro(codigo) {
+            const motivos = {
+                2: 'O endereço do vídeo ou da playlist está inválido.',
+                5: 'O navegador não conseguiu reproduzir este vídeo.',
+                100: 'A playlist ou o vídeo não foi encontrado, ou está como PRIVADO no YouTube. Deixe como Pública ou Não listada.',
+                101: 'O dono do vídeo não permite que ele apareça em outros sites. No YouTube Studio, ative "Permitir incorporação".',
+                150: 'O dono do vídeo não permite que ele apareça em outros sites. No YouTube Studio, ative "Permitir incorporação".',
+                153: 'O YouTube bloqueou porque a página não foi aberta pelo endereço do site.'
+            };
+            document.getElementById('aviso-texto').textContent =
+                (motivos[codigo] || 'O vídeo não carregou aqui.') + ' (código ' + codigo + ')';
+            mostrarAviso();
+        }
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('video-atual', {
+                width: '100%',
+                height: '100%',
+                playerVars: { autoplay: 1, mute: 1, playsinline: 1, rel: 0, modestbranding: 1 },
+                events: {
+                    onReady: () => { ytPronto = true; iniciar(); },
+                    onStateChange: aoMudarEstado,
+                    onError: (e) => aoDarErro(e.data)
+                }
+            });
+            // Se em 12 segundos nada começou a tocar, mostra o aviso
+            tempoFalha = setTimeout(() => { if (errosSeguidos === 0) mostrarAviso(); }, 12000);
+        }
+
+        function aoMudarEstado(e) {
+            if (e.data === YT.PlayerState.PLAYING) {
+                errosSeguidos = 0;
+                clearTimeout(tempoFalha);
+                document.getElementById('aviso').classList.remove('ativo');
+                if (modoPlaylist) {
+                    const dados = ytPlayer.getVideoData();
+                    document.getElementById('video-titulo-atual').textContent = dados.title || 'TV Costa';
+                }
+            }
+            // Vídeos do painel: quando termina, vai para o próximo (e volta ao primeiro no fim)
+            if (!modoPlaylist && e.data === YT.PlayerState.ENDED && reproduzindo) proximoVideo();
+        }
+
+        function iniciar() {
+            try { videos = JSON.parse(localStorage.getItem('fcosta_videos') || '[]'); } catch (e) { videos = []; }
+            videos = videos.filter(v => v && extrairIdYoutube(v.url));
+            modoPlaylist = videos.length === 0;
+
+            if (modoPlaylist) {
+                ytPlayer.loadPlaylist({ listType: 'playlist', list: PLAYLIST_ID, index: 0 });
+                ytPlayer.setLoop(true);
+            } else {
+                exibirVideo(0);
+            }
+        }
+
+        function exibirVideo(index) {
+            videoAtual = index;
+            const video = videos[index];
+            const id = extrairIdYoutube(video.url);
+            if (id) ytPlayer.loadVideoById(id);
+            document.getElementById('video-titulo-atual').textContent = video.titulo || 'TV Costa';
+        }
+
+        function proximoVideo() {
+            if (!ytPronto) return;
+            if (modoPlaylist) { ytPlayer.nextVideo(); return; }
+            exibirVideo((videoAtual + 1) % videos.length);
+        }
+
+        function videoAnterior() {
+            if (!ytPronto) return;
+            if (modoPlaylist) { ytPlayer.previousVideo(); return; }
+            exibirVideo((videoAtual - 1 + videos.length) % videos.length);
+        }
+
+        function pausarReproducao() {
+            if (!ytPronto) return;
+            reproduzindo = !reproduzindo;
+            const btn = document.getElementById('btn-pausa');
+            if (reproduzindo) {
+                ytPlayer.playVideo();
+                btn.innerHTML = '<i class="fas fa-pause"></i> <span>Pausar</span>';
+            } else {
+                ytPlayer.pauseVideo();
+                btn.innerHTML = '<i class="fas fa-play"></i> <span>Reproduzir</span>';
+            }
+        }
+
+        function ativarSom() {
+            if (!ytPronto) return;
+            ytPlayer.unMute();
+            ytPlayer.setVolume(100);
+            document.getElementById('btn-som').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
