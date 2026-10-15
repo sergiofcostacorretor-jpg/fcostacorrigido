@@ -897,11 +897,45 @@ function ytEmbed(url){
 }
 
 /* ── Galeria ── */
+/* ── Efeito Cubo 3D (estilo Facebook) para troca de fotos ── */
+var mDir=0;
+function dirCubo(a,b,n){if(n>2){if(b===(a+1)%n)return 1;if(a===(b+1)%n)return -1;}return b>a?1:-1;}
+function cuboTroca(img,src,dir){
+  if(!img)return;
+  if(img._cuboFim)img._cuboFim();
+  var w=img.offsetWidth,h=img.offsetHeight;
+  if(!dir||!w||!h||!img.naturalWidth||img.getAttribute('src')===src||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)){img.src=src;return;}
+  dir=dir>0?1:-1;
+  var cs=getComputedStyle(img),vis0=img.style.visibility,atual=img.currentSrc||img.src;
+  var palco=document.createElement('div');
+  palco.style.cssText='position:absolute;left:'+img.offsetLeft+'px;top:'+img.offsetTop+'px;width:'+w+'px;height:'+h+'px;perspective:'+Math.round(w*2.4)+'px;pointer-events:none;';
+  var cubo=document.createElement('div');
+  cubo.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;transform-style:preserve-3d;will-change:transform;transform:translateZ('+(-w/2)+'px) rotateY(0deg);transition:transform .7s cubic-bezier(.65,0,.35,1);';
+  function face(s,t){
+    var f=document.createElement('img');
+    f.src=s;f.alt='';
+    f.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;object-fit:'+cs.objectFit+';background:'+cs.backgroundColor+';border-radius:'+cs.borderRadius+';backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:'+t+';';
+    return f;
+  }
+  cubo.appendChild(face(atual,'rotateY(0deg) translateZ('+(w/2)+'px)'));
+  cubo.appendChild(face(src,'rotateY('+(dir*90)+'deg) translateZ('+(w/2)+'px)'));
+  palco.appendChild(cubo);
+  img.style.visibility='hidden';
+  img.src=src;
+  img.parentNode.insertBefore(palco,img.nextSibling);
+  void cubo.offsetWidth;
+  cubo.style.transform='translateZ('+(-w/2)+'px) rotateY('+(-dir*90)+'deg)';
+  var tm=setTimeout(fim,740);
+  function fim(){clearTimeout(tm);if(palco.parentNode)palco.parentNode.removeChild(palco);img.style.visibility=vis0;img._cuboFim=null;}
+  img._cuboFim=fim;
+}
+
 function mostrarFoto(idx){
   if(!_fotos.length) return;
+  var _ant = _fi;
   _fi = ((idx % _fotos.length) + _fotos.length) % _fotos.length;
   var fp = document.getElementById('foto-principal');
-  fp.src = cldUrl(_fotos[_fi],1600);
+  cuboTroca(fp, cldUrl(_fotos[_fi],1600), _fi === _ant ? 0 : dirCubo(_ant,_fi,_fotos.length));
   document.querySelectorAll('.galeria-strip img').forEach(function(el, i){
     el.classList.toggle('ativa', i === _fi);
     if(i === _fi) el.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
@@ -929,9 +963,9 @@ function fecharFs(){
 function fsNav(d){
   _fi = ((_fi + d) + _fotos.length) % _fotos.length;
   var img = document.getElementById('fs-img');
-  img.style.opacity = '0';
-  img.src = cldUrl(_fotos[_fi],2000);
-  img.onload = function(){ img.style.opacity = '1'; };
+  img.style.opacity = '1';
+  img.onload = null;
+  cuboTroca(img, cldUrl(_fotos[_fi],2000), d);
   document.getElementById('fs-cnt').textContent = (_fi + 1) + ' / ' + _fotos.length;
 }
 
