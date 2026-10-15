@@ -645,6 +645,10 @@ footer{background:var(--azul-esc);border-top:none;padding:28px var(--px);}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
 }
+/* Formato Reels (vertical) na galeria do imóvel — a foto aparece inteira, sem cortar */
+.galeria{max-width:440px;}
+.galeria-principal{height:auto;min-height:0;aspect-ratio:9/16;max-height:78vh;background:#0B1A2C;object-fit:contain;}
+@media(max-width:700px){.galeria{max-width:none;}.galeria-principal{max-height:72vh;}}
 </style>
 </head>
 <body>
