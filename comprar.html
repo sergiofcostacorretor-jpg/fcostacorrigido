@@ -260,6 +260,11 @@ body{background:var(--fundo);-webkit-font-smoothing:antialiased;}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
 }
+/* Formato Reels (vertical) nas fotos do modal — a foto aparece inteira, sem cortar */
+#modal{max-width:440px;}
+#modal .modal-gal{height:auto;min-height:0;aspect-ratio:9/16;max-height:66vh;background:#0B1A2C;}
+#modal .modal-gal img{object-fit:contain;background:#0B1A2C;}
+@media(max-width:600px){#modal .modal-gal{max-height:58vh;}}
 </style>
 </head>
 <body>

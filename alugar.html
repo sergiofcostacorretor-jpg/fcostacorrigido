@@ -130,6 +130,11 @@ img{max-width:100%;display:block;}
 .lb-cnt{color:rgba(255,255,255,.5);font-size:.68rem;margin-top:7px;}
 .foot-mini{background:#071120;color:rgba(255,255,255,.5);text-align:center;padding:16px 20px;font-size:.68rem;}
 .foot-mini a{color:#3B9BD6;}
+/* Formato Reels (vertical) nas fotos do modal — a foto aparece inteira, sem cortar */
+#modal{max-width:440px;}
+#modal .modal-gal{height:auto;min-height:0;aspect-ratio:9/16;max-height:66vh;background:#0B1A2C;}
+#modal .modal-gal img{object-fit:contain;background:#0B1A2C;}
+@media(max-width:600px){#modal .modal-gal{max-height:58vh;}}
 </style>
 </head>
 <body>
