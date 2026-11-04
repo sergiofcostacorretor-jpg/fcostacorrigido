@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"/>
 <meta name="description" content="FCosta Corretor e Avaliador Imobiliário — Compra, Venda, Locação e Lançamentos na Zona Leste de São Paulo. CRECI-SP 294791-F"/>
+<meta name="theme-color" content="#000000"/>
 <meta property="og:title" content="FCosta Corretor — Zona Leste SP"/>
 <meta property="og:image" content="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png"/>
 <title>FCosta Corretor e Avaliador Imobiliário | Zona Leste SP</title>
@@ -12,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -550,6 +551,273 @@ img{max-width:100%;display:block}
 #modal .modal-galeria{height:auto;min-height:0;aspect-ratio:9/16;max-height:66vh;background:#0B1A2C;}
 #modal .modal-galeria img{object-fit:contain;background:#0B1A2C;}
 @media(max-width:600px){#modal .modal-galeria{max-height:58vh;}}
+
+/* ══════════════════════════════════════════════════════════════
+   TEMA PRETO + AMARELO (estilo do site de academia)
+   Este bloco fica no fim do CSS e sobrescreve as cores/fontes.
+   Para voltar ao visual antigo, basta apagar este bloco.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --amarelo:#FFD400;--amarelo2:#FFE24D;
+  --azul:#FFD400;--azul-esc:#FFFFFF;--azul-ceu:#FFD400;--ouro:#FFD400;--ouro2:#FFE24D;
+  --fundo:#0E0E0E;--texto:#FFFFFF;--sec:#A3A3A3;--borda:#262626;
+  --roxo:#FFD400;--roxo2:#FFD400;--roxo3:#0E0E0E;
+  --titulo:'Anton','Bebas Neue','Impact',sans-serif;
+  --sh:none;--sh2:0 18px 50px rgba(255,212,0,.08);
+}
+body{background:#000;color:#fff;}
+:focus-visible{outline:2px solid var(--amarelo);outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){.hero-left,.hero-right,.opt-btn{animation:none!important;}html{scroll-behavior:auto;}}
+
+/* Anton só tem peso 400: evita negrito falso em todo texto de título */
+.logo-nome,.cred-val,.hcard-titulo,.sec-h2,.im-nome,.im-preco,.modal-h2,.modal-preco,.srv-h3,.fcp-h2,.fcp-mhdr-tit,
+.opt-sec-h2,.cta-h2,.foot-col-h,.vd-tit,.vd-preco,.lead-h2,.lead-success h3,.logo-mono,.foot-logo-txt span:first-child,.nm-v{font-weight:400;}
+
+/* ── Menu ── */
+#nav{background:rgba(0,0,0,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #1f1f1f;}
+#nav.stuck{box-shadow:none;border-bottom-color:var(--amarelo);}
+.nav-bar{height:84px;}
+.logo img{height:58px;width:58px;box-shadow:0 0 0 2px var(--amarelo);filter:none;}
+.logo-nome{font-size:1.3rem;letter-spacing:1.2px;text-transform:uppercase;color:#fff;}
+.logo-creci{color:#8a8a8a;font-size:.55rem;}
+.nav-links a{font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#d4d4d4;border-radius:0;padding:10px 12px;}
+.nav-links a:hover{background:transparent;color:var(--amarelo);}
+.nb{border-radius:3px;}
+.nb-v{background:var(--amarelo);color:#000;}
+.nb-a{background:#fff;color:#000;}
+.nb-l{background:transparent;color:var(--amarelo);border:1px solid var(--amarelo);}
+.nb-p{background:#2a2a2a;color:#fff;}
+.btn-wa-nav{background:var(--amarelo);color:#000;font-weight:800;font-size:.74rem;letter-spacing:.8px;text-transform:uppercase;border-radius:6px;padding:11px 20px;}
+.hbg span{background:#fff;}
+.logo-mono{background:#000;color:var(--amarelo);border:2px solid var(--amarelo);box-shadow:none;}
+@media(max-width:900px){.nav-bar{height:76px;}.logo img{height:52px;width:52px;}}
+@media(max-width:420px){.nav-bar{height:68px;}.logo img{height:46px;width:46px;}.logo-nome{font-size:1.05rem;}.logo-creci{font-size:.46rem;letter-spacing:.8px;}}
+
+/* ── Menu lateral (celular) ── */
+.nav-drawer{background:rgba(0,0,0,.72);}
+.drawer-panel{background:#0a0a0a;border-left:1px solid #262626;}
+.drawer-head,.drawer-foot{border-color:#262626;}
+.drawer-close{background:#1a1a1a;color:#fff;}
+.drawer-links a{color:#e5e5e5;border-radius:6px;}
+.drawer-links a:hover{background:#151515;color:var(--amarelo);border-left-color:var(--amarelo);}
+.drawer-sep{background:#262626;}
+.btn-wa-drawer{background:var(--amarelo);color:#000;border-radius:8px;text-transform:uppercase;letter-spacing:.6px;}
+
+/* ── Hero ── */
+#hero{background:#000;min-height:clamp(520px,calc(100svh - 84px),820px);border-bottom:1px solid #1a1a1a;}
+.hero-decor{background:radial-gradient(ellipse at 88% 8%,rgba(255,212,0,.16) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(255,212,0,.06) 0%,transparent 50%);}
+.hero-badge{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.5);color:var(--amarelo);border-radius:4px;font-size:.62rem;padding:6px 14px;}
+.hero-badge::before{color:var(--amarelo);}
+.hero-h1{font-family:var(--titulo);font-weight:400;text-transform:uppercase;font-size:clamp(2.1rem,4.8vw,3.9rem);line-height:1;letter-spacing:.4px;color:#fff;margin-bottom:20px;}
+.hero-h1 em{color:var(--amarelo);}
+.hero-p{color:#bdbdbd;}
+.btn-hero-wa{background:var(--amarelo);color:#000;box-shadow:none;border-radius:6px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;font-size:.8rem;padding:15px 28px;}
+.btn-hero-wa:hover{box-shadow:0 10px 30px rgba(255,212,0,.25);}
+.btn-hero-sec{background:transparent;border:1.5px solid #fff;color:#fff;border-radius:6px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;font-size:.8rem;padding:14px 26px;}
+.btn-hero-sec:hover{background:rgba(255,255,255,.1);border-color:var(--amarelo);color:var(--amarelo);}
+.hero-creds{padding-top:4px;}
+.cred-val{font-family:var(--titulo);font-size:1.05rem;letter-spacing:.8px;text-transform:uppercase;color:#fff;}
+.cred-lbl{color:#8a8a8a;}
+
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.hcard{display:flex;flex-direction:column;align-items:flex-start;padding:22px 18px 18px;background:#0b0b0b;border:1px solid #262626;border-left:1px solid #262626;border-radius:10px;}
+.hcard:nth-child(2n){border-left-color:#262626;}
+.hcard:hover{transform:translateY(-4px);background:#111;border-color:var(--amarelo);}
+.hcard-icon{font-size:1.7rem;margin-bottom:12px;}
+.hcard-titulo{font-size:1.2rem;letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px;}
+.hcard-cod{color:var(--amarelo);opacity:1;font-size:.55rem;letter-spacing:1.4px;margin-bottom:8px;}
+.hcard-desc{color:#9a9a9a;font-size:.7rem;line-height:1.5;margin:0 0 16px;}
+.hcard-btn{margin-top:auto;align-self:flex-start;background:transparent;border:1px solid #3a3a3a;color:#fff;border-radius:4px;font-size:.6rem;letter-spacing:.8px;padding:7px 14px;}
+.hcard:hover .hcard-btn{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.hcard-chip{top:12px;right:12px;background:var(--amarelo);color:#000;border-radius:3px;font-size:.46rem;}
+@media(max-width:480px){.hero-right{grid-template-columns:1fr;}.hcard{padding:18px 16px;}}
+
+/* ── Faixa de números (ao vivo) ── */
+#numeros{background:#000;border-bottom:1px solid #1a1a1a;padding:clamp(28px,4vw,44px) var(--px);}
+.nm-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.nm-card{background:#0b0b0b;border:1px solid #262626;border-radius:10px;padding:22px 10px 18px;text-align:center;}
+.nm-v{font-family:var(--titulo);font-size:clamp(2rem,4.4vw,3rem);line-height:1;color:var(--amarelo);letter-spacing:.5px;}
+.nm-l{font-size:.6rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#8a8a8a;margin-top:10px;}
+@media(max-width:640px){.nm-grid{grid-template-columns:1fr 1fr;}}
+
+/* ── Títulos de seção ── */
+.sec-label{color:var(--amarelo);font-size:.68rem;letter-spacing:2.5px;}
+.sec-label::before{background:var(--amarelo);}
+.sec-h2{font-family:var(--titulo);font-size:clamp(1.9rem,4.4vw,3.1rem);line-height:1.02;letter-spacing:.5px;text-transform:uppercase;color:#fff;}
+.sec-h2 span{color:var(--amarelo);}
+.sec-link{color:#fff;border:1px solid #333;border-radius:6px;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.sec-link:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+
+/* ── Imóveis ── */
+#imoveis{background:#000;}
+.tab{background:#0b0b0b;border:1px solid #262626;color:#bdbdbd;border-radius:6px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;font-size:.74rem;}
+.tab .cnt{background:#1c1c1c;color:#fff;}
+.tab.on,.tab:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.tab.on .cnt,.tab:hover .cnt{background:rgba(0,0,0,.16);color:#000;}
+.tab.on .nb,.tab:hover .nb{border-color:#000;}
+.car-arr{background:#0b0b0b;border:1px solid #333;color:#fff;}
+.car-arr:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.dot{background:#2b2b2b;}
+.dot.on{background:var(--amarelo);}
+.im-card{background:#0b0b0b;border:1px solid #262626;border-radius:12px;box-shadow:none;}
+.im-card:hover{transform:translateY(-6px);border-color:var(--amarelo);box-shadow:0 18px 50px rgba(255,212,0,.08);}
+.im-foto{background:#141414;}
+.im-fn{background:rgba(0,0,0,.7);color:#fff;}
+.im-fc,.im-cod{background:rgba(0,0,0,.72);}
+.im-tipo{color:#8a8a8a;}
+.im-nome{font-size:1.15rem;letter-spacing:.4px;text-transform:uppercase;color:#fff;}
+.im-local{color:#a3a3a3;}
+.im-preco{color:var(--amarelo);font-size:1.7rem;letter-spacing:.5px;}
+.im-preco small{color:#8a8a8a;}
+.im-tag{background:#151515;color:#d4d4d4;border:1px solid #262626;}
+.im-wa{background:var(--amarelo);color:#000;font-weight:800;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.im-ver{background:transparent;color:#fff;border:1px solid #3a3a3a;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;}
+.im-ver:hover{background:#1a1a1a;border-color:var(--amarelo);}
+.bv{background:var(--amarelo);color:#000;}
+.ba{background:#fff;color:#000;}
+.bl{background:#000;color:var(--amarelo);border:1px solid var(--amarelo);}
+.bp{background:#2a2a2a;color:#fff;}
+.bx{background:#444;color:#fff;}
+.im-dest{background:var(--amarelo);color:#000;}
+.spin{border-color:#262626;border-top-color:var(--amarelo);}
+.im-loading{color:#8a8a8a;}
+#ver-mais{background:var(--amarelo)!important;color:#000!important;font-weight:800!important;text-transform:uppercase;letter-spacing:1px;border-radius:6px!important;}
+
+/* ── Vídeos ── */
+#videos{background:#050505;border-top:1px solid #1a1a1a;}
+.vid-embed{border:1px solid #262626;border-radius:12px;}
+.btn-out{background:transparent;border:1px solid #333;color:#fff;border-radius:6px;}
+.btn-yt{border-radius:6px;}
+.vd-card{background:#0b0b0b;border-color:#262626;box-shadow:none;}
+.vd-card:hover{border-color:var(--amarelo);box-shadow:0 18px 50px rgba(255,212,0,.08);}
+.vd-cod{color:var(--amarelo);}
+.vd-tit{color:#fff;text-transform:uppercase;letter-spacing:.4px;}
+.vd-loc{color:#a3a3a3;}
+.vd-preco{color:var(--amarelo);}
+.vd-play{background:var(--amarelo);color:#000;}
+.vd-tipo{background:rgba(0,0,0,.8);}
+.vd-acts .vd-wa{background:var(--amarelo);color:#000;font-weight:800;}
+.vd-acts .vd-ver{background:transparent;color:#fff;border:1px solid #3a3a3a;}
+
+/* ── Panfletos (FCP) ── */
+#fcp-home{background:#000;}
+#fcp-home.ativo{border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
+#fcp-home.ativo::before{background:radial-gradient(ellipse at 10% 30%,rgba(255,212,0,.07) 0%,transparent 55%);}
+.fcp-badge{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.4);color:var(--amarelo);border-radius:4px;}
+.fcp-badge::before{color:var(--amarelo);}
+.fcp-h2{font-family:var(--titulo);text-transform:uppercase;letter-spacing:.5px;font-size:clamp(1.8rem,4vw,2.8rem);}
+.fcp-h2 em{color:var(--amarelo);}
+.fcp-ver-todos{background:transparent;border:1px solid #333;border-radius:6px;text-transform:uppercase;letter-spacing:1px;}
+.fcp-ver-todos:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.fcp-arr{background:#0b0b0b;border-color:#333;}
+.fcp-arr:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.fcp-dot{background:#2b2b2b;}
+.fcp-dot.on{background:var(--amarelo);}
+.fcp-card{background:#0b0b0b;border:1px solid #262626;box-shadow:none;border-radius:10px;}
+.fcp-card:hover{border-color:var(--amarelo);box-shadow:0 16px 48px rgba(255,212,0,.08);}
+.fcp-body{background:#0b0b0b;border-top:1px solid #262626;}
+.fcp-cod-b{color:var(--amarelo);}
+.fcp-tipo-tag{background:rgba(255,212,0,.1);color:var(--amarelo);border-color:rgba(255,212,0,.35);}
+.fcp-btn-ver{background:var(--amarelo);color:#000;}
+.fcp-btn-ver:hover{background:var(--amarelo2);}
+.fcp-spin{border-top-color:var(--amarelo);}
+#fcp-modal{background:#0b0b0b;border:1px solid #262626;}
+.fcp-mhdr{background:#000;border-bottom:1px solid #262626;}
+.fcp-mhdr-cod{color:var(--amarelo);}
+.fcp-mhdr-tit{text-transform:uppercase;letter-spacing:.5px;font-size:1.15rem;}
+.fcp-mprev{background:#111;}
+.fcp-mfooter{background:#0b0b0b;border-top:1px solid #262626;}
+.fcp-mf-roxo{background:var(--amarelo);color:#000;}
+.fcp-mfbtn[style*="background:#eee"]{background:#1a1a1a!important;color:#fff!important;}
+
+/* ── Serviços (cartões como no print) ── */
+#servicos{background:#000;border-top:1px solid #1a1a1a;}
+.srv-card{background:#0b0b0b;border:1px solid #262626;border-radius:10px;}
+.srv-card:hover{border-color:var(--amarelo);box-shadow:0 18px 50px rgba(255,212,0,.08);}
+.srv-ic{background:rgba(255,212,0,.1);border:1px solid rgba(255,212,0,.25);}
+.srv-h3{text-transform:uppercase;letter-spacing:.6px;color:#fff;}
+.srv-p{color:#9a9a9a;}
+.srv-btn{background:var(--amarelo);color:#000;font-weight:800;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.btn-az,.btn-wa{background:var(--amarelo);color:#000;}
+
+/* ── Botões opcionais (liberados pelo painel) ── */
+#sec-botoes-opcionais{background:#050505;}
+#sec-botoes-opcionais.ativo{border-top:1px solid #1a1a1a;}
+.opt-sec-badge{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.4);color:var(--amarelo);border-radius:4px;}
+.opt-sec-badge::before{color:var(--amarelo);}
+.opt-sec-h2{text-transform:uppercase;letter-spacing:.5px;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.02;}
+.opt-sec-h2 em{color:var(--amarelo);}
+.opt-sec-hint{background:rgba(255,212,0,.06);border-color:rgba(255,212,0,.3);}
+.opt-btn{background:#0b0b0b;border:1px solid #262626;border-radius:10px;}
+.opt-btn:hover{background:#111;border-color:var(--amarelo);box-shadow:0 14px 40px rgba(255,212,0,.08);}
+.opt-btn-bar{height:2px;background:var(--amarelo);}
+.opt-new{background:var(--amarelo);color:#000;}
+.opt-btn-label{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.6px;font-size:1.05rem;}
+.opt-btn-cta{background:transparent;border:1px solid #3a3a3a;border-radius:4px;text-transform:uppercase;letter-spacing:.8px;}
+.opt-btn:hover .opt-btn-cta{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+
+/* ── Chamada final (faixa amarela) ── */
+#cta{background:var(--amarelo);}
+.cta-h2{font-family:var(--titulo);text-transform:uppercase;letter-spacing:.5px;color:#000;font-size:clamp(2rem,5vw,3.6rem);line-height:1;}
+.cta-h2 em{color:#000;}
+.cta-p{color:rgba(0,0,0,.75);font-weight:600;}
+.cta-wa{background:#000;color:var(--amarelo);box-shadow:none;border-radius:6px;text-transform:uppercase;letter-spacing:.8px;font-weight:800;}
+.cta-wa:hover{box-shadow:0 10px 30px rgba(0,0,0,.3);}
+.cta-cat{border:2px solid #000;color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.8px;font-weight:800;}
+.cta-cat:hover{background:rgba(0,0,0,.1);}
+
+/* ── Rodapé ── */
+#footer{background:#000;border-top:1px solid #262626;}
+.foot-logo img{height:84px;width:84px;box-shadow:0 0 0 2px var(--amarelo);}
+.foot-logo-txt span:first-child{font-family:var(--titulo);text-transform:uppercase;letter-spacing:1px;}
+.foot-col-h{text-transform:uppercase;letter-spacing:1px;font-size:1.05rem;}
+.foot-col-h::after{background:var(--amarelo);}
+.fbadge span{color:var(--amarelo);}
+.fci-ic{background:rgba(255,212,0,.12);}
+.fci a:hover,.foot-bot-r a:hover{color:var(--amarelo);}
+.fsoc:hover{border-color:var(--amarelo);background:rgba(255,212,0,.15);}
+.fapp:hover{border-color:var(--amarelo);}
+
+/* ── Janela do imóvel ── */
+#modal-bg{background:rgba(0,0,0,.8);}
+#modal{background:#0b0b0b;color:#fff;border:1px solid #262626;}
+#modal .modal-galeria,#modal .modal-galeria img{background:#000;}
+.modal-thumbs{background:#0b0b0b;border-bottom-color:#262626;}
+.mth.on{border-color:var(--amarelo);}
+.modal-cod{color:var(--amarelo);}
+.modal-h2{font-size:1.5rem;text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.modal-preco{color:var(--amarelo);}
+.mchar{background:#141414;border:1px solid #262626;}
+.modal-desc{color:#bdbdbd;}
+.modal-wa{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.modal-pag{background:transparent;color:#fff;border:1px solid #3a3a3a;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.modal-pag:hover{border-color:var(--amarelo);opacity:1;}
+.lb-cnt{color:#a3a3a3;}
+
+/* ── Cadastro (lead) ── */
+#lead-bg{background:rgba(0,0,0,.85);}
+#lead-modal{background:#0b0b0b;border:1px solid #262626;border-radius:16px;box-shadow:0 28px 90px rgba(0,0,0,.7);}
+.lead-header{background:#000;border-bottom:1px solid #262626;}
+.lead-header::before{border-color:rgba(255,212,0,.18);}
+.lead-header::after{background:linear-gradient(90deg,transparent,rgba(255,212,0,.5),transparent);}
+.lead-ic-wrap{background:rgba(255,212,0,.1);border-color:rgba(255,212,0,.3);}
+.lead-h2{text-transform:uppercase;letter-spacing:.6px;font-size:1.5rem;}
+.lead-h2 em{color:var(--amarelo);}
+.lead-label{color:#d4d4d4;}
+.lead-input,.lead-select{background:#141414;border:1px solid #2a2a2a;color:#fff;border-radius:8px;}
+.lead-input::placeholder{color:#6b6b6b;}
+.lead-input:focus,.lead-select:focus{border-color:var(--amarelo);box-shadow:0 0 0 3px rgba(255,212,0,.15);}
+.lead-select option{background:#141414;color:#fff;}
+.lead-privacy{background:#141414;color:#bdbdbd;border:1px solid #262626;}
+.lead-btn-submit{background:var(--amarelo);background-size:auto;color:#000;border-radius:8px;text-transform:uppercase;letter-spacing:.8px;}
+.lead-btn-submit:hover{background:var(--amarelo2);box-shadow:0 10px 30px rgba(255,212,0,.25);}
+.lead-btn-submit::after{display:none;}
+.lead-btn-skip{color:#8a8a8a;}
+.lead-btn-skip:hover{color:var(--amarelo);}
+.lead-success-ic{background:rgba(255,212,0,.12);}
+.lead-success h3{text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.lead-success-btn{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:800;}
+.lead-success-wa{background:transparent;border:1px solid #3a3a3a;color:#fff;border-radius:6px;}
 </style>
 </head>
 <body>
@@ -665,6 +933,16 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
         <span class="hcard-btn">Ver catálogo</span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- NÚMEROS (ao vivo: copiados dos contadores das abas de imóveis) -->
+<section id="numeros" aria-label="Imóveis no site">
+  <div class="nm-grid">
+    <div class="nm-card"><div class="nm-v" id="nm-todos">0</div><div class="nm-l">Imóveis no site</div></div>
+    <div class="nm-card"><div class="nm-v" id="nm-venda">0</div><div class="nm-l">À venda</div></div>
+    <div class="nm-card"><div class="nm-v" id="nm-aluguel">0</div><div class="nm-l">Para alugar</div></div>
+    <div class="nm-card"><div class="nm-v" id="nm-lancamento">0</div><div class="nm-l">Lançamentos</div></div>
   </div>
 </section>
 
@@ -1549,6 +1827,17 @@ document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight')lbNav(1);
   }
 });
+</script>
+<script>
+/* Faixa de números: acompanha os contadores que o site já calcula */
+(function(){
+  var mapa={'cnt-todos':'nm-todos','cnt-venda':'nm-venda','cnt-aluguel':'nm-aluguel','cnt-lancamento':'nm-lancamento'};
+  function sync(){for(var k in mapa){var a=document.getElementById(k),b=document.getElementById(mapa[k]);if(a&&b)b.textContent=a.textContent;}}
+  sync();
+  if(window.MutationObserver){
+    Object.keys(mapa).forEach(function(k){var el=document.getElementById(k);if(el)new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true});});
+  }
+})();
 </script>
 </body>
 </html>
