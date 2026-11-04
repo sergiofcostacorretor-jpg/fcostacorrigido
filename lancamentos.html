@@ -6,7 +6,7 @@
 <meta name="description" content="Lançamentos imobiliários na Zona Leste de SP — FCosta Corretor. Novos empreendimentos. CRECI-SP 294791-F"/>
 <title>Lançamentos Imobiliários Zona Leste SP | FCosta Corretor FCL</title>
 <link rel="canonical" href="https://fcostacorretor.com/lancamentos"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
@@ -130,6 +130,205 @@ img{max-width:100%;display:block;}
 .lb-cnt{color:rgba(255,255,255,.5);font-size:.68rem;margin-top:7px;}
 .foot-mini{background:#071120;color:rgba(255,255,255,.5);text-align:center;padding:16px 20px;font-size:.68rem;}
 .foot-mini a{color:#3B9BD6;}
+</style>
+<meta name="theme-color" content="#000000"/>
+<style id="tema-fcosta">
+/* ══════════════════════════════════════════════════════════════════
+   TEMA FCOSTA — PRETO + AMARELO
+   Arquivo único usado pelas páginas: comprar, alugar, lancamentos,
+   panfletos e imovel. É carregado DEPOIS do estilo de cada página,
+   então só ele precisa ser mexido para mudar cor ou fonte do site.
+   Para voltar ao visual antigo de uma página, apague a linha
+   <link rel="stylesheet" href="tema-fcosta.css"> dela.
+   ══════════════════════════════════════════════════════════════════ */
+:root{
+  --amarelo:#FFD400;--amarelo2:#FFE24D;
+  /* nomes usados em comprar / alugar / lancamentos */
+  --azul:#FFD400;--escuro:#FFFFFF;--ceu:#FFD400;--ouro:#FFD400;--ouro2:#FFE24D;--ceu-claro:#141414;
+  /* nomes usados em panfletos */
+  --az:#FFD400;--esc:#FFFFFF;--roxo:#FFD400;--roxo2:#FFD400;--roxo3:#141414;
+  /* nomes usados em imovel */
+  --azul-esc:#FFFFFF;--azul-ceu:#FFD400;
+  /* comuns */
+  --fundo:#0E0E0E;--texto:#FFFFFF;--sec:#A3A3A3;--borda:#262626;
+  --titulo:'Anton','Bebas Neue','Impact',sans-serif;
+  --sh:none;--sh2:0 18px 50px rgba(255,212,0,.08);
+}
+body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
+:focus-visible{outline:2px solid var(--amarelo);outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){.im-card,.pf-card{animation:none!important;}html{scroll-behavior:auto;}}
+
+/* Anton só tem peso 400: evita negrito falso nos títulos */
+.logo-txt span:first-child,.logo-nome,.page-h1,.hero-h1,.hstat-n,.im-nome,.im-preco,.modal-h2,.modal-preco,.modal-titulo,
+.pf-titulo,.imovel-titulo,.imovel-preco,.secao-h3,.cta-bloco-txt h3{font-weight:400;}
+
+/* ── Menu de cima ── */
+#nav{background:rgba(0,0,0,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #1f1f1f;}
+#nav.sc,#nav.stuck{box-shadow:none;border-bottom-color:var(--amarelo);}
+.nb{height:72px;}
+.logo img{height:48px;width:48px;object-fit:cover;border-radius:50%;background:#000;box-shadow:0 0 0 2px var(--amarelo);}
+.logo-txt span:first-child,.logo-nome{font-family:var(--titulo);font-size:1.2rem;letter-spacing:1.2px;text-transform:uppercase;color:#fff;}
+.logo-txt span:last-child,.logo-creci{color:#8a8a8a;}
+.bread{color:#a3a3a3;}
+.bread a{color:var(--amarelo);}
+.bread span{color:#555;}
+.btn-home,.btn-voltar{background:transparent;border:1px solid #333;color:#fff;border-radius:6px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+.btn-home:hover,.btn-voltar:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.nav-wa,.btn-wa-nav{background:var(--amarelo);color:#000;box-shadow:none;border-radius:6px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;}
+
+/* ── Abertura da página ── */
+.page-hero,.hero{background:#000;border-bottom:1px solid #1a1a1a;}
+.page-hero::before,.hero::before{background:radial-gradient(ellipse at 88% 8%,rgba(255,212,0,.16) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(255,212,0,.06) 0%,transparent 50%);}
+.hero::after{opacity:.04;}
+.page-badge,.hero-badge{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.5);color:var(--amarelo);border-radius:4px;text-transform:uppercase;letter-spacing:2px;font-size:.62rem;font-weight:700;}
+.hero-badge span{background:var(--amarelo);}
+.page-h1,.hero-h1{font-family:var(--titulo);text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.7rem);line-height:1;letter-spacing:.4px;color:#fff;max-width:760px;}
+.page-h1 em,.hero-h1 em{color:var(--amarelo);}
+.page-sub,.hero-sub{color:#bdbdbd;}
+.hstat-n{color:var(--amarelo);}
+.hstat-l{color:#8a8a8a;}
+
+/* ── Filtros ── */
+.filtros-wrap{background:#000;border:none;box-shadow:none;}
+.filtros-inner{background:#0b0b0b;border:1px solid #262626;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.55);}
+.filtro-busca input,.f-busca input{background:#141414;border:1px solid #2a2a2a;color:#fff;border-radius:8px;}
+.filtro-busca input:focus,.f-busca input:focus{border-color:var(--amarelo);background:#141414;box-shadow:0 0 0 3px rgba(255,212,0,.15);}
+.filtro-busca input::placeholder,.f-busca input::placeholder{color:#6b6b6b;}
+.filtro-busca-ic,.f-busca-ic{color:#6b6b6b;}
+.filtro-sel,.f-sel{background:#141414;border:1px solid #2a2a2a;color:#fff;border-radius:8px;}
+.filtro-sel:focus,.f-sel:focus{border-color:var(--amarelo);background:#141414;}
+.filtro-sel option,.f-sel option{background:#141414;color:#fff;}
+.filtro-cnt,.f-cnt{color:#a3a3a3;}
+.filtro-cnt strong,.f-cnt strong{color:var(--amarelo);}
+
+/* ── Aviso (listas) ── */
+.aviso-in,.aviso-inner{background:#0b0b0b;border:1px solid #262626;border-left:4px solid var(--amarelo);border-radius:8px;}
+.aviso-in p,.aviso-inner p{color:#bdbdbd;}
+.aviso-in b,.aviso-inner b{color:#fff!important;}
+
+/* ── Cartões de imóvel ── */
+.im-card{background:#0b0b0b;border:1px solid #262626;border-radius:12px;box-shadow:none;}
+.im-card:hover{transform:translateY(-6px);border-color:var(--amarelo);box-shadow:0 18px 50px rgba(255,212,0,.08);}
+.im-foto{background:#141414;}
+.im-foto img{background:#141414;}
+.im-fn{background:rgba(0,0,0,.7);color:#fff;box-shadow:none;}
+.im-fc{background:rgba(0,0,0,.72);}
+.bv{background:var(--amarelo);color:#000;}
+.ba{background:#fff;color:#000;}
+.bl{background:#000;color:var(--amarelo);border:1px solid var(--amarelo);}
+.bp{background:#2a2a2a;color:#fff;}
+.bx{background:#444;color:#fff;}
+.im-cod{background:rgba(0,0,0,.72);color:#fff;}
+.im-dest{background:var(--amarelo);color:#000;box-shadow:none;}
+.im-tipo{color:#8a8a8a;text-transform:uppercase;letter-spacing:1.2px;font-size:.62rem;}
+.im-nome{font-size:1.15rem;letter-spacing:.4px;text-transform:uppercase;color:#fff;}
+.im-local{color:#a3a3a3;}
+.im-preco{color:var(--amarelo);font-size:1.7rem;letter-spacing:.5px;}
+.im-preco small{color:#8a8a8a;}
+.im-tags{border-top-color:#262626;}
+.im-tag{background:#151515;color:#d4d4d4;border:1px solid #262626;}
+.im-wa{background:var(--amarelo);color:#000;font-weight:800;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.im-ver{background:transparent;color:#fff;border:1px solid #3a3a3a;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;}
+.im-ver:hover{background:#1a1a1a;border-color:var(--amarelo);color:#fff;}
+.spinner{border-color:#262626;border-top-color:var(--amarelo);}
+.im-loading,.nenhum,.loading-wrap{color:#8a8a8a;}
+
+/* ── Cartões de panfleto ── */
+.pf-card{background:#0b0b0b;border:1px solid #262626;border-radius:10px;box-shadow:none;}
+.pf-card:hover{border-color:var(--amarelo);box-shadow:0 16px 48px rgba(255,212,0,.08);}
+.pf-thumb{background:#fff;}
+.pf-thumb-ph .ph-lbl{color:#555;}
+.pf-cod{background:rgba(0,0,0,.8);color:var(--amarelo);}
+.pf-dest{background:var(--amarelo);color:#000;}
+.pf-body{background:#0b0b0b;border-top:1px solid #262626;}
+.pf-titulo{text-transform:uppercase;letter-spacing:.4px;color:#fff;font-size:1rem;}
+.pf-local{color:#a3a3a3;}
+.pf-tag{background:rgba(255,212,0,.1);color:var(--amarelo);border:1px solid rgba(255,212,0,.3);}
+.pf-btn-abrir{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.pf-btn-wa{background:transparent;border:1px solid #3a3a3a;color:#fff;border-radius:6px;}
+
+/* ── Janela de detalhes (imóvel e panfleto) ── */
+#modal-bg{background:rgba(0,0,0,.82);backdrop-filter:none;}
+#modal{background:#0b0b0b;color:#fff;border:1px solid #262626;box-shadow:0 30px 80px rgba(0,0,0,.7);}
+.modal-close{background:rgba(0,0,0,.72);color:#fff;box-shadow:none;}
+.modal-gal,#modal .modal-gal,#modal .modal-gal img{background:#000;}
+.mfnav{background:rgba(0,0,0,.72);color:#fff;box-shadow:none;}
+.modal-thumbs{background:#0b0b0b;border-bottom-color:#262626;}
+.mth.on{border-color:var(--amarelo);}
+.modal-cod{color:var(--amarelo);}
+.modal-h2{text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.modal-preco{color:var(--amarelo);}
+.mchar{background:#141414;border:1px solid #262626;}
+.modal-desc{color:#bdbdbd;}
+.modal-video{color:var(--amarelo);}
+.modal-wa{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.modal-pag,.modal-gal-btn{background:transparent;color:#fff;border:1px solid #3a3a3a;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.modal-pag:hover,.modal-gal-btn:hover{background:#1a1a1a;border-color:var(--amarelo);opacity:1;}
+.lbth.on{border-color:var(--amarelo);}
+.lb-dl{border-radius:6px;}
+.modal-hdr{background:#000;border-bottom:1px solid #262626;}
+.modal-cod-lbl{color:var(--amarelo);}
+.modal-titulo{text-transform:uppercase;letter-spacing:.5px;font-size:1.2rem;}
+.modal-preview{background:#111;}
+.modal-footer{background:#0b0b0b;border-top:1px solid #262626;}
+.mbtn{border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.mbtn-abrir{background:var(--amarelo);color:#000;}
+.mbtn-wa{background:transparent;color:#fff;border:1px solid #3a3a3a;}
+.mbtn-share{background:#141414;color:#fff;border:1px solid #262626;}
+.pdf-ph{color:#a3a3a3;}
+
+/* ── Rodapé ── */
+.foot-mini,.foot,footer{background:#000;border-top:1px solid #262626;color:rgba(255,255,255,.55);}
+.foot-mini a,.foot a{color:var(--amarelo);}
+.foot-txt{color:rgba(255,255,255,.55);}
+.foot-txt strong{color:rgba(255,255,255,.85);}
+.foot-links a{color:#8a8a8a;}
+.foot-links a:hover{color:var(--amarelo);}
+
+/* ══ Página de um imóvel (imovel.html) ══ */
+.pg-imovel .galeria-wrap{background:#000;border-bottom:1px solid #262626;}
+.pg-imovel .galeria,.pg-imovel .galeria-principal,.pg-imovel .galeria-strip{background:#000;}
+.pg-imovel .galeria-count{background:rgba(0,0,0,.75);}
+.pg-imovel .galeria-hint{background:rgba(0,0,0,.7);color:#fff;}
+.pg-imovel .seta{background:rgba(0,0,0,.72);color:#fff;box-shadow:none;}
+.pg-imovel .seta:hover{background:var(--amarelo);color:#000;}
+.pg-imovel .galeria-strip img.ativa{border-color:var(--amarelo);}
+.pg-imovel .galeria-strip::-webkit-scrollbar-thumb{background:var(--amarelo);}
+.pg-imovel .fs-arr:hover{background:rgba(255,212,0,.5);}
+.pg-imovel .codigo-badge{background:transparent;color:var(--amarelo);border:1px solid var(--amarelo);}
+.pg-imovel .sb-venda{background:var(--amarelo);color:#000;}
+.pg-imovel .sb-aluguel{background:#fff;color:#000;}
+.pg-imovel .sb-lancamento{background:#000;color:var(--amarelo);border:1px solid var(--amarelo);}
+.pg-imovel .sb-vendido{background:#444;color:#fff;}
+.pg-imovel .destaque-badge{background:var(--amarelo);color:#000;}
+.pg-imovel .imovel-titulo{text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.pg-imovel .imovel-local{color:#a3a3a3;}
+.pg-imovel .imovel-preco{color:var(--amarelo);letter-spacing:.5px;}
+.pg-imovel .imovel-preco-label{color:#8a8a8a;}
+.pg-imovel .preco-box{border-bottom-color:#262626;}
+.pg-imovel .chip{background:#141414;border:1px solid #262626;color:#fff;}
+.pg-imovel .divisor{background:#262626;}
+.pg-imovel .secao{border-top-color:#262626;}
+.pg-imovel .secao-h3{text-transform:uppercase;letter-spacing:.6px;color:#fff;}
+.pg-imovel .secao-h3::after{background:var(--amarelo);}
+.pg-imovel .secao-p{color:#bdbdbd;}
+.pg-imovel .comod{background:#141414;border:1px solid #262626;color:#fff;}
+.pg-imovel .comod::before{color:var(--amarelo);}
+.pg-imovel .video-wrap{border:1px solid #262626;box-shadow:none;}
+.pg-imovel .aviso{background:#0b0b0b;border:1px solid #262626;border-left:4px solid var(--amarelo);color:#bdbdbd;}
+.pg-imovel .aviso strong{color:#fff;}
+.pg-imovel .cta-bloco{background:#0b0b0b;color:#fff;border:1px solid #262626;box-shadow:none;}
+.pg-imovel .cta-bloco-txt h3{text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.pg-imovel .cta-bloco-txt p{color:#a3a3a3;}
+.pg-imovel .btn-cta-wa{background:var(--amarelo);color:#000;box-shadow:none;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
+.pg-imovel .btn-compartilhar{background:transparent;color:#fff;border:1px solid #3a3a3a;border-radius:6px;}
+.pg-imovel .btn-compartilhar:hover{background:#1a1a1a;border-color:var(--amarelo);}
+.pg-imovel .share-opt{background:#141414;color:#fff;border:1px solid #333;box-shadow:none;border-radius:8px;}
+.pg-imovel .share-opt:hover{background:var(--amarelo);color:#000;border-color:var(--amarelo);}
+.pg-imovel #toast-share{background:var(--amarelo);color:#000;}
+.pg-imovel .estado-msg{color:#a3a3a3;}
+.pg-imovel .estado-sub{color:#555;}
+
 </style>
 </head>
 <body>
