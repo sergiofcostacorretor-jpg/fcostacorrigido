@@ -4,11 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FCosta — Painel ADM</title>
+<meta name="theme-color" content="#000000"/>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -466,29 +467,31 @@ img{max-width:100%;display:block;}
 @media(max-width:400px){.lbox{padding:28px 16px 24px;}.tab{font-size:.6rem;padding:10px 7px;}.stats{display:flex;overflow-x:auto;gap:7px;padding-bottom:4px;}.stat{flex:0 0 auto;min-width:90px;}}
 .link-rapido{display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;text-decoration:none;}
 
-/* ═══════════ TEMA ELEGANTE — Painel ADM (azul-marinho, azul céu e branco) ═══════════ */
+/* ═══════════ TEMA FCOSTA — Painel ADM (preto + amarelo, igual às páginas do site) ═══════════ */
 :root{
-  --bg:#0B1A2C;--panel:#10263D;--panel2:#153049;--field:#0C2036;--line:rgba(150,190,230,.15);--line2:#24425F;
-  --txt:#EAF2FA;--mut:#8FA8C0;--acc:#4DAAE3;--acc2:#2F8FCB;--ok:#25B48A;--dang:#E2727F;
-  --ouro:#7CC3EE;--card:#10263D;--borda:rgba(150,190,230,.15);--sec:#8FA8C0;
+  --bg:#000;--panel:#0b0b0b;--panel2:#141414;--field:#141414;--line:#262626;--line2:#2a2a2a;
+  --txt:#fff;--mut:#a3a3a3;--acc:#FFD400;--acc2:#FFD400;--ok:#FFD400;--dang:#E2727F;
+  --amarelo:#FFD400;--amarelo2:#FFE24D;
+  --ouro:#FFD400;--az:#FFD400;--ceu:#FFD400;--card:#0b0b0b;--borda:#262626;--sec:#a3a3a3;
+  --tit:'Anton','Bebas Neue','Impact',sans-serif;
 }
-body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 60%),var(--bg);background-attachment:fixed;color:var(--txt);-webkit-font-smoothing:antialiased;}
-:focus-visible{outline:3px solid rgba(77,170,227,.55);outline-offset:2px;}
-::selection{background:rgba(77,170,227,.35);}
+body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
+:focus-visible{outline:2px solid #FFD400;outline-offset:3px;}
+::selection{background:rgba(255,212,0,.35);color:#000;}
 
 /* Entrada */
-#ls{background:radial-gradient(900px 500px at 20% 0%,#17406A 0%,transparent 60%),#08131F;}
-.lbox{background:rgba(16,38,61,.85);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45);}
+#ls{background:radial-gradient(900px 500px at 85% 0%,rgba(255,212,0,.14) 0%,transparent 55%),#000;}
+.lbox{background:#0b0b0b;border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45);}
 .l-brand span{letter-spacing:.6px;text-transform:none;font-size:.76rem;color:var(--mut);}
 .l-field label{text-transform:none;letter-spacing:0;font-size:.76rem;color:var(--mut);}
 .l-field input{background:var(--field);border:1px solid var(--line2);}
-.l-field input:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(77,170,227,.16);}
-.l-btn{background:linear-gradient(135deg,#3B9BD6,#2478B4);color:#fff;border-radius:12px;padding:15px;font-size:.95rem;box-shadow:0 8px 22px rgba(47,143,203,.35);}
+.l-field input:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.16);}
+.l-btn{background:#FFD400;color:#000;border-radius:6px;padding:15px;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;box-shadow:none;}
 .l-btn::before{display:none;}
 .l-deco{display:none;}
 
 /* Barra do topo */
-#top{background:#0A1626;backdrop-filter:none;border-bottom:1px solid var(--line);height:60px;}
+#top{background:#000;backdrop-filter:none;border-bottom:1px solid #FFD400;height:64px;}
 .ttitle{font-size:1rem;}
 .ttitle small{letter-spacing:.3px;text-transform:none;font-size:.66rem;color:var(--mut);}
 .tbtn{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--txt);font-size:.76rem;padding:7px 14px;border-radius:9px;}
@@ -496,13 +499,13 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 .tbtn.out{background:transparent;border-color:rgba(226,114,127,.45);color:#F1A0A9;}
 .tbtn.out:hover{background:rgba(226,114,127,.14);}
 .ubadge{background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.72rem;}
-.uav,.u-av{background:linear-gradient(135deg,#4DAAE3,#2F8FCB);}
+.uav,.u-av{background:#FFD400;color:#000;}
 
 /* Menu de abas (barra rolável no celular) */
-#tabs{background:#0A1626;backdrop-filter:none;border-bottom:1px solid var(--line);padding:8px 14px;gap:6px;}
+#tabs{background:#000;backdrop-filter:none;border-bottom:1px solid var(--line);padding:8px 14px;gap:6px;}
 .tab{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;padding:9px 14px;border-radius:10px;border-bottom:none;color:var(--mut);}
 .tab:hover{background:rgba(255,255,255,.05);color:var(--txt);}
-.tab.on{background:rgba(77,170,227,.16);color:#fff;box-shadow:inset 3px 0 0 var(--acc);}
+.tab.on{background:rgba(255,212,0,.12);color:#FFD400;box-shadow:inset 3px 0 0 var(--acc);}
 .tab::before{font-size:1rem;line-height:1;}
 .tab[data-p="imoveis"]::before{content:"🏠";}
 .tab[data-p="adicionar"]::before{content:"➕";}
@@ -521,13 +524,13 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 /* Botões */
 .btn{font-size:.78rem;font-weight:600;padding:9px 16px;border-radius:10px;border:1px solid transparent;}
 .btn:hover{filter:brightness(1.08);}
-.bok{background:var(--ok);color:#fff;border-color:var(--ok);}
-.baz{background:var(--acc2);color:#fff;border-color:var(--acc2);}
+.bok{background:#FFD400;color:#000;border-color:#FFD400;font-weight:800;}
+.baz{background:#FFD400;color:#000;border-color:#FFD400;font-weight:800;}
 .bdel,.breset{background:transparent;color:#F1A0A9;border:1px solid rgba(226,114,127,.5);}
 .bdel:hover,.breset:hover{background:rgba(226,114,127,.15);filter:none;}
-.bwarn{background:rgba(143,168,192,.14);color:#D5E6F5;border:1px solid rgba(143,168,192,.35);}
-.bgh{background:rgba(255,255,255,.06);color:#DCE9F5;border:1px solid var(--line);}
-.bopen{background:rgba(77,170,227,.14);color:#BFE3F8;border:1px solid rgba(77,170,227,.4);}
+.bwarn{background:rgba(255,255,255,.14);color:#d4d4d4;border:1px solid rgba(255,255,255,.35);}
+.bgh{background:transparent;color:#fff;border:1px solid var(--line);}
+.bopen{background:rgba(255,212,0,.14);color:#FFD400;border:1px solid rgba(255,212,0,.4);}
 
 /* Cartões e blocos */
 .stat,.icard,.fcard,.pag-fcard,.cod-section,.ctrl-section,.auth-panel,.ref-gen,.pcard,.pagsite-search,.ref-tabela,.cod-item,.ctrl-grupo{background:var(--panel);border:1px solid var(--line);border-radius:14px;}
@@ -541,12 +544,12 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 /* Lista de imóveis */
 .toolbar{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;gap:10px;margin-bottom:20px;}
 .toolbar input[type=text],.toolbar select{background:var(--field);border:1px solid var(--line2);border-radius:10px;padding:10px 14px;font-size:.84rem;}
-.toolbar input[type=text]:focus,.toolbar select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(77,170,227,.14);}
+.toolbar input[type=text]:focus,.toolbar select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.14);}
 .im-grid{gap:18px;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));}
-.icard:hover{border-color:rgba(77,170,227,.55);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.28);}
-.icard-img{height:180px;background:#0C2036;}
-.icard-rbadge{background:linear-gradient(to bottom,rgba(8,19,31,.85),rgba(8,19,31,0));padding:9px 11px;}
-.icard-cod{font-size:1.05rem;letter-spacing:1.2px;background:rgba(8,19,31,.72);text-shadow:none;padding:3px 10px;}
+.icard:hover{border-color:rgba(255,212,0,.55);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.28);}
+.icard-img{height:180px;background:#141414;}
+.icard-rbadge{background:linear-gradient(to bottom,rgba(0,0,0,.85),rgba(0,0,0,0));padding:9px 11px;}
+.icard-cod{font-size:1.05rem;letter-spacing:1.2px;background:rgba(0,0,0,.72);text-shadow:none;padding:3px 10px;}
 .icard-body{padding:14px 16px 16px;}
 .icard-nome{font-size:.98rem;margin-bottom:5px;}
 .icard-local{font-size:.76rem;margin-bottom:8px;}
@@ -560,66 +563,66 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 /* Formulários */
 .fgrid{gap:16px;margin-bottom:16px;}
 .fg{gap:6px;}
-.fg label,.seo-field label,.aform label{text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:600;color:#B9CCDE;}
+.fg label,.seo-field label,.aform label{text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:600;color:#d4d4d4;}
 .fg input,.fg select,.fg textarea,.aform input,.seo-field input,.seo-field textarea,.outro-wrap input,.pagsite-search{background:var(--field);border:1px solid var(--line2);border-radius:10px;}
 .fg input,.fg select,.fg textarea,.aform input{padding:11px 14px;font-size:.86rem;}
-.fg input:focus,.fg select:focus,.fg textarea:focus,.aform input:focus,.seo-field input:focus,.seo-field textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(77,170,227,.14);}
-.fg select option,.toolbar select option{background:#0C2036;color:#fff;}
-.fg input::placeholder,.fg textarea::placeholder{color:#5F7890;}
+.fg input:focus,.fg select:focus,.fg textarea:focus,.aform input:focus,.seo-field input:focus,.seo-field textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.14);}
+.fg select option,.toolbar select option{background:#141414;color:#fff;}
+.fg input::placeholder,.fg textarea::placeholder{color:#6b6b6b;}
 .outro-wrap input{border-color:var(--line2);}
 .pagsite-search{padding:11px 16px;}
 .upload-area{border:2px dashed var(--line2);border-radius:12px;padding:22px;background:rgba(255,255,255,.02);}
-.upload-area:hover{border-color:var(--acc);background:rgba(77,170,227,.06);}
+.upload-area:hover{border-color:var(--acc);background:rgba(255,212,0,.06);}
 .ftab{border:1px solid var(--line2);background:var(--field);border-radius:10px;}
-.ftab.on{border-color:var(--acc);background:rgba(77,170,227,.16);}
+.ftab.on{border-color:var(--acc);background:rgba(255,212,0,.16);}
 .foto-th{border:2px solid var(--line2);border-radius:9px;}
-.foto-w:first-child .foto-th{border-color:var(--acc);box-shadow:0 0 0 3px rgba(77,170,227,.3);}
-.foto-w:first-child::after{color:#9AD3F5;}
+.foto-w:first-child .foto-th{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,212,0,.3);}
+.foto-w:first-child::after{color:#FFD400;}
 #btn-salvar{min-width:160px;padding:11px 20px;font-size:.84rem;}
 #btn-salvar.saving{background:#177A5E;}
 
 /* Avisos */
-.info-box{background:rgba(77,170,227,.08);border:1px solid rgba(77,170,227,.28);border-radius:12px;}
-.sec-warn-box{background:rgba(143,168,192,.08);border:1px solid rgba(143,168,192,.3);color:#D5E6F5;border-radius:12px;}
+.info-box{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.28);border-radius:12px;}
+.sec-warn-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:#d4d4d4;border-radius:12px;}
 .sec-warn-box strong{color:#fff;}
 .salv-err,.reset-box{background:rgba(226,114,127,.1);border:1px solid rgba(226,114,127,.4);border-radius:12px;}
 .dup-box{background:rgba(226,114,127,.1);border:1px solid rgba(226,114,127,.6);animation:none;border-radius:12px;}
 
 /* Referência / códigos */
-.ref-master{background:var(--panel2);border:1px solid rgba(77,170,227,.35);border-radius:14px;}
-.ref-master::before{background:linear-gradient(90deg,var(--acc2),var(--acc),transparent);}
+.ref-master{background:var(--panel2);border:1px solid rgba(255,212,0,.35);border-radius:14px;}
+.ref-master::before{background:linear-gradient(90deg,#FFD400,transparent);}
 .ref-master-tit{letter-spacing:.4px;text-transform:none;font-size:.78rem;}
 .ref-master-tit::after{background:var(--line);}
-.ref-destaque{background:rgba(8,19,31,.45);border:1px solid rgba(77,170,227,.35);}
-.ref-numgd{text-shadow:none;color:#9AD3F5;}
+.ref-destaque{background:rgba(0,0,0,.45);border:1px solid rgba(255,212,0,.35);}
+.ref-numgd{text-shadow:none;color:#FFD400;}
 .ref-gen-tit,.auth-stit,.abc-lbl{letter-spacing:.4px;text-transform:none;font-size:.78rem;}
 .ref-stat,.ref-sbtn,.tl-card,.ref-resultado,.abc-idx,.hcopy-panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;}
 .ref-stat:hover{border-color:var(--acc);}
-.ref-sbtn:hover{background:rgba(77,170,227,.12);border-color:var(--acc);}
-.ref-sbtn.on,.ref-chip.on{background:var(--acc2);border-color:var(--acc2);}
+.ref-sbtn:hover{background:rgba(255,212,0,.12);border-color:var(--acc);}
+.ref-sbtn.on,.ref-chip.on{background:#FFD400;border-color:#FFD400;color:#000;}
 .ref-chip{border:1px solid var(--line2);}
 .ref-busca{background:var(--field);border:1px solid var(--line2);}
-.ref-thead{background:rgba(8,19,31,.5);}
+.ref-thead{background:rgba(0,0,0,.5);}
 .ref-linha:hover{background:rgba(255,255,255,.03);}
-.ref-bed,.pbedit{background:rgba(77,170,227,.18);color:#BFE3F8;}
-.ref-bed:hover,.pbedit:hover{background:var(--acc2);color:#fff;}
+.ref-bed,.pbedit{background:rgba(255,212,0,.18);color:#FFD400;}
+.ref-bed:hover,.pbedit:hover{background:#FFD400;color:#000;}
 .pbdel{background:rgba(226,114,127,.16);color:#F1A0A9;}
 .pbdel:hover{background:rgba(226,114,127,.3);}
-.pbopen{background:rgba(255,255,255,.08);color:#DCE9F5;}
+.pbopen{background:rgba(255,255,255,.08);color:#d4d4d4;}
 .pbopen:hover{background:rgba(255,255,255,.16);}
-.abc-btn:hover,.abc-all{background:rgba(77,170,227,.16);border-color:rgba(77,170,227,.4);color:#BFE3F8;}
-.pbadge-tp{background:rgba(143,168,192,.16);color:#D5E6F5;border:1px solid rgba(143,168,192,.3);}
-.ubadge-adm{background:rgba(77,170,227,.16);color:#BFE3F8;border:1px solid rgba(77,170,227,.35);}
-.fixa-card{background:rgba(77,170,227,.08);border:1px solid rgba(77,170,227,.25);}
-.fixa-nome{color:#DCEEFB;}
-.pw2,.pw3{background:#6FA8D6;}
+.abc-btn:hover,.abc-all{background:rgba(255,212,0,.16);border-color:rgba(255,212,0,.4);color:#FFD400;}
+.pbadge-tp{background:rgba(255,255,255,.16);color:#d4d4d4;border:1px solid rgba(255,255,255,.3);}
+.ubadge-adm{background:rgba(255,212,0,.16);color:#FFD400;border:1px solid rgba(255,212,0,.35);}
+.fixa-card{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.25);}
+.fixa-nome{color:#fff;}
+.pw2,.pw3{background:#FFD400;}
 
 /* Botões de páginas */
 .ctrl-mini{background:var(--field);border:1px solid var(--line);}
-.ctrl-mini.on{border-color:rgba(37,180,138,.5);background:rgba(37,180,138,.1);}
-.tg input:checked+.tg-sl{background:var(--ok);}
-.pcard:hover{border-color:rgba(77,170,227,.5);background:var(--panel2);transform:none;}
-.pub-bar{background:#0A1626;backdrop-filter:none;border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(0,0,0,.25);}
+.ctrl-mini.on{border-color:rgba(255,212,0,.5);background:rgba(255,212,0,.08);}
+.tg input:checked+.tg-sl{background:#FFD400;}
+.pcard:hover{border-color:rgba(255,212,0,.5);background:var(--panel2);transform:none;}
+.pub-bar{background:#000;backdrop-filter:none;border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(0,0,0,.25);}
 .pub-bar-txt strong{color:#fff;}
 
 /* Confirmação de exclusão e aviso rápido */
@@ -627,13 +630,49 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 .cdel-box::before{background:linear-gradient(90deg,transparent,var(--dang),transparent);}
 .cdel-ok{background:rgba(226,114,127,.2);border:1px solid var(--dang);color:#FFD5DA;}
 .cdel-cancel{border:1px solid var(--line);}
-#toast{background:#16805F;border-radius:12px;font-size:.84rem;padding:12px 18px;}
+#toast{background:#FFD400;color:#000;font-weight:700;border-radius:12px;font-size:.84rem;padding:12px 18px;}
 #toast.err{background:#B84A57;}
-#toast.warn{background:#2F7FB3;}
+#toast.warn{background:#fff;color:#000;}
 
 /* Computador: menu lateral fixo à esquerda */
+/* Tipografia do site: títulos em Anton, maiúsculas, sem negrito falso */
+.l-brand strong,.ttitle,.stnum,.icard-cod,.icard-nome,.icard-preco,.ref-numgd,.tl-cod,.seo-tit,.cod-tit,.cod-sigla,.ctrl-tit,.pagsite-hdr h2,.pag-letra,.pag-ed-hdr h2,.ref-stat-sig,.ref-stat-tot,.ref-sbtn .rs,.ref-num,.ref-c,.auth-panel h3,.cdel-h3,#main h2{font-weight:400!important;}
+.l-brand strong,.ttitle,.icard-nome,#main h2,.pagsite-hdr h2,.pag-ed-hdr h2,.auth-panel h3{text-transform:uppercase;letter-spacing:.5px;}
+.ttitle small{font-family:var(--fonte);}
+.tl img{height:42px;width:42px;object-fit:cover;border-radius:50%;background:#000;box-shadow:0 0 0 2px #FFD400;}
+.l-brand span{color:#8a8a8a;}
+.l-icon{filter:grayscale(1) brightness(1.4);}
+.icard-preco,.stnum{color:#FFD400;}
+.stic{background:rgba(255,212,0,.1)!important;}
+.sdot{background:#FFD400;}
+.tl img{flex-shrink:0;min-width:42px;}
+.l-field input[type=checkbox]{width:18px;padding:0;box-shadow:none;}
+@media(max-width:600px){
+  #top{height:56px;padding:0 10px;gap:6px;}
+  .tl img{height:36px;width:36px;min-width:36px;}
+  .tr{gap:5px;}
+  .tr>span:first-child,.ubadge{display:none;}
+  .tbtn{padding:6px 9px;font-size:.64rem;white-space:nowrap;}
+  #btn-logo-antigas{max-width:96px;overflow:hidden;text-overflow:ellipsis;}
+}
+
+/* Selos de tipo (mesmo padrão dos cartões do site) */
+.rc-v{color:#FFD400}.rc-a{color:#fff}.rc-l{color:#FFE24D}.rc-p{color:#bdbdbd}
+.sb-v{background:#FFD400;color:#000;border:1px solid #FFD400;}
+.sb-a{background:#fff;color:#000;border:1px solid #fff;}
+.sb-l{background:#000;color:#FFD400;border:1px solid #FFD400;}
+.sb-p{background:#2a2a2a;color:#fff;border:1px solid #444;}
+.sb-vd{background:#444;color:#fff;border:1px solid #555;}
+.pub-sim{background:#FFD400;color:#000;}
+.pub-nao{background:#2a2a2a;color:#bdbdbd;}
+.icard-link{background:rgba(255,212,0,.06);border:1px solid rgba(255,212,0,.25);color:#FFD400;}
+.icard-link:hover{background:rgba(255,212,0,.14);}
+.icard-img,.icard-img .ph{background:#141414;}
+.spin,.spinner{border-top-color:#FFD400;}
+.upload-area:hover{background:rgba(255,212,0,.05);}
+
 @media(min-width:1024px){
-  #tabs{position:fixed;top:60px;left:0;bottom:0;width:232px;z-index:900;flex-direction:column;flex-wrap:nowrap;gap:3px;padding:18px 12px;overflow-y:auto;overflow-x:hidden;border-right:1px solid var(--line);border-bottom:none;}
+  #tabs{position:fixed;top:64px;left:0;bottom:0;width:232px;z-index:900;flex-direction:column;flex-wrap:nowrap;gap:3px;padding:18px 12px;overflow-y:auto;overflow-x:hidden;border-right:1px solid var(--line);border-bottom:none;}
   .tab{font-size:.88rem;padding:11px 14px;}
   #main{margin-left:232px;max-width:1420px;padding:32px 40px 100px;}
   .pub-bar{margin:28px -40px -100px;padding:14px 40px;}
@@ -659,8 +698,8 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
     <div class="l-warn" id="l-warn"></div>
     <div class="l-err" id="l-err"></div>
     <div class="l-field"><label>E-mail</label><div class="l-iw"><span class="ic">✉️</span><input type="email" id="l-email" placeholder="seu@email.com" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('l-senha').focus()"/></div></div>
-    <div class="l-field"><label>Senha</label><div class="l-iw"><span class="ic">🔒</span><input type="password" id="l-senha" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()"/>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><input type="checkbox" id="ver-cb" style="width:18px;height:18px;cursor:pointer;accent-color:#3B9BD6;" onchange="document.getElementById('l-senha').type=this.checked?'text':'password'"/><label for="ver-cb" style="font-size:.72rem;color:rgba(255,255,255,.6);cursor:pointer;user-select:none;">Mostrar senha</label></div></div></div>
+    <div class="l-field"><label>Senha</label><div class="l-iw"><span class="ic">🔒</span><input type="password" id="l-senha" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()"/></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><input type="checkbox" id="ver-cb" style="width:18px;height:18px;cursor:pointer;accent-color:#FFD400;" onchange="document.getElementById('l-senha').type=this.checked?'text':'password'"/><label for="ver-cb" style="font-size:.72rem;color:rgba(255,255,255,.6);cursor:pointer;user-select:none;">Mostrar senha</label></div></div>
     <button class="l-btn" id="l-btn" onclick="fazerLogin()"><span class="lt">Entrar no Painel</span><div class="sb"></div></button>
     <div class="l-meta">Acesso restrito a administradores autorizados.<br/><strong>FCosta Corretor e Avaliador Imobiliario</strong></div>
   </div>
@@ -693,7 +732,7 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 <div class="painel on" id="p-imoveis">
   <div class="stats">
     <div class="stat"><div class="stic">🏠</div><div><div class="stnum" id="st-total">-</div><div class="stlbl">Total</div></div></div>
-    <div class="stat"><div class="stic" style="background:rgba(33,118,174,.15)">🔵</div><div><div class="stnum" id="st-fcv">-</div><div class="stlbl">FCV Vendas</div></div></div>
+    <div class="stat"><div class="stic" style="background:rgba(255,212,0,.1)">🟡</div><div><div class="stnum" id="st-fcv">-</div><div class="stlbl">FCV Vendas</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(201,168,76,.15)">🔑</div><div><div class="stnum" id="st-fca">-</div><div class="stlbl">FCA Aluguel</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(46,125,50,.15)">🏗️</div><div><div class="stnum" id="st-fcl">-</div><div class="stlbl">FCL Lanc.</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(123,31,162,.15)">📄</div><div><div class="stnum" id="st-fcp">-</div><div class="stlbl">FCP Panfl.</div></div></div>
@@ -710,7 +749,7 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
         <div class="fcp-sec-tit">FCP - Panfletos</div>
         <div class="fcp-sec-sub">Upload de panfletos em PDF ou imagem</div>
       </div>
-      <button class="btn" style="background:rgba(123,31,162,.3);color:#CE93D8;border:1.5px solid rgba(171,71,188,.45);font-size:.7rem;" onclick="novoFcp()">Novo Panfleto</button>
+      <button class="btn" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;font-size:.7rem;" onclick="novoFcp()">Novo Panfleto</button>
     </div>
     <div class="fcp-grid-cards" id="fcp-grid"></div>
   </div>
@@ -756,9 +795,9 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
       <div class="fg"><label>Cidade / UF</label><input type="text" id="f-cidade" value="Sao Paulo - SP"/></div>
       <div class="fg full"><label>Endereco Completo</label><input type="text" id="f-endereco" placeholder="Ex: Rua das Flores, 123"/></div>
       <div class="fg full"><label>Descricao</label><textarea id="f-descricao" placeholder="Descreva o imovel..." oninput="atuPrev()"></textarea></div>
-      <div class="fg full"><label>Link do Video (YouTube)</label><input type="text" id="f-video" placeholder="https://youtube.com/watch?v=... ou https://youtube.com/shorts/ID" oninput="prevVideo()"/><div id="video-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(59,155,214,.4);position:relative;padding-top:56.25%;"><iframe id="video-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe><button onclick="limparVideo()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div><div id="video-erro" style="display:none;margin-top:6px;font-size:.68rem;color:#FFD5D5;background:rgba(160,21,21,.2);border:1px solid rgba(160,21,21,.4);border-radius:6px;padding:6px 10px;">Link invalido. Use youtube.com/watch?v=... ou youtube.com/shorts/ID</div></div>
-      <div class="fg full"><label>Video MP4 (enviar do celular ou PC)</label><input type="hidden" id="f-videomp4"/><div id="mp4-area" class="upload-area" onclick="document.getElementById('inp-mp4').click()"><input type="file" id="inp-mp4" accept="video/mp4,video/*" onchange="onVideoMp4(event)"/><div style="font-size:1.8rem;">🎬</div><p>Clique para selecionar um video MP4</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Maximo 50 MB</p></div><div class="prog" id="mp4-prog">Enviando video...</div><div id="mp4-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(59,155,214,.4);position:relative;background:#000;"><video id="mp4-player" controls playsinline preload="metadata" style="width:100%;max-height:320px;display:block;"></video><button type="button" onclick="limparVideoMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
-      <div class="fg full"><label>🎬 Tour do imóvel (MP4 baixado do gerador de tour)</label><input type="hidden" id="f-tourmp4"/><div id="tour-area" class="upload-area" onclick="document.getElementById('inp-tour').click()"><input type="file" id="inp-tour" accept="video/mp4,video/*" onchange="onTourMp4(event)"/><div style="font-size:1.8rem;">🧭</div><p>Clique para subir o MP4 do tour</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Aparece na aba Tour do imóvel no site. Máximo 50 MB</p></div><div class="prog" id="tour-prog">Enviando tour...</div><div id="tour-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(59,155,214,.4);position:relative;background:#000;"><video id="tour-player" controls playsinline preload="metadata" style="width:100%;max-height:360px;display:block;"></video><button type="button" onclick="limparTourMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
+      <div class="fg full"><label>Link do Video (YouTube)</label><input type="text" id="f-video" placeholder="https://youtube.com/watch?v=... ou https://youtube.com/shorts/ID" oninput="prevVideo()"/><div id="video-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(255,212,0,.4);position:relative;padding-top:56.25%;"><iframe id="video-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe><button onclick="limparVideo()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div><div id="video-erro" style="display:none;margin-top:6px;font-size:.68rem;color:#FFD5D5;background:rgba(160,21,21,.2);border:1px solid rgba(160,21,21,.4);border-radius:6px;padding:6px 10px;">Link invalido. Use youtube.com/watch?v=... ou youtube.com/shorts/ID</div></div>
+      <div class="fg full"><label>Video MP4 (enviar do celular ou PC)</label><input type="hidden" id="f-videomp4"/><div id="mp4-area" class="upload-area" onclick="document.getElementById('inp-mp4').click()"><input type="file" id="inp-mp4" accept="video/mp4,video/*" onchange="onVideoMp4(event)"/><div style="font-size:1.8rem;">🎬</div><p>Clique para selecionar um video MP4</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Maximo 50 MB</p></div><div class="prog" id="mp4-prog">Enviando video...</div><div id="mp4-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(255,212,0,.4);position:relative;background:#000;"><video id="mp4-player" controls playsinline preload="metadata" style="width:100%;max-height:320px;display:block;"></video><button type="button" onclick="limparVideoMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
+      <div class="fg full"><label>🎬 Tour do imóvel (MP4 baixado do gerador de tour)</label><input type="hidden" id="f-tourmp4"/><div id="tour-area" class="upload-area" onclick="document.getElementById('inp-tour').click()"><input type="file" id="inp-tour" accept="video/mp4,video/*" onchange="onTourMp4(event)"/><div style="font-size:1.8rem;">🧭</div><p>Clique para subir o MP4 do tour</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Aparece na aba Tour do imóvel no site. Máximo 50 MB</p></div><div class="prog" id="tour-prog">Enviando tour...</div><div id="tour-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(255,212,0,.4);position:relative;background:#000;"><video id="tour-player" controls playsinline preload="metadata" style="width:100%;max-height:360px;display:block;"></video><button type="button" onclick="limparTourMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
       <div class="fcp-info-box full" id="fcp-info-box">Modo Panfleto (FCP) - Preencha titulo, bairro e publicacao. Faca upload do arquivo abaixo.</div>
       <div class="fg full" id="fcp-upload-bloco" style="display:none;">
         <label>Arquivo do Panfleto (PDF ou Imagem)</label>
@@ -803,9 +842,9 @@ body{background:radial-gradient(1200px 600px at 8% -10%,#15385C 0%,transparent 6
 <div class="painel" id="p-ctrl-pag">
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Links Rapidos</div><span style="font-size:.65rem;color:var(--sec);">Movidos do topo (nao cabiam no celular)</span></div><p class="ctrl-sub">Estes links ficavam no cabecalho e nao apareciam em telas pequenas. Agora estao aqui.</p><div class="fixas-grid">
     <a href="https://fcostacorretor.com/parceria" target="_blank" class="btn baz link-rapido">🤝 Ver Parceria</a>
-    <a href="https://fcostacorretor.com/contratos_principal.html" target="_blank" class="btn link-rapido" style="background:rgba(59,155,214,.3);color:#B3E6FF;border:1.5px solid rgba(59,155,214,.5);">📋 Contratos</a>
-    <a href="https://fcostacorretor.com/fcosta_secundario.html" target="_blank" class="btn link-rapido" style="background:rgba(123,31,162,.3);color:#CE93D8;border:1.5px solid rgba(171,71,188,.5);">📄 Outros Docs</a>
-    <a href="https://fcostacorretor.com/contratos_particulares.html" target="_blank" class="btn link-rapido" style="background:rgba(39,174,96,.3);color:#9ee8b8;border:1.5px solid rgba(39,174,96,.5);">📝 Contratos Particulares</a>
+    <a href="https://fcostacorretor.com/contratos_principal.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📋 Contratos</a>
+    <a href="https://fcostacorretor.com/fcosta_secundario.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📄 Outros Docs</a>
+    <a href="https://fcostacorretor.com/contratos_particulares.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📝 Contratos Particulares</a>
   </div></div>
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Paginas Fixas</div><span style="font-size:.65rem;color:var(--sec);">Sempre visiveis no site</span></div><div class="fixas-grid"><div class="fixa-card"><div class="fixa-ic">🏠</div><div class="fixa-nome">Comprar</div><div class="fixa-badge">FCV FIXO</div></div><div class="fixa-card"><div class="fixa-ic">🔑</div><div class="fixa-nome">Alugar</div><div class="fixa-badge">FCA FIXO</div></div><div class="fixa-card"><div class="fixa-ic">🏗️</div><div class="fixa-nome">Lancamentos</div><div class="fixa-badge">FCL FIXO</div></div><div class="fixa-card"><div class="fixa-ic">📄</div><div class="fixa-nome">Panfletos</div><div class="fixa-badge">FCP FIXO</div></div></div></div>
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Paginas Opcionais</div><div style="display:flex;gap:7px;flex-wrap:wrap;"><span class="ativos-b" id="badge-home">0 Home</span><span class="ativos-b az" id="badge-menu">0 Menu</span></div></div><p class="ctrl-sub">Cada card tem dois toggles: H = Home M = Menu</p><div class="reset-box"><div class="reset-txt"><strong>Aparecem todos selecionados?</strong>Clique em Zerar para resetar.</div><div style="display:flex;gap:7px;"><button class="btn breset" onclick="resetCtrl('home_botoes')">Zerar Home</button><button class="btn breset" onclick="resetCtrl('menu_hamburger')">Zerar Menu</button></div></div><div class="ctrl-grupos" id="ctrl-grupos"><div class="loading"><div class="spin"></div><p>Carregando paginas...</p></div></div></div>
@@ -881,7 +920,7 @@ var PAG_LINKS={venda:'https://fcostacorretor.com/comprar',aluguel:'https://fcost
 var PAG_LABELS={venda:'FCV - Comprar',aluguel:'FCA - Alugar',lancamento:'FCL - Lancamentos',panfleto:'FCP - Panfletos',vendido:'FCV - Comprar'};
 var ST_LABEL={venda:'A Venda',aluguel:'Aluguel',lancamento:'Lancamento',panfleto:'Panfleto',vendido:'Vendido'};
 var SLUG_PAG={venda:'comprar',aluguel:'alugar',lancamento:'lancamento',panfleto:'panfleto',vendido:'vendido'};
-var GRUPOS_COR={'Servicos':'rgba(59,155,214,.8)','Conteudo':'rgba(105,240,174,.8)','Outros':'rgba(201,168,76,.8)'};
+var GRUPOS_COR={'Servicos':'rgba(255,212,0,.85)','Conteudo':'rgba(255,255,255,.75)','Outros':'rgba(163,163,163,.8)'};
 
 auth.onAuthStateChanged(function(user){if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}});
 var _imovelRef=null,_imovelListener=null,_pausarListener=false;
@@ -1004,7 +1043,7 @@ function limparVideo(){document.getElementById('f-video').value='';document.getE
 function onTipo(){var sel=document.getElementById('f-tipo'),wrap=document.getElementById('outro-wrap');if(sel.value==='__outro__'){wrap.style.display='block';document.getElementById('f-tipo-outro').focus();}else{wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}atuPrev();}
 function getTipoReal(){var sel=document.getElementById('f-tipo');if(sel.value==='__outro__')return document.getElementById('f-tipo-outro').value.trim();return sel.value;}
 function carregarTipo(t){var sel=document.getElementById('f-tipo'),wrap=document.getElementById('outro-wrap'),existe=false;for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===t&&sel.options[i].value!=='__outro__'){existe=true;break;}}if(existe){sel.value=t;wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}else if(t){sel.value='__outro__';wrap.style.display='block';document.getElementById('f-tipo-outro').value=t;}else{sel.value='';wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}}
-function atuRefPainel(status,idAtual){var el=document.getElementById('ref-master');if(!status){el.style.display='none';return;}el.style.display='block';var sigla=SG[status]||'FCV',isNovo=!idAtual,numcod=document.getElementById('f-numcod').value.trim();var numFinal=numcod?numcod.padStart(3,'0'):(isNovo?proxNum(status):'001');var codAtual=sigla+numFinal;var corMap={FCV:'#5EC4FF',FCA:'#FFE07A',FCL:'#69f0ae',FCP:'#CE93D8'};var numEl=document.getElementById('rn-num');numEl.textContent=codAtual;numEl.style.color=corMap[sigla]||'var(--ouro)';document.getElementById('rn-st').textContent=(ST_LABEL[status]||status)+' '+sigla;document.getElementById('rn-tp').textContent=getTipoReal()||'';var bdg=document.getElementById('rn-badge');bdg.style.display='inline';if(isNovo){bdg.textContent='NOVO';bdg.className='ref-badge-novo';}else{bdg.textContent='EDITANDO';bdg.className='ref-badge-edit';}var mesma=_todos.filter(function(i){return(SG[i.status]||'FCV')===sigla&&i.id!==idAtual;}).sort(function(a,b){return(parseInt(b.numeroCodigo)||0)-(parseInt(a.numeroCodigo)||0);}).slice(0,8);var proxN=proxNum(status),proxC=sigla+proxN;var tl=document.getElementById('ref-tl'),html='';html+='<div class="tl-card tl-prox"><span class="tl-tag tag-prox">PROXIMO</span><span class="tl-cod">'+proxC+'</span><span class="tl-nome">Disponivel</span><span class="tl-bairro">Livre para uso</span></div>';if(idAtual){var atual=_todos.find(function(x){return x.id===idAtual;});if(atual)html+='<div class="tl-card tl-atual"><span class="tl-tag tag-edit">EDITANDO</span><span class="tl-cod">'+esc(getCod(atual))+'</span><span class="tl-nome">'+esc((atual.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(atual.bairro||'')+'</span></div>';}mesma.forEach(function(i){html+='<div class="tl-card"><span class="tl-tag tag-uso">USADO</span><span class="tl-cod" style="color:rgba(255,255,255,.6);">'+esc(getCod(i))+'</span><span class="tl-nome">'+esc((i.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(i.bairro||'')+'</span></div>';});tl.innerHTML=html;}
+function atuRefPainel(status,idAtual){var el=document.getElementById('ref-master');if(!status){el.style.display='none';return;}el.style.display='block';var sigla=SG[status]||'FCV',isNovo=!idAtual,numcod=document.getElementById('f-numcod').value.trim();var numFinal=numcod?numcod.padStart(3,'0'):(isNovo?proxNum(status):'001');var codAtual=sigla+numFinal;var corMap={FCV:'#FFD400',FCA:'#ffffff',FCL:'#FFE24D',FCP:'#bdbdbd'};var numEl=document.getElementById('rn-num');numEl.textContent=codAtual;numEl.style.color=corMap[sigla]||'var(--ouro)';document.getElementById('rn-st').textContent=(ST_LABEL[status]||status)+' '+sigla;document.getElementById('rn-tp').textContent=getTipoReal()||'';var bdg=document.getElementById('rn-badge');bdg.style.display='inline';if(isNovo){bdg.textContent='NOVO';bdg.className='ref-badge-novo';}else{bdg.textContent='EDITANDO';bdg.className='ref-badge-edit';}var mesma=_todos.filter(function(i){return(SG[i.status]||'FCV')===sigla&&i.id!==idAtual;}).sort(function(a,b){return(parseInt(b.numeroCodigo)||0)-(parseInt(a.numeroCodigo)||0);}).slice(0,8);var proxN=proxNum(status),proxC=sigla+proxN;var tl=document.getElementById('ref-tl'),html='';html+='<div class="tl-card tl-prox"><span class="tl-tag tag-prox">PROXIMO</span><span class="tl-cod">'+proxC+'</span><span class="tl-nome">Disponivel</span><span class="tl-bairro">Livre para uso</span></div>';if(idAtual){var atual=_todos.find(function(x){return x.id===idAtual;});if(atual)html+='<div class="tl-card tl-atual"><span class="tl-tag tag-edit">EDITANDO</span><span class="tl-cod">'+esc(getCod(atual))+'</span><span class="tl-nome">'+esc((atual.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(atual.bairro||'')+'</span></div>';}mesma.forEach(function(i){html+='<div class="tl-card"><span class="tl-tag tag-uso">USADO</span><span class="tl-cod" style="color:rgba(255,255,255,.6);">'+esc(getCod(i))+'</span><span class="tl-nome">'+esc((i.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(i.bairro||'')+'</span></div>';});tl.innerHTML=html;}
 function mostrarDup(codDup,nomeDup,proxDisp){document.getElementById('dup-tit').textContent='Codigo '+codDup+' ja existe!';document.getElementById('dup-msg').textContent='Ja usado por: "'+nomeDup+'". Escolha outro numero.';document.getElementById('dup-prox').textContent=proxDisp;var b=document.getElementById('dup-box');b.classList.add('on');b.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function esconderDup(){document.getElementById('dup-box').classList.remove('on');}
 function usarProximo(){var st=document.getElementById('f-status').value;if(!st)return;var p=proxNum(st);document.getElementById('f-numcod').value=p;esconderDup();atuPrev();toast('Numero '+p+' aplicado!');}
@@ -1079,7 +1118,7 @@ function onFcpArquivo(event){
   event.target.value='';
 }
 function removerFcpArq(){document.getElementById('fcp-url').value='';document.getElementById('fcp-tipo-arq').value='';document.getElementById('fcp-arq-prev').classList.remove('on');document.getElementById('fcp-arq-nome').textContent='-';toast('Panfleto removido.','warn');}
-function renderFcp(){var sec=document.getElementById('fcp-sec'),grid=document.getElementById('fcp-grid');if(!sec||!grid)return;var fcpList=_todos.filter(function(i){return i.status==='panfleto'&&i._del!==true&&i._excluido!==true;});fcpList.sort(function(a,b){return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(fcpList.length){sec.classList.add('on');}else{sec.classList.remove('on');}if(!fcpList.length){grid.innerHTML='<div class="fcp-empty"><span>📄</span>Nenhum panfleto.</div>';return;}grid.innerHTML=fcpList.map(function(i){var c=getCod(i),arqUrl=i.panfletoUrl||'',isPdf=(i.panfletoTipo||'imagem')==='pdf';var thumb=arqUrl&&!isPdf?'<img src="'+esc(arqUrl)+'" loading="lazy"/>':'<div style="font-size:2.5rem;opacity:.5;">📄</div>';var idEsc=esc(i.id),nomeEsc=(i.titulo||c).replace(/"/g,'&quot;');return'<div class="fcp-card"><div class="fcp-thumb">'+thumb+'<span class="fcp-cod-b">'+esc(c)+'</span><span class="fcp-pub-b '+(i.publicado===false?'fcp-pub-nao':'fcp-pub-sim')+'">'+(i.publicado===false?'Oculto':'Pub.')+'</span></div><div class="fcp-body"><div class="fcp-nome">'+esc(i.titulo||'Panfleto FCosta')+'</div><div class="fcp-local">'+esc([i.bairro,i.cidade].filter(Boolean).join(' - '))+'</div><span class="fcp-tipo-tag">'+(isPdf?'PDF':'Imagem')+'</span>'+(arqUrl?'<br/><a href="'+esc(arqUrl)+'" target="_blank" rel="noopener" style="font-size:.62rem;color:#CE93D8;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;">'+(isPdf?'Abrir PDF':'Ver imagem')+'</a>':'')+'<div class="fcp-acts"><button class="btn bwarn" data-action="editar" data-id="'+idEsc+'">Editar</button><button class="btn bdel" data-action="excluir" data-id="'+idEsc+'" data-nome="'+nomeEsc+'">Excluir</button></div></div></div>';}).join('');}
+function renderFcp(){var sec=document.getElementById('fcp-sec'),grid=document.getElementById('fcp-grid');if(!sec||!grid)return;var fcpList=_todos.filter(function(i){return i.status==='panfleto'&&i._del!==true&&i._excluido!==true;});fcpList.sort(function(a,b){return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(fcpList.length){sec.classList.add('on');}else{sec.classList.remove('on');}if(!fcpList.length){grid.innerHTML='<div class="fcp-empty"><span>📄</span>Nenhum panfleto.</div>';return;}grid.innerHTML=fcpList.map(function(i){var c=getCod(i),arqUrl=i.panfletoUrl||'',isPdf=(i.panfletoTipo||'imagem')==='pdf';var thumb=arqUrl&&!isPdf?'<img src="'+esc(arqUrl)+'" loading="lazy"/>':'<div style="font-size:2.5rem;opacity:.5;">📄</div>';var idEsc=esc(i.id),nomeEsc=(i.titulo||c).replace(/"/g,'&quot;');return'<div class="fcp-card"><div class="fcp-thumb">'+thumb+'<span class="fcp-cod-b">'+esc(c)+'</span><span class="fcp-pub-b '+(i.publicado===false?'fcp-pub-nao':'fcp-pub-sim')+'">'+(i.publicado===false?'Oculto':'Pub.')+'</span></div><div class="fcp-body"><div class="fcp-nome">'+esc(i.titulo||'Panfleto FCosta')+'</div><div class="fcp-local">'+esc([i.bairro,i.cidade].filter(Boolean).join(' - '))+'</div><span class="fcp-tipo-tag">'+(isPdf?'PDF':'Imagem')+'</span>'+(arqUrl?'<br/><a href="'+esc(arqUrl)+'" target="_blank" rel="noopener" style="font-size:.62rem;color:#FFD400;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;">'+(isPdf?'Abrir PDF':'Ver imagem')+'</a>':'')+'<div class="fcp-acts"><button class="btn bwarn" data-action="editar" data-id="'+idEsc+'">Editar</button><button class="btn bdel" data-action="excluir" data-id="'+idEsc+'" data-nome="'+nomeEsc+'">Excluir</button></div></div></div>';}).join('');}
 document.getElementById('fcp-grid').addEventListener('click',function(e){var btn=e.target.closest('[data-action]');if(!btn)return;e.stopPropagation();var action=btn.dataset.action,id=btn.dataset.id,nome=btn.dataset.nome||id;if(action==='editar')editarImovel(id);else if(action==='excluir')pedirDelImovel(id,nome);});
 function novoFcp(){novoImovel();setTimeout(function(){var sel=document.getElementById('f-status');if(sel){sel.value='panfleto';onStatusChange();}},80);}
 /* ── Upload de fotos do imovel direto para o Supabase Storage ── */
@@ -1220,7 +1259,7 @@ function corrigirSlugs(){
   db.ref().update(batch).then(function(){toast('✅ '+Object.keys(batch).length+' slug(s) gerado(s) com sucesso!');}).catch(function(e){toast('Erro: '+msgErr(e),true);});
 }
 function renderCodigos(){var map={venda:'FCV',aluguel:'FCA',lancamento:'FCL',panfleto:'FCP'},nomes={venda:'Venda / Comprar',aluguel:'Aluguel / Locacao',lancamento:'Lancamentos',panfleto:'Panfletos'};var g=document.getElementById('cod-grid');if(!g)return;g.innerHTML=Object.entries(map).map(function(e){var st=e[0],sig=e[1],tot=_todos.filter(function(i){return(SG[i.status]||'FCV')===sig;}).length,prox=sig+proxNum(st);return'<div class="cod-item"><div class="cod-sigla">'+sig+'</div><div><div class="cod-info-nome">'+nomes[st]+'</div><div class="cod-info-total">'+tot+' imove'+(tot!==1?'is':'l')+'</div><div class="cod-info-prox">proximo: '+prox+'</div></div></div>';}).join('');filtrarCods();}
-function filtrarCods(){var b=(document.getElementById('cod-busca').value||'').toLowerCase(),s=document.getElementById('cod-filtro').value,tbody=document.getElementById('cod-tbody');if(!tbody)return;var lista=_todos.filter(function(i){if(s&&i.status!==s)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.tipo].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(!lista.length){tbody.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--sec);font-size:.75rem;">Nenhum imovel encontrado.</td></tr>';return;}tbody.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status),url='https://fcostacorretor.com/imovel?id='+i.id;return'<tr style="border-bottom:1px solid rgba(255,255,255,.06);"><td style="padding:8px 10px;"><span class="ref-c '+cl+'">'+esc(c)+'</span></td><td style="padding:8px 10px;font-size:.72rem;color:#fff;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(i.titulo||'-')+'</td><td style="padding:8px 10px;font-size:.68rem;color:var(--sec);">'+esc(i.bairro||'-')+'</td><td style="padding:8px 10px;font-size:.72rem;color:#5EC4FF;font-weight:700;">'+(i.preco?'R$ '+esc(i.preco):'-')+'</td><td style="padding:8px 10px;"><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'Nao':'Sim')+'</span></td><td style="padding:8px 10px;text-align:center;white-space:nowrap;"><a href="'+url+'" target="_blank" class="ref-bcp" title="Abrir" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Link</a> <button class="ref-bed" onclick="editarImovel(\''+i.id+'\')" title="Editar">Edit</button></td></tr>';}).join('');}
+function filtrarCods(){var b=(document.getElementById('cod-busca').value||'').toLowerCase(),s=document.getElementById('cod-filtro').value,tbody=document.getElementById('cod-tbody');if(!tbody)return;var lista=_todos.filter(function(i){if(s&&i.status!==s)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.tipo].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(!lista.length){tbody.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--sec);font-size:.75rem;">Nenhum imovel encontrado.</td></tr>';return;}tbody.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status),url='https://fcostacorretor.com/imovel?id='+i.id;return'<tr style="border-bottom:1px solid rgba(255,255,255,.06);"><td style="padding:8px 10px;"><span class="ref-c '+cl+'">'+esc(c)+'</span></td><td style="padding:8px 10px;font-size:.72rem;color:#fff;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(i.titulo||'-')+'</td><td style="padding:8px 10px;font-size:.68rem;color:var(--sec);">'+esc(i.bairro||'-')+'</td><td style="padding:8px 10px;font-size:.72rem;color:#FFD400;font-weight:700;">'+(i.preco?'R$ '+esc(i.preco):'-')+'</td><td style="padding:8px 10px;"><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'Nao':'Sim')+'</span></td><td style="padding:8px 10px;text-align:center;white-space:nowrap;"><a href="'+url+'" target="_blank" class="ref-bcp" title="Abrir" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Link</a> <button class="ref-bed" onclick="editarImovel(\''+i.id+'\')" title="Editar">Edit</button></td></tr>';}).join('');}
 var PAGS_DEFAULT=[{id:'pg-financiamento',ic:'💰',nome:'Financiamento',url:'https://fcostacorretor.com/financiamento',grupo:'Servicos'},{id:'pg-avaliacao',ic:'📊',nome:'Avaliacao Gratuita',url:'https://fcostacorretor.com/avaliacao',grupo:'Servicos'},{id:'pg-ptam',ic:'📋',nome:'PTAM - Laudo',url:'https://fcostacorretor.com/ptam',grupo:'Servicos'},{id:'pg-laudo-ia',ic:'✨',nome:'Laudo/Autorização com IA',url:'https://fcostacorretor.com/laudo-ia.html',grupo:'Servicos'},{id:'pg-judicial',ic:'⚖️',nome:'Consultoria Judicial',url:'https://fcostacorretor.com/judicial',grupo:'Servicos'},{id:'pg-blog',ic:'📝',nome:'Blog',url:'https://fcostacorretor.com/blog',grupo:'Conteudo'},{id:'pg-legislacao',ic:'📜',nome:'Legislacao',url:'https://fcostacorretor.com/legislacao',grupo:'Conteudo'},{id:'pg-documentacao',ic:'🗂️',nome:'Documentacao Imobiliaria',url:'https://fcostacorretor.com/documentacao-imoveis.html',grupo:'Conteudo'},{id:'pg-galeria',ic:'🖼️',nome:'Galeria',url:'https://fcostacorretor.com/galeria',grupo:'Conteudo'},{id:'pg-inquilinato',ic:'📑',nome:'Inquilinato',url:'https://fcostacorretor.com/inquilino',grupo:'Outros'},{id:'pg-parceiros',ic:'🤝',nome:'Parceiros',url:'https://fcostacorretor.com/parceria',grupo:'Outros'},{id:'pg-cartorio',ic:'🏛️',nome:'Cartorio',url:'https://fcostacorretor.com/cartorio',grupo:'Outros'},{id:'pg-contratos',ic:'✍️',nome:'Contratos',url:'https://fcostacorretor.com/contratos_principal.html',grupo:'Outros'},{id:'pg-privacidade',ic:'🔒',nome:'Politica de Privacidade',url:'https://fcostacorretor.com/politica',grupo:'Outros'},{id:'pg-reajuste',ic:'📈',nome:'Calculadora de Reajuste',url:'https://fcostacorretor.com/calculadora-reajuste.html',grupo:'Servicos'},{id:'pg-videos',ic:'▶️',nome:'Videos',url:'https://fcostacorretor.com/tv_costa.html',grupo:'Conteudo'},{id:'pg-sergioig',ic:'📸',nome:'Pagina Pessoal',url:'https://fcostacorretor.com/sergio_ig.html',grupo:'Outros'},{id:'pg-condicoes',ic:'📃',nome:'Condicoes de Uso',url:'https://fcostacorretor.com/certificado.html',grupo:'Outros'},{id:'cadastro',ic:'🔐',nome:'ADM / Cadastro',url:'https://fcostacorretor.com/painel_adm',grupo:'Outros'}];
 function carregarCtrl(){db.ref('fcosta_config/home_botoes').on('value',function(snap){_estadosHome=snap.val()||{};renderCtrl();});db.ref('fcosta_config/menu_hamburger').on('value',function(snap){_estadosHamb=snap.val()||{};renderCtrl();});renderCtrl();}
 function renderCtrl(){var wrap=document.getElementById('ctrl-grupos');if(!wrap)return;var grupos={};PAGS_DEFAULT.forEach(function(p){var g=p.grupo||'Outros';if(!grupos[g])grupos[g]=[];grupos[g].push(p);});_paginasSite.forEach(function(p){if(!PAGS_DEFAULT.find(function(x){return x.id===p.id;})){var g=p.grupo||'Outros';if(!grupos[g])grupos[g]=[];grupos[g].push(p);}});var html='';['Servicos','Conteudo','Outros'].forEach(function(gNome){var pages=grupos[gNome];if(!pages||!pages.length)return;var cor=GRUPOS_COR[gNome]||'rgba(255,255,255,.5)';html+='<div class="ctrl-grupo"><div class="ctrl-glbl" style="color:'+cor+'">'+gNome+'<span style="font-size:.5rem;margin-left:6px;color:rgba(255,255,255,.3);">'+pages.length+' pagina'+(pages.length!==1?'s':'')+'</span></div><div class="ctrl-minigrid">';pages.forEach(function(p){var hOn=_estadosHome[p.id]!==false,mOn=_estadosHamb[p.id]!==false;html+='<div class="ctrl-mini '+(hOn||mOn?'on':'')+'"><div class="ctrl-mini-ic">'+(p.ic||'📄')+'</div><div style="flex:1;min-width:0;"><div class="ctrl-mini-nome">'+esc(p.nome||p.id)+'</div><div class="ctrl-mini-toggles"><div style="display:flex;align-items:center;gap:3px;"><span class="ctrl-mini-tlbl">H</span><label class="tg"><input type="checkbox" '+(hOn?'checked':'')+' onchange="togCtrl(\'home_botoes\',\''+p.id+'\',this.checked)"/><span class="tg-sl"></span></label></div><div style="display:flex;align-items:center;gap:3px;"><span class="ctrl-mini-tlbl">M</span><label class="tg"><input type="checkbox" '+(mOn?'checked':'')+' onchange="togCtrl(\'menu_hamburger\',\''+p.id+'\',this.checked)"/><span class="tg-sl"></span></label></div></div></div></div>';});html+='</div></div>';});wrap.innerHTML=html;var hAt=Object.values(_estadosHome).filter(Boolean).length,mAt=Object.values(_estadosHamb).filter(Boolean).length;var bh=document.getElementById('badge-home');if(bh)bh.textContent=hAt+' Home';var bm=document.getElementById('badge-menu');if(bm)bm.textContent=mAt+' Menu';}
