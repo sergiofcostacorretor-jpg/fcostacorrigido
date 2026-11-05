@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -962,6 +963,7 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
   <button class="tab" onclick="vitTab('venda',this)">Comprar <span class="nb nb-v" style="font-size:.44rem">FCV</span> <span class="cnt" id="cnt-venda">0</span></button>
   <button class="tab" onclick="vitTab('aluguel',this)">Alugar <span class="nb nb-a" style="font-size:.44rem">FCA</span> <span class="cnt" id="cnt-aluguel">0</span></button>
   <button class="tab" onclick="vitTab('lancamento',this)">Lançamentos <span class="nb nb-l" style="font-size:.44rem">FCL</span> <span class="cnt" id="cnt-lancamento">0</span></button>
+  <button class="tab" onclick="vitTab('tour',this)">🎬 Tour <span class="cnt" id="cnt-tour">0</span></button>
 </div>
 <div class="car-outer">
   <button class="car-arr arr-prev" id="arr-prev" onclick="carNav(-1)">‹</button>
@@ -1251,6 +1253,8 @@ firebase.initializeApp({
   appId:'1:131225040087:web:d468aad3d80bd26aaa2c92'
 });
 var db=firebase.database();
+var _adm=false;
+try{firebase.auth().onAuthStateChanged(function(u){_adm=!!u;var t=document.getElementById('mp-tour-adm');if(t)t.style.display=_adm?'flex':'none';});}catch(e){}
 
 var _ims=[],_cur=[],_idx=0,_mf=[],_mi=0,_lf=[],_li=0,_timer=null,_filtro='todos';
 var _fcpList=[],_fcpIdx=0,_fcpTimer=null;
@@ -1431,6 +1435,7 @@ function renderVideos(lista){
     var y=ytId(i.video);
     if(y)itens.push({i:i,t:'yt',id:y});
     if(i.videoMp4)itens.push({i:i,t:'mp4',url:i.videoMp4});
+    if(i.tourMp4)itens.push({i:i,t:'mp4',url:i.tourMp4,tour:1});
   });
   if(!itens.length){g.style.display='none';g.innerHTML='';if(pl)pl.style.display='';return;}
   if(pl)pl.style.display='none';
@@ -1440,7 +1445,7 @@ function renderVideos(lista){
     var wa='https://wa.me/5511993509109?text='+encodeURIComponent('Olá! Vi o vídeo do imóvel '+c+' - '+(i.titulo||''));
     var media=x.t==='yt'
       ?'<div class="vd-yt" onclick="vdPlay(this,\''+x.id+'\')" style="background-image:url(https://img.youtube.com/vi/'+x.id+'/hqdefault.jpg)"><span class="vd-play">▶</span></div><span class="vd-tipo">YOUTUBE</span>'
-      :'<video controls playsinline preload="metadata" src="'+esc(x.url)+'#t=0.1"></video><span class="vd-tipo">VÍDEO</span>';
+      :'<video controls playsinline preload="metadata" src="'+esc(x.url)+'#t=0.1"></video><span class="vd-tipo">'+(x.tour?'TOUR':'VÍDEO')+'</span>';
     return '<article class="vd-card"><div class="vd-media">'+media+'</div><div class="vd-body">'
       +'<div class="vd-cod">'+esc(c)+'</div>'
       +'<h3 class="vd-tit">'+esc(i.titulo||'Imóvel FCosta')+'</h3>'
@@ -1465,8 +1470,8 @@ db.ref('fcosta_imoveis').on('value',function(snap){
       return(b.atualizado||b.criado||'').localeCompare(a.atualizado||a.criado||'');
     });
 
-  var c={todos:0,venda:0,aluguel:0,lancamento:0};
-  _ims.forEach(function(i){c.todos++;if(c[i.status]!==undefined)c[i.status]++;});
+  var c={todos:0,venda:0,aluguel:0,lancamento:0,tour:0};
+  _ims.forEach(function(i){c.todos++;if(c[i.status]!==undefined)c[i.status]++;if(i.tourMp4)c.tour++;});
   Object.keys(c).forEach(function(k){var el=document.getElementById('cnt-'+k);if(el)el.textContent=c[k];});
 
   renderCar(_filtro);
@@ -1485,7 +1490,7 @@ function vitTab(s,btn){
   renderCar(s);autoplay();
 }
 function renderCar(s){
-  var lista=s==='todos'?_ims:_ims.filter(function(i){return i.status===s;});
+  var lista=s==='todos'?_ims:(s==='tour'?_ims.filter(function(i){return !!i.tourMp4;}):_ims.filter(function(i){return i.status===s;}));
   _cur=lista;_idx=0;
   var t=document.getElementById('car-track');
   if(!lista.length){t.innerHTML='<div class="im-loading"><p>Nenhum imóvel nessa categoria.</p></div>';document.getElementById('car-dots').innerHTML='';return;}
@@ -1517,6 +1522,7 @@ function cardHtml(i){
         +(i.quartos?'<span class="im-tag">🛏 '+i.quartos+' qto'+(i.quartos>1?'s':'')+'</span>':'')
         +(i.banheiros?'<span class="im-tag">🚿 '+i.banheiros+' bnh</span>':'')
         +(i.area?'<span class="im-tag">📐 '+i.area+' m²</span>':'')
+        +(i.tourMp4?'<span class="im-tag">🎬 Tour</span>':'')
         +(i.vagas?'<span class="im-tag">🚗 '+i.vagas+' vaga'+(i.vagas>1?'s':'')+'</span>':'')
       +'</div>'
       +'<div class="im-acoes">'
@@ -1758,7 +1764,7 @@ function abrirModal(id){
       +(fs.length?'<span class="mhint">🔍 Clique para abrir galeria</span>':'')
     +'</div>'
     +(fs.length>1?'<div class="modal-thumbs">'+fs.map(function(f,j){return'<img class="mth'+(j===0?' on':'')+'" src="'+esc(cldUrl(f,120))+'" onclick="mThumb('+j+')" loading="lazy"/>';}).join('')+'</div>':'')
-    +'<div class="modal-body">'
+    +'<div class="modal-body">'+tourTabs(i)
       +'<div class="modal-cod">'+esc(c)+'</div>'
       +'<h2 class="modal-h2">'+esc(i.titulo||'Imóvel FCosta')+'</h2>'
       +'<p class="modal-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</p>'
@@ -1779,7 +1785,35 @@ function abrirModal(id){
   document.getElementById('modal-bg').classList.add('on');
   document.body.style.overflow='hidden';
 }
-function fecharModal(){document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
+function tourTabs(i){
+  if(!i.tourMp4)return'';
+  return'<div id="mp-tabs" style="display:flex;gap:8px;margin-bottom:12px;">'
+    +'<button class="tab on" id="mp-t-det" onclick="mTab(\'det\')" style="flex:1;justify-content:center;">Detalhes</button>'
+    +'<button class="tab" id="mp-t-tour" onclick="mTab(\'tour\')" style="flex:1;justify-content:center;">🎬 Tour</button></div>'
+    +'<div id="mp-tour" style="display:none;"><div class="modal-video" style="aspect-ratio:9/16;max-height:62vh;max-width:100%;margin:0 auto 12px;"><video controls playsinline preload="metadata" src="'+esc(i.tourMp4)+'#t=0.1"></video></div>'
+    +'<p style="font-size:.68rem;color:var(--sec);text-align:center;">Passeio virtual pelo imóvel.</p>'
+    +'<div id="mp-tour-adm" style="display:'+(_adm?'flex':'none')+';gap:8px;justify-content:center;margin-top:10px;">'
+    +'<button class="tab" onclick="tourEditar(\''+i.id+'\')">✏️ Editar tour</button>'
+    +'<button class="tab" onclick="tourExcluir(\''+i.id+'\')" style="color:#e55;">🗑 Excluir tour</button></div></div>';
+}
+function tourEditar(id){window.location.href='painel_adm.html?editar='+encodeURIComponent(id);}
+function tourExcluir(id){
+  if(!_adm){alert('Entre no painel ADM para excluir.');return;}
+  if(!confirm('Excluir o tour deste imóvel?'))return;
+  db.ref('fcosta_imoveis/'+id+'/tourMp4').remove().then(function(){alert('Tour excluído.');fecharModal();}).catch(function(e){alert('Erro ao excluir: '+(e.message||e));});
+}
+function mTab(k){
+  var body=document.querySelector('#modal-content .modal-body');if(!body)return;
+  Array.prototype.forEach.call(body.children,function(c){
+    if(c.id==='mp-tabs')return;
+    if(c.id==='mp-tour')c.style.display=k==='tour'?'':'none';
+    else c.style.display=k==='tour'?'none':'';
+  });
+  var a=document.getElementById('mp-t-det'),b=document.getElementById('mp-t-tour');
+  if(a)a.classList.toggle('on',k!=='tour');if(b)b.classList.toggle('on',k==='tour');
+  if(k!=='tour'){var v=body.querySelector('#mp-tour video');if(v)v.pause();}
+}
+function fecharModal(){document.querySelectorAll('#modal-content video').forEach(function(v){v.pause();});document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
 function mNav(dir){
   if(!_mf.length)return;
   _mi=(_mi+dir+_mf.length)%_mf.length;
