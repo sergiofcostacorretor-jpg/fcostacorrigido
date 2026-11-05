@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Galeria de Imóveis — FCosta Corretor</title>
 <meta name="description" content="Galeria completa de imóveis à venda, para alugar, lançamentos e catálogo. FCosta Corretor — CRECI-SP 294791-F">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:100%;min-height:100vh;background:#f4f7fd;font-family:'Open Sans',sans-serif;}
@@ -182,6 +182,54 @@ html,body{background:var(--fundo);font-family:'Inter',sans-serif;color:var(--tex
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;}
 }
+</style>
+<meta name="theme-color" content="#000000"/>
+<style id="tema-fcosta">
+/* ══ TEMA FCOSTA — PRETO + AMARELO (mesmo padrão do index) ══ */
+:root{--amarelo:#FFD400;--amarelo2:#FFE24D;--titulo:'Anton','Bebas Neue','Impact',sans-serif;}
+:focus-visible{outline:2px solid #FFD400;outline-offset:3px;}
+:root{--escuro:#FFFFFF;--ceu:#FFD400;--ceu-claro:#141414;--fundo:#000;--texto:#fff;--sec:#A3A3A3;--borda:#262626;--titulo:'Anton','Bebas Neue','Impact',sans-serif;}
+html,body{background:#000;color:#fff;}
+.gal-topo{background:radial-gradient(ellipse at 88% 0%,rgba(255,212,0,.16) 0%,transparent 55%),#000;border-bottom:1px solid #1a1a1a;}
+.gal-topo-logo img{border:2px solid #FFD400;}
+.gal-topo-logo span,.gal-topo h1{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.8px;}
+.gal-topo h1 em{color:#FFD400;}
+.gal-topo p{color:#bdbdbd;}
+.gal-voltar{background:transparent;color:#fff;border:1px solid #333;text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+.gal-voltar:hover{background:#FFD400;color:#000;border-color:#FFD400;}
+.fcg-secao-header{border-bottom:1px solid #262626;}
+.fcg-secao-titulo{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.6px;color:#fff;}
+.fcg-secao-sub{color:#8a8a8a;}
+.fcg-secao-count{background:#141414;color:#FFD400;border:1px solid #262626;}
+.icon-fcv,.icon-fca,.icon-fcl,.icon-fcp{background:#141414;border:1px solid #262626;}
+.fcg-item{background:#0b0b0b;border:1px solid #262626;box-shadow:none;}
+.fcg-item:hover{border-color:#FFD400;box-shadow:0 18px 40px rgba(255,212,0,.08);}
+.fcg-carousel{background:#141414;}
+.fcg-nav{background:rgba(0,0,0,.7);color:#fff;box-shadow:none;}
+.fcg-nav:hover{background:#FFD400;color:#000;}
+.fcg-cnt{background:rgba(0,0,0,.72);}
+.s-fcv{background:#FFD400;color:#000;}
+.s-fca{background:#fff;color:#000;}
+.s-fcl{background:#000;color:#FFD400;border:1px solid #FFD400;}
+.s-fcp{background:#444;color:#fff;}
+.fcg-home-badge{background:#FFD400;color:#000;}
+.fcg-dots{background:#0b0b0b;}
+.fcg-dot{background:#2b2b2b;}
+.fcg-dot.on{background:#FFD400;}
+.fcg-local{color:#a3a3a3;}
+.fcg-titulo{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.4px;color:#fff;}
+.fcg-preco{font-family:var(--titulo);font-weight:400;color:#FFD400;letter-spacing:.5px;}
+.fcg-btns button{border-radius:8px;text-transform:uppercase;letter-spacing:.6px;font-weight:800;}
+.fcg-wpp{background:#FFD400;color:#000;}
+.fcg-wpp:hover{background:#FFE24D;}
+.fcg-det{background:transparent;color:#fff;border:1px solid #3a3a3a;}
+.fcg-det:hover{background:#1a1a1a;border-color:#FFD400;}
+.fcg-loading,.fcg-vazio{color:#8a8a8a;}
+.fcg-spinner{border-color:#262626;border-top-color:#FFD400;}
+.gal-footer{background:#000;border-top:1px solid #262626;color:rgba(255,255,255,.55);}
+.gal-footer a{color:#FFD400;}
+.fcg-lb-x:hover,.fcg-lb-a:hover{background:#FFD400;color:#000;}
+
 </style>
 </head>
 <body>
