@@ -819,6 +819,7 @@ body{background:#000;color:#fff;}
 .lead-success h3{text-transform:uppercase;letter-spacing:.5px;color:#fff;}
 .lead-success-btn{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:800;}
 .lead-success-wa{background:transparent;border:1px solid #3a3a3a;color:#fff;border-radius:6px;}
+.im-vendido{position:absolute;top:50%;left:50%;width:150%;transform:translate(-50%,-50%) rotate(-25deg);background:#D30000;color:#fff;text-align:center;font-weight:900;font-size:clamp(1.4rem,5vw,2.6rem);letter-spacing:6px;text-transform:uppercase;padding:10px 0;z-index:2;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.35);}
 </style>
 </head>
 <body>
@@ -1509,6 +1510,7 @@ function cardHtml(i){
     +'<div class="im-foto" id="cf'+i.id+'" data-idx="0" data-fotos=\''+JSON.stringify(fs)+'\'>'
       +(f0?'<img src="'+esc(cldUrl(f0,500))+'" alt="'+esc(i.titulo||'')+'" loading="lazy"/>':'<div class="im-foto-ph">🏠</div>')
       +'<span class="im-badge '+b[0]+'">'+esc(b[1])+'</span>'
+      +(i.status==='vendido'?'<span class="im-vendido">Vendido</span>':'')
       +'<span class="im-cod">'+esc(c)+'</span>'
       +(i.destaque?'<span class="im-dest">⭐ Destaque</span>':'')
       +(fs.length>1?'<button class="im-fn im-fp" onclick="cfNav(\''+i.id+'\',-1,event)">‹</button><button class="im-fn im-fx" onclick="cfNav(\''+i.id+'\',1,event)">›</button><span class="im-fc"><span id="cfc'+i.id+'">1</span>/'+fs.length+'</span>':'')
