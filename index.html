@@ -845,6 +845,7 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
     <a href="https://fcostacorretor.com/alugar.html" target="_top">Alugar <span class="nb nb-a">FCA</span></a>
     <a href="https://fcostacorretor.com/lancamentos.html" target="_top">Lançamentos <span class="nb nb-l">FCL</span></a>
     <a href="https://fcostacorretor.com/panfletos.html" target="_top">Panfletos <span class="nb nb-p">FCP</span></a>
+    <a href="#tour-fc" id="ftr-nav" style="display:none">🎬 Tour</a>
   </nav>
   <div class="nav-right">
     <a href="https://wa.me/5511993509109?text=Olá!%20Vim%20pelo%20site%20FCosta." target="_blank" class="btn-wa-nav">
@@ -871,6 +872,7 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
       <a href="https://fcostacorretor.com/alugar.html" target="_top" onclick="closeDrawer()">🔑 Alugar <span class="nb nb-a" style="font-size:.44rem">FCA</span></a>
       <a href="https://fcostacorretor.com/lancamentos.html" target="_top" onclick="closeDrawer()">🏗️ Lançamentos <span class="nb nb-l" style="font-size:.44rem">FCL</span></a>
       <a href="https://fcostacorretor.com/panfletos.html" target="_top" onclick="closeDrawer()">📄 Panfletos <span class="nb nb-p" style="font-size:.44rem">FCP</span></a>
+      <a href="#tour-fc" id="ftr-nav2" style="display:none" onclick="closeDrawer()">🎬 Tour</a>
     </nav>
     <div id="drawer-extras-label" style="padding:4px 13px 0;font-size:.52rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--azul-ceu);display:none;align-items:center;gap:5px;">
       <span style="display:inline-block;width:12px;height:2px;background:var(--ouro);border-radius:2px;"></span>Mais Páginas
@@ -937,6 +939,65 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
     </div>
   </div>
 </section>
+
+<!-- TOUR FCOSTA: vídeos gerados no Tour entram aqui (Firebase: fcosta_tour) -->
+<style id="ftr-css">
+#tour-fc{background:#050505;padding:clamp(22px,4vw,48px) var(--px,16px);scroll-margin-top:84px;border-bottom:1px solid #1a1a1a}
+#tour-fc[hidden]{display:none}
+.ftr-in{max-width:1320px;margin:0 auto}
+.ftr-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:flex-end;min-height:clamp(440px,74vh,660px);border-radius:22px;background:#000;box-shadow:0 26px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,212,0,.28);cursor:pointer;color:#fff;font-family:inherit}
+.ftr-bg{position:absolute;inset:0;z-index:-2}
+.ftr-bg img,.ftr-bg video{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);transition:transform 7s ease}
+.ftr-hero:hover .ftr-bg img{transform:scale(1.09)}
+.ftr-hero.vert .ftr-bg img,.ftr-hero.vert .ftr-bg video{filter:blur(26px) brightness(.5);transform:scale(1.25)}
+.ftr-sh{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.55) 40%,rgba(0,0,0,.05) 100%),linear-gradient(90deg,rgba(0,0,0,.65),transparent 66%)}
+.ftr-tx{padding:clamp(22px,4.5vw,54px);max-width:780px;width:100%}
+.ftr-ey{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:700 .72rem/1 inherit;letter-spacing:.22em;text-transform:uppercase;color:#FFD400}
+.ftr-ey i{flex:none;width:38px;height:1px;background:currentColor}
+.ftr-ey em{font-style:normal;color:#fff;opacity:.75}
+.ftr-new{background:#FFD400;color:#000;border-radius:4px;padding:4px 8px;font-size:.62rem;letter-spacing:.1em}
+.ftr-ti{font-family:var(--titulo,Georgia,serif);font-weight:400;text-transform:uppercase;font-size:clamp(1.9rem,5.6vw,3.8rem);line-height:1.04;letter-spacing:.4px;margin:14px 0 8px;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.55)}
+.ftr-me{font-weight:500;font-size:clamp(.9rem,1.6vw,1.1rem);line-height:1.5;color:#e9e9e9;margin:0 0 6px}
+.ftr-pr{font-weight:800;font-size:clamp(1.1rem,2.2vw,1.5rem);line-height:1.2;color:#FFD400;margin:0 0 20px}
+.ftr-bt{display:flex;flex-wrap:wrap;gap:10px}
+.ftr-b{min-height:46px;padding:0 20px;border-radius:10px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:#fff;font:700 .9rem/1 inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ftr-b:hover{background:rgba(255,255,255,.18)}
+.ftr-b.p{background:#FFD400;border-color:#FFD400;color:#000;box-shadow:0 8px 26px rgba(255,212,0,.3)}
+.ftr-b.p:hover{background:#FFE24D}
+.ftr-b.g{background:#25D366;border-color:#25D366;color:#fff}
+.ftr-b.d{background:#c0392b;border-color:#c0392b}
+.ftr-ph{display:none;position:absolute;z-index:0;right:clamp(22px,6vw,90px);top:50%;width:clamp(150px,17vw,240px);aspect-ratio:9/16;transform:translateY(-50%) rotate(2deg);border-radius:22px;overflow:hidden;border:2px solid rgba(255,212,0,.75);box-shadow:0 24px 64px rgba(0,0,0,.65);background:#000}
+.ftr-ph img,.ftr-ph video{width:100%;height:100%;object-fit:cover;display:block}
+.ftr-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ftr-play span{width:56px;height:56px;border-radius:50%;background:rgba(255,212,0,.92);color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px;box-shadow:0 6px 22px rgba(0,0,0,.5)}
+@media(min-width:760px){.ftr-hero.vert .ftr-ph{display:block}.ftr-hero.vert .ftr-tx{padding-right:clamp(200px,28vw,380px)}}
+@media(max-width:759px){.ftr-hero.vert{min-height:640px}.ftr-hero.vert .ftr-ph{display:block;top:22px;right:50%;transform:translateX(50%);width:150px}.ftr-b{flex:1 1 auto}}
+.ftr-h2{font-family:var(--titulo,Georgia,serif);font-weight:400;text-transform:uppercase;letter-spacing:.5px;font-size:clamp(1.1rem,2.4vw,1.5rem);color:#fff;margin:26px 2px 12px}
+.ftr-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;-webkit-overflow-scrolling:touch}
+.ftr-c{position:relative;flex:0 0 auto;width:clamp(150px,22vw,200px);aspect-ratio:9/16;border-radius:16px;overflow:hidden;scroll-snap-align:start;background:#111;border:1px solid rgba(255,212,0,.25);cursor:pointer;transition:transform .2s,border-color .2s}
+.ftr-c.h{width:clamp(250px,34vw,340px);aspect-ratio:16/9}
+.ftr-c:hover{transform:translateY(-3px);border-color:#FFD400}
+.ftr-c img,.ftr-c video{width:100%;height:100%;object-fit:cover;display:block}
+.ftr-c .ct{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 10px;background:linear-gradient(0deg,rgba(0,0,0,.92),transparent);color:#fff;font:700 .78rem/1.25 inherit}
+.ftr-c .ct small{display:block;color:#FFD400;font-weight:800;margin-top:3px}
+.ftr-md{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;padding:14px;overflow:auto}
+.ftr-md.on{display:flex}
+.ftr-mb{width:min(100%,460px);display:flex;flex-direction:column;gap:10px;color:#fff;font-family:inherit}
+.ftr-mb.h{width:min(100%,960px)}
+.ftr-mb video{width:100%;max-height:70vh;border-radius:14px;background:#000;display:block}
+.ftr-mb h3{margin:4px 0 0;font:800 1.15rem/1.25 inherit}
+.ftr-mb p{margin:0;color:#ddd;font-size:.9rem}
+.ftr-mb .pr{color:#FFD400;font-weight:800}
+.ftr-mr{display:flex;flex-wrap:wrap;gap:8px}
+@media(prefers-reduced-motion:reduce){.ftr-bg img{transition:none}.ftr-hero:hover .ftr-bg img{transform:scale(1.04)}}
+</style>
+<section id="tour-fc" hidden aria-label="Tour em vídeo dos imóveis">
+  <div class="ftr-in">
+    <div class="ftr-hero" id="ftr-hero"></div>
+    <div id="ftr-more"></div>
+  </div>
+</section>
+<div class="ftr-md" id="ftr-md" role="dialog" aria-modal="true" aria-label="Tour em vídeo"></div>
 
 <!-- NÚMEROS (ao vivo: copiados dos contadores das abas de imóveis) -->
 <section id="numeros" aria-label="Imóveis no site">
@@ -1873,6 +1934,132 @@ document.addEventListener('keydown',function(e){
   if(window.MutationObserver){
     Object.keys(mapa).forEach(function(k){var el=document.getElementById(k);if(el)new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true});});
   }
+})();
+</script>
+<script>
+/* TOUR FCOSTA: lê fcosta_tour no Firebase e mostra o último vídeo como destaque (hero) + vitrine */
+(function(){
+  'use strict';
+  var SITE='https://fcostacorretor.com/', FONE='5511993509109';
+  var lista=[], porId={}, primeira=true, mdId=null;
+  var calmo=false; try{ calmo=window.matchMedia('(prefers-reduced-motion:reduce)').matches||(navigator.connection&&navigator.connection.saveData); }catch(e){}
+  function $(i){return document.getElementById(i);}
+  function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+  function preco(p){p=String(p||'').trim();if(!p)return'';if(/^\d+([.,]\d+)?$/.test(p)){var n=parseFloat(p.replace(',','.'));if(isFinite(n))return'R$ '+n.toLocaleString('pt-BR');}return p;}
+  function jpg(u){return u.replace(/\.(mp4|webm|mov)(\?.*)?$/i,'.jpg');}
+  function thumb(u,w){return /res\.cloudinary\.com/.test(u)?jpg(u.replace('/video/upload/','/video/upload/so_1,w_'+w+',c_limit,q_auto/')):'';}
+  function capa(box,v,w,eager){
+    var t=thumb(v.url,w);
+    if(t){var i=new Image();i.alt='';i.decoding='async';if(!eager)i.loading='lazy';i.onerror=function(){i.onerror=null;i.src=jpg(v.url);};i.src=t;box.appendChild(i);}
+    else{var vd=document.createElement('video');vd.muted=true;vd.playsInline=true;vd.preload='metadata';vd.src=v.url+'#t=0.5';box.appendChild(vd);}
+  }
+  function filme(box,v){
+    var vd=document.createElement('video');vd.muted=true;vd.loop=true;vd.playsInline=true;vd.setAttribute('playsinline','');vd.preload='metadata';vd.src=v.url;
+    box.appendChild(vd);
+    var go=function(){try{var p=vd.play();if(p&&p.catch)p.catch(function(){});}catch(e){}};
+    if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting)go();else vd.pause();});},{threshold:.25}).observe(vd);}else go();
+  }
+  function link(v){return SITE+'#tour-'+v.id;}
+  function texto(v){var p=preco(v.preco);return '🎬 Tour em vídeo — '+v.titulo+(p?' · '+p:'')+'\nFCosta Corretor · CRECI-SP 294791-F';}
+  function copiar(v,b){
+    var l=link(v),ok=function(){if(b){var t=b.textContent;b.textContent='✅ Link copiado';setTimeout(function(){b.textContent=t;},1800);}};
+    try{navigator.clipboard.writeText(l).then(ok,function(){window.prompt('Copie o link:',l);});}catch(e){window.prompt('Copie o link:',l);}
+  }
+  function partilhar(v){
+    if(navigator.share){navigator.share({title:v.titulo,text:texto(v),url:link(v)}).catch(function(){});}
+    else abrir(v.id);
+  }
+  function zap(v){window.open('https://wa.me/?text='+encodeURIComponent(texto(v)+'\n'+link(v)),'_blank');}
+  function quero(v){window.open('https://wa.me/'+FONE+'?text='+encodeURIComponent('Olá! Vi o tour "'+v.titulo+'" no site e quero saber mais.'),'_blank');}
+  function btn(c,t,f){var b=mk('button','ftr-b'+(c?' '+c:''),t);b.type='button';b.onclick=function(e){e.stopPropagation();f(b);};return b;}
+
+  function abrir(id){
+    var v=porId[id];if(!v)return;mdId=id;
+    var M=$('ftr-md');M.innerHTML='';
+    var B=mk('div','ftr-mb'+(v.vert?'':' h'));
+    var vd=document.createElement('video');vd.controls=true;vd.autoplay=true;vd.playsInline=true;vd.setAttribute('playsinline','');vd.preload='auto';vd.src=v.url;
+    var t=thumb(v.url,720);if(t)vd.poster=t;
+    B.appendChild(vd);B.appendChild(mk('h3','',v.titulo));
+    if(v.info)B.appendChild(mk('p','',v.info));
+    if(v.preco)B.appendChild(mk('p','pr',preco(v.preco)));
+    var r=mk('div','ftr-mr');
+    r.appendChild(btn('g','💬 Enviar no WhatsApp',function(){zap(v);}));
+    r.appendChild(btn('','🔗 Copiar link',function(b){copiar(v,b);}));
+    if(navigator.share)r.appendChild(btn('','📤 Compartilhar',function(){partilhar(v);}));
+    r.appendChild(btn('p','🏠 Quero visitar',function(){quero(v);}));
+    if(window._adm)r.appendChild(btn('d','🗑 Excluir',function(){
+      if(!confirm('Excluir este tour do site?'))return;
+      window.db.ref('fcosta_tour/'+v.id).remove().then(function(){fechar();}).catch(function(e){alert('Erro ao excluir: '+(e&&e.message||e));});
+    }));
+    r.appendChild(btn('','Fechar',fechar));
+    B.appendChild(r);M.appendChild(B);M.classList.add('on');document.body.style.overflow='hidden';
+    try{history.replaceState(null,'','#tour-'+id);}catch(e){}
+    var p=vd.play();if(p&&p.catch)p.catch(function(){});
+  }
+  function fechar(){
+    var M=$('ftr-md'),vd=M.querySelector('video');
+    if(vd){try{vd.pause();vd.removeAttribute('src');vd.load();}catch(e){}}
+    M.classList.remove('on');M.innerHTML='';document.body.style.overflow='';mdId=null;
+    try{history.replaceState(null,'','#tour-fc');}catch(e){}
+  }
+  $('ftr-md').addEventListener('click',function(e){if(e.target===this)fechar();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mdId)fechar();});
+
+  function montar(){
+    var sec=$('tour-fc'),navs=[$('ftr-nav'),$('ftr-nav2')];
+    if(!lista.length){sec.hidden=true;navs.forEach(function(n){if(n)n.style.display='none';});return;}
+    sec.hidden=false;navs.forEach(function(n){if(n)n.style.display='';});
+    var v=lista[0],H=$('ftr-hero');H.innerHTML='';H.className='ftr-hero'+(v.vert?' vert':'');
+    var bg=mk('div','ftr-bg');
+    if(v.vert||calmo)capa(bg,v,1200,true);else filme(bg,v);
+    H.appendChild(bg);H.appendChild(mk('div','ftr-sh'));
+    if(v.vert){var ph=mk('div','ftr-ph');if(calmo)capa(ph,v,480,true);else filme(ph,v);ph.appendChild(mk('div','ftr-play')).appendChild(mk('span','','▶'));H.appendChild(ph);}
+    var tx=mk('div','ftr-tx'),ey=mk('div','ftr-ey');
+    ey.appendChild(mk('span','','🎬 Tour FCosta'));ey.appendChild(mk('i'));ey.appendChild(mk('em','','Vídeo do imóvel'));
+    if(v.ts&&Date.now()-v.ts<7*864e5)ey.appendChild(mk('span','ftr-new','NOVO'));
+    tx.appendChild(ey);tx.appendChild(mk('h2','ftr-ti',v.titulo));
+    tx.appendChild(mk('p','ftr-me',v.info||'Conheça o imóvel em vídeo e agende a sua visita.'));
+    if(v.preco)tx.appendChild(mk('p','ftr-pr',preco(v.preco)));
+    var bt=mk('div','ftr-bt');
+    bt.appendChild(btn('p','▶ Assistir o tour',function(){abrir(v.id);}));
+    bt.appendChild(btn('','🔗 Compartilhar',function(){partilhar(v);}));
+    bt.appendChild(btn('g','💬 Quero visitar',function(){quero(v);}));
+    tx.appendChild(bt);H.appendChild(tx);
+    H.onclick=function(){abrir(v.id);};
+    var M=$('ftr-more');M.innerHTML='';
+    var rest=lista.slice(1);
+    if(rest.length){
+      M.appendChild(mk('h2','ftr-h2','🎬 Mais vídeos do Tour'));
+      var row=mk('div','ftr-row');
+      rest.forEach(function(x){
+        var c=mk('div','ftr-c'+(x.vert?'':' h'));c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-label','Assistir '+x.titulo);
+        capa(c,x,480,false);c.appendChild(mk('div','ftr-play')).appendChild(mk('span','','▶'));
+        var ct=mk('div','ct',x.titulo);if(x.preco)ct.appendChild(mk('small','',preco(x.preco)));c.appendChild(ct);
+        c.onclick=function(){abrir(x.id);};c.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir(x.id);}};
+        row.appendChild(c);
+      });
+      M.appendChild(row);
+    }
+    if(primeira){
+      primeira=false;
+      var m=/^#tour-(.+)$/.exec(location.hash);
+      if(m&&m[1]!=='fc'&&porId[m[1]]){sec.scrollIntoView();abrir(m[1]);}
+      else if(/^#tour(-fc)?$/.test(location.hash)){sec.scrollIntoView();}
+    }
+  }
+  function ouvir(n){
+    if(!window.db){if(n<20)setTimeout(function(){ouvir(n+1);},400);return;}
+    try{
+      window.db.ref('fcosta_tour').limitToLast(20).on('value',function(s){
+        var a=[];
+        s.forEach(function(c){var o=c.val()||{};if(o.url)a.push({id:c.key,titulo:String(o.titulo||'Tour do imóvel'),preco:o.preco||'',info:o.info||'',url:String(o.url),vert:!!o.vert,ts:+o.ts||0});});
+        a.sort(function(x,y){return (y.ts-x.ts)||(y.id<x.id?-1:1);});
+        lista=a;porId={};a.forEach(function(x){porId[x.id]=x;});montar();
+      },function(){});
+    }catch(e){}
+  }
+  window.addEventListener('hashchange',function(){var m=/^#tour-(.+)$/.exec(location.hash);if(m&&m[1]!=='fc'&&porId[m[1]]&&mdId!==m[1])abrir(m[1]);});
+  ouvir(0);
 })();
 </script>
 </body>
