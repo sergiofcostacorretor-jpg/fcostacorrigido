@@ -848,6 +848,27 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pg-imovel .estado-msg{color:#a3a3a3;}
 .pg-imovel .estado-sub{color:#555;}
 
+
+/* ============ FORMATO 9:16 (tela de celular / reels) — fotos, galerias e vídeos ============ */
+.galeria-wrap,#fs{--bg:none}
+.galeria-wrap::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+#fs::before{content:"";position:absolute;inset:0;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(28px) brightness(.45) saturate(1.2);transform:scale(1.2);pointer-events:none}
+.galeria{max-width:min(520px,calc(88vh*.5625))}
+@media(max-width:700px){.galeria{max-width:none}}
+.galeria-wrap{overflow:hidden;aspect-ratio:9/16;background:#000}
+.galeria-principal{position:relative;z-index:1;width:100%;height:100%;max-height:none;min-height:0;aspect-ratio:auto;object-fit:contain;background:transparent}
+@media(max-width:600px){.galeria-principal{min-height:0}}
+.galeria-overlay,.seta,.galeria-count,.galeria-hint{z-index:3}
+.galeria-strip img{width:48px;height:85px}
+/* foto ampliada */
+#fs{overflow:hidden}
+#fs-img{position:relative;z-index:1;width:min(96vw,calc((100vh - 70px)*.5625),600px);aspect-ratio:9/16;height:auto;max-width:none;max-height:none;object-fit:contain;border-radius:14px}
+@supports(height:100dvh){#fs-img{width:min(96vw,calc((100dvh - 70px)*.5625),600px)}}
+.fs-close,.fs-arr,.fs-cnt{z-index:3}
+/* vídeos */
+.video-wrap{padding-bottom:177.78%;max-width:440px;margin-inline:auto}
+.video-wrap.shorts{max-width:440px}
+.video-mp4{aspect-ratio:9/16;max-width:440px;margin-inline:auto}
 </style>
 </head>
 <body class="pg-imovel">
@@ -1648,6 +1669,23 @@ buscarImovel();
     obs.observe(document.body, {childList:true, subtree:true, attributes:true});
   }
   var n = 0, iv = setInterval(function(){ tick(); if(++n >= 20) clearInterval(iv); }, 400);
+})();
+</script>
+<script>
+/* FORMATO 9:16: foto/vídeo vertical preenche o quadro; paisagem aparece inteira sobre fundo desfocado */
+(function(){
+  var SEL='.im-foto,.modal-gal,.modal-galeria,.lb-wrap,.fcg-carousel,.fcg-lb,.galeria-wrap,#fs';
+  document.addEventListener('load',function(e){
+    var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
+    var c=t.closest(SEL);
+    if(!c||t.parentNode!==c)return;
+    c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
+    if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';
+  },true);
+  document.addEventListener('loadedmetadata',function(e){
+    var v=e.target;if(!v||v.tagName!=='VIDEO')return;
+    if(v.videoWidth&&v.videoHeight){v.style.objectFit=(v.videoWidth/v.videoHeight>0.8)?'contain':'cover';v.style.background='#000';}
+  },true);
 })();
 </script>
 </body>

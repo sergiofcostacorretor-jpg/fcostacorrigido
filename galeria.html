@@ -230,6 +230,23 @@ html,body{background:#000;color:#fff;}
 .gal-footer a{color:#FFD400;}
 .fcg-lb-x:hover,.fcg-lb-a:hover{background:#FFD400;color:#000;}
 
+
+/* ============ FORMATO 9:16 (tela de celular / reels) — fotos, galerias e vídeos ============ */
+.fcg-carousel,.fcg-lb{--bg:none}
+.fcg-carousel::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+.fcg-lb::before{content:"";position:absolute;inset:0;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(28px) brightness(.45) saturate(1.2);transform:scale(1.2);pointer-events:none}
+.fcg-lb{overflow:hidden}
+.fcg-carousel{height:auto;aspect-ratio:9/16;background:#000}
+.fcg-carousel img{position:relative;z-index:1;object-fit:contain}
+.fcg-carousel::after{z-index:2}
+.fcg-sig,.fcg-home-badge,.fcg-cnt,.fcg-nav{z-index:3}
+.fcg-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:26px}
+@media(hover:none){.fcg-nav{display:flex}}
+/* foto ampliada */
+.fcg-lb img{position:relative;z-index:1;width:min(96vw,calc((100vh - 90px)*.5625),560px);aspect-ratio:9/16;height:auto;max-width:none;max-height:none;object-fit:contain;border-radius:14px}
+@supports(height:100dvh){.fcg-lb img{width:min(96vw,calc((100dvh - 90px)*.5625),560px)}}
+.fcg-lb-x,.fcg-lb-a{z-index:3}
+.fcg-lb-info{position:relative;z-index:3}
 </style>
 </head>
 <body>
@@ -434,6 +451,23 @@ carregarImoveis().then(imoveis => {
   const html = CATEGORIAS.map(cat => secaoHTML(cat, imoveis)).join('');
   el.innerHTML = html || '<div class="fcg-loading"><p>Nenhum imóvel disponível no momento.</p></div>';
 });
+</script>
+<script>
+/* FORMATO 9:16: foto/vídeo vertical preenche o quadro; paisagem aparece inteira sobre fundo desfocado */
+(function(){
+  var SEL='.im-foto,.modal-gal,.modal-galeria,.lb-wrap,.fcg-carousel,.fcg-lb,.galeria-wrap,#fs';
+  document.addEventListener('load',function(e){
+    var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
+    var c=t.closest(SEL);
+    if(!c||t.parentNode!==c)return;
+    c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
+    if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';
+  },true);
+  document.addEventListener('loadedmetadata',function(e){
+    var v=e.target;if(!v||v.tagName!=='VIDEO')return;
+    if(v.videoWidth&&v.videoHeight){v.style.objectFit=(v.videoWidth/v.videoHeight>0.8)?'contain':'cover';v.style.background='#000';}
+  },true);
+})();
 </script>
 </body>
 </html>

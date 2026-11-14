@@ -329,6 +329,41 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pg-imovel .estado-msg{color:#a3a3a3;}
 .pg-imovel .estado-sub{color:#555;}
 
+
+/* ============ FORMATO 9:16 (tela de celular / reels) — fotos, galerias e vídeos ============ */
+.im-foto,.modal-gal,.lb-wrap{--bg:none}
+.im-foto::before,.modal-gal::before,.lb-wrap::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+.im-foto{height:auto!important;aspect-ratio:9/16!important;background:#000}
+.im-foto img{position:relative;z-index:1;object-fit:contain;background:transparent}
+.im-foto::after{z-index:2}
+.imoveis-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
+.im-fn{width:42px;height:42px}
+@media(hover:none){.im-fn{opacity:1}}
+/* janela do imóvel */
+#modal-bg{padding:12px}
+#modal{display:block;overflow-y:auto;overflow-x:hidden;width:100%;max-width:min(520px,calc(86vh*.5625),100%);max-height:94vh}
+#modal .modal-gal{position:relative;height:auto!important;min-height:0;max-height:none!important;aspect-ratio:9/16;background:#000}
+#modal .modal-gal img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;background:transparent}
+.modal-body{overflow:visible;flex:none;min-height:0}
+.mfnav{z-index:3;width:44px;height:44px;font-size:1.25rem}
+.mfc,.mhint{z-index:3}
+.mth{width:40px;height:71px}
+.modal-thumbs{padding:8px 12px}
+@media(max-width:640px){
+  #modal-bg{padding:0;align-items:stretch}
+  #modal{max-width:none;width:100%;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;border-radius:0;border:0}
+  #modal .modal-gal{border-radius:0;max-height:82vh!important;max-height:82dvh!important}
+  .modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:42px;height:42px;font-size:1.1rem;z-index:30}
+}
+/* visualizador de fotos (tela cheia) */
+#lb{padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.lb-wrap{position:relative;overflow:hidden;border-radius:16px;aspect-ratio:9/16;width:min(100%,calc((100vh - 150px)*.5625),560px);max-width:none;background:#000}
+@supports(height:100dvh){.lb-wrap{width:min(100%,calc((100dvh - 150px)*.5625),560px)}}
+#lb-img{position:relative;z-index:1;width:100%;height:100%;max-height:none;max-width:none;border-radius:0;object-fit:contain}
+.lb-a{z-index:3;width:46px;height:46px}
+.lb-p{left:8px}.lb-n{right:8px}
+.lb-thumbs{width:max-content;max-width:100%;margin-inline:auto}
+.lbth{width:36px;height:64px}
 </style>
 </head>
 <body>
@@ -567,6 +602,23 @@ document.addEventListener('keydown',function(e){
   }else if(e.key==='Escape')fecharModal();
 });
 window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('sc',scrollY>20);});
+</script>
+<script>
+/* FORMATO 9:16: foto/vídeo vertical preenche o quadro; paisagem aparece inteira sobre fundo desfocado */
+(function(){
+  var SEL='.im-foto,.modal-gal,.modal-galeria,.lb-wrap,.fcg-carousel,.fcg-lb,.galeria-wrap,#fs';
+  document.addEventListener('load',function(e){
+    var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
+    var c=t.closest(SEL);
+    if(!c||t.parentNode!==c)return;
+    c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
+    if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';
+  },true);
+  document.addEventListener('loadedmetadata',function(e){
+    var v=e.target;if(!v||v.tagName!=='VIDEO')return;
+    if(v.videoWidth&&v.videoHeight){v.style.objectFit=(v.videoWidth/v.videoHeight>0.8)?'contain':'cover';v.style.background='#000';}
+  },true);
+})();
 </script>
 </body>
 </html>
