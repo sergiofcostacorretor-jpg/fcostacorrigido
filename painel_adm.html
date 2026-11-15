@@ -1056,7 +1056,7 @@ function salvar(){
     var ok=document.getElementById('salv-ok');
     if(ok){ok.style.display='inline';setTimeout(function(){ok.style.display='none';},3000);}
     if(isNovo)limpar();
-    setTimeout(function(){publicarSite(true);},1500);
+    setTimeout(function(){toast('Quando terminar de cadastrar, clique em 🚀 Publicar no site (uma vez só).','warn');},3500);
   }).catch(function(e){
     setSalvando(false);_pausarListener=false;
     var msg=msgErr(e);
@@ -1339,6 +1339,7 @@ function paginaImovel(i,slug){
 }
 function sitemapXml(paginas){
   var urls=[SITE+'/'],vistos={};
+  ['comprar','alugar','lancamentos','panfletos','portal-do-investidor','financiamento','avaliacao-fcosta','ptam','judicial','pericia','sergioig','inquilinato','parceiros-fcosta','galeria','blog','legislacaoimobiliaria','documentacao-imobiliaria','videos-imobiliarios','politica-de-privacidade','condicoes-de-uso','calculadora-reajuste'].forEach(function(p){var u=SITE+'/'+p;vistos[u]=1;urls.push(u);});
   Object.keys(PAG_LINKS).forEach(function(k){var u=PAG_LINKS[k];if(!vistos[u]){vistos[u]=1;urls.push(u);}});
   var x='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   urls.forEach(function(u){x+='<url><loc>'+u+'</loc></url>\n';});

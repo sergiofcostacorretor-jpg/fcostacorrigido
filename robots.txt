@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /painel_adm
+Disallow: /cadastro
+Disallow: /contratos
+Disallow: /financeiro
+Disallow: /laudo-ia
+Disallow: /pix
+Disallow: /lucro
+Disallow: /agenda-fcosta-embed
+Disallow: /guia-dominios-azul
+Disallow: /netlify/
+Disallow: /.netlify/
+
+Sitemap: https://fcostacorretor.com/sitemap.xml
