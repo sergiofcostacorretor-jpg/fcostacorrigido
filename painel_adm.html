@@ -239,6 +239,16 @@ img{max-width:100%;display:block;}
 .foto-w:first-child .foto-th{border-color:var(--ouro);box-shadow:0 0 0 2px rgba(201,168,76,.4);}
 .foto-w:first-child::after{content:'Destaque';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.48rem;font-weight:800;color:var(--ouro);white-space:nowrap;}
 .fotos-wrap{padding-bottom:22px;}
+.fcard #dest-box{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.dest-b{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 6px;color:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit;transition:background .15s,border-color .15s,transform .1s;}
+.dest-b:active{transform:scale(.97);}
+.dest-b b{font-size:1rem;letter-spacing:.04em;}
+.dest-b span{font-size:.66rem;opacity:.85;}
+.dest-b em{font-style:normal;font-size:.6rem;font-weight:700;color:#69f0ae;margin-top:2px;}
+.dest-b.on{background:rgba(255,212,0,.2);border-color:#FFD400;box-shadow:0 0 0 3px rgba(255,212,0,.25);}
+.dest-b.on b{color:#FFD400;}
+@media(max-width:560px){.fcard #dest-box{grid-template-columns:repeat(2,1fr);}}
+.foto-cap{position:absolute;top:-5px;left:-5px;width:20px;height:20px;border-radius:50%;background:#C9A84C;border:none;color:#1a1200;font-size:.7rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .foto-del{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:#A01515;border:none;color:#FFD5D5;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .drag-hint{font-size:.62rem;color:var(--sec);margin-top:6px;display:flex;align-items:center;gap:5px;}
 .drag-hint span{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:2px 7px;}
@@ -785,6 +795,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
   </div>
   <div class="fcard">
     <div class="fgrid">
+      <div class="fg full"><label>Destino da publicacao * <small style="font-weight:400;opacity:.8">(o numero livre ja vem preenchido)</small></label><div id="dest-box"></div></div>
       <div class="fg full"><label>Titulo do Imovel *</label><input type="text" id="f-titulo" placeholder="Ex: Apartamento 2 quartos Itaim Paulista" oninput="atuPrev()"/></div>
       <div class="fg"><label>Status / Categoria *</label><select id="f-status" onchange="onStatusChange()"><option value="">Selecione...</option><option value="venda">FCV - A Venda</option><option value="aluguel">FCA - Aluguel</option><option value="lancamento">FCL - Lancamento</option><option value="panfleto">FCP - Panfleto</option><option value="vendido">Vendido</option></select></div>
       <div class="fg"><label>Numero do Codigo</label><input type="text" id="f-numcod" placeholder="Automatico" maxlength="6" oninput="onNumCod()"/><small id="numcod-hint" style="font-size:.6rem;color:var(--sec);margin-top:2px;">Deixe em branco = proximo disponivel</small></div>
@@ -835,6 +846,8 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
     <input type="hidden" id="f-id"/>
     <div class="salv-area">
       <button class="btn bok" id="btn-salvar" onclick="salvar()"><span class="ic-s">💾</span><span class="spin-s"></span><span id="btn-s-txt">Salvar Imovel</span></button>
+      <button class="btn" onclick="publicarSite(false)">🚀 Publicar no site</button>
+      <button class="btn bgh" onclick="ghConfigurar()">⚙ GitHub</button>
       <button class="btn bgh" onclick="limpar()">Limpar</button>
       <button class="btn bgh" onclick="goTab('imoveis',document.querySelector('[data-p=imoveis]'))">Voltar</button>
       <span id="salv-ok" style="font-size:.7rem;color:#69f0ae;display:none;">✅ Salvo!</span>
@@ -931,7 +944,7 @@ var GRUPOS_COR={'Servicos':'rgba(255,212,0,.85)','Conteudo':'rgba(255,255,255,.7
 
 auth.onAuthStateChanged(function(user){if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}});
 var _imovelRef=null,_imovelListener=null,_pausarListener=false;
-function iniciarFB(){if(_fbOk)return;_fbOk=true;_pausarListener=false;_imovelRef=db.ref('fcosta_imoveis');_imovelListener=_imovelRef.on('value',function(snap){if(_pausarListener)return;var d=snap.val()||{};var todos_raw=Object.entries(d).map(function(e){return Object.assign({},e[1],{id:e[0]});});var excluidos=todos_raw.filter(function(i){return i._del===true||i._excluido===true;});if(excluidos.length){excluidos.forEach(function(i){db.ref('fcosta_imoveis/'+i.id).remove().catch(function(){});});}_todos=todos_raw.filter(function(i){return i._del!==true&&i._excluido!==true;});atualizarStats();filtrar();var pc=document.getElementById('p-codigos');if(pc&&pc.classList.contains('on'))renderCodigos();var pr=document.getElementById('p-refs');if(pr&&pr.classList.contains('on'))refRender();if(!window._edUrl){window._edUrl=1;var _q=new URLSearchParams(location.search).get('editar');if(_q&&_todos.find(function(x){return x.id===_q;})){editarImovel(_q);}}});}
+function iniciarFB(){if(_fbOk)return;_fbOk=true;_pausarListener=false;_imovelRef=db.ref('fcosta_imoveis');_imovelListener=_imovelRef.on('value',function(snap){if(_pausarListener)return;var d=snap.val()||{};var todos_raw=Object.entries(d).map(function(e){return Object.assign({},e[1],{id:e[0]});});var excluidos=todos_raw.filter(function(i){return i._del===true||i._excluido===true;});if(excluidos.length){excluidos.forEach(function(i){db.ref('fcosta_imoveis/'+i.id).remove().catch(function(){});});}_todos=todos_raw.filter(function(i){return i._del!==true&&i._excluido!==true;});atualizarStats();filtrar();try{renderDestino();}catch(e){}var pc=document.getElementById('p-codigos');if(pc&&pc.classList.contains('on'))renderCodigos();var pr=document.getElementById('p-refs');if(pr&&pr.classList.contains('on'))refRender();if(!window._edUrl){window._edUrl=1;var _q=new URLSearchParams(location.search).get('editar');if(_q&&_todos.find(function(x){return x.id===_q;})){editarImovel(_q);}}});}
 function pararFB(){if(_imovelRef&&_imovelListener){_imovelRef.off('value',_imovelListener);_imovelRef=null;_imovelListener=null;}_fbOk=false;_pausarListener=false;}
 
 // MELHORIA: login com rate limit visual (bloqueia após 5 tentativas por 2 min)
@@ -1031,8 +1044,8 @@ function seoAtualizar(){var st=document.getElementById('f-status').value,seoBox=
 function seoTManual(){_seoTM=true;var v=document.getElementById('seo-t').value;document.getElementById('gp-title').textContent=v||'-';document.getElementById('hc-title').textContent=v;gpcLbl('gpc-t',v.length,50,70,'Titulo');}
 function seoDManual(){_seoDM=true;var v=document.getElementById('seo-d').value;document.getElementById('gp-desc').textContent=v||'-';document.getElementById('hc-desc').textContent=v;gpcLbl('gpc-d',v.length,120,160,'Desc');}
 function gpcLbl(id,n,min,max,lbl){var el=document.getElementById(id);if(!el)return;el.textContent=lbl+': '+n+'/'+max;el.className='gpc '+(n>max?'gerr':n>=min?'gok':'gwarn');}
-function onStatusChange(){var s=document.getElementById('f-status').value,id=document.getElementById('f-id').value;if(s&&!id)document.getElementById('f-numcod').value='';esconderDup();atuRefPainel(s,id);atuPrev();var isFcp=(s==='panfleto');var ib=document.getElementById('fcp-info-box');if(ib)ib.classList.toggle('on',isFcp);var ub=document.getElementById('fcp-upload-bloco');if(ub)ub.style.display=isFcp?'flex':'none';var fb=document.getElementById('fotos-bloco');if(fb)fb.style.display=isFcp?'none':'';['f-area','f-quartos','f-banheiros','f-vagas','f-endereco','f-tipo','f-preco','f-tourmp4'].forEach(function(fid){var field=document.getElementById(fid);if(!field)return;var wrap=field.closest('.fg');if(wrap)wrap.style.display=isFcp?'none':'';});var ow=document.getElementById('outro-wrap');if(ow&&isFcp)ow.style.display='none';}
-function onNumCod(){var id=document.getElementById('f-id').value;esconderDup();_slugManual=false;atuPrev();var st=document.getElementById('f-status').value,nc=document.getElementById('f-numcod').value.trim();if(!st||!nc)return;var np=nc.padStart(3,'0'),conf=verDup(st,np,id);if(conf){var sig=SG[st]||'FCV';mostrarDup(sig+np,conf.titulo||'Sem titulo',sig+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}atuRefPainel(st,id);}
+function onStatusChange(){var s=document.getElementById('f-status').value,id=document.getElementById('f-id').value;if(!id){var nc0=document.getElementById('f-numcod');if(s){nc0.value=proxNum(s);_numAuto=true;var nh0=document.getElementById('numcod-hint');if(nh0)nh0.textContent='Automatico: proximo numero livre de '+(SG[s]||'FCV')+'. Se trocar, o painel avisa se ja existe.';}else{nc0.value='';_numAuto=false;}}esconderDup();atuRefPainel(s,id);atuPrev();renderDestino();var isFcp=(s==='panfleto');var ib=document.getElementById('fcp-info-box');if(ib)ib.classList.toggle('on',isFcp);var ub=document.getElementById('fcp-upload-bloco');if(ub)ub.style.display=isFcp?'flex':'none';var fb=document.getElementById('fotos-bloco');if(fb)fb.style.display=isFcp?'none':'';['f-area','f-quartos','f-banheiros','f-vagas','f-endereco','f-tipo','f-preco','f-tourmp4'].forEach(function(fid){var field=document.getElementById(fid);if(!field)return;var wrap=field.closest('.fg');if(wrap)wrap.style.display=isFcp?'none':'';});var ow=document.getElementById('outro-wrap');if(ow&&isFcp)ow.style.display='none';}
+function onNumCod(){_numAuto=false;var id=document.getElementById('f-id').value;esconderDup();_slugManual=false;atuPrev();var st=document.getElementById('f-status').value,nc=document.getElementById('f-numcod').value.trim();if(!st||!nc)return;var np=nc.padStart(3,'0'),conf=verDup(st,np,id);if(conf){var sig=SG[st]||'FCV';mostrarDup(sig+np,conf.titulo||'Sem titulo',sig+proxNum(st));document.getElementById('f-numcod').style.borderColor='rgba(255,50,50,.8)';}else{document.getElementById('f-numcod').style.borderColor='rgba(105,240,174,.5)';setTimeout(function(){document.getElementById('f-numcod').style.borderColor='';},2000);}atuRefPainel(st,id);}
 function atuPrev(){atuRefPainel(document.getElementById('f-status').value,document.getElementById('f-id').value);atuSlug();seoAtualizar();}
 function limpar(){['f-titulo','f-status','f-numcod','f-tipo','f-tipo-outro','f-preco','f-area','f-quartos','f-banheiros','f-vagas','f-bairro','f-endereco','f-descricao','f-id','slug-inp','seo-t','seo-d'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});document.getElementById('f-cidade').value='Sao Paulo - SP';document.getElementById('f-publicado').value='true';document.getElementById('f-destaque').value='false';document.getElementById('f-tipo').value='';document.getElementById('outro-wrap').style.display='none';_fotosEx=[];_bookEx=[];_bookMod=false;renderBook();_slugManual=false;_seoTM=false;_seoDM=false;document.getElementById('fotos-prev').innerHTML='';document.getElementById('drag-hint').style.display='none';document.getElementById('slug-box').style.display='none';document.getElementById('seo-box').style.display='none';document.getElementById('ref-master').style.display='none';document.getElementById('salv-err').classList.remove('on');esconderDup();document.getElementById('form-h').textContent='Adicionar Novo Imovel';document.getElementById('f-numcod').style.borderColor='';document.getElementById('f-numcod').readOnly=false;document.getElementById('f-numcod').style.opacity='';document.getElementById('f-numcod').style.cursor='';var nh=document.getElementById('numcod-hint');if(nh)nh.textContent='Deixe em branco = proximo disponivel';var ok=document.getElementById('salv-ok');if(ok)ok.style.display='none';var _t=document.getElementById('f-tourmp4');if(_t){_t.value='';mostrarTour('');}var fu=document.getElementById('fcp-url');if(fu)fu.value='';var ft=document.getElementById('fcp-tipo-arq');if(ft)ft.value='';var fp=document.getElementById('fcp-arq-prev');if(fp)fp.classList.remove('on');var fprog=document.getElementById('fcp-prog');if(fprog)fprog.style.display='none';var fib=document.getElementById('fcp-info-box');if(fib)fib.classList.remove('on');var fub=document.getElementById('fcp-upload-bloco');if(fub)fub.style.display='none';var fb=document.getElementById('fotos-bloco');if(fb)fb.style.display='';['f-area','f-quartos','f-banheiros','f-vagas','f-endereco','f-tipo','f-preco','f-tourmp4'].forEach(function(fid){var field=document.getElementById(fid);if(!field)return;var wrap=field.closest('.fg');if(wrap)wrap.style.display='';});}
 function novoImovel(){limpar();goTab('adicionar',document.querySelector('[data-p=adicionar]'));setTimeout(function(){var el=document.getElementById('f-titulo');if(el)el.focus();},150);window.scrollTo({top:0,behavior:'smooth'});}
@@ -1047,11 +1060,12 @@ function salvar(){
   if(!status){mostrarErrSalv('Selecione o status do imovel.');document.getElementById('f-status').focus();return;}
   var sigla=SG[status]||'FCV',numFinal=numcod?numcod.padStart(3,'0'):proxNum(status);
   var conf=verDup(status,numFinal,id);
+  if(conf&&isNovo&&_numAuto){numFinal=proxNum(status);document.getElementById('f-numcod').value=numFinal;conf=verDup(status,numFinal,id);}
   if(conf){mostrarDup(sigla+numFinal,conf.titulo||'Sem titulo',sigla+proxNum(status));mostrarErrSalv('Codigo '+sigla+numFinal+' ja existe!');return;}
   var slugVal=document.getElementById('slug-inp').value.trim();
   if(slugVal&&slugDup(slugVal)){mostrarErrSalv('Este slug ja esta em uso por outro imovel.');return;}
   setSalvando(true);
-  var dados={titulo:titulo,status:status,numeroCodigo:numFinal,codigo:sigla+numFinal,tipo:getTipoReal(),preco:document.getElementById('f-preco').value.trim(),area:document.getElementById('f-area').value.trim(),quartos:parseInt(document.getElementById('f-quartos').value)||0,banheiros:parseInt(document.getElementById('f-banheiros').value)||0,vagas:parseInt(document.getElementById('f-vagas').value)||0,bairro:document.getElementById('f-bairro').value.trim(),cidade:document.getElementById('f-cidade').value.trim(),endereco:document.getElementById('f-endereco').value.trim(),descricao:document.getElementById('f-descricao').value.trim(),video:null,videoMp4:null,tourMp4:document.getElementById('f-tourmp4').value.trim(),destaque:document.getElementById('f-destaque').value==='true',publicado:document.getElementById('f-publicado').value!=='false',slug:slugVal||gerarSlugAuto()||'',seoTitle:document.getElementById('seo-t').value.trim(),seoDesc:document.getElementById('seo-d').value.trim(),fotos:_fotosEx,fotoDestaque:_fotosEx[0]||'',atualizado:new Date().toISOString()};
+  var dados={titulo:titulo,status:status,numeroCodigo:numFinal,codigo:sigla+numFinal,tipo:getTipoReal(),preco:document.getElementById('f-preco').value.trim(),area:document.getElementById('f-area').value.trim(),quartos:parseInt(document.getElementById('f-quartos').value)||0,banheiros:parseInt(document.getElementById('f-banheiros').value)||0,vagas:parseInt(document.getElementById('f-vagas').value)||0,bairro:document.getElementById('f-bairro').value.trim(),cidade:document.getElementById('f-cidade').value.trim(),endereco:document.getElementById('f-endereco').value.trim(),descricao:document.getElementById('f-descricao').value.trim(),video:null,videoMp4:null,tourMp4:document.getElementById('f-tourmp4').value.trim(),destaque:document.getElementById('f-destaque').value==='true',publicado:document.getElementById('f-publicado').value!=='false',slug:slugVal||gerarSlugAuto()||'',seoTitle:document.getElementById('seo-t').value.trim(),seoDesc:document.getElementById('seo-d').value.trim(),fotos:_fotosEx,fotoDestaque:_fotosEx[0]||(_bookEx&&_bookEx[0])||'',atualizado:new Date().toISOString()};
   if(_bookMod)dados.bookFotos=_bookEx;
   if(isNovo)dados.criado=new Date().toISOString();
   if(status==='panfleto'){var fcpUrl=document.getElementById('fcp-url').value;var fcpTipo=document.getElementById('fcp-tipo-arq').value||'imagem';dados.panfletoUrl=fcpUrl;dados.panfletoTipo=fcpTipo;dados.fotos=[];dados.fotoDestaque=(fcpUrl&&fcpTipo!=='pdf')?fcpUrl:'';}
@@ -1063,7 +1077,11 @@ function salvar(){
     var ok=document.getElementById('salv-ok');
     if(ok){ok.style.display='inline';setTimeout(function(){ok.style.display='none';},3000);}
     if(isNovo)limpar();
-    setTimeout(function(){toast('Quando terminar de cadastrar, clique em 🚀 Publicar no site (uma vez só).','warn');},3500);
+    setTimeout(function(){
+      if(status==='panfleto')return;
+      if(ghCfg())publicarSite(true);
+      else toast('Salvo! Para o site atualizar sozinho depois de salvar, toque em ⚙ GitHub (só uma vez).','warn');
+    },2500);
   }).catch(function(e){
     setSalvando(false);_pausarListener=false;
     var msg=msgErr(e);
@@ -1224,11 +1242,12 @@ function logoFotosAntigas(){
     toast(imOk+' imovel(is) atualizado(s)'+(falhas?'; '+falhas+' foto(s) falharam. Os imoveis com erro nao foram alterados; clique de novo para tentar.':'.'),falhas?'warn':undefined);
   });
 }
-function renderFotos(){var wrap=document.getElementById('fotos-prev'),hint=document.getElementById('drag-hint');if(!_fotosEx.length){wrap.innerHTML='';hint.style.display='none';return;}hint.style.display='flex';wrap.innerHTML=_fotosEx.map(function(url,idx){return'<div class="foto-w" draggable="true" data-idx="'+idx+'"><img class="foto-th" src="'+esc(url)+'" loading="lazy"/><button class="foto-del" onclick="delFoto('+idx+')">X</button></div>';}).join('');wrap.querySelectorAll('.foto-w').forEach(function(el){el.addEventListener('dragstart',function(e){_dragSrc=el;el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});el.addEventListener('dragend',function(){el.classList.remove('dragging');wrap.querySelectorAll('.foto-w').forEach(function(x){x.classList.remove('drag-over');});});el.addEventListener('dragover',function(e){e.preventDefault();if(el!==_dragSrc)el.classList.add('drag-over');});el.addEventListener('dragleave',function(){el.classList.remove('drag-over');});el.addEventListener('drop',function(e){e.preventDefault();el.classList.remove('drag-over');if(_dragSrc&&_dragSrc!==el){var a=parseInt(_dragSrc.dataset.idx),b=parseInt(el.dataset.idx);var t=_fotosEx[a];_fotosEx[a]=_fotosEx[b];_fotosEx[b]=t;renderFotos();}});el.addEventListener('touchstart',function(e){_touchItem=el;var t=e.touches[0];_touchClone=el.cloneNode(true);_touchClone.style.cssText='position:fixed;opacity:.7;pointer-events:none;z-index:9999;width:'+el.offsetWidth+'px;top:'+(t.clientY-40)+'px;left:'+(t.clientX-40)+'px;';document.body.appendChild(_touchClone);},{passive:true});el.addEventListener('touchmove',function(e){if(!_touchClone)return;e.preventDefault();var t=e.touches[0];_touchClone.style.top=(t.clientY-40)+'px';_touchClone.style.left=(t.clientX-40)+'px';var ov=document.elementFromPoint(t.clientX,t.clientY);if(ov){var fw=ov.closest('.foto-w');if(fw&&fw!==_touchItem)_touchOver=fw;}},{passive:false});el.addEventListener('touchend',function(){if(_touchClone)_touchClone.remove();_touchClone=null;if(_touchItem&&_touchOver&&_touchItem!==_touchOver){var a=parseInt(_touchItem.dataset.idx),b=parseInt(_touchOver.dataset.idx);var t=_fotosEx[a];_fotosEx[a]=_fotosEx[b];_fotosEx[b]=t;renderFotos();}_touchItem=null;_touchOver=null;});});}
+function renderFotos(){var wrap=document.getElementById('fotos-prev'),hint=document.getElementById('drag-hint');if(!_fotosEx.length){wrap.innerHTML='';hint.style.display='none';return;}hint.style.display='flex';wrap.innerHTML=_fotosEx.map(function(url,idx){return'<div class="foto-w" draggable="true" data-idx="'+idx+'"><img class="foto-th" src="'+esc(url)+'" loading="lazy"/><button class="foto-cap" title="Usar como foto de destaque" onclick="capaFoto('+idx+')">★</button><button class="foto-del" onclick="delFoto('+idx+')">X</button></div>';}).join('');wrap.querySelectorAll('.foto-w').forEach(function(el){el.addEventListener('dragstart',function(e){_dragSrc=el;el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});el.addEventListener('dragend',function(){el.classList.remove('dragging');wrap.querySelectorAll('.foto-w').forEach(function(x){x.classList.remove('drag-over');});});el.addEventListener('dragover',function(e){e.preventDefault();if(el!==_dragSrc)el.classList.add('drag-over');});el.addEventListener('dragleave',function(){el.classList.remove('drag-over');});el.addEventListener('drop',function(e){e.preventDefault();el.classList.remove('drag-over');if(_dragSrc&&_dragSrc!==el){var a=parseInt(_dragSrc.dataset.idx),b=parseInt(el.dataset.idx);var t=_fotosEx[a];_fotosEx[a]=_fotosEx[b];_fotosEx[b]=t;renderFotos();}});el.addEventListener('touchstart',function(e){_touchItem=el;var t=e.touches[0];_touchClone=el.cloneNode(true);_touchClone.style.cssText='position:fixed;opacity:.7;pointer-events:none;z-index:9999;width:'+el.offsetWidth+'px;top:'+(t.clientY-40)+'px;left:'+(t.clientX-40)+'px;';document.body.appendChild(_touchClone);},{passive:true});el.addEventListener('touchmove',function(e){if(!_touchClone)return;e.preventDefault();var t=e.touches[0];_touchClone.style.top=(t.clientY-40)+'px';_touchClone.style.left=(t.clientX-40)+'px';var ov=document.elementFromPoint(t.clientX,t.clientY);if(ov){var fw=ov.closest('.foto-w');if(fw&&fw!==_touchItem)_touchOver=fw;}},{passive:false});el.addEventListener('touchend',function(){if(_touchClone)_touchClone.remove();_touchClone=null;if(_touchItem&&_touchOver&&_touchItem!==_touchOver){var a=parseInt(_touchItem.dataset.idx),b=parseInt(_touchOver.dataset.idx);var t=_fotosEx[a];_fotosEx[a]=_fotosEx[b];_fotosEx[b]=t;renderFotos();}_touchItem=null;_touchOver=null;});});}
 function bookDe(i){var b=i.bookFotos;if(!b)return[];return(Array.isArray(b)?b:Object.values(b)).filter(Boolean);}
 function renderBook(){var w=document.getElementById('book-prev');if(!w)return;if(!_bookEx.length){w.innerHTML='<span style="font-size:.66rem;color:var(--sec);">Nenhum quadro no book.</span>';return;}w.innerHTML=_bookEx.map(function(u,n){return '<div style="position:relative;width:72px;"><img src="'+esc(u)+'" loading="lazy" style="width:72px;aspect-ratio:9/16;object-fit:cover;border-radius:6px;display:block;background:#8883;"/><span style="position:absolute;left:3px;top:3px;background:rgba(0,0,0,.6);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:8px;">'+(n+1)+'</span><button type="button" onclick="delBook('+n+')" title="Remover" style="position:absolute;right:2px;top:2px;width:20px;height:20px;border:0;border-radius:50%;background:#c62828;color:#fff;font-size:.7rem;cursor:pointer;line-height:1;">x</button></div>';}).join('');}
 function delBook(n){_bookEx.splice(n,1);_bookMod=true;renderBook();}
 function delFoto(idx){_fotosEx.splice(idx,1);renderFotos();}
+function capaFoto(idx){if(idx<=0||idx>=_fotosEx.length)return;var f=_fotosEx.splice(idx,1)[0];_fotosEx.unshift(f);renderFotos();toast('★ Essa foto agora é o destaque. Clique em Salvar Imovel.');}
 
 function corrigirSlugs(){
   var semSlug=_todos.filter(function(i){return!i.slug;});
@@ -1291,7 +1310,30 @@ function addUsuario(){
 </script>
 <script>
 /* ── Publicação no GitHub Pages: 1 página estática por imóvel + sitemap.xml ── */
-var SITE='https://fcostacorretor.com',WA_NUM='5511993509109',_pub=false;
+var SITE='https://fcostacorretor.com',WA_NUM='5511993509109',_pub=false,_pubPend=false;
+var _numAuto=false;
+function renderDestino(){
+  var box=document.getElementById('dest-box');if(!box)return;
+  var sel=document.getElementById('f-status').value,id=document.getElementById('f-id').value;
+  var nc=document.getElementById('f-numcod');
+  if(!id&&sel&&_numAuto&&nc){var np=proxNum(sel);if(nc.value!==np)nc.value=np;}
+  var op=[['venda','FCV','A venda'],['aluguel','FCA','Aluguel'],['lancamento','FCL','Lancamento'],['panfleto','FCP','Panfleto']];
+  box.innerHTML=op.map(function(o){
+    var on=(sel===o[0]||(sel==='vendido'&&o[0]==='venda'));
+    var info=(id&&on)?'editando':'proximo '+o[1]+proxNum(o[0]);
+    return '<button type="button" class="dest-b'+(on?' on':'')+'" onclick="escolherDestino(\''+o[0]+'\')"><b>'+o[1]+'</b><span>'+o[2]+'</span><em>'+info+'</em></button>';
+  }).join('');
+}
+function escolherDestino(st){
+  var id=document.getElementById('f-id').value;
+  if(id){var atual=document.getElementById('f-status').value;if(atual!==st&&!confirm('Mudar o destino deste imovel? O codigo muda para o proximo livre de '+(SG[st]||'FCV')+'.'))return;}
+  document.getElementById('f-status').value=st;
+  if(id){_numAuto=true;document.getElementById('f-numcod').value=proxNum(st);}
+  onStatusChange();
+}
+var _limparOrig=limpar;limpar=function(){_limparOrig();_numAuto=false;renderDestino();};
+try{renderDestino();}catch(e){}
+function _pubFim(){_pub=false;if(_pubPend){_pubPend=false;setTimeout(function(){publicarSite(true);},600);}}
 var ST_ACENTO={venda:'À venda',aluguel:'Para alugar',lancamento:'Lançamento',vendido:'Vendido'};
 function ghCfg(){try{return JSON.parse(localStorage.getItem('fcosta_gh')||'null');}catch(e){return null;}}
 function ghConfigurar(){
@@ -1357,7 +1399,7 @@ function sitemapXml(paginas){
   return x+'</urlset>\n';
 }
 function publicarSite(auto){
-  if(_pub)return;
+  if(_pub){_pubPend=true;return;}
   var c=ghCfg();
   if(!c){if(auto)return;c=ghConfigurar();if(!c)return;}
   var vistos={},paginas=[],ignorados=0;
@@ -1381,8 +1423,8 @@ function publicarSite(auto){
     return ghApi(c,'/git/trees',{method:'POST',body:JSON.stringify({base_tree:base.tree.sha,tree:tree})});
   }).then(function(t){return ghApi(c,'/git/commits',{method:'POST',body:JSON.stringify({message:'Painel ADM: publica '+paginas.length+' imóveis',tree:t.sha,parents:[base.sha]})});
   }).then(function(cm){return ghApi(c,'/git/refs/heads/'+encodeURIComponent(c.branch),{method:'PATCH',body:JSON.stringify({sha:cm.sha})});
-  }).then(function(){_pub=false;toast('✅ Site atualizado: '+paginas.length+' imóvel(is)'+(ignorados?' ('+ignorados+' sem slug válido)':'')+'. Entra no ar em ~1 min.');
-  }).catch(function(e){_pub=false;var m=msgErr(e);if(e.status===401||e.status===403||e.status===404)m='GitHub recusou ('+m+'). Confira repositório, branch e token em ⚙ GitHub.';toast('❌ '+m,true);});
+  }).then(function(){_pubFim();toast('✅ Site atualizado: '+paginas.length+' imóvel(is)'+(ignorados?' ('+ignorados+' sem slug válido)':'')+'. Entra no ar em ~1 min.');
+  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);if(e.status===401||e.status===403||e.status===404)m='GitHub recusou ('+m+'). Confira repositório, branch e token em ⚙ GitHub.';toast('❌ '+m,true);});
 }
 </script>
 </body>
