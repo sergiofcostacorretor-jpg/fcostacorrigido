@@ -1330,9 +1330,11 @@ function renderImovel(data, fbKey){
   var comodidades = data.comodidades || [];
 
   /* SEO + og:image com foto real do imóvel */
-  var fotoOg = _fotos[0] || 'https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png';
+  var fotoOg = (getFotos(data)[0]) || 'https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png';
   var tituloOg = data.seoTitulo || (titulo + ' — FCosta Corretor');
-  var descOg = (precoFmt ? precoFmt + ' — ' : '') + (loc || 'Zona Leste SP') + ' — FCosta Corretor';
+  var _locSeo = [bairro, cidade].filter(Boolean).join(', ');
+  var _precoSeo = fmtPreco(preco, status);
+  var descOg = (_precoSeo ? _precoSeo + ' — ' : '') + (_locSeo || 'Zona Leste SP') + ' — FCosta Corretor';
   document.getElementById('page-title').textContent = tituloOg;
   document.getElementById('page-desc').setAttribute('content', data.seoDescricao || descricao.slice(0, 160));
   var elOgTitle = document.getElementById('og-title');
@@ -1447,7 +1449,7 @@ function renderImovel(data, fbKey){
     : [];
   if(cl.length){
     document.getElementById('det-comods').innerHTML = cl.map(function(c){
-      return '<span class="comod">' + c + '</span>';
+      return '<span class="comod">' + String(c).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>';
     }).join('');
     document.getElementById('sec-comods').style.display = '';
   }
@@ -1506,7 +1508,9 @@ function renderImovel(data, fbKey){
 }
 
 /* ── Erro ── */
+function _escH(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function mostrarErro(msg, sub){
+  msg = _escH(msg); sub = _escH(sub);
   document.getElementById('estado').innerHTML =
     '<p class="estado-erro">\uD83D\uDE15 ' + msg + '</p>'
     + (sub ? '<p class="estado-sub">' + sub + '</p>' : '')
@@ -1558,7 +1562,7 @@ async function buscarImovel(){
     try{
       var r0 = await fetch(_DB + '/' + _NODE + '/' + encodeURIComponent(idParam) + '.json?key=' + _KEY);
       var d0 = await r0.json();
-      if(d0 && !d0.error && d0.titulo){ renderImovel(d0, idParam); return; }
+      if(d0 && !d0.error && d0.titulo && d0._del !== true && d0._excluido !== true && d0.publicado !== false){ renderImovel(d0, idParam); return; }
     }catch(e){ console.warn('busca direta:', e); }
   }
 
@@ -1576,6 +1580,7 @@ async function buscarImovel(){
 
     for(var key in todos){
       var val = todos[key];
+      if(!val || val._del === true || val._excluido === true || val.publicado === false) continue;
       var codFb  = normCod(val.codigo || val.code || '');
       var slugFb = String(val.slug || val.seoSlug || '').toLowerCase().replace(/[-_]/g, '');
       if(
@@ -1598,6 +1603,7 @@ async function buscarImovel(){
       var pN = pname.toLowerCase().replace(/^\//, '').replace(/[-_]/g, '');
       for(var k2 in todos){
         var v2 = todos[k2];
+        if(!v2 || v2._del === true || v2._excluido === true || v2.publicado === false) continue;
         var sl2 = String(v2.slug || v2.seoSlug || '').toLowerCase().replace(/[-_]/g, '');
         var cd2 = normCod(v2.codigo || '').toLowerCase();
         if((sl2 && pN.includes(sl2)) || (cd2 && pN.includes(cd2))){

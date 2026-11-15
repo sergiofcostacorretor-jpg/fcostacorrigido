@@ -986,7 +986,7 @@ function mostrarErrLogin(msg){var el=document.getElementById('l-err');el.textCon
 function trErr(code){var m={'auth/user-not-found':'E-mail nao cadastrado.','auth/wrong-password':'Senha incorreta.','auth/invalid-email':'E-mail invalido.','auth/user-disabled':'Usuario desativado.','auth/too-many-requests':'Muitas tentativas. Tente mais tarde.','auth/invalid-credential':'Credenciais invalidas. Verifique email e senha.','auth/network-request-failed':'Sem conexao. Verifique a internet.','auth/email-already-in-use':'E-mail ja cadastrado.','auth/weak-password':'Senha fraca (min. 8 caracteres).','auth/requires-recent-login':'Faca login novamente.'};return m[code]||('Erro: '+(code||'desconhecido'));}
 function fazerLogout(){if(!confirm('Deseja sair do Painel ADM?'))return;auth.signOut().then(function(){pararFB();_ctrlOk=false;_pagsOk=false;_todos=[];_fotosEx=[];_paginasSite=[];_estadosHome={};_estadosHamb={};limpar();toast('Saiu com seguranca!','warn');});}
 var _tTimer=null;
-function toast(msg,tipo){var el=document.getElementById('toast');el.textContent=msg;el.className='on'+(tipo===true?' err':tipo==='warn'?' warn':'');if(_tTimer)clearTimeout(_tTimer);_tTimer=setTimeout(function(){el.className='';},3200);}
+function toast(msg,tipo){var el=document.getElementById('toast');el.textContent=msg;el.className='on'+(tipo===true?' err':tipo==='warn'?' warn':'');if(_tTimer)clearTimeout(_tTimer);_tTimer=setTimeout(function(){el.className='';},tipo===true?15000:3200);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 function msgErr(e){return e&&e.message?e.message:String(e||'Erro desconhecido');}
 function getCod(i){if(i.codigo)return i.codigo;var s=SG[i.status]||'FCV';var n=i.numeroCodigo?String(i.numeroCodigo).padStart(3,'0'):null;if(!n){var c=i.codigo||'';if(c.toUpperCase().startsWith(s))n=parseInt(c.replace(/[^0-9]/g,''));n=n?String(n).padStart(3,'0'):'001';}return s+n;}
@@ -1191,7 +1191,7 @@ function prevFotos(event){
     renderFotos();
     prog.style.display='none';
     document.getElementById('inp-fotos').value='';
-    if(ok.length)toast(ok.length+' foto(s) enviada(s) com logo!');
+    if(ok.length)toast('📸 '+ok.length+' foto(s) enviada(s). Agora clique em SALVAR IMÓVEL para elas irem ao site.','warn');
     if(fail)toast(fail+' foto(s) falharam.','warn');
   });
 }
@@ -1341,7 +1341,7 @@ function ghConfigurar(){
   var repo=prompt('Repositório do site (usuario/repositorio):',c.repo||'');if(!repo)return null;
   var br=prompt('Branch publicada no GitHub Pages:',c.branch||'main');if(!br)return null;
   var tk=prompt('Token do GitHub (fine-grained, só deste repositório, Contents: Read and write):',c.token||'');if(!tk)return null;
-  c={repo:repo.trim(),branch:br.trim(),token:tk.trim()};
+  c={repo:repo.trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\.git$/i,'').replace(/^\/+|\/+$/g,''),branch:br.trim(),token:tk.trim()};
   try{localStorage.setItem('fcosta_gh',JSON.stringify(c));}catch(e){}
   toast('Configuração do GitHub salva neste navegador.');
   return c;
@@ -1409,6 +1409,7 @@ function publicarSite(auto){
     if(!/^[a-z0-9-]+$/.test(s)||vistos[s]){ignorados++;return;}
     vistos[s]=1;paginas.push({i:i,s:s});
   });
+  if(!paginas.length){toast('❌ Nenhum imóvel carregado para publicar. Aguarde a lista carregar e tente de novo (nada foi apagado do site).',true);return;}
   _pub=true;toast('Publicando '+paginas.length+' página(s) no site...','warn');
   var base,manifest=[];
   ghApi(c,'/git/ref/heads/'+encodeURIComponent(c.branch)).then(function(r){return ghApi(c,'/git/commits/'+r.object.sha);}).then(function(cm){
@@ -1424,7 +1425,7 @@ function publicarSite(auto){
   }).then(function(t){return ghApi(c,'/git/commits',{method:'POST',body:JSON.stringify({message:'Painel ADM: publica '+paginas.length+' imóveis',tree:t.sha,parents:[base.sha]})});
   }).then(function(cm){return ghApi(c,'/git/refs/heads/'+encodeURIComponent(c.branch),{method:'PATCH',body:JSON.stringify({sha:cm.sha})});
   }).then(function(){_pubFim();toast('✅ Site atualizado: '+paginas.length+' imóvel(is)'+(ignorados?' ('+ignorados+' sem slug válido)':'')+'. Entra no ar em ~1 min.');
-  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);if(e.status===401||e.status===403||e.status===404)m='GitHub recusou ('+m+'). Confira repositório, branch e token em ⚙ GitHub.';toast('❌ '+m,true);});
+  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401)m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub.';else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Sem conexão com o GitHub. Verifique a internet e tente de novo.';toast('❌ '+m,true);});
 }
 </script>
 </body>
