@@ -1514,10 +1514,11 @@ function cod(i){
 }
 function fotos(i){
   var arr=[];
-  if(i.fotoDestaque&&i.fotoDestaque.startsWith('http'))arr.push(i.fotoDestaque);
-  if(!i.fotos)return arr;
-  var lista=Array.isArray(i.fotos)?i.fotos:Object.values(i.fotos);
-  lista.filter(Boolean).forEach(function(u){if(typeof u==='string'&&u.startsWith('http')&&u!==i.fotoDestaque)arr.push(u);});
+  function add(u){if(typeof u==='string'&&u.startsWith('http')&&arr.indexOf(u)<0)arr.push(u);}
+  add(i.fotoDestaque);
+  if(i.fotos)(Array.isArray(i.fotos)?i.fotos:Object.values(i.fotos)).forEach(add);
+  /* sem fotos do imóvel: usa as páginas do book enviadas pela ferramenta Fotos e Book */
+  if(!arr.length&&i.bookFotos)(Array.isArray(i.bookFotos)?i.bookFotos:Object.values(i.bookFotos)).forEach(add);
   return arr;
 }
 function badge(s){return{venda:['bv','À Venda'],aluguel:['ba','Aluguel'],lancamento:['bl','Lançamento'],vendido:['bx','Vendido']}[s]||['bv',s||''];}
