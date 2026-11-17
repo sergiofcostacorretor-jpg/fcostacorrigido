@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FCosta — Painel ADM</title>
 <meta name="theme-color" content="#000000"/>
+<meta name="robots" content="noindex,nofollow"/>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
@@ -33,6 +34,7 @@ img{max-width:100%;display:block;}
 #ls.on{display:flex;}
 .lbox{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);border-radius:22px;padding:44px 40px 36px;width:100%;max-width:420px;backdrop-filter:blur(20px);animation:loginIn .5s cubic-bezier(.2,.8,.4,1) forwards;position:relative;overflow:hidden;}
 .lbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ouro),transparent);}
+.l-logo{display:block;width:120px;height:120px;margin:0 auto 14px;}
 .l-icon{text-align:center;margin-bottom:8px;font-size:3rem;animation:floatKey 3s ease-in-out infinite;display:block;}
 .l-brand{text-align:center;margin-bottom:32px;}
 .l-brand strong{display:block;font-family:var(--tit);font-size:1.5rem;color:#fff;letter-spacing:-.3px;margin-bottom:4px;}
@@ -705,7 +707,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 <div id="ls" class="on">
   <div class="l-deco d1">🏠</div><div class="l-deco d2">🔑</div><div class="l-deco d3">📊</div><div class="l-deco d4">🏡</div>
   <div class="lbox">
-    <span class="l-icon">🔐</span>
+    <img class="l-logo" src="sen_fundo_logo.png" width="120" height="120" alt="FCosta Corretor"/>
     <div class="l-brand"><strong>FCosta — Painel ADM</strong><span>CRECI-SP 294791-F · CNAI 52708</span></div>
     <div class="l-warn" id="l-warn"></div>
     <div class="l-err" id="l-err"></div>
