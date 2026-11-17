@@ -864,6 +864,69 @@ body{background:#000;color:#fff;}
 .vd-yt{background-position:center}
 .modal-video{aspect-ratio:9/16;max-width:100%}
 .vid-embed{aspect-ratio:9/16;max-width:440px;margin-inline:auto}
+
+/* ══════════ CATEGORIAS (FCV/FCA/FCL/FCP) + 9:16 EM TUDO ══════════ */
+.faixa-loc{max-width:1320px;margin:0 var(--px,16px) 18px;background:var(--amarelo);color:#000;border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center}
+@media(min-width:1380px){.faixa-loc{margin-inline:auto}}
+.faixa-loc[hidden]{display:none}
+.faixa-loc>span{font-size:1.4rem;line-height:1}
+.faixa-loc p{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.8px;font-size:clamp(.95rem,2.2vw,1.3rem);line-height:1.15;margin:0}
+.faixa-loc a{background:#000;color:var(--amarelo);font-weight:800;font-size:.7rem;letter-spacing:.8px;text-transform:uppercase;padding:10px 16px;border-radius:6px;white-space:nowrap}
+#cat-aluguel.faixa-on .im-vazio{display:none}
+.fcp-thumb{--bg:none}
+.fcp-thumb::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+.cat-nav{max-width:1320px;margin:0 auto 8px;padding-top:2px}
+.cat-nav .tab{text-decoration:none}
+.cat-nav .tab .nb{border-radius:3px}
+.cat-nav .tab:hover .nb-v,.cat-nav .tab.on .nb-v{background:#000;color:var(--amarelo)}
+.cat-bloco{padding:clamp(28px,4vw,46px) 0 10px;border-top:1px solid #1a1a1a;scroll-margin-top:92px}
+#imoveis{padding-bottom:clamp(24px,4vw,40px)}
+.cat-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.cat-cod{display:inline-block;font-weight:800;font-size:.7rem;letter-spacing:2px;padding:5px 12px;border-radius:4px;margin-bottom:10px}
+.cat-cod-v{background:var(--amarelo);color:#000}
+.cat-cod-a{background:#fff;color:#000}
+.cat-cod-l{background:#000;color:var(--amarelo);border:1px solid var(--amarelo)}
+.cat-cod-p{background:#2a2a2a;color:#fff;margin-right:8px}
+.cat-h3{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.5px;font-size:clamp(1.6rem,3.6vw,2.5rem);line-height:1.05;color:#fff}
+.cat-h3 span{color:var(--amarelo)}
+.cat-n{display:inline-block;vertical-align:middle;margin-left:8px;font-family:'Manrope',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.5px;color:#000;background:var(--amarelo);border-radius:50px;padding:3px 10px}
+.cat-sub{font-size:.82rem;color:#9a9a9a;margin-top:6px}
+.im-vazio{width:100%;padding:44px 20px;text-align:center;color:#8a8a8a;border:1px dashed #2a2a2a;border-radius:12px;font-size:.85rem}
+#fcp-home{scroll-margin-top:92px}
+#fcp-home.ativo{border-top:1px solid #1a1a1a;padding-top:clamp(28px,4vw,46px)}
+.im-card{flex:0 0 clamp(250px,21vw,310px)}
+.im-foto{aspect-ratio:9/16!important}
+.im-body{padding:16px 16px 18px}
+.im-nome{font-size:1.02rem}
+.im-preco{font-size:1.45rem}
+.im-tag{font-size:.62rem;padding:4px 9px}
+.im-wa,.im-ver{font-size:.74rem;padding:12px 10px}
+.car-track{gap:20px}
+@media(max-width:760px){.im-card{flex:0 0 min(72vw,290px)}.car-track{gap:14px}}
+/* ══ CARDS MAIORES (9:16 grande) ══ */
+.im-card{flex:0 0 clamp(300px,29vw,410px)}
+.car-track{gap:26px}
+.im-body{padding:20px 22px 24px}
+.im-nome{font-size:1.25rem}
+.im-local{font-size:.8rem}
+.im-preco{font-size:1.8rem}
+.im-tag{font-size:.7rem;padding:5px 11px}
+.im-wa,.im-ver{font-size:.82rem;padding:14px 12px}
+.im-fn{width:48px;height:48px;font-size:1.2rem}
+.im-badge{font-size:.66rem;padding:5px 12px}
+.im-cod{font-size:.62rem;padding:5px 11px}
+#modal{max-width:min(600px,calc(94vh*.5625),100%)}
+@media(max-width:760px){.im-card{flex:0 0 min(88vw,400px)}.car-track{gap:16px}}
+.fcp-thumb{aspect-ratio:9/16!important;background:#000}
+.fcp-thumb img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;background:transparent}
+.fcp-thumb-ph{position:relative;z-index:1}
+.fcp-card{flex:0 0 clamp(170px,19vw,230px)}
+@media(max-width:600px){.fcp-card{flex:0 0 min(60vw,230px)}}
+#fcp-modal{max-width:min(460px,calc((90vh - 150px)*.5625),100%)}
+.fcp-mprev{flex:none;width:100%;aspect-ratio:9/16;max-height:calc(90vh - 150px);padding:0;background:#000;position:relative}
+.fcp-mprev img{width:100%;height:100%;max-width:none;max-height:none;border-radius:0;box-shadow:none;object-fit:contain}
+.fcp-mprev iframe{width:100%;height:100%;border-radius:0}
+@media(max-width:600px){#fcp-modal{max-width:none;width:100%}.fcp-mprev{max-height:calc(92vh - 150px)}}
 </style>
 </head>
 <body>
@@ -1053,7 +1116,7 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
   </div>
 </section>
 
-<!-- IMÓVEIS FCV / FCA / FCL -->
+<!-- IMÓVEIS POR CATEGORIA: FCV / FCA / FCL (+ FCP logo abaixo) -->
 <section id="imoveis">
 <div class="sec-inner">
   <div class="sec-head">
@@ -1061,27 +1124,87 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
       <div class="sec-label">Imóveis FCosta</div>
       <h2 class="sec-h2">Encontre seu <span>imóvel ideal</span></h2>
     </div>
-    <a href="https://fcostacorretor.com/comprar.html" target="_top" class="sec-link" id="sec-link-mais">Ver todos →</a>
   </div>
 </div>
-<div class="tabs">
-  <button class="tab on" onclick="vitTab('todos',this)">🏠 Todos <span class="cnt" id="cnt-todos">0</span></button>
-  <button class="tab" onclick="vitTab('venda',this)">Comprar <span class="nb nb-v" style="font-size:.44rem">FCV</span> <span class="cnt" id="cnt-venda">0</span></button>
-  <button class="tab" onclick="vitTab('aluguel',this)">Alugar <span class="nb nb-a" style="font-size:.44rem">FCA</span> <span class="cnt" id="cnt-aluguel">0</span></button>
-  <button class="tab" onclick="vitTab('lancamento',this)">Lançamentos <span class="nb nb-l" style="font-size:.44rem">FCL</span> <span class="cnt" id="cnt-lancamento">0</span></button>
-  <button class="tab" onclick="vitTab('tour',this)">🎬 Tour <span class="cnt" id="cnt-tour">0</span></button>
-</div>
-<div class="car-outer">
-  <button class="car-arr arr-prev" id="arr-prev" onclick="carNav(-1)">‹</button>
-  <div class="car-track" id="car-track">
-    <div class="im-loading"><div class="spin"></div><p>Carregando imóveis...</p></div>
+<nav class="tabs cat-nav" aria-label="Categorias de imóveis">
+  <a class="tab" href="#cat-venda">Comprar <span class="nb nb-v">FCV</span> <span class="cnt" id="cnt-venda">0</span></a>
+  <a class="tab" href="#cat-aluguel">Alugar <span class="nb nb-a">FCA</span> <span class="cnt" id="cnt-aluguel">0</span></a>
+  <a class="tab" href="#cat-lancamento">Lançamentos <span class="nb nb-l">FCL</span> <span class="cnt" id="cnt-lancamento">0</span></a>
+  <a class="tab" href="#fcp-home">Panfletos <span class="nb nb-p">FCP</span> <span class="cnt" id="cnt-fcp">0</span></a>
+  <a class="tab" href="#tour-fc">🎬 Tour <span class="cnt" id="cnt-tour">0</span></a>
+  <span id="cnt-todos" hidden>0</span>
+</nav>
+<div class="cat-bloco" id="cat-venda">
+  <div class="sec-inner"><div class="cat-head">
+    <div>
+      <span class="cat-cod cat-cod-v">FCV</span>
+      <h3 class="cat-h3">Imóveis para <span>Comprar</span> <small class="cat-n" id="cc-venda">0</small></h3>
+      <p class="cat-sub">Casas, apartamentos e comerciais à venda na Zona Leste.</p>
+    </div>
+    <a class="sec-link" href="https://fcostacorretor.com/comprar.html" target="_top">Ver todos →</a>
+  </div></div>
+  <div class="car-outer" id="co-venda">
+    <button class="car-arr arr-prev" id="cp-venda" onclick="carNav('venda',-1)" aria-label="Anterior">‹</button>
+    <div class="car-track" id="ct-venda"><div class="im-loading"><div class="spin"></div><p>Carregando...</p></div></div>
+    <button class="car-arr arr-next" id="cn-venda" onclick="carNav('venda',1)" aria-label="Próximo">›</button>
   </div>
-  <button class="car-arr arr-next" id="arr-next" onclick="carNav(1)">›</button>
+  <div class="car-dots" id="cd-venda"></div>
 </div>
-<div class="car-dots" id="car-dots"></div>
-<div class="ver-mais-wrap">
-  <a id="ver-mais" href="https://fcostacorretor.com/comprar.html" target="_top" style="display:inline-flex;align-items:center;gap:8px;background:var(--azul-esc);color:#fff;font-weight:600;font-size:.78rem;padding:11px 26px;border-radius:9px;transition:opacity .2s;">Ver todos os imóveis →</a>
+<div class="cat-bloco" id="cat-aluguel">
+  <div class="sec-inner"><div class="cat-head">
+    <div>
+      <span class="cat-cod cat-cod-a">FCA</span>
+      <h3 class="cat-h3">Imóveis para <span>Alugar</span> <small class="cat-n" id="cc-aluguel">0</small></h3>
+      <p class="cat-sub">Locação residencial e comercial com contrato seguro.</p>
+    </div>
+    <a class="sec-link" href="https://fcostacorretor.com/alugar.html" target="_top">Ver todos →</a>
+  </div></div>
+  <div class="faixa-loc" id="faixa-aluguel" role="status" hidden><span>🔑</span><p id="faixa-aluguel-txt">Não temos imóveis para locação no momento.</p><a href="https://wa.me/5511993509109?text=Ol%C3%A1!%20Quero%20ser%20avisado%20quando%20tiver%20im%C3%B3vel%20para%20alugar." target="_blank" rel="noopener">💬 Quero ser avisado</a></div>
+  <div class="car-outer" id="co-aluguel">
+    <button class="car-arr arr-prev" id="cp-aluguel" onclick="carNav('aluguel',-1)" aria-label="Anterior">‹</button>
+    <div class="car-track" id="ct-aluguel"><div class="im-loading"><div class="spin"></div><p>Carregando...</p></div></div>
+    <button class="car-arr arr-next" id="cn-aluguel" onclick="carNav('aluguel',1)" aria-label="Próximo">›</button>
+  </div>
+  <div class="car-dots" id="cd-aluguel"></div>
 </div>
+<div class="cat-bloco" id="cat-lancamento">
+  <div class="sec-inner"><div class="cat-head">
+    <div>
+      <span class="cat-cod cat-cod-l">FCL</span>
+      <h3 class="cat-h3">Novos <span>Lançamentos</span> <small class="cat-n" id="cc-lancamento">0</small></h3>
+      <p class="cat-sub">Empreendimentos com condições especiais de lançamento.</p>
+    </div>
+    <a class="sec-link" href="https://fcostacorretor.com/lancamentos.html" target="_top">Ver todos →</a>
+  </div></div>
+  <div class="car-outer" id="co-lancamento">
+    <button class="car-arr arr-prev" id="cp-lancamento" onclick="carNav('lancamento',-1)" aria-label="Anterior">‹</button>
+    <div class="car-track" id="ct-lancamento"><div class="im-loading"><div class="spin"></div><p>Carregando...</p></div></div>
+    <button class="car-arr arr-next" id="cn-lancamento" onclick="carNav('lancamento',1)" aria-label="Próximo">›</button>
+  </div>
+  <div class="car-dots" id="cd-lancamento"></div>
+</div>
+</section>
+
+<!-- SEÇÃO FCP — PANFLETOS -->
+<section id="fcp-home">
+  <div class="fcp-inner">
+    <div class="fcp-head">
+      <div>
+        <span class="cat-cod cat-cod-p">FCP</span><div class="fcp-badge">Materiais de Divulgação</div>
+        <h2 class="fcp-h2">Panfletos <em>FCosta</em></h2>
+        <p class="fcp-sub">Catálogos e materiais de divulgação de imóveis. Clique para abrir ou baixar.</p>
+      </div>
+      <a href="https://fcostacorretor.com/panfletos.html" target="_top" class="fcp-ver-todos">Ver todos os panfletos →</a>
+    </div>
+    <div class="fcp-car-outer">
+      <button class="fcp-arr fcp-prev" id="fcp-prev" onclick="fcpNav(-1)">‹</button>
+      <div class="fcp-track" id="fcp-track">
+        <div class="fcp-loading"><div class="fcp-spin"></div>Carregando panfletos...</div>
+      </div>
+      <button class="fcp-arr fcp-next" id="fcp-next" onclick="fcpNav(1)">›</button>
+    </div>
+    <div class="fcp-dots" id="fcp-dots"></div>
+  </div>
 </section>
 
 <!-- VÍDEOS -->
@@ -1098,28 +1221,6 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
     <a href="https://play.google.com/store/apps/details?id=meu.fcosta.app2026" target="_blank" class="vid-btn btn-out">📱 Baixar App</a>
   </div>
 </div>
-</section>
-
-<!-- SEÇÃO FCP — PANFLETOS -->
-<section id="fcp-home">
-  <div class="fcp-inner">
-    <div class="fcp-head">
-      <div>
-        <div class="fcp-badge">FCP — Materiais de Divulgação</div>
-        <h2 class="fcp-h2">Panfletos <em>FCosta</em></h2>
-        <p class="fcp-sub">Catálogos e materiais de divulgação de imóveis. Clique para abrir ou baixar.</p>
-      </div>
-      <a href="https://fcostacorretor.com/panfletos.html" target="_top" class="fcp-ver-todos">Ver todos os panfletos →</a>
-    </div>
-    <div class="fcp-car-outer">
-      <button class="fcp-arr fcp-prev" id="fcp-prev" onclick="fcpNav(-1)">‹</button>
-      <div class="fcp-track" id="fcp-track">
-        <div class="fcp-loading"><div class="fcp-spin"></div>Carregando panfletos...</div>
-      </div>
-      <button class="fcp-arr fcp-next" id="fcp-next" onclick="fcpNav(1)">›</button>
-    </div>
-    <div class="fcp-dots" id="fcp-dots"></div>
-  </div>
 </section>
 
 <!-- MODAL FCP -->
@@ -1362,6 +1463,13 @@ var db=firebase.database();
 var _adm=false;
 try{firebase.auth().onAuthStateChanged(function(u){_adm=!!u;var t=document.getElementById('mp-tour-adm');if(t)t.style.display=_adm?'flex':'none';});}catch(e){}
 
+/* faixa "sem imóveis para locação": mesmo controle da página alugar.html (Firebase fcosta_config/faixa_locacao) */
+db.ref('fcosta_config/faixa_locacao').on('value',function(s){
+  var v=s.val()||{},on=(typeof v.ativo==='boolean')?v.ativo:true;
+  var f=document.getElementById('faixa-aluguel'),t=document.getElementById('faixa-aluguel-txt'),b=document.getElementById('cat-aluguel');
+  if(t)t.textContent=(typeof v.texto==='string'&&v.texto.trim())?v.texto.trim():'Não temos imóveis para locação no momento.';
+  if(f)f.hidden=!on;if(b)b.classList.toggle('faixa-on',on);
+});
 var _ims=[],_cur=[],_idx=0,_mf=[],_mi=0,_lf=[],_li=0,_timer=null,_filtro='todos';
 var _fcpList=[],_fcpIdx=0,_fcpTimer=null;
 
@@ -1581,29 +1689,12 @@ db.ref('fcosta_imoveis').on('value',function(snap){
   _ims.forEach(function(i){c.todos++;if(c[i.status]!==undefined)c[i.status]++;if(i.tourMp4)c.tour++;});
   Object.keys(c).forEach(function(k){var el=document.getElementById('cnt-'+k);if(el)el.textContent=c[k];});
 
-  renderCar(_filtro);
+  renderCats();
   renderFcp();
   renderVideos(_ims);
 });
 
-/* ── Vitrine ── */
-function vitTab(s,btn){
-  _filtro=s;
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
-  btn.classList.add('on');
-  var lnk=verLinks[s]||verLinks['venda'];
-  document.getElementById('ver-mais').href=lnk;
-  document.getElementById('sec-link-mais').href=lnk;
-  renderCar(s);autoplay();
-}
-function renderCar(s){
-  var lista=s==='todos'?_ims:(s==='tour'?_ims.filter(function(i){return !!i.tourMp4;}):_ims.filter(function(i){return i.status===s;}));
-  _cur=lista;_idx=0;
-  var t=document.getElementById('car-track');
-  if(!lista.length){t.innerHTML='<div class="im-loading"><p>Nenhum imóvel nessa categoria.</p></div>';document.getElementById('car-dots').innerHTML='';return;}
-  t.innerHTML=lista.map(cardHtml).join('');
-  renderDots();atualizarCar();
-}
+/* ── Vitrine por categoria (módulo abaixo) ── */
 function cardHtml(i){
   var fs=fotos(i),f0=fs[0]||'',c=cod(i),b=badge(i.status);
   var urlImovel=BASE+'imovel.html?id='+encodeURIComponent(i.id);
@@ -1682,87 +1773,103 @@ function cfNav(id,dir,e){
   var img=w.querySelector('img');if(img)cuboTroca(img,cldUrl(fs[idx],500),dir);
   var c=document.getElementById('cfc'+id);if(c)c.textContent=idx+1;
 }
-function vis(){try{var o=document.querySelector('.car-outer'),c=document.querySelectorAll('#car-track .im-card');if(o&&c.length){var st=passoCar(c);if(st>0)return Math.max(1,Math.floor((o.clientWidth-10)/st));}}catch(e){}var w=innerWidth;if(w<680)return 1;if(w<1000)return 2;return 2;}
+/* ── Carrosséis por categoria: FCV (venda), FCA (aluguel), FCL (lançamento) ── */
+var CATS=['venda','aluguel','lancamento'];
+var CAT_MATCH={
+  venda:function(i){return i.status==='venda'||i.status==='vendido';},
+  aluguel:function(i){return i.status==='aluguel';},
+  lancamento:function(i){return i.status==='lancamento';}
+};
+var CAT_VAZIO={venda:'Nenhum imóvel à venda no momento.',aluguel:'Nenhum imóvel para alugar no momento.',lancamento:'Nenhum lançamento no momento.'};
+var _car={};
+function cs(k){return _car[k]||(_car[k]={idx:0,list:[],timer:null});}
 function passoCar(cards){return cards.length>1?cards[1].offsetLeft-cards[0].offsetLeft:cards[0].offsetWidth+20;}
-function atualizarCar(){
-  var t=document.getElementById('car-track');
-  var cards=t.querySelectorAll('.im-card');
-  if(!cards.length)return;
-  var v=vis(),max=Math.max(0,_cur.length-v);
-  _idx=Math.max(0,Math.min(_idx,max));
-  var cw=passoCar(cards);
-  t.style.transform='translateX(-'+(_idx*cw)+'px)';
-  document.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===Math.round(_idx/v));});
-  document.getElementById('arr-prev').disabled=_idx<=0;
-  document.getElementById('arr-next').disabled=_idx>=max;
+function carVis(k){
+  var o=document.getElementById('co-'+k),c=document.querySelectorAll('#ct-'+k+' .im-card');
+  if(o&&c.length){
+    var st=passoCar(c),q=getComputedStyle(o);
+    var av=o.clientWidth-(parseFloat(q.paddingLeft)||0)-(parseFloat(q.paddingRight)||0);
+    if(st>0)return Math.max(1,Math.floor((av+20)/st));
+  }
+  return 1;
 }
-function renderDots(){
-  var v=vis(),tot=Math.ceil(_cur.length/v);
-  document.getElementById('car-dots').innerHTML=Array.from({length:tot},function(_,i){
-    return'<button class="dot'+(i===0?' on':'')+'" onclick="carIr('+i+')"></button>';
-  }).join('');
+function carUpdate(k){
+  var st=cs(k),t=document.getElementById('ct-'+k);if(!t)return;
+  var cards=t.querySelectorAll('.im-card'),p=document.getElementById('cp-'+k),n=document.getElementById('cn-'+k);
+  if(!cards.length){t.style.transform='';p.disabled=true;n.disabled=true;return;}
+  var v=carVis(k),max=Math.max(0,st.list.length-v);
+  st.idx=Math.max(0,Math.min(st.idx,max));
+  t.style.transform='translateX(-'+(st.idx*passoCar(cards))+'px)';
+  document.querySelectorAll('#cd-'+k+' .dot').forEach(function(d,i){d.classList.toggle('on',i===Math.round(st.idx/v));});
+  p.disabled=st.idx<=0;n.disabled=st.idx>=max;
 }
-function carNav(d){var v=vis();_idx=Math.max(0,Math.min(_idx+d,_cur.length-v));atualizarCar();autoplay();}
-function carIr(di){var v=vis();_idx=di*v;atualizarCar();autoplay();}
-window.addEventListener('resize',function(){atualizarCar();renderDots();fcpAtualizarCar();fcpRenderDots();});
-/* Deslizar com o dedo: o carrossel acompanha o toque e encaixa no imóvel mais próximo */
-(function(){
-  var t=document.getElementById('car-track');
-  if(!t)return;
-  var x0=0,y0=0,dx=0,arrastando=false,horizontal=null,base=0,passo=0;
+function carDots(k){
+  var st=cs(k),v=carVis(k),tot=Math.ceil(st.list.length/v),el=document.getElementById('cd-'+k);
+  el.innerHTML=tot>1?Array.from({length:tot},function(_,i){return'<button class="dot'+(i===0?' on':'')+'" onclick="carIr(\''+k+'\','+i+')" aria-label="Página '+(i+1)+'"></button>';}).join(''):'';
+}
+function carNav(k,d){var st=cs(k),v=carVis(k);st.idx=Math.max(0,Math.min(st.idx+d,Math.max(0,st.list.length-v)));carUpdate(k);carAuto(k);}
+function carIr(k,di){var st=cs(k);st.idx=di*carVis(k);carUpdate(k);carAuto(k);}
+function carAuto(k){
+  var st=cs(k);if(st.timer)clearInterval(st.timer);
+  st.timer=setInterval(function(){
+    if(st.list.length<2)return;
+    var o=document.getElementById('co-'+k);if(!o)return;
+    var r=o.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+    var max=Math.max(0,st.list.length-carVis(k));
+    st.idx=st.idx>=max?0:st.idx+1;carUpdate(k);
+  },5200);
+}
+function renderCat(k){
+  var st=cs(k),t=document.getElementById('ct-'+k);if(!t)return;
+  st.list=_ims.filter(CAT_MATCH[k]);
+  var n=document.getElementById('cc-'+k);if(n)n.textContent=st.list.length;
+  if(!st.list.length){t.innerHTML='<div class="im-vazio">'+CAT_VAZIO[k]+'</div>';document.getElementById('cd-'+k).innerHTML='';st.idx=0;carUpdate(k);return;}
+  t.innerHTML=st.list.map(cardHtml).join('');
+  carDots(k);carUpdate(k);carAuto(k);
+}
+function renderCats(){CATS.forEach(renderCat);}
+function carTouch(k){
+  var t=document.getElementById('ct-'+k);if(!t||t._tc)return;t._tc=1;
+  var st=cs(k),x0=0,y0=0,dx=0,on=false,hz=null,base=0,passo=0;
   t.addEventListener('touchstart',function(e){
     if(e.touches.length!==1)return;
-    var c=t.querySelectorAll('.im-card');
-    if(!c.length)return;
-    passo=passoCar(c);base=_idx*passo;
-    x0=e.touches[0].clientX;y0=e.touches[0].clientY;dx=0;arrastando=true;horizontal=null;
-    if(_timer)clearInterval(_timer);
+    var c=t.querySelectorAll('.im-card');if(!c.length)return;
+    passo=passoCar(c);base=st.idx*passo;x0=e.touches[0].clientX;y0=e.touches[0].clientY;dx=0;on=true;hz=null;
+    if(st.timer)clearInterval(st.timer);
   },{passive:true});
   t.addEventListener('touchmove',function(e){
-    if(!arrastando)return;
+    if(!on)return;
     var mx=e.touches[0].clientX-x0,my=e.touches[0].clientY-y0;
-    if(horizontal===null&&(Math.abs(mx)>8||Math.abs(my)>8)){
-      horizontal=Math.abs(mx)>Math.abs(my);
-      if(horizontal)t.style.transition='none';
-    }
-    if(!horizontal)return;
+    if(hz===null&&(Math.abs(mx)>8||Math.abs(my)>8)){hz=Math.abs(mx)>Math.abs(my);if(hz)t.style.transition='none';}
+    if(!hz)return;
     dx=mx;
-    var max=Math.max(0,_cur.length-vis())*passo;
-    var pos=base-dx;
+    var max=Math.max(0,st.list.length-carVis(k))*passo,pos=base-dx;
     if(pos<0)pos=pos/3;else if(pos>max)pos=max+(pos-max)/3;
     t.style.transform='translateX('+(-pos)+'px)';
   },{passive:true});
   function fim(){
-    if(!arrastando)return;
-    arrastando=false;
-    t.style.transition='';
-    if(horizontal){
+    if(!on)return;on=false;t.style.transition='';
+    if(hz){
       var n=Math.round(-dx/passo);
       if(n===0&&Math.abs(dx)>40)n=dx<0?1:-1;
-      _idx=Math.max(0,Math.min(_idx+n,Math.max(0,_cur.length-vis())));
+      st.idx=Math.max(0,Math.min(st.idx+n,Math.max(0,st.list.length-carVis(k))));
     }
-    atualizarCar();autoplay();
+    carUpdate(k);carAuto(k);
   }
-  t.addEventListener('touchend',fim);
-  t.addEventListener('touchcancel',fim);
-})();
-function autoplay(){
-  if(_timer)clearInterval(_timer);
-  _timer=setInterval(function(){
-    if(!_cur.length)return;
-    var v=vis(),max=Math.max(0,_cur.length-v);
-    _idx=_idx>=max?0:_idx+1;
-    atualizarCar();
-  },4800);
+  t.addEventListener('touchend',fim);t.addEventListener('touchcancel',fim);
 }
-autoplay();
+CATS.forEach(carTouch);
+window.addEventListener('resize',function(){CATS.forEach(function(k){carDots(k);carUpdate(k);});fcpAtualizarCar();fcpRenderDots();});
 
 /* ── FCP ── */
-function fcpVis(){var w=innerWidth;if(w<420)return 2;if(w<640)return 2;if(w<900)return 3;if(w<1150)return 4;return 5;}
+function fcpVis(){var o=document.querySelector('.fcp-car-outer'),c=document.querySelectorAll('#fcp-track .fcp-card');if(o&&c.length){var cw=c[0].offsetWidth+14,q=getComputedStyle(o),av=o.clientWidth-(parseFloat(q.paddingLeft)||0)-(parseFloat(q.paddingRight)||0);return Math.max(1,Math.floor((av+14)/cw));}return 2;}
 function renderFcp(){
   var sec=document.getElementById('fcp-home');
-  if(!_fcpList.length){sec.classList.remove('ativo');return;}
   sec.classList.add('ativo');
+  var nf=document.getElementById('cnt-fcp');if(nf)nf.textContent=_fcpList.length;
+  var vz=!_fcpList.length;
+  ['fcp-prev','fcp-next','fcp-dots'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display=vz?'none':'';});
+  if(vz){document.getElementById('fcp-track').innerHTML='<div class="im-vazio">Nenhum panfleto disponível no momento.</div>';return;}
   var t=document.getElementById('fcp-track');
   t.innerHTML=_fcpList.map(function(i){
     var c=cod(i);
@@ -1797,7 +1904,7 @@ function renderFcp(){
   fcpAutoplay();
   (function(){
     var s=0,tr=document.getElementById('fcp-track');
-    if(!tr)return;
+    if(!tr||tr._t)return;tr._t=1;
     tr.addEventListener('touchstart',function(e){s=e.touches[0].clientX;},{passive:true});
     tr.addEventListener('touchend',function(e){var d=s-e.changedTouches[0].clientX;if(Math.abs(d)>44)fcpNav(d>0?1:-1);});
   })();
@@ -2112,7 +2219,7 @@ document.addEventListener('keydown',function(e){
 (function(){
   document.addEventListener('load',function(e){
     var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
-    var c=t.closest('.im-foto,.modal-galeria,.lb-wrap,.ftr-c,.ftr-ph');
+    var c=t.closest('.im-foto,.modal-galeria,.lb-wrap,.ftr-c,.ftr-ph,.fcp-thumb');
     if(!c||t.parentNode!==c)return;
     c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
     if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';

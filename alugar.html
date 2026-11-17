@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Alugar imóvel na Zona Leste de SP — FCosta Corretor. Apartamentos, casas e comerciais para locação. CRECI-SP 294791-F"/>
-<title>Alugar Imóvel Zona Leste SP | FCosta Corretor FCA</title>
+<meta name="description" content="Imóveis para alugar na Zona Leste de SP — FCosta Corretor. Locação residencial e comercial. CRECI-SP 294791-F"/>
+<title>Imóveis para Alugar Zona Leste SP | FCosta Corretor FCA</title>
 <link rel="canonical" href="https://fcostacorretor.com/alugar"/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <style>
 :root{--azul:#2176AE;--escuro:#0D3B66;--ceu:#3B9BD6;--ouro:#C9A84C;--ouro2:#FFD700;--verde:#25D366;--fundo:#F5F9FF;--texto:#1a2a3a;--sec:#4a6070;--borda:#dce8f4;--titulo:'Playfair Display',serif;--r:14px;--sh:0 4px 24px rgba(13,59,102,.10);--sh2:0 12px 48px rgba(13,59,102,.18);--tr:.22s ease;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -130,11 +131,6 @@ img{max-width:100%;display:block;}
 .lb-cnt{color:rgba(255,255,255,.5);font-size:.68rem;margin-top:7px;}
 .foot-mini{background:#071120;color:rgba(255,255,255,.5);text-align:center;padding:16px 20px;font-size:.68rem;}
 .foot-mini a{color:#3B9BD6;}
-/* Formato Reels (vertical) nas fotos do modal — a foto aparece inteira, sem cortar */
-#modal{max-width:440px;}
-#modal .modal-gal{height:auto;min-height:0;aspect-ratio:9/16;max-height:66vh;background:#0B1A2C;}
-#modal .modal-gal img{object-fit:contain;background:#0B1A2C;}
-@media(max-width:600px){#modal .modal-gal{max-height:58vh;}}
 </style>
 <meta name="theme-color" content="#000000"/>
 <style id="tema-fcosta">
@@ -334,6 +330,71 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pg-imovel .estado-msg{color:#a3a3a3;}
 .pg-imovel .estado-sub{color:#555;}
 
+
+/* ============ FORMATO 9:16 (tela de celular / reels) — fotos, galerias e vídeos ============ */
+.im-foto,.modal-gal,.lb-wrap{--bg:none}
+.im-foto::before,.modal-gal::before,.lb-wrap::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+.im-foto{height:auto!important;aspect-ratio:9/16!important;background:#000}
+.im-foto img{position:relative;z-index:1;object-fit:contain;background:transparent}
+.im-foto::after{z-index:2}
+.imoveis-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
+.im-fn{width:42px;height:42px}
+@media(hover:none){.im-fn{opacity:1}}
+/* janela do imóvel */
+#modal-bg{padding:12px}
+#modal{display:block;overflow-y:auto;overflow-x:hidden;width:100%;max-width:min(520px,calc(86vh*.5625),100%);max-height:94vh}
+#modal .modal-gal{position:relative;height:auto!important;min-height:0;max-height:none!important;aspect-ratio:9/16;background:#000}
+#modal .modal-gal img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;background:transparent}
+.modal-body{overflow:visible;flex:none;min-height:0}
+.mfnav{z-index:3;width:44px;height:44px;font-size:1.25rem}
+.mfc,.mhint{z-index:3}
+.mth{width:40px;height:71px}
+.modal-thumbs{padding:8px 12px}
+@media(max-width:640px){
+  #modal-bg{padding:0;align-items:stretch}
+  #modal{max-width:none;width:100%;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;border-radius:0;border:0}
+  #modal .modal-gal{border-radius:0;max-height:82vh!important;max-height:82dvh!important}
+  .modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:42px;height:42px;font-size:1.1rem;z-index:30}
+}
+/* visualizador de fotos (tela cheia) */
+#lb{padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.lb-wrap{position:relative;overflow:hidden;border-radius:16px;aspect-ratio:9/16;width:min(100%,calc((100vh - 150px)*.5625),560px);max-width:none;background:#000}
+@supports(height:100dvh){.lb-wrap{width:min(100%,calc((100dvh - 150px)*.5625),560px)}}
+#lb-img{position:relative;z-index:1;width:100%;height:100%;max-height:none;max-width:none;border-radius:0;object-fit:contain}
+.lb-a{z-index:3;width:46px;height:46px}
+.lb-p{left:8px}.lb-n{right:8px}
+.lb-thumbs{width:max-content;max-width:100%;margin-inline:auto}
+.lbth{width:36px;height:64px}
+</style>
+<style id="faixa-locacao">
+/* ══ FAIXA "SEM IMÓVEIS PARA LOCAÇÃO" ══ ligar/desligar: Firebase fcosta_config/faixa_locacao/ativo (ou botão do ADM nesta página) */
+.faixa-loc{background:var(--amarelo,#FFD400);color:#000;border-bottom:1px solid #000}
+.faixa-loc[hidden],.faixa-adm[hidden]{display:none}
+.faixa-loc-in{max-width:1180px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;text-align:center}
+.faixa-loc-ic{font-size:1.5rem;line-height:1}
+.faixa-loc p{font-family:var(--titulo,'Anton',sans-serif);font-weight:400;text-transform:uppercase;letter-spacing:.8px;font-size:clamp(1rem,2.4vw,1.45rem);line-height:1.15;margin:0}
+.faixa-loc-wa{background:#000;color:var(--amarelo,#FFD400);font-weight:800;font-size:.74rem;letter-spacing:.8px;text-transform:uppercase;padding:11px 18px;border-radius:6px;white-space:nowrap}
+.faixa-loc-wa:hover{opacity:.88}
+.faixa-adm{position:fixed;left:12px;bottom:12px;z-index:9990;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#0b0b0b;border:1px solid var(--amarelo,#FFD400);color:#fff;border-radius:10px;padding:8px 12px;font-size:.72rem;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.faixa-adm b{color:var(--amarelo,#FFD400)}
+.faixa-adm button{background:var(--amarelo,#FFD400);color:#000;border:0;border-radius:6px;font-weight:800;font-size:.68rem;padding:7px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.4px}
+body.faixa-on .nenhum{display:none}
+</style>
+<style id="fmt-grande">
+/* ══ CARDS MAIORES (9:16 grande) ══ */
+.imoveis-wrap{max-width:1280px}
+.imoveis-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:30px}
+.im-body{padding:20px 22px 24px}
+.im-nome{font-size:1.3rem}
+.im-local{font-size:.8rem}
+.im-preco{font-size:1.9rem}
+.im-tag{font-size:.7rem;padding:5px 11px}
+.im-wa,.im-ver{font-size:.82rem;padding:14px 12px}
+.im-fn{width:48px;height:48px;font-size:1.2rem}
+.im-badge{font-size:.66rem;padding:5px 12px}
+.im-cod{font-size:.62rem;padding:5px 11px}
+#modal{max-width:min(600px,calc(94vh*.5625),100%)}
+@media(max-width:700px){.imoveis-grid{grid-template-columns:1fr;gap:22px}.im-nome{font-size:1.2rem}}
 </style>
 </head>
 <body>
@@ -347,7 +408,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
   <nav class="bread">
     <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;">Home</a>
     <span>›</span>
-    <span style="color:var(--texto);font-weight:600;">Alugar Imóvel (FCA)</span>
+    <span style="color:var(--texto);font-weight:600;">Alugar (FCA)</span>
   </nav>
   <a href="https://fcostacorretor.com/" onclick="window.top.location.href='https://fcostacorretor.com/';return false;" class="btn-home">← Home</a>
   <a href="https://wa.me/5511993509109?text=Quero%20alugar%20um%20im%C3%B3vel%20na%20Zona%20Leste." target="_blank" class="nav-wa">
@@ -359,10 +420,25 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 
 <div class="page-hero">
 <div class="page-hero-inner">
-  <div class="page-badge">🟡 FCA — Imóveis para Alugar</div>
-  <h1 class="page-h1">Alugar imóvel na <em>Zona Leste</em></h1>
-  <p class="page-sub">Apartamentos, casas e salas comerciais para locação. Contratos seguros e análise de crédito. CRECI-SP 294791-F</p>
+  <div class="page-badge">🔑 FCA — Locação de Imóveis</div>
+  <h1 class="page-h1">Alugar na <em>Zona Leste</em></h1>
+  <p class="page-sub">Locação residencial e comercial com contrato seguro, análise de crédito e suporte completo. CRECI-SP 294791-F</p>
 </div>
+</div>
+
+
+<!-- FAIXA: sem imóveis para locação (liga/desliga) -->
+<div id="faixa-loc" class="faixa-loc" role="status" hidden>
+  <div class="faixa-loc-in">
+    <span class="faixa-loc-ic">🔑</span>
+    <p id="faixa-loc-txt">Não temos imóveis para locação no momento.</p>
+    <a class="faixa-loc-wa" target="_blank" rel="noopener" href="https://wa.me/5511993509109?text=Ol%C3%A1!%20Quero%20ser%20avisado%20quando%20tiver%20im%C3%B3vel%20para%20alugar.">💬 Quero ser avisado</a>
+  </div>
+</div>
+<div id="faixa-adm" class="faixa-adm" hidden>
+  <span>🔧 Faixa de locação: <b id="faixa-adm-st">—</b></span>
+  <button type="button" onclick="faixaAlternar()">Ligar / desligar</button>
+  <button type="button" onclick="faixaTexto()">Editar texto</button>
 </div>
 
 <div class="filtros-wrap">
@@ -388,7 +464,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 <div style="max-width:1180px;margin:0 auto;padding:12px 20px 0;">
   <div style="background:#FFF8E7;border:1.5px solid #F0C040;border-left:4px solid #C9A84C;border-radius:9px;padding:11px 16px;display:flex;align-items:flex-start;gap:10px;">
     <span style="font-size:1rem;flex-shrink:0;margin-top:1px;">⚠️</span>
-    <p style="font-size:.7rem;color:#5a4000;line-height:1.7;margin:0;"><b style="color:#3d2c00;">Atenção:</b> Valores do imóvel anunciado podem sofrer alterações sem prévio aviso. As metragens e taxas informadas são aproximadas. Favor entrar em contato para confirmar informações atualizadas e disponibilidade!</p>
+    <p style="font-size:.7rem;color:#5a4000;line-height:1.7;margin:0;"><b style="color:#3d2c00;">Atenção:</b> Valores de aluguel e encargos podem sofrer alterações sem prévio aviso. As metragens e taxas informadas são aproximadas. Favor entrar em contato para confirmar informações atualizadas e disponibilidade!</p>
   </div>
 </div>
 
@@ -484,7 +560,7 @@ function render(lista){
         +'<div class="im-tipo">'+esc(i.tipo||'Imóvel')+'</div>'
         +'<h2 class="im-nome">'+esc(i.titulo||'Imóvel FCosta')+'</h2>'
         +'<p class="im-local">📍 '+esc([i.bairro,i.cidade].filter(Boolean).join(' — '))+'</p>'
-        +(precoFmt?'<div class="im-preco"><small>Aluguel/mês</small>'+precoFmt+'</div>':'')
+        +(precoFmt?'<div class="im-preco"><small>Aluguel / mês</small>'+precoFmt+'</div>':'')
         +'<div class="im-tags">'
           +(i.quartos?'<span class="im-tag">🛏 '+i.quartos+' qto'+(i.quartos>1?'s':'')+'</span>':'')
           +(i.banheiros?'<span class="im-tag">🚿 '+i.banheiros+'</span>':'')
@@ -499,46 +575,13 @@ function render(lista){
   }).join('');
 }
 
-/* ── Efeito Cubo 3D (estilo Facebook) para troca de fotos ── */
-var mDir=0;
-function dirCubo(a,b,n){if(n>2){if(b===(a+1)%n)return 1;if(a===(b+1)%n)return -1;}return b>a?1:-1;}
-function cuboTroca(img,src,dir){
-  if(!img)return;
-  if(img._cuboFim)img._cuboFim();
-  var w=img.offsetWidth,h=img.offsetHeight;
-  if(!dir||!w||!h||!img.naturalWidth||img.getAttribute('src')===src||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)){img.src=src;return;}
-  dir=dir>0?1:-1;
-  var cs=getComputedStyle(img),vis0=img.style.visibility,atual=img.currentSrc||img.src;
-  var palco=document.createElement('div');
-  palco.style.cssText='position:absolute;left:'+img.offsetLeft+'px;top:'+img.offsetTop+'px;width:'+w+'px;height:'+h+'px;perspective:'+Math.round(w*2.4)+'px;pointer-events:none;';
-  var cubo=document.createElement('div');
-  cubo.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;transform-style:preserve-3d;will-change:transform;transform:translateZ('+(-w/2)+'px) rotateY(0deg);transition:transform .7s cubic-bezier(.65,0,.35,1);';
-  function face(s,t){
-    var f=document.createElement('img');
-    f.src=s;f.alt='';
-    f.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;object-fit:'+cs.objectFit+';background:'+cs.backgroundColor+';border-radius:'+cs.borderRadius+';backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:'+t+';';
-    return f;
-  }
-  cubo.appendChild(face(atual,'rotateY(0deg) translateZ('+(w/2)+'px)'));
-  cubo.appendChild(face(src,'rotateY('+(dir*90)+'deg) translateZ('+(w/2)+'px)'));
-  palco.appendChild(cubo);
-  img.style.visibility='hidden';
-  img.src=src;
-  img.parentNode.insertBefore(palco,img.nextSibling);
-  void cubo.offsetWidth;
-  cubo.style.transform='translateZ('+(-w/2)+'px) rotateY('+(-dir*90)+'deg)';
-  var tm=setTimeout(fim,740);
-  function fim(){clearTimeout(tm);if(palco.parentNode)palco.parentNode.removeChild(palco);img.style.visibility=vis0;img._cuboFim=null;}
-  img._cuboFim=fim;
-}
-
 function cfN(id,dir,e){
   e.stopPropagation();
   var w=document.getElementById('cf'+id);
   var fs=JSON.parse(w.dataset.fotos);
   var idx=(parseInt(w.dataset.idx)+dir+fs.length)%fs.length;
   w.dataset.idx=idx;
-  var img=w.querySelector('img');if(img)cuboTroca(img,cldUrl(fs[idx],500),dir);
+  var img=w.querySelector('img');if(img)img.src=cldUrl(fs[idx],500);
   var c=document.getElementById('fc'+id);if(c)c.textContent=idx+1;
 }
 
@@ -589,12 +632,12 @@ function abrirModal(id){
 }
 
 function fecharModal(){document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
-function mN(d){_mi=(_mi+d+_mf.length)%_mf.length;var img=document.getElementById('mfimg');if(img)cuboTroca(img,cldUrl(_mf[_mi],900),mDir||d);var x=document.getElementById('mfidx');if(x)x.textContent=_mi+1;document.querySelectorAll('.mth').forEach(function(t,i){t.classList.toggle('on',i===_mi);});_li=_mi;}
-function mIr(x){var d=x>_mi?1:-1;_mi=x;mDir=d;mN(0);mDir=0;}
+function mN(d){_mi=(_mi+d+_mf.length)%_mf.length;var img=document.getElementById('mfimg');if(img)img.src=cldUrl(_mf[_mi],900);var x=document.getElementById('mfidx');if(x)x.textContent=_mi+1;document.querySelectorAll('.mth').forEach(function(t,i){t.classList.toggle('on',i===_mi);});_li=_mi;}
+function mIr(x){_mi=x;mN(0);}
 function lbAbrir(idx){if(!_lf.length)return;_li=idx||0;document.getElementById('lb').classList.add('on');document.body.style.overflow='hidden';lbR();}
-function lbR(dir){var img=document.getElementById('lb-img');if(dir){img.style.opacity='1';cuboTroca(img,cldUrl(_lf[_li],1400),dir);}else{img.style.opacity='0';setTimeout(function(){img.src=cldUrl(_lf[_li],1400);img.style.opacity='1';},80);}document.getElementById('lb-cnt').textContent=(_li+1)+' / '+_lf.length;document.getElementById('lb-thumbs').innerHTML=_lf.map(function(f,i){return'<img src="'+esc(cldUrl(f,120))+'" class="lbth'+(i===_li?' on':'')+'" onclick="lbIr('+i+')" loading="lazy"/>';}).join('');setTimeout(function(){var t=document.querySelectorAll('.lbth');if(t[_li])t[_li].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});},100);}
-function lbNav(d){_li=(_li+d+_lf.length)%_lf.length;lbR(d);}
-function lbIr(i){var d=i>_li?1:-1;_li=i;lbR(d);}
+function lbR(){var img=document.getElementById('lb-img');img.style.opacity='0';setTimeout(function(){img.src=cldUrl(_lf[_li],1400);img.style.opacity='1';},80);document.getElementById('lb-cnt').textContent=(_li+1)+' / '+_lf.length;document.getElementById('lb-thumbs').innerHTML=_lf.map(function(f,i){return'<img src="'+esc(cldUrl(f,120))+'" class="lbth'+(i===_li?' on':'')+'" onclick="lbIr('+i+')" loading="lazy"/>';}).join('');setTimeout(function(){var t=document.querySelectorAll('.lbth');if(t[_li])t[_li].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});},100);}
+function lbNav(d){_li=(_li+d+_lf.length)%_lf.length;lbR();}
+function lbIr(i){_li=i;lbR();}
 function lbFechar(){document.getElementById('lb').classList.remove('on');document.body.style.overflow=document.getElementById('modal-bg').classList.contains('on')?'hidden':'';}
 
 document.addEventListener('keydown',function(e){
@@ -605,6 +648,55 @@ document.addEventListener('keydown',function(e){
   }else if(e.key==='Escape')fecharModal();
 });
 window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('sc',scrollY>20);});
+</script>
+<script>
+/* ══ FAIXA DE LOCAÇÃO ══
+   Padrão: LIGADA (FAIXA_PADRAO=true) enquanto o painel não definir nada.
+   Controle: Firebase  fcosta_config/faixa_locacao = { ativo:true|false, texto:"..." }
+   Ou entre no painel ADM e use os botões "Ligar / desligar" e "Editar texto" que aparecem no canto desta página. */
+(function(){
+  var FAIXA_PADRAO=true,TEXTO_PADRAO='Não temos imóveis para locação no momento.';
+  var ref=db.ref('fcosta_config/faixa_locacao'),cfg={ativo:FAIXA_PADRAO,texto:TEXTO_PADRAO};
+  function pintar(){
+    var on=cfg.ativo!==false;
+    var f=document.getElementById('faixa-loc'),t=document.getElementById('faixa-loc-txt'),st=document.getElementById('faixa-adm-st');
+    if(t)t.textContent=cfg.texto||TEXTO_PADRAO;
+    if(f)f.hidden=!on;
+    document.body.classList.toggle('faixa-on',on);
+    if(st)st.textContent=on?'LIGADA':'DESLIGADA';
+  }
+  ref.on('value',function(s){
+    var v=s.val()||{};
+    cfg={ativo:(typeof v.ativo==='boolean')?v.ativo:FAIXA_PADRAO,texto:(typeof v.texto==='string'&&v.texto.trim())?v.texto.trim():TEXTO_PADRAO};
+    pintar();
+  },function(){pintar();});
+  function erro(e){alert('Não foi possível salvar. Entre no painel ADM e tente de novo.\n'+(e&&e.message||''));}
+  window.faixaAlternar=function(){ref.update({ativo:!(cfg.ativo!==false)}).catch(erro);};
+  window.faixaTexto=function(){
+    var n=prompt('Texto da faixa:',cfg.texto||TEXTO_PADRAO);
+    if(n===null)return;
+    ref.update({texto:n.trim()||TEXTO_PADRAO}).catch(erro);
+  };
+  try{firebase.auth().onAuthStateChanged(function(u){var a=document.getElementById('faixa-adm');if(a)a.hidden=!u;});}catch(e){}
+  pintar();
+})();
+</script>
+<script>
+/* FORMATO 9:16: foto/vídeo vertical preenche o quadro; paisagem aparece inteira sobre fundo desfocado */
+(function(){
+  var SEL='.im-foto,.modal-gal,.modal-galeria,.lb-wrap,.fcg-carousel,.fcg-lb,.galeria-wrap,#fs';
+  document.addEventListener('load',function(e){
+    var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
+    var c=t.closest(SEL);
+    if(!c||t.parentNode!==c)return;
+    c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
+    if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';
+  },true);
+  document.addEventListener('loadedmetadata',function(e){
+    var v=e.target;if(!v||v.tagName!=='VIDEO')return;
+    if(v.videoWidth&&v.videoHeight){v.style.objectFit=(v.videoWidth/v.videoHeight>0.8)?'contain':'cover';v.style.background='#000';}
+  },true);
+})();
 </script>
 </body>
 </html>

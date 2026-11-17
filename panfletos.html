@@ -463,6 +463,36 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pg-imovel .estado-sub{color:#555;}
 
 </style>
+<style id="fmt-916">
+/* ============ FORMATO 9:16 (tela de celular / reels) — panfletos ============ */
+.pf-thumb,.modal-preview,.lb-wrap{--bg:none}
+.pf-thumb::before,.modal-preview::before,.lb-wrap::before{content:"";position:absolute;inset:-24px;z-index:0;background:var(--bg) center/cover no-repeat;filter:blur(24px) brightness(.55) saturate(1.2);transform:scale(1.1);pointer-events:none}
+.pf-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:22px}
+.pf-thumb{aspect-ratio:9/16;background:#000}
+.pf-thumb img,.pf-card:hover .pf-thumb img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;background:transparent}
+.pf-thumb-ph{position:relative;z-index:1}
+.pf-cod,.pf-tipo-badge,.pf-dest{z-index:3}
+/* janela do panfleto */
+#modal-bg{padding:12px}
+#modal{display:block;overflow-y:auto;overflow-x:hidden;width:100%;max-width:min(480px,calc((94vh - 200px)*.5625),100%);max-height:94vh}
+#modal .modal-preview{position:relative;flex:none;width:100%;aspect-ratio:9/16;min-height:0;padding:0;background:#000;overflow:hidden}
+#modal .modal-preview img{position:relative;z-index:1;width:100%;height:100%;max-width:none;max-height:none;border-radius:0;box-shadow:none;object-fit:contain;background:transparent}
+#modal .modal-preview iframe{position:relative;z-index:1;width:100%;height:100%;border-radius:0;background:#fff}
+#modal .modal-preview .pdf-ph{position:relative;z-index:1}
+@media(max-width:640px){
+  #modal-bg{padding:0;align-items:stretch}
+  #modal{max-width:none;width:100%;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;border-radius:0;border:0}
+  .modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:42px;height:42px;font-size:1.1rem;z-index:30}
+}
+/* visualizador de imagem (tela cheia) */
+#lb{padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.lb-wrap{position:relative;overflow:hidden;border-radius:16px;aspect-ratio:9/16;width:min(100%,calc((100vh - 170px)*.5625),560px);max-width:none;background:#000}
+@supports(height:100dvh){.lb-wrap{width:min(100%,calc((100dvh - 170px)*.5625),560px)}}
+#lb-img{position:relative;z-index:1;width:100%;height:100%;max-height:none;max-width:none;border-radius:0;object-fit:contain}
+.lb-a{z-index:3;width:46px;height:46px}
+.lb-p{left:8px}.lb-n{right:8px}
+@media(max-width:420px){.pf-grid{grid-template-columns:1fr 1fr;gap:12px}}
+</style>
 </head>
 <body>
 
@@ -850,6 +880,19 @@ window.addEventListener('scroll', function(){
   window.addEventListener('resize',sendHeight);
   if(window.MutationObserver){var obs=new MutationObserver(function(){setTimeout(sendHeight,60);});obs.observe(document.body,{childList:true,subtree:true,attributes:true});}
   var ticks=0;var iv=setInterval(function(){sendHeight();ticks++;if(ticks>=10)clearInterval(iv);},500);
+})();
+</script>
+<script>
+/* FORMATO 9:16: foto vertical preenche o quadro; paisagem/A4 aparece inteira sobre fundo desfocado */
+(function(){
+  var SEL='.pf-thumb,.modal-preview,.lb-wrap';
+  document.addEventListener('load',function(e){
+    var t=e.target;if(!t||t.tagName!=='IMG'||!t.closest)return;
+    var c=t.closest(SEL);
+    if(!c||t.parentNode!==c)return;
+    c.style.setProperty('--bg','url("'+String(t.currentSrc||t.src).replace(/"/g,'%22')+'")');
+    if(t.naturalWidth&&t.naturalHeight)t.style.objectFit=(t.naturalWidth/t.naturalHeight<=0.65)?'cover':'contain';
+  },true);
 })();
 </script>
 </body>
