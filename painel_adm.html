@@ -1335,14 +1335,32 @@ var _limparOrig=limpar;limpar=function(){_limparOrig();_numAuto=false;renderDest
 try{renderDestino();}catch(e){}
 function _pubFim(){_pub=false;if(_pubPend){_pubPend=false;setTimeout(function(){publicarSite(true);},600);}}
 var ST_ACENTO={venda:'À venda',aluguel:'Para alugar',lancamento:'Lançamento',vendido:'Vendido'};
-function ghCfg(){try{return JSON.parse(localStorage.getItem('fcosta_gh')||'null');}catch(e){return null;}}
-function ghConfigurar(){
-  var c=ghCfg()||{};
-  var repo=prompt('Repositório do site (usuario/repositorio):',c.repo||'');if(!repo)return null;
-  var br=prompt('Branch publicada no GitHub Pages:',c.branch||'main');if(!br)return null;
-  var tk=prompt('Token do GitHub (fine-grained, só deste repositório, Contents: Read and write):',c.token||'');if(!tk)return null;
-  c={repo:repo.trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\.git$/i,'').replace(/^\/+|\/+$/g,''),branch:br.trim(),token:tk.trim()};
+/* Configuração fixa opcional: preencha aqui para nunca mais digitar (cuidado: quem abrir o código-fonte vê o token) */
+var GH_PADRAO={repo:'',branch:'main',token:''};
+function ghCfg(){
+  var c=null;
+  try{c=JSON.parse(localStorage.getItem('fcosta_gh')||'null');}catch(e){}
+  if(!c){try{c=JSON.parse(document.cookie.split('; ').filter(function(x){return x.indexOf('fcosta_gh=')===0;}).map(function(x){return decodeURIComponent(x.slice(10));})[0]||'null');}catch(e){}}
+  if((!c||!c.token)&&GH_PADRAO.repo&&GH_PADRAO.token)c={repo:GH_PADRAO.repo,branch:GH_PADRAO.branch||'main',token:GH_PADRAO.token};
+  if(c&&c.token&&!localStorage.getItem('fcosta_gh')){try{localStorage.setItem('fcosta_gh',JSON.stringify(c));}catch(e){}}
+  return(c&&c.token&&c.repo)?c:null;
+}
+function ghSalvar(c){
   try{localStorage.setItem('fcosta_gh',JSON.stringify(c));}catch(e){}
+  try{document.cookie='fcosta_gh='+encodeURIComponent(JSON.stringify(c))+'; max-age=31536000; path=/; SameSite=Strict'+(location.protocol==='https:'?'; Secure':'');}catch(e){}
+}
+function ghConfigurar(forcar){
+  var c=ghCfg();
+  /* já configurado: não pergunta de novo, só pergunta se quer trocar */
+  if(c&&forcar!==true){
+    if(!confirm('GitHub já está configurado ('+c.repo+' / '+c.branch+').\n\nOK = alterar a configuração\nCancelar = manter como está'))return c;
+  }
+  c=c||{};
+  var repo=prompt('Repositório do site (usuario/repositorio):',c.repo||'');if(!repo)return ghCfg();
+  var br=prompt('Branch publicada no GitHub Pages:',c.branch||'main');if(!br)return ghCfg();
+  var tk=prompt('Token do GitHub (fine-grained, só deste repositório, Contents: Read and write):',c.token||'');if(!tk)return ghCfg();
+  c={repo:repo.trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\.git$/i,'').replace(/^\/+|\/+$/g,''),branch:br.trim(),token:tk.trim()};
+  ghSalvar(c);
   toast('Configuração do GitHub salva neste navegador.');
   return c;
 }
@@ -1425,7 +1443,7 @@ function publicarSite(auto){
   }).then(function(t){return ghApi(c,'/git/commits',{method:'POST',body:JSON.stringify({message:'Painel ADM: publica '+paginas.length+' imóveis',tree:t.sha,parents:[base.sha]})});
   }).then(function(cm){return ghApi(c,'/git/refs/heads/'+encodeURIComponent(c.branch),{method:'PATCH',body:JSON.stringify({sha:cm.sha})});
   }).then(function(){_pubFim();toast('✅ Site atualizado: '+paginas.length+' imóvel(is)'+(ignorados?' ('+ignorados+' sem slug válido)':'')+'. Entra no ar em ~1 min.');
-  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401)m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub.';else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Sem conexão com o GitHub. Verifique a internet e tente de novo.';toast('❌ '+m,true);});
+  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401){try{localStorage.removeItem('fcosta_gh');document.cookie='fcosta_gh=; max-age=0; path=/';}catch(_){}m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub.';}else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Sem conexão com o GitHub. Verifique a internet e tente de novo.';toast('❌ '+m,true);});
 }
 </script>
 </body>
