@@ -15,6 +15,7 @@
 <link rel="icon" type="image/png" href="sen_fundo_logo.png">
 <link rel="apple-touch-icon" href="sen_fundo_logo.png">
 <link rel="preconnect" href="https://fcosta2026-847c3-default-rtdb.firebaseio.com" crossorigin>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 <style>
 :root{--y:#FFC800;--y2:#FFE066;--k:#000;--k2:#141414;--k3:#262626;--w:#fff;--g:#b8b8b8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -131,6 +132,51 @@ footer a:hover{color:var(--y)}
 /* botão do WhatsApp */
 .zap{position:fixed;right:16px;bottom:16px;z-index:60;background:var(--y);color:var(--k);font-weight:700;padding:14px 20px;border-radius:50px;border:3px solid var(--k);box-shadow:0 0 0 2px var(--y);min-height:52px;display:flex;align-items:center;gap:8px}
 .zap:hover{background:var(--y2)}
+
+/* cartões de imóvel (foto sempre 4:3, qualquer tela) */
+img{max-width:100%}
+.im{display:flex;flex-direction:column}
+.im-link{display:block;color:inherit}
+.im-foto{aspect-ratio:4/3;overflow:hidden}
+.im-foto .f{width:100%;height:100%;object-fit:cover;display:block}
+.im-acoes{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 18px;margin-top:auto}
+.im-acoes a,.im-acoes button{flex:1 1 auto;min-height:44px;padding:8px 12px;border-radius:6px;border:2px solid var(--y);background:transparent;color:var(--y);font:700 14px Arial,Helvetica,sans-serif;text-align:center;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.im-acoes a:hover,.im-acoes button:hover{background:var(--y);color:var(--k)}
+.im-acoes .p{background:var(--y);color:var(--k)}
+/* seções FCV / FCL / FCA */
+.cat{padding:56px 0;border-bottom:1px solid var(--k3)}
+.cat-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cat-hd h2{margin-bottom:0}
+.cat-hd small{font:700 14px Arial,sans-serif;color:var(--g);letter-spacing:1px}
+.cat .gim{margin-top:22px}
+.vazio-faixa{background:var(--y);color:var(--k);border-radius:8px;padding:26px 22px;margin-top:22px}
+.vazio-faixa h3{font-size:26px;margin-bottom:6px}
+.vazio-faixa p{font-size:17px;margin-bottom:16px;max-width:36em}
+.vazio-faixa .btn{background:var(--k);color:var(--y);border-color:var(--k)}
+.vazio-faixa .btn:hover{background:var(--k3)}
+/* galeria */
+.galeria{padding:56px 0;border-bottom:1px solid var(--k3)}
+.gfotos{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));margin-top:22px}
+.gfotos a{display:block;aspect-ratio:1/1;overflow:hidden;border-radius:6px;background:var(--k3)}
+.gfotos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.gfotos a:hover img{transform:scale(1.05)}
+@media(max-width:480px){.gfotos{grid-template-columns:repeat(2,1fr)}.gim{grid-template-columns:1fr}}
+/* menu "Mais" */
+.mais summary{list-style:none;cursor:pointer;font-weight:700;font-size:15px}
+.mais summary::-webkit-details-marker{display:none}
+.mais summary::after{content:" \25BE"}
+.mais summary:hover{color:var(--y)}
+.mais-box a{display:block}
+@media(min-width:981px){
+ nav ul{gap:16px}nav a,.mais summary{font-size:14px}
+ .mais{position:relative}
+ .mais-box{position:absolute;right:0;top:36px;background:var(--k);border:2px solid var(--y);border-radius:8px;min-width:270px;max-height:70vh;overflow:auto;padding:6px 16px;z-index:60}
+ .mais-box a{padding:9px 0;border-bottom:1px solid var(--k3)}
+}
+@media(max-width:980px){
+ .mais summary{display:block;padding:14px 0;border-bottom:1px solid var(--k3);font-size:18px}
+ .mais-box a{padding:12px 0 12px 14px;font-size:16px}
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -142,11 +188,29 @@ footer a:hover{color:var(--y)}
   <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
   <nav id="menu" aria-label="Menu principal">
    <ul id="menuLista">
-    <li><a href="https://fcostacorretor.com/comprar.html">Comprar</a></li>
-    <li><a href="https://fcostacorretor.com/alugar.html">Alugar</a></li>
-    <li><a href="https://fcostacorretor.com/lancamentos.html">Lançamentos</a></li>
-    <li data-m="pg-financiamento"><a href="https://fcostacorretor.com/financiamento.html">Financiamento</a></li>
-    <li data-m="pg-blog"><a href="https://fcostacorretor.com/blog.html">Blog</a></li>
+    <li><a href="https://fcostacorretor.com/comprar">Comprar</a></li>
+    <li><a href="https://fcostacorretor.com/alugar">Alugar</a></li>
+    <li><a href="https://fcostacorretor.com/lancamentos">Lançamentos</a></li>
+    <li data-m="pg-financiamento"><a href="https://fcostacorretor.com/financiamento">Financiamento</a></li>
+    <li data-m="pg-galeria"><a href="https://fcostacorretor.com/galeria">Galeria</a></li>
+    <li data-m="pg-blog"><a href="https://fcostacorretor.com/blog">Blog</a></li>
+    <li class="mais-li"><details class="mais" id="maisMenu"><summary>Mais</summary><div class="mais-box" id="menuMais">
+      <a href="https://fcostacorretor.com/panfletos">Panfletos</a>
+      <a href="https://fcostacorretor.com/avaliacao" data-alt="https://fcostacorretor.com/avaliacao-fcosta" data-m="pg-avaliacao">Avaliação gratuita</a>
+      <a href="https://fcostacorretor.com/ptam" data-m="pg-ptam">PTAM — Laudo de avaliação</a>
+      <a href="https://fcostacorretor.com/laudo-ia.html" data-m="pg-laudo-ia">Laudo e autorização com IA</a>
+      <a href="https://fcostacorretor.com/judicial" data-m="pg-judicial">Consultoria judicial</a>
+      <a href="https://fcostacorretor.com/calculadora-reajuste.html" data-m="pg-reajuste">Calculadora de reajuste</a>
+      <a href="https://fcostacorretor.com/cartorio" data-m="pg-cartorio">Cartório</a>
+      <a href="https://fcostacorretor.com/inquilino" data-alt="https://fcostacorretor.com/inquilinato" data-m="pg-inquilinato">Inquilinato</a>
+      <a href="https://fcostacorretor.com/documentacao-imoveis.html" data-alt="https://fcostacorretor.com/documentacao-imobiliaria" data-m="pg-documentacao">Documentação imobiliária</a>
+      <a href="https://fcostacorretor.com/legislacao" data-alt="https://fcostacorretor.com/legislacaoimobiliaria" data-m="pg-legislacao">Legislação imobiliária</a>
+      <a href="https://fcostacorretor.com/parceria" data-alt="https://fcostacorretor.com/parceiros-fcosta" data-m="pg-parceiros">Parceiros</a>
+      <a href="https://fcostacorretor.com/tv_costa.html" data-alt="https://fcostacorretor.com/videos-imobiliarios" data-m="pg-videos">Vídeos</a>
+      <a href="https://fcostacorretor.com/sergio_ig.html" data-alt="https://fcostacorretor.com/sergioig" data-m="pg-sergioig">Página pessoal</a>
+      <a href="https://fcostacorretor.com/politica" data-alt="https://fcostacorretor.com/politica-de-privacidade" data-m="pg-privacidade">Política de privacidade</a>
+      <a href="https://fcostacorretor.com/certificado.html" data-alt="https://fcostacorretor.com/condicoes-de-uso" data-m="pg-condicoes">Condições de uso</a>
+    </div></details></li>
     <li><a href="#contato">Contato</a></li>
    </ul>
   </nav>
@@ -161,7 +225,7 @@ footer a:hover{color:var(--y)}
   <h1>Seu imóvel começa <span class="y">aqui.</span></h1>
   <p>Comprar, alugar ou investir com um corretor que acompanha você do primeiro contato até a chave na mão.</p>
   <div class="acoes">
-   <a class="btn btn-y" href="https://fcostacorretor.com/comprar.html">Ver imóveis à venda</a>
+   <a class="btn btn-y" href="https://fcostacorretor.com/comprar">Ver imóveis à venda</a>
    <a class="btn btn-o" href="https://wa.me/5511993509109?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20falar%20sobre%20um%20im%C3%B3vel." target="_blank" rel="noopener">Falar no WhatsApp</a>
   </div>
   <p class="cred">Sergio Fernandes da Costa &middot; CRECI-SP 294791-F &middot; CNAI 52708</p>
@@ -174,7 +238,7 @@ footer a:hover{color:var(--y)}
  <div class="wrap">
   <h2>Imóveis em <span class="y">destaque</span></h2>
   <div class="gim" id="destGrade"></div>
-  <p class="mais"><a class="btn btn-o" href="https://fcostacorretor.com/comprar.html">Ver todos os imóveis</a></p>
+  <p class="mais"><a class="btn btn-o" href="https://fcostacorretor.com/comprar">Ver todos os imóveis</a></p>
  </div>
 </section>
 
@@ -182,19 +246,62 @@ footer a:hover{color:var(--y)}
  <div class="wrap">
   <h2>O que você procura?</h2>
   <div class="grade">
-   <a class="cartao" href="https://fcostacorretor.com/comprar.html">
+   <a class="cartao" href="https://fcostacorretor.com/comprar">
     <h3>Comprar</h3><p>Casas, apartamentos e terrenos à venda.</p><b>Ver imóveis</b>
    </a>
-   <a class="cartao" href="https://fcostacorretor.com/alugar.html">
+   <a class="cartao" href="https://fcostacorretor.com/alugar">
     <h3>Alugar</h3><p>Imóveis para locação, com atendimento direto.</p><b>Ver imóveis</b>
    </a>
-   <a class="cartao" href="https://fcostacorretor.com/lancamentos.html">
+   <a class="cartao" href="https://fcostacorretor.com/lancamentos">
     <h3>Lançamentos</h3><p>Empreendimentos novos das construtoras.</p><b>Ver lançamentos</b>
    </a>
-   <a class="cartao" href="https://fcostacorretor.com/panfletos.html">
+   <a class="cartao" href="https://fcostacorretor.com/panfletos">
     <h3>Panfletos</h3><p>Ofertas e materiais de divulgação para baixar.</p><b>Ver panfletos</b>
    </a>
   </div>
+ </div>
+</section>
+
+<section class="cat" id="venda" data-cat="venda">
+ <div class="wrap">
+  <div class="cat-hd"><h2>Imóveis à <span class="y">venda</span> <small>FCV</small></h2><a class="btn btn-o ver-todos" href="https://fcostacorretor.com/comprar" hidden>Ver todos</a></div>
+  <div class="gim" hidden></div>
+  <div class="vazio-faixa">
+   <h3>Não temos imóvel disponível no momento</h3>
+   <p>Conte o que você procura para comprar. Eu busco para você e aviso quando surgir uma boa oportunidade.</p>
+   <a class="btn" href="#contato">Pedir minha busca</a>
+  </div>
+ </div>
+</section>
+
+<section class="cat" id="lancamentos-sec" data-cat="lancamento">
+ <div class="wrap">
+  <div class="cat-hd"><h2><span class="y">Lançamentos</span> <small>FCL</small></h2><a class="btn btn-o ver-todos" href="https://fcostacorretor.com/lancamentos" hidden>Ver todos</a></div>
+  <div class="gim" hidden></div>
+  <div class="vazio-faixa">
+   <h3>Não temos imóvel disponível no momento</h3>
+   <p>Ainda não há lançamento publicado. Peça e eu aviso assim que chegar um empreendimento novo.</p>
+   <a class="btn" href="#contato">Pedir minha busca</a>
+  </div>
+ </div>
+</section>
+
+<section class="cat" id="aluguel" data-cat="aluguel">
+ <div class="wrap">
+  <div class="cat-hd"><h2>Imóveis para <span class="y">alugar</span> <small>FCA</small></h2><a class="btn btn-o ver-todos" href="https://fcostacorretor.com/alugar" hidden>Ver todos</a></div>
+  <div class="gim" hidden></div>
+  <div class="vazio-faixa">
+   <h3>Não temos imóvel disponível no momento</h3>
+   <p>Diga o que você precisa para alugar. Eu procuro e aviso quando aparecer um imóvel disponível.</p>
+   <a class="btn" href="#contato">Pedir minha busca</a>
+  </div>
+ </div>
+</section>
+
+<section class="galeria" id="galeria" data-h="pg-galeria" hidden>
+ <div class="wrap">
+  <div class="cat-hd"><h2>Galeria de <span class="y">fotos</span></h2><a class="btn btn-o" href="https://fcostacorretor.com/galeria">Ver galeria completa</a></div>
+  <div class="gfotos" id="gFotos"></div>
  </div>
 </section>
 
@@ -210,12 +317,30 @@ footer a:hover{color:var(--y)}
  <div class="wrap">
   <h2>Serviços para cada etapa</h2>
   <div class="lista" id="servLista">
-   <a class="item" data-h="pg-financiamento" href="https://fcostacorretor.com/financiamento.html"><h3>Financiamento</h3><p>Simule parcelas e entenda o caminho até a aprovação.</p></a>
-   <a class="item" data-h="pg-avaliacao" href="https://fcostacorretor.com/avaliacao-fcosta.html"><h3>Avaliação do imóvel</h3><p>Saiba quanto vale o seu imóvel antes de vender ou alugar.</p></a>
-   <a class="item" href="https://fcostacorretor.com/consultoria.html"><h3>Consultoria</h3><p>Orientação para decidir com segurança.</p></a>
-   <a class="item" data-h="pg-documentacao" href="https://fcostacorretor.com/documentacao-imobiliaria.html"><h3>Documentação</h3><p>Entenda os documentos de compra, venda e locação.</p></a>
-   <a class="item" data-h="pg-inquilinato" href="https://fcostacorretor.com/inquilinato.html"><h3>Inquilinato</h3><p>Informação clara para quem aluga e para quem tem imóvel alugado.</p></a>
+   <a class="item" data-h="pg-financiamento" href="https://fcostacorretor.com/financiamento"><h3>Financiamento</h3><p>Simule parcelas e entenda o caminho até a aprovação.</p></a>
+   <a class="item" data-h="pg-avaliacao" href="https://fcostacorretor.com/avaliacao" data-alt="https://fcostacorretor.com/avaliacao-fcosta"><h3>Avaliação gratuita</h3><p>Saiba quanto vale o seu imóvel antes de vender ou alugar.</p></a>
+   <a class="item" data-h="pg-ptam" href="https://fcostacorretor.com/ptam"><h3>PTAM — Laudo de avaliação</h3><p>Parecer técnico com metodologia e normas, para banco, inventário ou Justiça.</p></a>
+   <a class="item" data-h="pg-laudo-ia" href="https://fcostacorretor.com/laudo-ia.html"><h3>Laudo e autorização com IA</h3><p>Gere laudos e autorizações com apoio de inteligência artificial.</p></a>
+   <a class="item" data-h="pg-judicial" href="https://fcostacorretor.com/judicial"><h3>Consultoria judicial</h3><p>Avaliação e perícia para processos, partilhas e ações judiciais.</p></a>
+   <a class="item" data-h="pg-reajuste" href="https://fcostacorretor.com/calculadora-reajuste.html"><h3>Calculadora de reajuste</h3><p>Calcule o reajuste do aluguel por IPCA ou IGP-M.</p></a>
+   <a class="item" data-h="pg-cartorio" href="https://fcostacorretor.com/cartorio"><h3>Cartório</h3><p>Registros, escrituras e certidões: o que fazer em cada etapa.</p></a>
+   <a class="item" data-h="pg-inquilinato" href="https://fcostacorretor.com/inquilino" data-alt="https://fcostacorretor.com/inquilinato"><h3>Inquilinato</h3><p>Informação clara para quem aluga e para quem tem imóvel alugado.</p></a>
+   <a class="item" data-h="pg-documentacao" href="https://fcostacorretor.com/documentacao-imoveis.html" data-alt="https://fcostacorretor.com/documentacao-imobiliaria"><h3>Documentação</h3><p>Entenda os documentos de compra, venda e locação.</p></a>
    <a class="item" href="https://fcostacorretor.com/portal-do-investidor.html"><h3>Portal do investidor</h3><p>Oportunidades para quem quer investir em imóveis.</p></a>
+  </div>
+ </div>
+</section>
+
+<section class="servicos" id="conteudo" style="padding-top:0">
+ <div class="wrap">
+  <h2>Conteúdo e <span class="y">parcerias</span></h2>
+  <div class="lista" id="contLista">
+   <a class="item" data-h="pg-blog" href="https://fcostacorretor.com/blog"><h3>Blog</h3><p>Dicas e novidades do mercado imobiliário.</p></a>
+   <a class="item" data-h="pg-legislacao" href="https://fcostacorretor.com/legislacao" data-alt="https://fcostacorretor.com/legislacaoimobiliaria"><h3>Legislação imobiliária</h3><p>Leis e normas que valem para compra, venda e locação.</p></a>
+   <a class="item" data-h="pg-galeria" href="https://fcostacorretor.com/galeria"><h3>Galeria</h3><p>Fotos dos imóveis.</p></a>
+   <a class="item" data-h="pg-videos" href="https://fcostacorretor.com/tv_costa.html" data-alt="https://fcostacorretor.com/videos-imobiliarios"><h3>Vídeos</h3><p>Tours e conteúdos em vídeo.</p></a>
+   <a class="item" data-h="pg-parceiros" href="https://fcostacorretor.com/parceria" data-alt="https://fcostacorretor.com/parceiros-fcosta"><h3>Parceiros</h3><p>Profissionais que trabalham junto com a FCosta.</p></a>
+   <a class="item" data-h="pg-sergioig" href="https://fcostacorretor.com/sergio_ig.html" data-alt="https://fcostacorretor.com/sergioig"><h3>Página pessoal</h3><p>Conheça mais sobre o Sergio.</p></a>
   </div>
  </div>
 </section>
@@ -265,11 +390,21 @@ footer a:hover{color:var(--y)}
    <div>
     <h3>Conteúdo</h3>
     <ul>
-     <li><a href="https://fcostacorretor.com/blog.html">Blog</a></li>
-     <li><a href="https://fcostacorretor.com/galeria.html">Galeria</a></li>
-     <li><a href="https://fcostacorretor.com/videos-imobiliarios.html">Vídeos imobiliários</a></li>
-     <li><a href="https://fcostacorretor.com/legislacaoimobiliaria.html">Legislação imobiliária</a></li>
-     <li><a href="https://fcostacorretor.com/parceiros-fcosta.html">Parceiros</a></li>
+     <li><a href="https://fcostacorretor.com/blog">Blog</a></li>
+     <li><a href="https://fcostacorretor.com/galeria">Galeria</a></li>
+     <li><a href="https://fcostacorretor.com/tv_costa.html" data-alt="https://fcostacorretor.com/videos-imobiliarios">Vídeos</a></li>
+     <li><a href="https://fcostacorretor.com/legislacao" data-alt="https://fcostacorretor.com/legislacaoimobiliaria">Legislação imobiliária</a></li>
+     <li><a href="https://fcostacorretor.com/parceria" data-alt="https://fcostacorretor.com/parceiros-fcosta">Parceiros</a></li>
+     <li><a href="https://fcostacorretor.com/sergio_ig.html" data-alt="https://fcostacorretor.com/sergioig">Página pessoal</a></li>
+    </ul>
+   </div>
+   <div>
+    <h3>Área do corretor</h3>
+    <ul>
+     <li><a href="https://fcostacorretor.com/painel_adm.html" rel="nofollow">Painel ADM</a></li>
+     <li><a href="https://fcostacorretor.com/contratos_principal.html" rel="nofollow" data-h="pg-contratos">Contratos</a></li>
+     <li><a href="https://fcostacorretor.com/fcosta_secundario.html" rel="nofollow">Outros documentos</a></li>
+     <li><a href="https://fcostacorretor.com/contratos_particulares.html" rel="nofollow">Contratos particulares</a></li>
     </ul>
    </div>
    <div>
@@ -291,9 +426,8 @@ footer a:hover{color:var(--y)}
   </div>
   <p class="legal">
    &copy; <span id="ano">2026</span> FCosta Corretor. Todos os direitos reservados.
-   <a href="https://fcostacorretor.com/politica-de-privacidade.html" style="text-decoration:underline">Política de privacidade</a> &middot;
-   <a href="https://fcostacorretor.com/condicoes-de-uso.html" style="text-decoration:underline">Condições de uso</a> &middot;
-   <a href="https://fcostacorretor.com/painel_adm.html" rel="nofollow" style="text-decoration:underline">Área do corretor</a>
+   <a href="https://fcostacorretor.com/politica" data-alt="https://fcostacorretor.com/politica-de-privacidade" style="text-decoration:underline">Política de privacidade</a> &middot;
+   <a href="https://fcostacorretor.com/certificado.html" data-alt="https://fcostacorretor.com/condicoes-de-uso" style="text-decoration:underline">Condições de uso</a>
   </p>
  </div>
 </footer>
@@ -321,63 +455,102 @@ footer a:hover{color:var(--y)}
 })();
 
 /* ── Conexão com o Painel ADM (mesmo Firebase do painel_adm.html) ──
-   imóveis com "Destaque na Home" = Sim   -> seção "Imóveis em destaque"
-   Botões de Páginas (H = Home, M = Menu) -> mostram/escondem itens
-   Páginas do Site (criadas no painel)    -> entram em Serviços e no Menu
-   Se o Firebase não responder, a home continua igual ao HTML. */
+   fcosta_imoveis                  -> seções FCV (venda), FCL (lançamento), FCA (aluguel), destaques e galeria
+   fcosta_config/home_botoes  (H)  -> mostra/esconde botões e seções da home
+   fcosta_config/menu_hamburger (M)-> mostra/esconde itens do menu
+   fcosta_imoveis_paginas          -> páginas criadas no painel entram em Serviços e no menu "Mais"
+   Se o Firebase não responder, a home continua igual ao HTML (faixas "sem imóvel disponível"). */
 (function(){
- var FB='https://fcosta2026-847c3-default-rtdb.firebaseio.com',SITE='https://fcostacorretor.com';
- function get(p,q){return fetch(FB+'/'+p+'.json'+(q||'')).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}
+ var FB='https://fcosta2026-847c3-default-rtdb.firebaseio.com',SITE='https://fcostacorretor.com',WA='5511993509109';
+ var ROT={venda:'À venda',aluguel:'Para alugar',lancamento:'Lançamento'};
+ function get(p){return fetch(FB+'/'+p+'.json').then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}
  function nulo(){return null;}
  function https(u){return typeof u==='string'&&/^https:\/\//i.test(u);}
  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
  function lista(v){if(!v)return[];return(Array.isArray(v)?v:Object.keys(v).map(function(k){return v[k];})).filter(Boolean);}
  function norm(u){return String(u||'').toLowerCase().replace(/^https?:\/\/(www\.)?fcostacorretor\.com/,'').replace(/[?#].*$/,'').replace(/\.html$/,'').replace(/\/+$/,'');}
+ /* Cloudinary: entrega a foto já no tamanho certo (leve no celular, nítida no PC) */
+ function otim(u,w){return /res\.cloudinary\.com\/[^\/]+\/image\/upload\/(?![^\/]*,)/.test(u)?u.replace('/image/upload/','/image/upload/w_'+w+',q_auto,f_auto/'):u;}
+ function preco(p){return String(p).replace(/^\s*R\$\s*/i,'');}
+ function linkImovel(i){var s=String(i.slug||'').replace(/^\/+|\/+$/g,'');return /^[a-z0-9-]+$/.test(s)?SITE+'/'+s+'/':SITE+'/imovel?id='+encodeURIComponent(i.id);}
+ function fotosDe(i){var f=lista(i.fotos).filter(https);if(https(i.fotoDestaque)&&f.indexOf(i.fotoDestaque)<0)f.unshift(i.fotoDestaque);return f;}
 
- /* 1) Imóveis em destaque */
- var ROT={venda:'À venda',aluguel:'Para alugar',lancamento:'Lançamento'};
  function cartao(i){
-  var slug=String(i.slug||'').replace(/^\/+|\/+$/g,'');
-  var a=el('a','im');
-  a.href=/^[a-z0-9-]+$/.test(slug)?SITE+'/'+slug+'/':SITE+'/imovel?id='+encodeURIComponent(i.id);
-  var fotos=lista(i.fotos),foto=https(i.fotoDestaque)?i.fotoDestaque:(https(fotos[0])?fotos[0]:'');
-  var f=el('div','im-foto'),img;
-  if(foto){img=el('img','f');img.src=foto;img.alt=(i.titulo||'Imóvel')+(i.bairro?' em '+i.bairro:'');img.loading='lazy';img.width=640;img.height=480;}
+  var url=linkImovel(i),cod=i.codigo||'',tit=i.titulo||'Imóvel';
+  var d=el('div','im'),a=el('a','im-link');a.href=url;
+  var foto=fotosDe(i)[0]||'',f=el('div','im-foto'),img;
+  if(foto){img=el('img','f');img.src=otim(foto,720);img.alt=tit+(i.bairro?' em '+i.bairro:'');img.loading='lazy';img.width=640;img.height=480;}
   else{img=el('img','ph');img.src='sen_fundo_logo.png';img.alt='';img.width=96;img.height=96;}
   f.appendChild(img);
-  f.appendChild(el('span','im-tag',[i.codigo,ROT[i.status]].filter(Boolean).join(' · ')));
+  var tag=[cod,ROT[i.status]].filter(Boolean).join(' · ');if(tag)f.appendChild(el('span','im-tag',tag));
   var b=el('div','im-body');
-  b.appendChild(el('h3',null,i.titulo||'Imóvel'));
+  b.appendChild(el('h3',null,tit));
   var loc=[i.bairro,i.cidade].filter(Boolean).join(' - ');
   if(loc)b.appendChild(el('div','im-loc',loc));
-  if(i.preco)b.appendChild(el('div','im-preco','R$ '+i.preco));
+  if(i.preco)b.appendChild(el('div','im-preco','R$ '+preco(i.preco)));
   var chips=[];
   if(i.tipo)chips.push(i.tipo);
   if(i.area)chips.push(i.area+' m²');
   if(i.quartos)chips.push(i.quartos+(i.quartos>1?' quartos':' quarto'));
   if(i.vagas)chips.push(i.vagas+(i.vagas>1?' vagas':' vaga'));
   if(chips.length){var c=el('div','im-chips');chips.forEach(function(x){c.appendChild(el('span',null,x));});b.appendChild(c);}
-  a.appendChild(f);a.appendChild(b);
-  return a;
+  a.appendChild(f);a.appendChild(b);d.appendChild(a);
+  var ac=el('div','im-acoes'),ver=el('a','p','Ver imóvel');ver.href=url;ac.appendChild(ver);
+  if(https(i.tourMp4)){var t=el('a',null,'▶ Tour');t.href=i.tourMp4;t.target='_blank';t.rel='noopener';ac.appendChild(t);}
+  var w=el('a',null,'WhatsApp');w.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Olá! Tenho interesse no imóvel '+cod+' - '+tit+' '+url);w.target='_blank';w.rel='noopener';ac.appendChild(w);
+  var s=el('button',null,'Compartilhar');s.type='button';
+  s.addEventListener('click',function(){
+   var tx=tit+(cod?' ('+cod+')':'');
+   if(navigator.share){navigator.share({title:tx,text:tx,url:url}).catch(nulo);}
+   else{window.open('https://wa.me/?text='+encodeURIComponent(tx+' '+url),'_blank','noopener');}
+  });
+  ac.appendChild(s);d.appendChild(ac);
+  return d;
  }
- get('fcosta_imoveis','?orderBy=%22destaque%22&equalTo=true').catch(function(){return get('fcosta_imoveis');}).then(function(d){
-  var itens=Object.keys(d||{}).map(function(k){var o=d[k];if(o&&typeof o==='object')o.id=k;return o;}).filter(function(i){
-   return i&&typeof i==='object'&&i.destaque===true&&i.publicado!==false&&i._del!==true&&i._excluido!==true&&ROT[i.status];
-  }).sort(function(a,b){return String(b.atualizado||'').localeCompare(String(a.atualizado||''));}).slice(0,6);
-  if(!itens.length)return;
-  var g=document.getElementById('destGrade');
-  itens.forEach(function(i){g.appendChild(cartao(i));});
-  document.getElementById('destaques').hidden=false;
- }).catch(function(){});
 
- /* 2) Botões de Páginas (H/M) + páginas criadas no painel */
- Promise.all([get('fcosta_config/home_botoes').catch(nulo),get('fcosta_config/menu_hamburger').catch(nulo),get('fcosta_imoveis_paginas').catch(nulo)]).then(function(r){
-  var home=r[0]||{},menu=r[1]||{},pg=r[2]||{};
+ Promise.all([get('fcosta_imoveis').catch(nulo),get('fcosta_config/home_botoes').catch(nulo),get('fcosta_config/menu_hamburger').catch(nulo),get('fcosta_imoveis_paginas').catch(nulo)]).then(function(r){
+  var imv=r[0]||{},home=r[1]||{},menu=r[2]||{},pg=r[3]||{};
+
+  /* botões H (home) e M (menu) do painel */
   document.querySelectorAll('[data-h]').forEach(function(n){if(home[n.getAttribute('data-h')]===false)n.hidden=true;});
   document.querySelectorAll('[data-m]').forEach(function(n){if(menu[n.getAttribute('data-m')]===false)n.hidden=true;});
+
+  /* imóveis publicados (FCV / FCL / FCA) */
+  var itens=Object.keys(imv).map(function(k){var o=imv[k];if(o&&typeof o==='object')o.id=k;return o;}).filter(function(i){
+   return i&&typeof i==='object'&&i.publicado!==false&&i._del!==true&&i._excluido!==true&&ROT[i.status];
+  }).sort(function(a,b){return String(b.atualizado||'').localeCompare(String(a.atualizado||''));});
+
+  /* seções por categoria: a faixa "sem imóvel" some quando há imóvel publicado */
+  document.querySelectorAll('[data-cat]').forEach(function(sec){
+   var its=itens.filter(function(i){return i.status===sec.getAttribute('data-cat');}).slice(0,6);
+   if(!its.length)return;
+   var g=sec.querySelector('.gim');its.forEach(function(i){g.appendChild(cartao(i));});g.hidden=false;
+   sec.querySelector('.vazio-faixa').hidden=true;sec.querySelector('.ver-todos').hidden=false;
+  });
+
+  /* destaques (Destaque na Home = Sim) */
+  var dest=itens.filter(function(i){return i.destaque===true;}).slice(0,6);
+  if(dest.length){var dg=document.getElementById('destGrade');dest.forEach(function(i){dg.appendChild(cartao(i));});document.getElementById('destaques').hidden=false;}
+
+  /* galeria: fotos dos imóveis publicados, todas no mesmo formato quadrado */
+  var gs=document.getElementById('galeria');
+  if(gs&&home['pg-galeria']!==false){
+   var gf=document.getElementById('gFotos'),n=0;
+   itens.forEach(function(i){
+    fotosDe(i).slice(0,2).forEach(function(u){
+     if(n>=12)return;
+     var a=el('a');a.href=linkImovel(i);
+     var im=el('img');im.src=otim(u,480);im.alt=(i.titulo||'Imóvel')+(i.bairro?' em '+i.bairro:'');im.loading='lazy';im.width=480;im.height=480;
+     a.appendChild(im);gf.appendChild(a);n++;
+    });
+   });
+   if(n)gs.hidden=false;
+  }
+
+  /* páginas criadas no painel (Páginas do Site) */
   var jaTem={};
-  document.querySelectorAll('#menuLista a,#servLista a').forEach(function(a){jaTem[norm(a.getAttribute('href'))]=1;});
-  var serv=document.getElementById('servLista'),ul=document.getElementById('menuLista'),contato=ul.lastElementChild;
+  document.querySelectorAll('#menuLista a,#servLista a,#contLista a').forEach(function(a){jaTem[norm(a.getAttribute('href'))]=1;var al=a.getAttribute('data-alt');if(al)jaTem[norm(al)]=1;});
+  var serv=document.getElementById('servLista'),mais=document.getElementById('menuMais');
   Object.keys(pg).map(function(k){var p=pg[k];if(p&&typeof p==='object')p.id=k;return p;}).filter(function(p){
    return p&&typeof p==='object'&&p.tipo!=='default'&&!p.fixa&&p.nome&&/^https?:\/\//i.test(p.url||'')&&!jaTem[norm(p.url)];
   }).sort(function(a,b){return String(a.nome).localeCompare(String(b.nome),'pt-BR');}).forEach(function(p){
@@ -388,11 +561,25 @@ footer a:hover{color:var(--y)}
     if(https(p.img)){a.className='item com-img';var im=el('img');im.src=p.img;im.alt='';im.width=64;im.height=64;im.loading='lazy';a.appendChild(im);}
     a.appendChild(t);serv.appendChild(a);
    }
-   if(menu[p.id]!==false){
-    var li=el('li'),la=el('a',null,p.nome);la.href=p.url;li.appendChild(la);ul.insertBefore(li,contato);
-   }
+   if(menu[p.id]!==false){var la=el('a',null,p.nome);la.href=p.url;mais.appendChild(la);}
   });
  }).catch(function(){});
+
+ /* fecha o "Mais" ao clicar fora */
+ document.addEventListener('click',function(e){var d=document.getElementById('maisMenu');if(d&&d.open&&!d.contains(e.target))d.open=false;});
+
+ /* Endereços alternativos: se a página principal não existir (404), abre o endereço alternativo */
+ document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a[data-alt]');
+  if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.button||a.getAttribute('data-ok'))return;
+  e.preventDefault();
+  var p=a.href,alt=a.getAttribute('data-alt');
+  function ir(u){a.setAttribute('data-ok','1');a.href=u;location.href=u;}
+  fetch(p,{method:'HEAD'}).then(function(r1){
+   if(r1.ok)return ir(p);
+   return fetch(alt,{method:'HEAD'}).then(function(r2){ir(r2.ok?alt:p);});
+  }).catch(function(){ir(p);});
+ });
 })();
 </script>
 </body>
