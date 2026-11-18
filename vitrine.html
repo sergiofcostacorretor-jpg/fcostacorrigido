@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Imóveis FCosta — Sérgio Costa, corretor</title><meta name="description" content="Imóveis à venda, para alugar e lançamentos. Fale direto com o corretor Sérgio Costa, CRECI-SP 294791-F.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--c:#fff;--tx:#0b1424;--m:#5b6784;--l:rgba(11,20,36,.13);--v:#c8182a;--n:#070d18}
+@media(prefers-color-scheme:dark){:root{--bg:#070d18;--c:#0f1729;--tx:#eaf0ff;--m:#93a0bd;--l:rgba(148,163,184,.2)}}
+*{box-sizing:border-box;margin:0}body{font:16px/1.5 'DM Sans',sans-serif;background:var(--bg);color:var(--tx)}
+.in{max-width:1100px;margin:auto;padding:0 16px}header{background:var(--n);color:#fff;padding:30px 0 26px}
+h1{font:800 clamp(28px,5vw,46px)/1.1 'Playfair Display',serif;max-width:15em}header p{color:#b9c4dc;margin:10px 0 18px;max-width:32em}
+a{color:inherit}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:10px;background:var(--v);color:#fff;font:700 15px 'DM Sans',sans-serif;text-decoration:none;border:0;cursor:pointer}
+.btn.o{background:none;border:1px solid var(--l);color:var(--tx)}:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 14px}.bar input{flex:1 1 220px;min-height:44px;padding:0 12px;border:1px solid var(--l);border-radius:10px;background:var(--c);color:var(--tx);font:inherit}
+.bar button{min-height:44px;padding:0 14px;border:1px solid var(--l);border-radius:10px;background:var(--c);color:var(--tx);font:inherit;cursor:pointer}.bar button[aria-pressed=true]{background:var(--n);color:#fff;border-color:var(--n)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}.card{background:var(--c);border:1px solid var(--l);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.ph{aspect-ratio:4/3;background:#cfd6e4 center/cover;position:relative}.tag{position:absolute;left:10px;top:10px;background:var(--n);color:#fff;border-radius:6px;padding:2px 9px;font-size:13px;font-weight:700}
+.cb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}.pr{font:800 22px 'Playfair Display',serif}.m{color:var(--m);font-size:14px}.ac{display:flex;gap:8px;margin-top:auto;padding-top:10px}.ac .btn{flex:1;min-height:40px;font-size:14px}
+h2{font:800 26px 'Playfair Display',serif;margin:34px 0 12px}.pub{display:grid;gap:10px}.pi{display:flex;gap:12px;align-items:center;background:var(--c);border:1px solid var(--l);border-radius:12px;padding:10px;text-decoration:none}
+.pi .ph{width:84px;aspect-ratio:1;border-radius:8px;flex:none}.msg{padding:28px 0;color:var(--m)}footer{margin:40px 0;color:var(--m);font-size:14px}
+</style></head><body>
+<header><div class="in"><h1>Imóveis selecionados por Sérgio Costa</h1><p>Casas, apartamentos, terrenos e lançamentos na Zona Leste de São Paulo e região. Escolha um imóvel e chame direto no WhatsApp.</p>
+<a class="btn" id="zap" href="#">Falar com o corretor</a></div></header>
+<main class="in"><div class="bar" role="group" aria-label="Filtros"><input id="q" type="search" placeholder="Buscar por bairro, cidade ou tipo" aria-label="Buscar imóvel">
+<button data-s="" aria-pressed="true">Todos</button><button data-s="venda" aria-pressed="false">À venda</button><button data-s="aluguel" aria-pressed="false">Aluguel</button><button data-s="lancamento" aria-pressed="false">Lançamentos</button></div>
+<div id="g" class="grid" aria-live="polite"></div><div id="st" class="msg">Carregando imóveis…</div>
+<section id="ps" hidden><h2>Publicações recentes</h2><div id="p" class="pub"></div></section>
+<footer>Sérgio Costa · CRECI-SP 294791-F · <a href="https://fcostacorretor.com">fcostacorretor.com</a></footer></main>
+<script src="fcosta-imoveis.js"></script>
+<script>
+var F=FCImoveis,esc=F.esc,L=[],S='',ST={venda:'À venda',aluguel:'Aluguel',lancamento:'Lançamento'};
+function wa(t){return 'https://wa.me/'+F.WA+'?text='+encodeURIComponent(t)}
+document.getElementById('zap').href=wa('Olá, Sérgio! Vi seus imóveis no site e quero conversar.');
+function draw(){var q=document.getElementById('q').value.toLowerCase(),r=L.filter(function(i){return(!S||i.status===S)&&(i.titulo+i.bairro+i.cidade+i.tipo+i.codigo).toLowerCase().indexOf(q)>-1});
+ document.getElementById('st').textContent=r.length?'':'Nenhum imóvel com esse filtro. Tente outra busca.';
+ document.getElementById('g').innerHTML=r.map(function(i){var e=[i.quartos&&i.quartos+' quartos',i.vagas&&i.vagas+' vagas',i.area&&i.area].filter(Boolean).join(' · ');
+ return '<article class="card"><div class="ph" style="'+(i.capa?'background-image:url(\''+esc(i.capa)+'\')':'')+'" role="img" aria-label="Foto de '+esc(i.titulo)+'"><span class="tag">'+esc(ST[i.status]||i.status)+'</span></div><div class="cb"><span class="pr">'+esc(F.money(i.preco))+'</span><b>'+esc(i.titulo)+'</b><span class="m">'+esc([i.bairro,i.cidade].filter(Boolean).join(' – '))+'</span><span class="m">'+esc(e)+'</span><div class="ac"><a class="btn o" href="'+esc(i.link)+'" target="_blank" rel="noopener">Ver detalhes</a><a class="btn" href="'+esc(wa('Olá, Sérgio! Tenho interesse no imóvel '+i.codigo+' — '+i.titulo))+'" target="_blank" rel="noopener">WhatsApp</a></div></div></article>'}).join('')}
+document.querySelectorAll('.bar button').forEach(function(b){b.onclick=function(){S=b.dataset.s;document.querySelectorAll('.bar button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});draw()}});
+document.getElementById('q').oninput=draw;
+function load(){F.listar().then(function(l){L=l;draw()},function(){document.getElementById('st').innerHTML='Não foi possível carregar os imóveis agora. <a href="" onclick="location.reload();return false">Tentar de novo</a>'})}
+load();
+F.publicacoes(12).then(function(p){if(!p.length)return;document.getElementById('ps').hidden=false;
+ document.getElementById('p').innerHTML=p.map(function(x){var d=x.criado?new Date(x.criado).toLocaleDateString('pt-BR'):'';return '<a class="pi" href="'+esc(x.link||'#')+'" target="_blank" rel="noopener"><div class="ph" style="'+(x.capa?'background-image:url(\''+esc(x.capa)+'\')':'')+'"></div><div><b>'+esc(x.titulo)+'</b><br><span class="m">'+esc(x.canal||'Geral')+(d?' · '+d:'')+'</span></div></a>'}).join('')},function(){});
+</script></body></html>
