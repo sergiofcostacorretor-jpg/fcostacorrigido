@@ -12,6 +12,12 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://fcostacorretor.com/sen_fundo_logo.png">
 <meta name="twitter:card" content="summary">
+<meta property="og:site_name" content="FCosta Corretor">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image:alt" content="FCosta Corretor de Imóveis">
+<meta name="twitter:title" content="FCosta Corretor | Imóveis">
+<meta name="twitter:description" content="Compre, alugue ou invista com acompanhamento de um corretor de verdade.">
+<meta name="twitter:image" content="https://fcostacorretor.com/sen_fundo_logo.png">
 <link rel="icon" type="image/png" href="sen_fundo_logo.png">
 <link rel="apple-touch-icon" href="sen_fundo_logo.png">
 <link rel="preconnect" href="https://fcosta2026-847c3-default-rtdb.firebaseio.com" crossorigin>
@@ -177,6 +183,41 @@ img{max-width:100%}
  .mais summary{display:block;padding:14px 0;border-bottom:1px solid var(--k3);font-size:18px}
  .mais-box a{padding:12px 0 12px 14px;font-size:16px}
 }
+/* compartilhar o site */
+.ic{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+.btn-cmp{background:var(--w);color:var(--k);border-color:var(--w);display:inline-flex;align-items:center;gap:8px}
+.btn-cmp:hover{background:var(--y2);border-color:var(--y2)}
+.cmp-fab{position:fixed;right:16px;bottom:84px;z-index:60;display:flex;align-items:center;gap:8px;background:var(--k);color:var(--y);font:700 16px Arial,Helvetica,sans-serif;padding:12px 18px;border-radius:50px;border:3px solid var(--y);min-height:50px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.6);animation:cmpP 2.2s ease-in-out 3}
+.cmp-fab:hover{background:var(--y);color:var(--k)}
+@keyframes cmpP{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@media(prefers-reduced-motion:reduce){.cmp-fab{animation:none}}
+footer{padding-bottom:150px}
+body.cmp-aberto{overflow:hidden}
+.cmp-ov{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:16px}
+.cmp-box{position:relative;background:var(--k2);border:2px solid var(--y);border-radius:12px;width:100%;max-width:460px;max-height:92vh;overflow:auto;padding:22px 18px 18px}
+@media(max-width:600px){.cmp-ov{align-items:flex-end;padding:0}.cmp-box{border-radius:16px 16px 0 0;max-width:none;border-bottom:0}}
+.cmp-box h2{font-size:30px;padding-right:50px;margin-bottom:6px}
+.cmp-box p{color:var(--g);font-size:16px;margin-bottom:14px}
+.cmp-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:6px;border:2px solid var(--y);background:none;color:var(--y);font-size:26px;line-height:1;cursor:pointer}
+.cmp-nat{width:100%;margin-bottom:12px;justify-content:center}
+.cmp-g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cmp-g a,.cmp-g button{display:flex;align-items:center;justify-content:center;min-height:56px;padding:10px;border-radius:8px;border:2px solid transparent;font:700 16px Arial,Helvetica,sans-serif;color:#fff;cursor:pointer;text-align:center}
+.cmp-g .wa{background:#25D366;color:#000}
+.cmp-g .fb{background:#1877F2}
+.cmp-g .tg{background:#229ED9}
+.cmp-g .x{background:#000;border-color:#fff}
+.cmp-g .li{background:#0A66C2}
+.cmp-g .em{background:var(--y);color:#000}
+.cmp-g .sm{background:#444}
+.cmp-g .ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)}
+.cmp-g .tt{background:#000;border-color:#25F4EE}
+.cmp-lk{display:flex;gap:8px;margin-top:14px}
+.cmp-lk input{flex:1;min-width:0;background:var(--k);color:var(--w);border:2px solid var(--k3);border-radius:6px;padding:12px;font:16px Arial,Helvetica,sans-serif}
+.cmp-lk .btn{padding:12px 16px}
+.cmp-t{min-height:24px;margin-top:12px;color:var(--y);font-weight:700;font-size:15px}
+.cmp-qr{display:flex;align-items:center;gap:14px;margin-top:14px;border-top:1px solid var(--k3);padding-top:14px}
+.cmp-qr img{width:120px;height:120px;background:#fff;padding:6px;border-radius:8px;flex-shrink:0}
+.cmp-qr p{margin:0;font-size:15px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -227,6 +268,7 @@ img{max-width:100%}
   <div class="acoes">
    <a class="btn btn-y" href="https://fcostacorretor.com/comprar">Ver imóveis à venda</a>
    <a class="btn btn-o" href="https://wa.me/5511993509109?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20falar%20sobre%20um%20im%C3%B3vel." target="_blank" rel="noopener">Falar no WhatsApp</a>
+   <button class="btn btn-cmp" type="button" data-compartilhar><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.1c-.8 0-1.5.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 9.8C7.5 9.3 6.8 9 6 9c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.2 4.2c-.1.2-.1.4-.1.7 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.9-2.9z"/></svg>Compartilhar o site</button>
   </div>
   <p class="cred">Sergio Fernandes da Costa &middot; CRECI-SP 294791-F &middot; CNAI 52708</p>
   </div>
@@ -375,6 +417,14 @@ img{max-width:100%}
  </div>
 </section>
 
+<section class="faixa divulgue" id="divulgue">
+ <div class="wrap">
+  <h2>Gostou do site? Compartilhe!</h2>
+  <p>Envie para um amigo, para a família ou para um grupo de WhatsApp. Quem está procurando imóvel agradece.</p>
+  <button class="btn" type="button" data-compartilhar>Compartilhar o site</button>
+ </div>
+</section>
+
 </main>
 
 <footer>
@@ -433,6 +483,27 @@ img{max-width:100%}
 </footer>
 
 <a class="zap" href="https://wa.me/5511993509109?text=Ol%C3%A1%2C%20vim%20pelo%20site." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">WhatsApp</a>
+
+<button class="cmp-fab" type="button" data-compartilhar aria-label="Compartilhar o site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.1c-.8 0-1.5.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 9.8C7.5 9.3 6.8 9 6 9c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.2 4.2c-.1.2-.1.4-.1.7 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.9-2.9z"/></svg>Compartilhar</button>
+
+<div class="cmp-ov" id="cmpBox" role="dialog" aria-modal="true" aria-labelledby="cmpTit" hidden>
+ <div class="cmp-box">
+  <button class="cmp-x" type="button" data-cmp-fechar aria-label="Fechar">&times;</button>
+  <h2 id="cmpTit">Compartilhar o site</h2>
+  <p>Toque em um botão para enviar para seus amigos, família e grupos.</p>
+  <button class="btn btn-y cmp-nat" id="cmpNativo" type="button" hidden>Compartilhar pelo celular (todos os apps)</button>
+  <div class="cmp-g" id="cmpGrade"></div>
+  <div class="cmp-lk">
+   <input id="cmpUrl" readonly value="https://fcostacorretor.com/" aria-label="Endereço do site">
+   <button class="btn btn-o" id="cmpCopiar" type="button">Copiar link</button>
+  </div>
+  <div class="cmp-t" id="cmpToast" role="status" aria-live="polite"></div>
+  <div class="cmp-qr" id="cmpQrBox">
+   <img id="cmpQr" width="120" height="120" alt="QR Code do site FCosta Corretor">
+   <p>Mostre este <b>QR Code</b> para alguém apontar a câmera do celular e abrir o site.</p>
+  </div>
+ </div>
+</div>
 
 <script>
 (function(){
@@ -579,6 +650,85 @@ img{max-width:100%}
    if(r1.ok)return ir(p);
    return fetch(alt,{method:'HEAD'}).then(function(r2){ir(r2.ok?alt:p);});
   }).catch(function(){ir(p);});
+ });
+})();
+</script>
+<script>
+/* ── Compartilhar o site (WhatsApp, redes sociais, e-mail, SMS, link e QR Code) ── */
+(function(){
+ var SITE='https://fcostacorretor.com/';
+ var TIT='FCosta Corretor | Imóveis para comprar, alugar e lançamentos';
+ var MSG='🏠 Conheça o site do corretor FCosta: imóveis para comprar, alugar e lançamentos, com atendimento direto pelo WhatsApp.';
+ var box=document.getElementById('cmpBox'),grade=document.getElementById('cmpGrade'),aviso=document.getElementById('cmpToast');
+ var nativo=document.getElementById('cmpNativo'),qr=document.getElementById('cmpQr'),qrBox=document.getElementById('cmpQrBox');
+ if(!box||!grade)return;
+ var voltar=null,timer=null,montou=false;
+ function e(s){return encodeURIComponent(s);}
+ var CANAIS=[
+  {n:'WhatsApp',c:'wa',u:'https://wa.me/?text='+e(MSG+' '+SITE)},
+  {n:'Facebook',c:'fb',u:'https://www.facebook.com/sharer/sharer.php?u='+e(SITE)},
+  {n:'Telegram',c:'tg',u:'https://t.me/share/url?url='+e(SITE)+'&text='+e(MSG)},
+  {n:'X (Twitter)',c:'x',u:'https://x.com/intent/post?text='+e(MSG)+'&url='+e(SITE)},
+  {n:'LinkedIn',c:'li',u:'https://www.linkedin.com/sharing/share-offsite/?url='+e(SITE)},
+  {n:'E-mail',c:'em',u:'mailto:?subject='+e(TIT)+'&body='+e(MSG+'\n\n'+SITE),mesma:1},
+  {n:'SMS',c:'sm',u:'sms:?&body='+e(MSG+' '+SITE),mesma:1},
+  {n:'Instagram',c:'ig',cp:'Link copiado! Abra o Instagram e cole no Direct, nos Stories ou na bio.'},
+  {n:'TikTok',c:'tt',cp:'Link copiado! Abra o TikTok e cole na bio ou numa mensagem.'}
+ ];
+ function msg(t){aviso.textContent=t;clearTimeout(timer);timer=setTimeout(function(){aviso.textContent='';},7000);}
+ function copiar(t){
+  if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+  return new Promise(function(ok,erro){
+   var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;left:-9999px';
+   document.body.appendChild(a);a.select();
+   try{document.execCommand('copy')?ok():erro();}catch(x){erro();}
+   a.remove();
+  });
+ }
+ function copiarLink(texto){
+  copiar(SITE).then(function(){msg(texto);}).catch(function(){
+   var i=document.getElementById('cmpUrl');i.focus();i.select();msg('Não consegui copiar sozinho. Segure o link selecionado e escolha "Copiar".');
+  });
+ }
+ function montar(){
+  if(montou)return;montou=true;
+  CANAIS.forEach(function(c){
+   var x;
+   if(c.cp){x=document.createElement('button');x.type='button';x.addEventListener('click',function(){copiarLink(c.cp);});}
+   else{x=document.createElement('a');x.href=c.u;if(!c.mesma){x.target='_blank';x.rel='noopener';}}
+   x.className=c.c;x.textContent=c.n;grade.appendChild(x);
+  });
+  if(navigator.share){
+   nativo.hidden=false;
+   nativo.addEventListener('click',function(){navigator.share({title:TIT,text:MSG,url:SITE}).catch(function(){});});
+  }
+  document.getElementById('cmpCopiar').addEventListener('click',function(){copiarLink('Link copiado ✓ Agora é só colar na conversa.');});
+  qr.onerror=function(){qrBox.hidden=true;};
+  qr.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data='+e(SITE);
+ }
+ function abrir(){
+  montar();voltar=document.activeElement;box.hidden=false;document.body.classList.add('cmp-aberto');aviso.textContent='';
+  var f=box.querySelector('.cmp-x');if(f)f.focus();
+ }
+ function fechar(){
+  box.hidden=true;document.body.classList.remove('cmp-aberto');
+  if(voltar&&voltar.focus)voltar.focus();
+ }
+ document.addEventListener('click',function(ev){
+  var t=ev.target.closest&&ev.target.closest('[data-compartilhar]');
+  if(t){ev.preventDefault();abrir();return;}
+  if(ev.target===box||(ev.target.closest&&ev.target.closest('[data-cmp-fechar]')))fechar();
+ });
+ document.addEventListener('keydown',function(ev){
+  if(box.hidden)return;
+  if(ev.key==='Escape'){fechar();return;}
+  if(ev.key==='Tab'){
+   var l=[].slice.call(box.querySelectorAll('a[href],button,input')).filter(function(n){return !n.hidden&&n.offsetParent!==null;});
+   if(!l.length)return;
+   var p=l[0],u=l[l.length-1];
+   if(ev.shiftKey&&document.activeElement===p){ev.preventDefault();u.focus();}
+   else if(!ev.shiftKey&&document.activeElement===u){ev.preventDefault();p.focus();}
+  }
  });
 })();
 </script>
