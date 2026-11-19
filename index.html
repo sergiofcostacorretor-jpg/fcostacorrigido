@@ -607,7 +607,7 @@ body.cmp-aberto{overflow:hidden}
   if(i.vagas)chips.push(i.vagas+(i.vagas>1?' vagas':' vaga'));
   if(chips.length){var c=el('div','im-chips');chips.forEach(function(x){c.appendChild(el('span',null,x));});b.appendChild(c);}
   a.appendChild(f);a.appendChild(b);d.appendChild(a);
-  var ac=el('div','im-acoes'),ver=el('a','p','Ver imóvel');ver.href=url;ac.appendChild(ver);
+  var ac=el('div','im-acoes'),ver=el('a','p','Ver imóvel');ver.href=(i.status==='lancamento')?SITE+'/lancamentos':url;ac.appendChild(ver);
   if(https(i.tourMp4)){var t=el('a',null,'▶ Tour');t.href=i.tourMp4;t.target='_blank';t.rel='noopener';ac.appendChild(t);}
   var w=el('a',null,'WhatsApp');w.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Olá! Tenho interesse no imóvel '+cod+' - '+tit+' '+url);w.target='_blank';w.rel='noopener';ac.appendChild(w);
   var s=el('button',null,'Compartilhar');s.type='button';
