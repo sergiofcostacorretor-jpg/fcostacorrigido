@@ -1463,6 +1463,24 @@ function publicarSite(auto){
   }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401){try{localStorage.removeItem('fcosta_gh');document.cookie='fcosta_gh=; max-age=0; path=/';}catch(_){}m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub.';}else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Sem conexão com o GitHub. Verifique a internet e tente de novo.';toast('❌ '+m,true);});
 }
 
+/* Ligação com o Tour: ?novo=1&video=URL&titulo=&preco=&bairro=&cidade=&status= abre o formulário de imóvel NOVO já com o vídeo anexado */
+(function(){var q=new URLSearchParams(location.search);if(q.get('novo')!=='1')return;
+var n=0,t=setInterval(function(){n++;
+ var app=document.getElementById('app');
+ var pronto=app&&app.style.display==='block'&&((typeof _todos!=='undefined'&&_todos.length)||n>24);
+ if(!pronto){if(n>240)clearInterval(t);return;}
+ clearInterval(t);
+ novoImovel();
+ setTimeout(function(){
+  function set(id,v){var el=document.getElementById(id);if(el&&v)el.value=v;}
+  set('f-titulo',q.get('titulo'));
+  var st=q.get('status');if(['venda','aluguel','lancamento'].indexOf(st)>-1){document.getElementById('f-status').value=st;onStatusChange();}
+  set('f-preco',q.get('preco'));set('f-bairro',q.get('bairro'));set('f-cidade',q.get('cidade'));
+  var v=q.get('video')||'';
+  if(/^https:\/\//i.test(v)){document.getElementById('f-tourmp4').value=v;mostrarTour(v);toast('Vídeo do tour anexado. Confira os dados e toque em Salvar.');}
+ },350);
+},500);})();
+
 /* Ligação com o Publicador: ?editar=ID abre o imóvel; ?publicar=ID publica a página no site */
 (function(){var p=new URLSearchParams(location.search),ed=p.get('editar'),pb=p.get('publicar'),id=ed||pb;if(!id)return;
 var n=0,t=setInterval(function(){n++;
