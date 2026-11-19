@@ -9,11 +9,14 @@
 <meta property="og:site_name" content="FCosta Corretor"/>
 <meta property="og:title" id="og-title" content="FCosta Corretor — Imóvel"/>
 <meta property="og:description" id="og-desc" content="Imóvel na Zona Leste de SP — FCosta Corretor e Avaliador Imobiliário"/>
-<meta property="og:image" id="og-image" content="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png"/>
+<meta property="og:image" id="og-image" content="https://fcostacorretor.com/og-fcosta.jpg?v=2"/>
+<meta property="og:image:secure_url" content="https://fcostacorretor.com/og-fcosta.jpg?v=2"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:alt" content="FCosta Corretor de Imóveis"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" id="tw-image" content="https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png"/>
+<meta name="twitter:image" id="tw-image" content="https://fcostacorretor.com/og-fcosta.jpg?v=2"/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 /* ══ RESET ══ */
@@ -1330,7 +1333,7 @@ function renderImovel(data, fbKey){
   var comodidades = data.comodidades || [];
 
   /* SEO + og:image com foto real do imóvel */
-  var fotoOg = (getFotos(data)[0]) || 'https://i.postimg.cc/xTQzc3RV/495379823-122128221800669140-5238985291153506093-n-photoaidcom-cropped.png';
+  var fotoOg = 'https://fcostacorretor.com/og-fcosta.jpg?v=2'; /* compartilhamento sempre com a logo oficial */
   var tituloOg = data.seoTitulo || (titulo + ' — FCosta Corretor');
   var _locSeo = [bairro, cidade].filter(Boolean).join(', ');
   var _precoSeo = fmtPreco(preco, status);
