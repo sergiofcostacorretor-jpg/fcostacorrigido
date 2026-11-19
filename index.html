@@ -26,6 +26,8 @@
 <link rel="apple-touch-icon" href="sen_fundo_logo.png">
 <link rel="preconnect" href="https://fcosta2026-847c3-default-rtdb.firebaseio.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
 :root{--y:#FFC800;--y2:#FFE066;--k:#000;--k2:#141414;--k3:#262626;--w:#fff;--g:#b8b8b8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -79,7 +81,7 @@ nav a:hover{color:var(--y)}
 .gim{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-top:26px}
 .im{display:block;background:var(--k2);border:1px solid var(--k3);border-radius:8px;overflow:hidden}
 .im:hover{border-color:var(--y)}
-.im-foto{position:relative;aspect-ratio:4/3;background:var(--k3);display:flex;align-items:center;justify-content:center}
+.im-foto{position:relative;aspect-ratio:4/3;background:var(--k3);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .im-foto .f{width:100%;height:100%;object-fit:cover}
 .im-foto .ph{width:96px;height:96px;opacity:.55}
 .im-tag{position:absolute;top:10px;left:10px;background:var(--y);color:var(--k);font-weight:700;font-size:13px;padding:3px 10px;border-radius:4px}
@@ -148,7 +150,7 @@ img{max-width:100%}
 .im{display:flex;flex-direction:column}
 .im-link{display:block;color:inherit}
 .im-foto{aspect-ratio:4/3;overflow:hidden}
-.im-foto .f{width:100%;height:100%;object-fit:cover;display:block}
+.im-foto .f{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .im-acoes{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 18px;margin-top:auto}
 .im-acoes a,.im-acoes button{flex:1 1 auto;min-height:44px;padding:8px 12px;border-radius:6px;border:2px solid var(--y);background:transparent;color:var(--y);font:700 14px Arial,Helvetica,sans-serif;text-align:center;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .im-acoes a:hover,.im-acoes button:hover{background:var(--y);color:var(--k)}
@@ -538,7 +540,39 @@ body.cmp-aberto{overflow:hidden}
 (function(){
  var FB='https://fcosta2026-847c3-default-rtdb.firebaseio.com',SITE='https://fcostacorretor.com',WA='5511993509109';
  var ROT={venda:'À venda',aluguel:'Para alugar',lancamento:'Lançamento'};
- function get(p){return fetch(FB+'/'+p+'.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}
+ var CFG={apiKey:'AIzaSyBo3zQ-yUNJ2Zk9d6jkEpslF-bsrFcRu8I',authDomain:'fcosta2026-847c3.firebaseapp.com',databaseURL:FB,projectId:'fcosta2026-847c3',storageBucket:'fcosta2026-847c3.firebasestorage.app',messagingSenderId:'131225040087',appId:'1:131225040087:web:d468aad3d80bd26aaa2c92'};
+ function tempo(ms,pr){return new Promise(function(ok,no){var t=setTimeout(function(){no(new Error('tempo'));},ms);pr.then(function(v){clearTimeout(t);ok(v);},function(e){clearTimeout(t);no(e);});});}
+ function viaSdk(p){
+  if(!window.firebase)return Promise.reject(new Error('sem sdk'));
+  try{if(!firebase.apps.length)firebase.initializeApp(CFG);}catch(e){}
+  return tempo(9000,firebase.database().ref(p).once('value').then(function(s){return s.val();}));
+ }
+ function viaRest(p){return tempo(9000,fetch(FB+'/'+p+'.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}));}
+ function guarda(p,v){try{localStorage.setItem('fc_'+p,JSON.stringify(v));}catch(e){}}
+ function lido(p){try{return JSON.parse(localStorage.getItem('fc_'+p)||'null');}catch(e){return null;}}
+ /* 1) SDK  2) REST  3) última leitura boa guardada no aparelho */
+ function get(p){
+  return viaSdk(p).catch(function(){return viaRest(p);}).then(function(v){guarda(p,v);return v;}).catch(function(e){var c=lido(p);if(c!==null)return c;throw e;});
+ }
+ /* Reserva final: lê as páginas estáticas dos imóveis publicadas no GitHub (mesmas fotos do painel) */
+ function estatico(){
+  return fetch(SITE+'/.fcosta-slugs.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(sl){
+   sl=(sl||[]).slice(0,40);
+   return Promise.all(sl.map(function(s){
+    return fetch(SITE+'/'+s+'/',{cache:'no-store'}).then(function(r){return r.text();}).then(function(t){
+     var d=new DOMParser().parseFromString(t,'text/html'),q=function(x){return d.querySelector(x);};
+     var cd=(q('.cod')||{}).textContent||'',m=cd.match(/(FC[VAL])\s*0*(\d+)/i),sg=m?m[1].toUpperCase():'FCV';
+     var fotos=[].map.call(d.querySelectorAll('.gal img'),function(i){return i.getAttribute('src');}).filter(https);
+     var divs=[].filter.call(d.querySelectorAll('main > div'),function(x){return x.textContent.indexOf('📍')===0;});
+     var local=divs[0]?divs[0].textContent.replace('📍','').trim():'';
+     var chips=[].map.call(d.querySelectorAll('.chips span'),function(x){return x.textContent;});
+     var v=q('.vend');
+     if(v||!fotos.length&&!q('h1'))return null;
+     return {slug:s,codigo:m?sg+m[2].padStart(3,'0'):'',status:{FCV:'venda',FCA:'aluguel',FCL:'lancamento'}[sg],titulo:(q('h1')||{}).textContent||'Imóvel',preco:((q('.preco')||{}).textContent||'').replace(/^R\$\s*/,''),cidade:local,tipo:chips[0]||'',fotos:fotos,fotoDestaque:fotos[0]||'',atualizado:''};
+    }).catch(function(){return null;});
+   })).then(function(l){var o={};l.forEach(function(x){if(x)o[x.slug]=x;});return o;});
+  });
+ }
  function nulo(){return null;}
  function https(u){return typeof u==='string'&&/^https:\/\//i.test(u);}
  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
@@ -585,7 +619,7 @@ body.cmp-aberto{overflow:hidden}
   return d;
  }
 
- Promise.all([get('fcosta_imoveis').catch(nulo),get('fcosta_config/home_botoes').catch(nulo),get('fcosta_config/menu_hamburger').catch(nulo),get('fcosta_imoveis_paginas').catch(nulo)]).then(function(r){
+ Promise.all([get('fcosta_imoveis').catch(nulo).then(function(v){return(v&&Object.keys(v).length)?v:estatico().catch(nulo);}),get('fcosta_config/home_botoes').catch(nulo),get('fcosta_config/menu_hamburger').catch(nulo),get('fcosta_imoveis_paginas').catch(nulo)]).then(function(r){
   var imv=r[0]||{},home=r[1]||{},menu=r[2]||{},pg=r[3]||{};
 
   /* botões H (home) e M (menu) do painel */
