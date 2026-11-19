@@ -75,7 +75,7 @@
 
         /* PALCO DO VÍDEO */
         main {
-            flex: 1;
+            flex: 0 0 calc(100vh - var(--altura-topo) - var(--altura-barra));
             min-height: 0;
             display: flex;
             align-items: center;
@@ -190,7 +190,20 @@
 
         .controles button:hover { background: var(--vermelho); }
 
+        /* TOURS DOS IMOVEIS (vem do Firebase fcosta_imoveis -> tourMp4) */
+        .tours { flex-shrink: 0; width: 100%; max-width: 1100px; margin: 24px auto 40px; padding: 0 20px; }
+        .tours h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--vermelho); margin-bottom: 4px; }
+        .tours .sub { color: var(--cinza); font-size: 14px; margin-bottom: 16px; }
+        .tours-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+        .tour-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }
+        .tour-card video { width: 100%; aspect-ratio: 9 / 16; max-height: 420px; background: #000; display: block; object-fit: contain; }
+        .tour-info { padding: 12px 14px 14px; }
+        .tour-info strong { display: block; font-size: 15px; margin-bottom: 4px; }
+        .tour-info span { display: block; font-size: 13px; color: var(--cinza); }
+        .tour-info a { display: inline-block; margin-top: 10px; background: var(--vermelho); color: var(--branco); text-decoration: none; font-weight: 600; font-size: 14px; padding: 9px 16px; border-radius: 8px; }
+
         @media (max-width: 700px) {
+            .tours { padding: 0 12px; }
             header { padding: 0 12px; }
             main { padding: 10px 0 0; }
             .palco { border-radius: 0; max-width: 100%; }
@@ -234,6 +247,12 @@
             <button onclick="proximoVideo()" title="Próximo"><i class="fas fa-forward-step"></i> <span>Próximo</span></button>
         </div>
     </div>
+
+    <section class="tours" id="tours" hidden>
+        <h2>Tours dos imóveis</h2>
+        <p class="sub">Vídeos feitos pelo FCosta Corretor. Toque no vídeo para assistir.</p>
+        <div class="tours-grade" id="tours-grade"></div>
+    </section>
 
     <script>
         const PLAYLIST_ID = 'PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1';
@@ -380,6 +399,46 @@
             ytPlayer.setVolume(100);
             document.getElementById('btn-som').style.display = 'none';
         }
+
+        // Tours dos imóveis: lê o mesmo Firebase do site (fcosta_imoveis) e mostra quem tem tourMp4
+        (function carregarTours() {
+            const FB = 'https://fcosta2026-847c3-default-rtdb.firebaseio.com';
+            const ehHttps = (u) => typeof u === 'string' && /^https:\/\//i.test(u);
+            fetch(FB + '/fcosta_imoveis.json', { cache: 'no-store' })
+                .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(dados => {
+                    if (!dados || typeof dados !== 'object') return;
+                    const itens = Object.keys(dados).map(k => Object.assign({ _id: k }, dados[k]))
+                        .filter(i => i && typeof i === 'object' && ehHttps(i.tourMp4) &&
+                                     i.publicado !== false && i._del !== true && i._excluido !== true);
+                    if (!itens.length) return;
+                    const grade = document.getElementById('tours-grade');
+                    itens.forEach(i => {
+                        const card = document.createElement('div');
+                        card.className = 'tour-card';
+                        const v = document.createElement('video');
+                        v.controls = true; v.playsInline = true; v.preload = 'metadata';
+                        v.src = i.tourMp4;
+                        if (ehHttps(i.fotoDestaque)) v.poster = i.fotoDestaque;
+                        const info = document.createElement('div');
+                        info.className = 'tour-info';
+                        const t = document.createElement('strong');
+                        t.textContent = i.titulo || 'Imóvel';
+                        info.appendChild(t);
+                        const local = [i.bairro, i.cidade].filter(Boolean).join(' - ');
+                        if (local) { const l = document.createElement('span'); l.textContent = local; info.appendChild(l); }
+                        if (i.preco) { const pr = document.createElement('span'); pr.textContent = 'R$ ' + i.preco; info.appendChild(pr); }
+                        const a = document.createElement('a');
+                        a.href = '/imovel?id=' + encodeURIComponent(i._id);
+                        a.textContent = 'Ver imóvel';
+                        info.appendChild(a);
+                        card.appendChild(v); card.appendChild(info);
+                        grade.appendChild(card);
+                    });
+                    document.getElementById('tours').hidden = false;
+                })
+                .catch(() => { /* sem tours: a TV continua normal */ });
+        })();
     </script>
 </body>
 </html>
