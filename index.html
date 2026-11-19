@@ -781,5 +781,18 @@ body.cmp-aberto{overflow:hidden}
  });
 })();
 </script>
+<script>
+/* Acesso discreto ao Painel ADM: 3 toques/cliques seguidos na logo do rodapé */
+(function(){
+ var lg=document.querySelector('.rod-logo');if(!lg)return;
+ var n=0,t=null;
+ lg.style.cursor='pointer';lg.style.webkitTapHighlightColor='transparent';
+ lg.addEventListener('click',function(e){
+  e.preventDefault();n++;clearTimeout(t);
+  if(n>=3){n=0;location.href='painel_adm.html';return;}
+  t=setTimeout(function(){n=0;},1500);
+ });
+})();
+</script>
 </body>
 </html>
