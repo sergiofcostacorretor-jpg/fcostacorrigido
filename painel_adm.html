@@ -926,6 +926,15 @@ firebase.initializeApp({apiKey:'AIzaSyBo3zQ-yUNJ2Zk9d6jkEpslF-bsrFcRu8I',authDom
 var db=firebase.database(),auth=firebase.auth();
 var SB_URL='https://rqqdeurrxwvkeiaefuws.supabase.co',SB_KEY='sb_publishable_tpHDtOrKh9IeKoJcFm1WCg_g63aDfTb',SB_BUCKET='fcosta-imoveis';
 var sb=supabase.createClient(SB_URL,SB_KEY);
+/* Fotos do imovel vao para o Cloudinary (Supabase ficou sem cota de trafego) */
+var CLD_NAME='dm0egn0ks',CLD_PRESET='fcosta_imoveis';
+function cldUp(blob){
+  var fd=new FormData();fd.append('file',blob);fd.append('upload_preset',CLD_PRESET);
+  return fetch('https://api.cloudinary.com/v1_1/'+CLD_NAME+'/image/upload',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(j){
+    if(!j||!j.secure_url)throw new Error((j&&j.error&&j.error.message)||'cloudinary');
+    return j.secure_url;
+  });
+}
 var _bookEx=[],_bookMod=false;
 var _todos=[],_fotosEx=[],_estadosHome={},_estadosHamb={};
 var _slugAtual='',_slugManual=false;
@@ -1021,13 +1030,21 @@ function onTourMp4(event){
   if(file.size>50*1024*1024){toast('Tour maior que 50 MB. Gere com menos fotos ou menos segundos por foto.',true);event.target.value='';return;}
   var prog=document.getElementById('tour-prog');
   prog.style.display='block';prog.textContent='Enviando '+file.name+'... aguarde';
-  var caminho='tours/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  sb.storage.from(SB_BUCKET).upload(caminho,file,{cacheControl:'3600',upsert:false,contentType:file.type||'video/mp4'}).then(function(res){
-    if(res.error)throw res.error;
-    var url=sb.storage.from(SB_BUCKET).getPublicUrl(caminho).data.publicUrl;
-    document.getElementById('f-tourmp4').value=url;
-    prog.style.display='none';mostrarTour(url);toast('Tour enviado! Clique em Salvar Imovel.');
-  }).catch(function(e){prog.style.display='none';toast('Erro no upload: '+(e.message||e),true);});
+  var nome='tour_'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  var c=ghCfg()||ghConfigurar(true);
+  if(!c){prog.style.display='none';toast('Configure o GitHub para enviar o video.',true);event.target.value='';return;}
+  var prev=URL.createObjectURL(file);
+  var fr=new FileReader();
+  fr.onerror=function(){prog.style.display='none';toast('Nao consegui ler o video.',true);};
+  fr.onload=function(){
+    var b64=String(fr.result).split(',')[1];
+    ghApi(c,'/contents/videos/'+nome,{method:'PUT',body:JSON.stringify({message:'Painel ADM: video '+nome,content:b64,branch:c.branch})}).then(function(){
+      var url=SITE+'/videos/'+nome;
+      document.getElementById('f-tourmp4').value=url;
+      prog.style.display='none';mostrarTour(prev);toast('Video enviado! Clique em Salvar Imovel. Pode levar 1 a 2 minutos para aparecer no site.');
+    }).catch(function(e){prog.style.display='none';toast('Erro no upload: '+(e.message||e),true);});
+  };
+  fr.readAsDataURL(file);
   event.target.value='';
 }
 function limparTourMp4(){document.getElementById('f-tourmp4').value='';mostrarTour('');}
@@ -1178,10 +1195,7 @@ function prevFotos(event){
       return new Promise(function(res,rej){
         var base=f.name.replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9._-]/g,'_');
         var caminho='imoveis/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'_'+base+'.jpg';
-        sb.storage.from(SB_BUCKET).upload(caminho,blob,{cacheControl:'3600',upsert:false,contentType:'image/jpeg'}).then(function(r){
-          if(r.error){rej(r.error);return;}
-          res(sb.storage.from(SB_BUCKET).getPublicUrl(caminho).data.publicUrl);
-        }).catch(rej);
+        cldUp(blob).then(res).catch(rej);
       });
     });
   });
@@ -1223,9 +1237,8 @@ function logoFotosAntigas(){
             .then(function(b){return aplicarMarcaDagua(b);})
             .then(function(blob){
               var caminho='imoveis/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'_logo'+k+'.jpg';
-              return sb.storage.from(SB_BUCKET).upload(caminho,blob,{cacheControl:'3600',upsert:false,contentType:'image/jpeg'}).then(function(r){
-                if(r.error)throw r.error;
-                novas.push(sb.storage.from(SB_BUCKET).getPublicUrl(caminho).data.publicUrl);
+              return cldUp(blob).then(function(u){
+                novas.push(u);
               });
             })
             .catch(function(){ruim=true;novas.push(url);falhas++;})
