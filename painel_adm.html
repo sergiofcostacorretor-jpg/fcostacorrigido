@@ -1174,10 +1174,18 @@ function onFcpArquivo(event){
   var isPdf=file.type==='application/pdf';
   prog.style.display='block';prog.textContent='Enviando '+file.name+'...';prev.classList.remove('on');
   var caminho='panfletos/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  sb.storage.from(SB_BUCKET).upload(caminho,file,{cacheControl:'3600',upsert:false}).then(function(res){
-    if(res.error)throw res.error;
-    var pub=sb.storage.from(SB_BUCKET).getPublicUrl(caminho);
-    var url=pub.data.publicUrl;
+  /* Supabase foi desativado: imagem vai para o Cloudinary e PDF fica guardado no próprio site (GitHub) */
+  var envio;
+  if(!isPdf){envio=cldUp(file);}
+  else{
+    var c=ghCfg()||ghConfigurar(true);
+    if(!c){prog.style.display='none';toast('Configure o GitHub para enviar o PDF.',true);event.target.value='';return;}
+    if(file.size>40*1024*1024){prog.style.display='none';toast('PDF maior que 40 MB. Diminua o arquivo e tente de novo.',true);event.target.value='';return;}
+    envio=new Promise(function(ok,ruim){var fr=new FileReader();fr.onerror=function(){ruim(new Error('Não consegui ler o PDF'));};fr.onload=function(){ok(String(fr.result).split(',')[1]);};fr.readAsDataURL(file);}).then(function(b64){
+      return ghApi(c,'/contents/arquivos/'+caminho,{method:'PUT',body:JSON.stringify({message:'Painel ADM: panfleto '+file.name,content:b64,branch:c.branch})});
+    }).then(function(){return SITE+'/arquivos/'+caminho;});
+  }
+  envio.then(function(url){
     prog.style.display='none';
     urlEl.value=url;tipoEl.value=isPdf?'pdf':'imagem';
     icEl.textContent=isPdf?'📄':'🖼️';

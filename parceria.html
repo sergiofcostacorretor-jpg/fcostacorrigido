@@ -298,6 +298,7 @@ textarea.ip{resize:vertical;min-height:80px}
 .empty i{font-size:44px;color:var(--bg3);display:block;margin-bottom:12px}
 </style>
 <style id="tema-ouro">/* FCosta - paleta Preto & Ouro */:root{--az:#1B1C22;--azd:#0A0B0F;--azl:#A78340;--vm:#A78340;--vmd:#7A5F2C;--bg:#F6F1E7;--bg2:#EEE6D6;--bg3:#DDD0B5;--borda:#E8DFCC;--borda2:#DDD0B5;--tx:#0A0B0F;--sombra:0 2px 16px rgba(10,11,15,.08);--sombra2:0 10px 40px rgba(10,11,15,.16);}::selection{background:rgba(214,178,102,.35)}</style>
+<script src="/fotos-reserva.js"></script>
 </head>
 <body>
 
@@ -891,15 +892,19 @@ function salvarFCP(){
 function togFCPHome(fbKey,atual){rdb.ref('fcosta_imoveis/'+fbKey).update({exibirHome:!atual}).then(function(){toast(atual?'Removido da Home':'⭐ Destacado na Home!');}).catch(function(er){toast('Erro: '+er.message,'err');});}
 function delFCP(fbKey){if(!confirm('Excluir este panfleto FCP?'))return;rdb.ref('fcosta_imoveis/'+fbKey).remove().then(function(){toast('FCP excluído');}).catch(function(er){toast('Erro: '+er.message,'err');});}
 
-/* ══ SUPABASE STORAGE (logos e arquivos) ══ */
+/* Supabase foi desativado (cota estourada): os arquivos agora vão para o Cloudinary */
+var CLD_NAME='dm0egn0ks',CLD_PRESET='fcosta_imoveis';
+function cldEnviar(file){var fd=new FormData();fd.append('file',file);fd.append('upload_preset',CLD_PRESET);
+  return fetch('https://api.cloudinary.com/v1_1/'+CLD_NAME+'/auto/upload',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(j){
+    if(!j||!j.secure_url)return{error:{message:(j&&j.error&&j.error.message)||'falha no envio'}};return{url:j.secure_url};});}
+/* ══ ENVIO DE ARQUIVOS (logos e arquivos) ══ */
 function uploadCldPromise(file){
   return new Promise(function(resolve,reject){
     if(file.size>50*1024*1024){reject(new Error('Arquivo maior que 50 MB: '+file.name));return;}
     var caminho='logos/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-    sb.storage.from(SB_BUCKET).upload(caminho,file,{cacheControl:'3600',upsert:false}).then(function(res){
+    cldEnviar(file).then(function(res){
       if(res.error){reject(res.error);return;}
-      var pub=sb.storage.from(SB_BUCKET).getPublicUrl(caminho);
-      resolve(pub.data.publicUrl);
+      resolve(res.url);
     }).catch(reject);
   });
 }
@@ -910,15 +915,14 @@ function uploadCld(file,boxId,progId,barId,pctId,nomId,hiddenId,onDone){
   var prog=progId?document.getElementById(progId):null;var bar=barId?document.getElementById(barId):null;var pct=pctId?document.getElementById(pctId):null;var nom=nomId?document.getElementById(nomId):null;
   if(prog){prog.style.display='block';if(nom)nom.textContent=file.name;if(bar)bar.style.width='10%';if(pct)pct.textContent='10%';}
   var caminho='logos/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  sb.storage.from(SB_BUCKET).upload(caminho,file,{cacheControl:'3600',upsert:false}).then(function(res){
+  cldEnviar(file).then(function(res){
     if(prog)prog.style.display='none';
     if(res.error){
       if(box)box.innerHTML='<div style="padding:18px;text-align:center;color:var(--vm)"><i class="fas fa-exclamation-circle"></i> Erro</div>';
-      toast('Erro Supabase: '+(res.error.message||'falha no upload'),'err');
+      toast('Erro no envio: '+(res.error.message||'falha no upload'),'err');
       return;
     }
-    var pub=sb.storage.from(SB_BUCKET).getPublicUrl(caminho);
-    var url=pub.data.publicUrl;
+    var url=res.url;
     if(hiddenId)document.getElementById(hiddenId).value=url;
     toast('Upload ✅');
     if(onDone)onDone(url);

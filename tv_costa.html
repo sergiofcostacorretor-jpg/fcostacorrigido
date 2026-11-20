@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Vídeos e tours dos imóveis do FCosta Corretor."/>
 <meta name="twitter:image" content="https://fcostacorretor.com/og-fcosta.jpg?v=3"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,8 +29,8 @@
         :root {
             --vermelho: #dc1c2d;
             --branco: #ffffff;
-            --preto: #070d18;
-            --cinza: #8a9bb5;
+            --preto: #0A0B0F;
+            --cinza: #B9AE98;
             --altura-topo: 56px;
             --altura-barra: 64px;
         }
@@ -38,7 +38,7 @@
         html, body { height: 100%; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--preto);
             color: var(--branco);
             display: flex;
@@ -62,7 +62,7 @@
             gap: 10px;
             text-decoration: none;
             color: var(--vermelho);
-            font-family: 'Playfair Display', serif;
+            font-family: 'Fraunces', serif;
             font-size: 22px;
             font-weight: 800;
         }
@@ -149,11 +149,11 @@
             gap: 14px;
             text-align: center;
             padding: 24px;
-            background: rgba(7, 13, 24, 0.95);
+            background: rgba(10,11,15,0.95);
         }
 
         .aviso.ativo { display: flex; }
-        .aviso p { max-width: 460px; color: #d5dcea; line-height: 1.5; }
+        .aviso p { max-width: 460px; color: #F6F1E7; line-height: 1.5; }
 
         .aviso a {
             background: var(--vermelho);
@@ -208,7 +208,7 @@
 
         /* TOURS DOS IMOVEIS (vem do Firebase fcosta_imoveis -> tourMp4) */
         .tours { flex-shrink: 0; width: 100%; max-width: 1100px; margin: 24px auto 40px; padding: 0 20px; }
-        .tours h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--vermelho); margin-bottom: 4px; }
+        .tours h2 { font-family: 'Fraunces', serif; font-size: 24px; color: var(--vermelho); margin-bottom: 4px; }
         .tours .sub { color: var(--cinza); font-size: 14px; margin-bottom: 16px; }
         .tours-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
         .tour-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }

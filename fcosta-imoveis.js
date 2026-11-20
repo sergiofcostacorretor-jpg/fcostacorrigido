@@ -9,7 +9,8 @@ function j(p,q,o){return fetch(DB+'/'+p+'.json'+(q||''),o).then(function(r){if(!
 function arr(v){return Array.isArray(v)?v.filter(Boolean):Object.keys(v||{}).map(function(k){return v[k]}).filter(Boolean)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(p){p=String(p||'').trim();return !p?'Consulte':/^R\$/.test(p)?p:'R$ '+p}
-function norm(id,d){var f=arr(d.fotos);return{id:id,codigo:d.codigo||'',titulo:d.titulo||'Imóvel',status:d.status||'venda',tipo:d.tipo||'',preco:d.preco||'',area:d.area||'',
+function morta(u){return /supabase\.co\//i.test(String(u||''))}
+function norm(id,d){var f=arr(d.fotos).filter(function(u){return !morta(u)});if(morta(d.fotoDestaque))d=Object.assign({},d,{fotoDestaque:''});return{id:id,codigo:d.codigo||'',titulo:d.titulo||'Imóvel',status:d.status||'venda',tipo:d.tipo||'',preco:d.preco||'',area:d.area||'',
  quartos:+d.quartos||0,banheiros:+d.banheiros||0,vagas:+d.vagas||0,bairro:d.bairro||'',cidade:d.cidade||'',descricao:d.descricao||'',fotos:f,
  capa:d.fotoDestaque||f[0]||'',tourMp4:d.tourMp4||'',destaque:!!d.destaque,slug:d.slug||'',link:d.slug?SITE+'/'+d.slug+'/':SITE+'/imovel?id='+id,atualizado:d.atualizado||''}}
 function listar(o){o=o||{};
