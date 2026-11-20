@@ -1412,8 +1412,10 @@ function ghCfg(){
   try{c=JSON.parse(localStorage.getItem('fcosta_gh')||'null');}catch(e){}
   if(!c){try{c=JSON.parse(document.cookie.split('; ').filter(function(x){return x.indexOf('fcosta_gh=')===0;}).map(function(x){return decodeURIComponent(x.slice(10));})[0]||'null');}catch(e){}}
   if(!c||!c.token)return null;
-  c={repo:c.repo||GH_PADRAO.repo,branch:c.branch||GH_PADRAO.branch,token:c.token};
-  if(!localStorage.getItem('fcosta_gh')){try{localStorage.setItem('fcosta_gh',JSON.stringify(c));}catch(e){}}
+  /* sempre usa o repositório e a branch certos, mesmo se uma configuração antiga tiver outro endereço salvo */
+  var velho=(c.repo!==GH_PADRAO.repo||c.branch!==GH_PADRAO.branch);
+  c={repo:GH_PADRAO.repo,branch:GH_PADRAO.branch,token:String(c.token).trim()};
+  if(velho||!localStorage.getItem('fcosta_gh'))ghSalvar(c);
   return c;
 }
 function ghSalvar(c){
@@ -1512,7 +1514,7 @@ function publicarSite(auto){
   }).then(function(t){return ghApi(c,'/git/commits',{method:'POST',body:JSON.stringify({message:'Painel ADM: publica '+paginas.length+' imóveis',tree:t.sha,parents:[base.sha]})});
   }).then(function(cm){return ghApi(c,'/git/refs/heads/'+encodeURIComponent(c.branch),{method:'PATCH',body:JSON.stringify({sha:cm.sha})});
   }).then(function(){_pubFim();toast('✅ Site atualizado: '+paginas.length+' imóvel(is)'+(ignorados?' ('+ignorados+' sem slug válido)':'')+'. Entra no ar em ~1 min.');
-  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401){try{localStorage.removeItem('fcosta_gh');document.cookie='fcosta_gh=; max-age=0; path=/';}catch(_){}m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub para colar o novo código.';}else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Sem conexão com o GitHub. Verifique a internet e tente de novo.';toast('❌ '+m,true);});
+  }).catch(function(e){_pub=false;_pubPend=false;var m=msgErr(e);console.error('publicarSite',e);if(e.status===401){try{localStorage.removeItem('fcosta_gh');document.cookie='fcosta_gh=; max-age=0; path=/';}catch(_){}m='Token do GitHub inválido ou vencido. Gere outro e toque em ⚙ GitHub para colar o novo código.';}else if(e.status===403)m='Token sem permissão. Ele precisa de Contents: Read and write neste repositório (⚙ GitHub).';else if(e.status===404)m='GitHub não achou o repositório ou a branch ("'+(c.repo||'')+'" / "'+(c.branch||'')+'"), ou o token não tem acesso a ele. Confira em ⚙ GitHub.';else if(e.status===422)m='GitHub rejeitou os arquivos: '+m;else if(/Failed to fetch|NetworkError/i.test(m))m='Não consegui falar com o GitHub. Confira a internet. Se a internet estiver boa, toque em ⚙ GitHub e cole o código de novo.';toast('❌ '+m,true);});
 }
 
 /* Ligação com o Tour: ?novo=1&video=URL&titulo=&preco=&bairro=&cidade=&status= abre o formulário de imóvel NOVO já com o vídeo anexado */
