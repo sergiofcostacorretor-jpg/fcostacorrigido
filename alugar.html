@@ -413,6 +413,7 @@ body.faixa-on .nenhum{display:none}
 @media(max-width:700px){.imoveis-grid{grid-template-columns:1fr;gap:22px}.im-nome{font-size:1.2rem}}
 </style>
 <link rel="stylesheet" href="/tema-ouro.css"/>
+<script src="/fotos-reserva.js"></script>
 </head>
 <body>
 
@@ -636,6 +637,7 @@ function abrirModal(id){
         +(i.vagas?'<div class="mchar"><span>🚗</span><small>'+i.vagas+' Vaga'+(i.vagas>1?'s':'')+'</small></div>':'')
         +(i.tipo?'<div class="mchar"><span>🏠</span><small>'+esc(i.tipo)+'</small></div>':'')
       +'</div>'
+      +((i.tourMp4||i.videoMp4)&&/^https:\/\//i.test(i.tourMp4||i.videoMp4)?'<video class="modal-tour" controls playsinline preload="metadata"'+(fs&&fs[0]?' poster="'+esc(cldUrl?cldUrl(fs[0],900):fs[0])+'"':'')+' src="'+esc(i.tourMp4||i.videoMp4)+'" style="display:block;width:100%;max-height:70vh;border-radius:14px;background:#000;margin:0 0 12px;"></video>':'')
       +(i.descricao?'<p class="modal-desc">'+esc(i.descricao)+'</p>':'')
       +(i.video?'<a href="'+esc(i.video)+'" target="_blank" style="display:inline-flex;align-items:center;gap:5px;color:#E53935;font-size:.72rem;font-weight:700;margin-bottom:9px;">▶️ Ver vídeo</a><br/>':'')
       +'<div class="modal-acoes">'
@@ -648,7 +650,7 @@ function abrirModal(id){
   document.body.style.overflow='hidden';
 }
 
-function fecharModal(){document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
+function fecharModal(){document.querySelectorAll('#modal-content video').forEach(function(v){try{v.pause();}catch(e){}});document.getElementById('modal-bg').classList.remove('on');document.body.style.overflow='';}
 function mN(d){_mi=(_mi+d+_mf.length)%_mf.length;var img=document.getElementById('mfimg');if(img)img.src=cldUrl(_mf[_mi],900);var x=document.getElementById('mfidx');if(x)x.textContent=_mi+1;document.querySelectorAll('.mth').forEach(function(t,i){t.classList.toggle('on',i===_mi);});_li=_mi;}
 function mIr(x){_mi=x;mN(0);}
 function lbAbrir(idx){if(!_lf.length)return;_li=idx||0;document.getElementById('lb').classList.add('on');document.body.style.overflow='hidden';lbR();}
