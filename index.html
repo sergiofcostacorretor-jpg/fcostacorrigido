@@ -246,6 +246,9 @@ body.nav-aberto .dock{display:none}
 .ibtn:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-2px)}
 .ibtn.wa:hover{border-color:var(--wa);color:var(--wa)}
 .ibtn .ic{width:18px;height:18px}
+.ver-im{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,#F2DCA4 0%,#D6B266 45%,#A78340 100%);color:#0A0B0F;font:700 14px/1 var(--sans);text-decoration:none;box-shadow:0 8px 22px rgba(214,178,102,.22);transition:transform .2s}
+.ver-im:hover{transform:translateY(-1px)}
+.ver-im .ic{width:16px;height:16px}
 
 /* destaques: carrossel */
 .carr{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 40px)/3);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 20px;margin:-6px -2px 0}
@@ -1012,7 +1015,9 @@ body.cmp-aberto{overflow:hidden}
   var w=el('a','ibtn wa');w.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Olá! Tenho interesse no imóvel '+cod+' - '+tit+' '+url);w.target='_blank';w.rel='noopener';w.setAttribute('aria-label','Perguntar no WhatsApp');w.appendChild(ico('wa','f'));ac.appendChild(w);
   var s=el('button','ibtn');s.type='button';s.setAttribute('aria-label','Compartilhar imóvel');s.appendChild(ico('share'));
   s.addEventListener('click',function(){partilha(tit+(cod?' ('+cod+')':''),url);});ac.appendChild(s);
-  cf.appendChild(ac);b.appendChild(cf);d.appendChild(b);
+  cf.appendChild(ac);b.appendChild(cf);
+  var vr=el('a','ver-im');vr.href=url;vr.appendChild(document.createTextNode('Ver imóvel'));vr.appendChild(ico('arrow'));b.appendChild(vr);
+  d.appendChild(b);
   return d;
  }
 

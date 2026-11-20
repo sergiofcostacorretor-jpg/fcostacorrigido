@@ -697,7 +697,7 @@ function render(lista){
         +'</div>'
         +'<div class="im-acoes">'
           +'<a class="im-wa" href="'+wa+'" target="_blank" onclick="event.stopPropagation()">💬 WhatsApp</a>'
-          +'<button class="im-ver" onclick="event.stopPropagation();verImovel(\''+i.id+'\')">🔍 Ver</button>'
+          +'<button class="im-ver" onclick="event.stopPropagation();verImovel(\''+i.id+'\')">Ver imóvel</button>'
         +'</div>'
       +'</div></article>';
   }).join('');
@@ -752,7 +752,8 @@ function cfN(id,dir,e){
    O imovel.html lê o ?id= e exibe o imóvel certo
    ══════════════════════════════════════════════ */
 function verImovel(id){
-  var url='https://fcostacorretor.com/imovel?id='+encodeURIComponent(id);
+  var i=(typeof _todos!=='undefined'?_todos:[]).find(function(x){return x.id===id;})||{},sl=String(i.slug||'').replace(/^\/+|\/+$/g,'');
+  var url=/^[a-z0-9-]+$/.test(sl)?'https://fcostacorretor.com/'+sl+'/':'https://fcostacorretor.com/imovel?id='+encodeURIComponent(id);
   try{window.top.location.href=url;}catch(e){window.location.href=url;}
 }
 
@@ -785,7 +786,7 @@ function abrirModal(id){
       +(i.video?'<a class="modal-video" href="'+esc(i.video)+'" target="_blank">▶️ Ver vídeo</a><br/>':'')
       +'<div class="modal-acoes">'
         +'<a class="modal-wa" href="'+wa+'" target="_blank">💬 Tenho interesse</a>'
-        +'<button class="modal-pag" onclick="verImovel(\''+i.id+'\')">📄 Ver página</button>'
+        +'<button class="modal-pag" onclick="verImovel(\''+i.id+'\')">📄 Ver imóvel completo</button>'
         +(fs.length?'<button class="modal-gal-btn" onclick="lbAbrir(0)">🖼️ Galeria</button>':'')
       +'</div>'
     +'</div>';
