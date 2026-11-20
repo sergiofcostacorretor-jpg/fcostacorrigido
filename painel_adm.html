@@ -15,6 +15,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/mp4-normal.js"></script>
 <style>
 :root{--az:#2176AE;--esc:#0D3B66;--ceu:#3B9BD6;--ouro:#C9A84C;--vd:#25D366;--card:rgba(255,255,255,.13);--borda:rgba(255,255,255,.2);--sec:rgba(255,255,255,.65);--fonte:'Inter',sans-serif;--tit:'Playfair Display',serif;--tr:.22s ease;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -1078,6 +1079,15 @@ function onTourMp4(event){
   var c=ghCfg()||ghConfigurar(true);
   if(!c){prog.style.display='none';toast('Configure o GitHub para enviar o video.',true);event.target.value='';return;}
   var prev=URL.createObjectURL(file);
+  /* Arruma o vídeo gravado pelo navegador (sem duração) para tocar em qualquer celular */
+  prog.textContent='Preparando o vídeo para tocar em todo celular...';
+  (file.arrayBuffer?file.arrayBuffer():Promise.reject()).then(function(ab){
+    var novo=null;
+    try{if(window.FCostaMp4)novo=FCostaMp4.normalizar(ab);}catch(e){novo=null;}
+    enviar(novo?new Blob([novo],{type:'video/mp4'}):file);
+  }).catch(function(){enviar(file);});
+  function enviar(arq){
+  prog.textContent='Enviando '+file.name+'... aguarde';
   var fr=new FileReader();
   fr.onerror=function(){prog.style.display='none';toast('Nao consegui ler o video.',true);};
   fr.onload=function(){
@@ -1088,7 +1098,8 @@ function onTourMp4(event){
       prog.style.display='none';mostrarTour(prev);toast('Video enviado! Clique em Salvar Imovel. Pode levar 1 a 2 minutos para aparecer no site.');
     }).catch(function(e){prog.style.display='none';toast('Erro no upload: '+(e.message||e),true);});
   };
-  fr.readAsDataURL(file);
+  fr.readAsDataURL(arq);
+  }
   event.target.value='';
 }
 function limparTourMp4(){document.getElementById('f-tourmp4').value='';mostrarTour('');}
