@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FCosta Studio I.A.</title>
+<meta name="robots" content="noindex,nofollow">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<style>
+:root{--az:#3B9BD6;--mr:#1E3A5F;--bg:#f0f4f8;--bd:#dbe3ec;--mu:#667085}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--mr);font:16px/1.5 Arial,Helvetica,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+header{position:sticky;top:0;z-index:5;background:var(--mr);color:#fff;display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px}
+header a{color:#fff;text-decoration:none;font-size:22px}
+header div{flex:1;line-height:1.2}header small{opacity:.8;font-size:12px}
+#kb{background:none;border:1px solid #fff5;border-radius:10px;color:#fff;font-size:18px;padding:6px 10px}
+main{max-width:820px;margin:0 auto;padding:14px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{font-size:17px;margin:0 0 4px}h3{font-size:14px;margin:0 0 6px;color:var(--az)}
+.hint{font-size:13px;color:var(--mu)}
+label{display:block;font-size:12px;color:var(--mu);margin:10px 0 3px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:#fff;color:var(--mr)}
+textarea{min-height:84px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{width:100%;margin-top:14px;padding:13px;border:0;border-radius:12px;background:var(--az);color:#fff;font:700 16px Arial,sans-serif}
+.btn:disabled{opacity:.6}.btn.s{background:#fff;color:var(--mr);border:1px solid var(--bd);margin-top:8px;font-size:14px;padding:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}
+.chip{flex:none;border:1px solid var(--bd);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;color:var(--mr)}
+.chip b{color:var(--az);margin-left:6px}
+.r pre{white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;font:inherit;margin:0 0 8px}
+.acts{display:flex;gap:8px}.acts button,.acts a{flex:1;text-align:center;text-decoration:none;padding:8px;border-radius:10px;border:1px solid var(--bd);background:#fff;color:var(--mr);font:600 13px Arial,sans-serif}
+.err{color:#b42318;font-size:14px;margin-top:8px}
+.msgs{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.m{max-width:88%;padding:10px 12px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px}
+.m.u{align-self:flex-end;background:var(--az);color:#fff}.m.a{align-self:flex-start;background:#fff;border:1px solid var(--bd)}
+.send{display:flex;gap:8px}.send textarea{min-height:46px}.send button{width:84px;margin:0}
+nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{border:0;background:none;padding:9px 2px;font:600 11px Arial,sans-serif;color:var(--mu)}
+nav button span{display:block;font-size:20px}nav button.on{color:var(--az)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div id="lock" style="position:fixed;inset:0;z-index:99;background:#1E3A5F;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px"><div><div style="font-size:40px">🔒</div><h2 style="color:#fff">Acesso restrito</h2><p id="lockt">Verificando acesso...</p><a id="locka" href="painel_adm.html" style="display:none;color:#fff;font-weight:700">Entrar no Painel ADM</a></div></div>
+<header><a href="index.html">←</a><div><b>FCosta Studio I.A.</b><br><small>CRECI-SP 294791-F · CNAI 52708</small></div><button id="kb">🔑</button></header>
+<main>
+<div class="card" id="keybox" style="border:2px solid var(--az)">
+<h2>🔑 Chave do Google AI Studio</h2>
+<div id="keyst" class="hint"></div>
+<div id="keyform"><input id="keyin" type="password" placeholder="Cole a chave (começa com AIza...)" autocomplete="off"><button class="btn" id="keysave">Salvar chave</button><p class="hint">Fica salva só neste aparelho. Gere em aistudio.google.com, "Get API key".</p></div>
+<button class="btn s hide" id="keychg">Trocar ou remover chave</button>
+</div>
+
+<section id="v-imovel">
+<div class="card"><h2>Cadastro do imóvel</h2><p class="hint">Preencha uma vez e gere o pacote completo: portais, Instagram, Meta Ads, Reels, WhatsApp e checklist.</p>
+<div id="impbox" class="hide"><label>Importar imóvel do Painel ADM</label><select id="imp"></select></div>
+<div class="chips" id="lista"></div>
+<div class="g2"><div><label>Finalidade</label><select id="fin"><option>Venda</option><option>Aluguel</option><option>Lançamento</option><option>Chácara para eventos</option></select></div>
+<div><label>Tipo</label><input id="tipo" placeholder="Casa, apto, terreno..."></div></div>
+<div class="g2"><div><label>Bairro</label><input id="bairro"></div><div><label>Cidade</label><input id="cidade" value="Suzano"></div></div>
+<div class="g3"><div><label>Área m²</label><input id="area" inputmode="numeric"></div><div><label>Quartos</label><input id="quartos" inputmode="numeric"></div><div><label>Vagas</label><input id="vagas" inputmode="numeric"></div></div>
+<div class="g3"><div><label>Suítes</label><input id="suites" inputmode="numeric"></div><div><label>Valor R$</label><input id="valor" inputmode="numeric"></div><div><label>Cond./IPTU</label><input id="cond"></div></div>
+<label>Estado</label><select id="estado"><option>Usado</option><option>Novo</option><option>Na planta</option><option>Reformado</option></select>
+<label>Diferenciais e detalhes reais</label><textarea id="dif" placeholder="Quintal, aceita financiamento, perto do trem, documentação em dia..."></textarea>
+<button class="btn" id="gi">Gerar pacote completo</button><div class="err" id="ei"></div></div>
+<div id="oi"></div>
+</section>
+
+<section id="v-atend" class="hide">
+<div class="card"><h2>Atendimento de leads</h2><p class="hint">Cole a mensagem do cliente. Receba a leitura do lead, 3 respostas prontas, perguntas de qualificação e follow-ups.</p>
+<label>Tipo de atendimento</label><select id="ctx"><option>Quer comprar</option><option>Quer alugar</option><option>Quer vender ou captar imóvel</option><option>Investidor</option><option>Avaliação PTAM / judicial</option><option>Chácara para evento</option></select>
+<label>Mensagem do cliente</label><textarea id="msg" style="min-height:120px" placeholder="Cole aqui o que o cliente escreveu..."></textarea>
+<button class="btn" id="ga">Analisar e responder</button><div class="err" id="ea"></div></div>
+<div id="oa"></div>
+</section>
+
+<section id="v-ads" class="hide">
+<div class="card"><h2>Plano Meta Ads</h2><p class="hint">Estratégia completa, já com as regras de Habitação do Meta.</p>
+<label>Imóvel ou foco</label><select id="adimv"></select>
+<div class="g2"><div><label>Objetivo</label><select id="adobj"><option>Mensagens no WhatsApp</option><option>Captação de proprietários</option><option>Leads</option><option>Tráfego para o site</option></select></div>
+<div><label>Orçamento diário R$</label><input id="adorc" inputmode="numeric" value="30"></div></div>
+<button class="btn" id="gad">Montar plano de campanha</button><div class="err" id="ed"></div></div>
+<div id="od"></div>
+</section>
+
+<section id="v-chat" class="hide">
+<div class="card"><h2>Consultor I.A. FCosta</h2><p class="hint">Conversa com memória: marketing, negociação, financiamento, documentação, contratos e locação. Orientação geral, não substitui advogado.</p></div>
+<div class="msgs" id="msgs"></div>
+<div class="send"><textarea id="ci" placeholder="Pergunte ou peça qualquer coisa..."></textarea><button class="btn" id="cs">Enviar</button></div>
+<button class="btn s" id="cn">Nova conversa</button><div class="err" id="ec"></div>
+</section>
+</main>
+<nav id="nav"><button data-v="imovel"><span>🏠</span>Imóvel</button><button data-v="atend"><span>💬</span>Atendimento</button><button data-v="ads"><span>📣</span>Meta Ads</button><button data-v="chat"><span>✨</span>Consultor</button></nav>
+
+<script>
+const $=id=>document.getElementById(id),MODEL="gemini-2.5-flash";
+const CTX="Corretor Sergio Fernandes da Costa, CRECI-SP 294791-F, CNAI 52708, marca FCosta, fcostacorretor.com, WhatsApp wa.me/5511993509109, Instagram @f.cost.a_corretor, atua em Suzano e região (SP). Serviços: compra, venda, locação, lançamentos, portal do investidor, financiamento, chácara para eventos em Suzano, PTAM/avaliação, perícia e judicial, consultoria, contratos. REGRAS: anúncios de imóveis no Meta são categoria Habitação: sem segmentação por idade, gênero ou CEP, raio mínimo 25 km. Todo anúncio leva nome e CRECI. Nunca prometa valorização, rentabilidade, crédito aprovado ou desconto. Nunca invente dados do imóvel que não foram informados: se faltar algo, deixe de fora ou marque [confirmar].";
+const SYS="Você é consultor sênior de marketing e negócios imobiliários no Brasil, parceiro do corretor. Responda em português do Brasil, direto, específico e pronto para usar. "+CTX;
+const L={titulo_portal:"Título para portais",descricao_portal:"Descrição para portais",legenda_instagram:"Legenda Instagram/Facebook",hashtags:"Hashtags",anuncios_meta:"Anúncios Meta Ads",roteiro_reels:"Roteiro de Reels (30s)",stories:"Stories",mensagem_whatsapp:"Mensagem para WhatsApp",perguntas_qualificacao:"Perguntas de qualificação",checklist_documentos:"Checklist de documentos",intencao:"Intenção do cliente",temperatura:"Temperatura do lead",resumo:"Resumo",respostas:"Respostas prontas",objecoes_provaveis:"Objeções prováveis",proximo_passo:"Próximo passo",followup_24h:"Follow-up 24h",followup_72h:"Follow-up 72h",estrutura:"Estrutura da campanha",publicos:"Públicos",anuncios:"Anúncios",orcamento:"Orçamento",metricas_alvo:"Métricas-alvo",teste_ab_7_dias:"Teste A/B (7 dias)",regras_escalar_pausar:"Quando escalar ou pausar",checklist_habitacao:"Checklist Habitação Meta"};
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const gk=()=>ld("fc_gemini_key","");
+function upd(){const k=gk();$("keyst").textContent=k?"Configurada ✓ (salva neste aparelho)":"Cole a chave abaixo para ativar a I.A.";$("keyform").classList.toggle("hide",!!k);$("keychg").classList.toggle("hide",!k);$("keybox").classList.toggle("hide",!!k&&!showKey);$("keybox").style.borderColor=k?"var(--bd)":"var(--az)"}
+let showKey=false;
+$("kb").onclick=()=>{showKey=!showKey;upd();scrollTo(0,0)};
+$("keysave").onclick=()=>{const k=$("keyin").value.trim();if(k){sv("fc_gemini_key",k);$("keyin").value="";showKey=false;upd()}};
+$("keychg").onclick=()=>{sv("fc_gemini_key","");showKey=true;upd()};
+async function ia(contents,o={}){
+ const k=gk();if(!k){showKey=true;upd();scrollTo(0,0);throw new Error("Cole sua chave do Google no quadro azul.")}
+ const b={contents,generationConfig:{temperature:.8,maxOutputTokens:8192}};
+ if(o.system)b.systemInstruction={parts:[{text:o.system}]};
+ if(o.json)b.generationConfig.responseMimeType="application/json";
+ const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+MODEL+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":k},body:JSON.stringify(b)});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw new Error(r.status==429?"Limite de uso atingido. Aguarde um minuto.":(r.status==400||r.status==403)?"Chave inválida ou sem permissão.":"Falha na I.A. ("+r.status+").");
+ return(d.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join("")
+}
+const parse=t=>{t=t.replace(/^```(?:json)?\s*|\s*```$/g,"").trim();try{return JSON.parse(t)}catch(e){return{resposta:t}}};
+function txt(v){if(v==null)return"";if(typeof v!=="object")return String(v);if(Array.isArray(v))return v.map((x,i)=>typeof x==="object"?(i+1)+". "+txt(x).replace(/\n/g,"\n   "):"• "+x).join("\n");return Object.entries(v).map(([k,x])=>(L[k]||k.replace(/_/g," "))+": "+txt(x)).join("\n")}
+function cards(el,o){el.innerHTML="";for(const k in o){const t=txt(o[k]),d=document.createElement("div");d.className="card r";d.innerHTML='<h3></h3><pre></pre><div class="acts"><button>Copiar</button><a target="_blank" rel="noopener">WhatsApp</a></div>';d.querySelector("h3").textContent=L[k]||k.replace(/_/g," ");d.querySelector("pre").textContent=t;const b=d.querySelector("button");b.onclick=async()=>{try{await navigator.clipboard.writeText(t);b.textContent="Copiado ✓"}catch(e){b.textContent="Selecione e copie"}setTimeout(()=>b.textContent="Copiar",1500)};d.querySelector("a").href="https://wa.me/?text="+encodeURIComponent(t);el.appendChild(d)}}
+async function run(btn,errEl,outEl,prompt,done){
+ errEl.textContent="";const t=btn.textContent;btn.disabled=true;btn.textContent="Gerando...";outEl.innerHTML='<div class="card hint">Trabalhando no seu pedido...</div>';
+ try{const o=parse(await ia([{role:"user",parts:[{text:prompt}]}],{system:SYS,json:true}));cards(outEl,o);done&&done(o);outEl.scrollIntoView({behavior:"smooth"})}
+ catch(e){outEl.innerHTML="";errEl.textContent=e.message}
+ btn.disabled=false;btn.textContent=t}
+const F=["fin","tipo","bairro","cidade","area","quartos","suites","vagas","valor","cond","estado","dif"];
+let raw=null;let imv=ld("fc_imoveis",[]),cur=null;
+const lab=i=>(i.d.tipo||"Imóvel")+" "+(i.d.bairro||"")+(i.d.valor?" · R$ "+i.d.valor:"");
+function lista(){const el=$("lista");el.innerHTML="";imv.forEach(i=>{const c=document.createElement("span");c.className="chip";c.textContent=lab(i);const x=document.createElement("b");x.textContent="✕";x.onclick=e=>{e.stopPropagation();imv=imv.filter(z=>z.id!==i.id);sv("fc_imoveis",imv);if(cur===i.id)cur=null;lista()};c.onclick=()=>{raw=i.d.painel||null;cur=i.id;F.forEach(f=>$(f).value=i.d[f]||"");i.p?cards($("oi"),i.p):$("oi").innerHTML=""};c.appendChild(x);el.appendChild(c)});
+ const s=$("adimv");s.innerHTML="<option value=''>Foco geral (sem imóvel específico)</option>";imv.forEach(i=>{const o=document.createElement("option");o.value=i.id;o.textContent=lab(i);s.appendChild(o)})}
+$("gi").onclick=()=>{const d={};F.forEach(f=>d[f]=$(f).value.trim());if(raw)d.painel=raw;if(!d.tipo||!d.bairro){$("ei").textContent="Informe ao menos o tipo e o bairro.";return}
+ const p=`Gere o PACOTE COMPLETO de divulgação deste imóvel. Responda SOMENTE um JSON com exatamente estas chaves: titulo_portal (string até 70 caracteres), descricao_portal (string, 120 a 180 palavras, parágrafos curtos), legenda_instagram (string com CTA e emojis moderados), hashtags (array de 12 strings, locais e de nicho), anuncios_meta (array de 3 objetos com texto_principal, titulo, descricao, cta, com ângulos diferentes), roteiro_reels (string com cenas, falas e texto na tela, 30s), stories (array de 3 strings), mensagem_whatsapp (string curta para enviar a interessados), perguntas_qualificacao (array de 5 strings), checklist_documentos (array de strings para ${d.fin}). Inclua nome e CRECI nos anúncios.\nIMÓVEL: ${JSON.stringify(d)}`;
+ run($("gi"),$("ei"),$("oi"),p,o=>{let i=imv.find(z=>z.id===cur);if(!i){i={id:Date.now()};cur=i.id;imv.unshift(i)}i.d=d;i.p=o;sv("fc_imoveis",imv);lista()})};
+$("ga").onclick=()=>{const m=$("msg").value.trim();if(!m){$("ea").textContent="Cole a mensagem do cliente.";return}
+ run($("ga"),$("ea"),$("oa"),`Atenda este lead. Contexto: ${$("ctx").value}. Responda SOMENTE um JSON com as chaves: intencao (string), temperatura (frio, morno ou quente, com justificativa curta), resumo (string), respostas (array de 3 objetos com estilo e texto, prontos para WhatsApp, curtos e humanos), perguntas_qualificacao (array de 5 strings), objecoes_provaveis (array de objetos com objecao e resposta), proximo_passo (string), followup_24h (string), followup_72h (string).\nMENSAGEM DO CLIENTE: """${m}"""`)};
+$("gad").onclick=()=>{const i=imv.find(z=>String(z.id)===$("adimv").value);
+ run($("gad"),$("ed"),$("od"),`Monte o plano de campanha Meta Ads (Facebook e Instagram). Objetivo: ${$("adobj").value}. Orçamento diário: R$ ${$("adorc").value}. Foco: ${i?JSON.stringify(i.d):"geral da FCosta"}. Responda SOMENTE um JSON com as chaves: estrutura (string: campanhas, conjuntos, otimização), publicos (array de objetos com nome, definicao, tamanho_sugerido, respeitando a política de Habitação), anuncios (array de 3 objetos com texto_principal, titulo, descricao, cta), orcamento (string com divisão por conjunto), metricas_alvo (array de strings realistas, sem garantir resultado), teste_ab_7_dias (array de strings por dia), regras_escalar_pausar (array de strings com gatilhos numéricos), checklist_habitacao (array de strings).`)};
+let hist=ld("fc_chat",[]);
+function msgs(){const el=$("msgs");el.innerHTML="";hist.forEach(m=>{const d=document.createElement("div");d.className="m "+(m.role=="user"?"u":"a");d.textContent=m.text;el.appendChild(d)})}
+async function send(){const t=$("ci").value.trim();if(!t)return;$("ec").textContent="";hist.push({role:"user",text:t});$("ci").value="";msgs();$("cs").disabled=true;
+ try{const r=await ia(hist.slice(-20).map(m=>({role:m.role,parts:[{text:m.text}]})),{system:SYS});hist.push({role:"model",text:r.trim()})}catch(e){$("ec").textContent=e.message;hist.pop();$("ci").value=t}
+ sv("fc_chat",hist);msgs();$("cs").disabled=false;scrollTo(0,document.body.scrollHeight)}
+$("cs").onclick=send;$("cn").onclick=()=>{hist=[];sv("fc_chat",hist);msgs()};
+function go(v){["imovel","atend","ads","chat"].forEach(x=>$("v-"+x).classList.toggle("hide",x!==v));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));if(location.hash.slice(1)!==v)history.replaceState(null,"","#"+v)}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.v));
+const h=location.hash.slice(1);go(h==="ia"?"chat":["imovel","atend","ads","chat"].includes(h)?h:"imovel");
+const pk=(o,ks)=>{for(const k of ks)if(o[k]!=null&&o[k]!=="")return String(o[k]);return""};
+function impor(i){raw=i;const m={venda:"Venda",aluguel:"Aluguel",lancamento:"Lançamento"};$("fin").value=m[i.status]||"Venda";$("tipo").value=pk(i,["tipo","titulo"]);$("bairro").value=pk(i,["bairro"]);$("cidade").value=pk(i,["cidade"])||"Suzano";$("area").value=pk(i,["area","areaTotal","areaUtil","m2"]);$("quartos").value=pk(i,["quartos","dormitorios"]);$("suites").value=pk(i,["suites"]);$("vagas").value=pk(i,["vagas"]);$("valor").value=pk(i,["valor","preco"]);$("cond").value=pk(i,["condominio","iptu"]);$("dif").value=pk(i,["descricao","desc","diferenciais","obs"]);cur=null;$("oi").innerHTML=""}
+let painel=[];
+addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.t!=="fc-imoveis")return;painel=e.data.lista||[];const s=$("imp");s.innerHTML="<option value=''>Escolher imóvel cadastrado no site...</option>";painel.forEach((i,n)=>{const o=document.createElement("option");o.value=n;o.textContent=(i.numeroCodigo?i.numeroCodigo+" · ":"")+(i.titulo||i.tipo||"Imóvel")+(i.status?" ("+i.status+")":"");s.appendChild(o)});$("impbox").classList.remove("hide")});
+$("imp").onchange=()=>{if($("imp").value!=="")impor(painel[+$("imp").value])};
+if(self!==top){document.querySelector("header a").style.display="none";parent.postMessage({t:"fc-pedir-imoveis"},location.origin)}
+let lk=setTimeout(()=>{$("lockt").textContent="Não foi possível verificar o acesso. Abra pelo Painel ADM.";$("locka").style.display="inline-block"},7000);
+try{firebase.initializeApp({apiKey:'AIzaSyBo3zQ-yUNJ2Zk9d6jkEpslF-bsrFcRu8I',authDomain:'fcosta2026-847c3.firebaseapp.com',projectId:'fcosta2026-847c3',appId:'1:131225040087:web:d468aad3d80bd26aaa2c92'});firebase.auth().onAuthStateChanged(u=>{clearTimeout(lk);if(u){$("lock").remove();if(self!==top)parent.postMessage({t:"fc-pedir-imoveis"},location.origin)}else{$("lockt").textContent="Faça login no Painel ADM para usar o agente.";$("locka").style.display="inline-block"}})}catch(e){}
+upd();lista();msgs();
+</script>
+</body>
+</html>

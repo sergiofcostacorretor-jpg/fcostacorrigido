@@ -741,6 +741,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
   <div class="tab" data-p="ed-pag" id="tab-ed-pag" onclick="goTab('ed-pag',this)" style="display:none;">Editar Página</div>
   <div class="tab" data-p="refs" onclick="goTab('refs',this)">Referências</div>
   <div class="tab" data-p="usuarios" onclick="goTab('usuarios',this)">Usuários</div>
+  <div class="tab" data-p="agente" onclick="goTab('agente',this);agAbrir()">Agente I.A.</div>
 </div>
 <div id="main">
 <div class="painel on" id="p-imoveis">
@@ -898,6 +899,9 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
   <div class="ref-gen"><div class="ref-gen-tit">Qual categoria voce precisa?</div><div class="ref-siglas"><div class="ref-sbtn" onclick="refSig('FCV',this)"><span class="rs">FCV</span><span class="rd">Venda / Comprar</span></div><div class="ref-sbtn" onclick="refSig('FCA',this)"><span class="rs">FCA</span><span class="rd">Aluguel / Locacao</span></div><div class="ref-sbtn" onclick="refSig('FCL',this)"><span class="rs">FCL</span><span class="rd">Lancamentos</span></div><div class="ref-sbtn" onclick="refSig('FCP',this)"><span class="rs">FCP</span><span class="rd">Panfletos</span></div></div><div class="ref-resultado"><div class="ref-num" id="ref-num-disp"><span class="rns">-</span></div><div class="ref-desc" id="ref-desc-disp">Clique em <strong>FCV, FCA, FCL ou FCP</strong> para ver o proximo numero disponivel.</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn bok" id="ref-btn-cp" style="display:none;" onclick="refCopiar()">Copiar</button><button class="btn bwarn" id="ref-btn-us" style="display:none;" onclick="refUsarForm()">Usar no formulario</button></div></div></div>
   <div class="ref-filtros"><span class="ref-chip on" onclick="refFilt('',this)">Todos</span><span class="ref-chip" onclick="refFilt('venda',this)">FCV</span><span class="ref-chip" onclick="refFilt('aluguel',this)">FCA</span><span class="ref-chip" onclick="refFilt('lancamento',this)">FCL</span><span class="ref-chip" onclick="refFilt('panfleto',this)">FCP</span><input type="text" class="ref-busca" id="ref-busca" placeholder="Buscar ref., bairro, titulo..." oninput="refRender()"/></div>
   <div class="ref-tabela"><div class="ref-thead"><span>Referencia</span><span>Titulo</span><span>Bairro / Cidade</span><span>Preco</span><span>Pub.</span><span>Acoes</span></div><div id="ref-corpo"><div class="loading"><div class="spin"></div><p>Carregando...</p></div></div></div>
+</div>
+<div class="painel" id="p-agente">
+  <iframe id="ag-frame" title="Agente I.A. FCosta" allow="clipboard-write" style="width:100%;height:calc(100vh - 140px);min-height:540px;border:0;border-radius:12px;background:#f0f4f8"></iframe>
 </div>
 <div class="painel" id="p-usuarios">
   <div class="auth-panel"><h3>Gerenciamento de Usuarios ADM</h3><p class="auth-sub">Gerencie quem tem acesso ao Painel ADM.</p><div class="auth-stit">Minha Conta</div><div id="minha-conta"></div><div class="chpw-box"><div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:12px;">Alterar Minha Senha</div><div class="fg" style="margin-bottom:10px;"><label>Nova Senha</label><input type="password" id="nova-pw" placeholder="minimo 8 caracteres" oninput="forcaPw(this.value,'pw-bar1','pw-txt1')" autocomplete="new-password"/><div class="pw-bar pw0" id="pw-bar1"></div><div class="pw-txt" id="pw-txt1"></div></div><div class="fg" style="margin-bottom:12px;"><label>Confirmar Nova Senha</label><input type="password" id="conf-pw" placeholder="repita a nova senha" autocomplete="new-password"/></div><button class="btn bwarn" onclick="alterarPw()">Alterar Senha</button></div></div>
@@ -1489,6 +1493,17 @@ var n=0,t=setInterval(function(){n++;
   else{if(!ghCfg()){toast('Configure o GitHub (botão ⚙ GitHub) para publicar a página.',true);ghConfigurar(true);}publicarSite(false);}
  }else if(n>120){clearInterval(t);toast('Imóvel não encontrado no Painel ADM.',true);}
 },500);})();
+</script>
+<style>.tab[data-p="agente"]::before{content:"✨";}</style>
+<script>
+/* Agente I.A. FCosta: carrega só dentro do painel e recebe os imóveis cadastrados */
+(function(){if(location.hash!=='#agente')return;var n=0,t=setInterval(function(){var a=document.getElementById('app');if(a&&a.style.display==='block'){clearInterval(t);var tb=document.querySelector('.tab[data-p="agente"]');if(tb){goTab('agente',tb);agAbrir();}}else if(++n>60)clearInterval(t);},300);})();
+function agAbrir(){var f=document.getElementById('ag-frame');if(f&&!f.getAttribute('src'))f.setAttribute('src','agente-fcosta.html#imovel');}
+window.addEventListener('message',function(e){
+  if(e.origin!==location.origin||!e.data||e.data.t!=='fc-pedir-imoveis')return;
+  var lista=(window._todos||[]).filter(function(i){return i._del!==true&&i._excluido!==true;}).map(function(i){var o={};Object.keys(i).forEach(function(k){var v=i[k];if((typeof v==='string'&&v.length<=300)||typeof v==='number'||typeof v==='boolean')o[k]=v;});return o;});
+  if(e.source)e.source.postMessage({t:'fc-imoveis',lista:lista},location.origin);
+});
 </script>
 </body>
 </html>
