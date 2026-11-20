@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="Imóveis para alugar na Zona Leste de SP. CRECI-SP 294791-F"/>
 <meta name="twitter:image" content="https://fcostacorretor.com/og-fcosta.jpg?v=2"/>
 <link rel="canonical" href="https://fcostacorretor.com/alugar"/>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -159,17 +159,17 @@ img{max-width:100%;display:block;}
    <link rel="stylesheet" href="tema-fcosta.css"> dela.
    ══════════════════════════════════════════════════════════════════ */
 :root{
-  --amarelo:#FFD400;--amarelo2:#FFE24D;
+  --amarelo:#D6B266;--amarelo2:#F2DCA4;
   /* nomes usados em comprar / alugar / lancamentos */
-  --azul:#FFD400;--escuro:#FFFFFF;--ceu:#FFD400;--ouro:#FFD400;--ouro2:#FFE24D;--ceu-claro:#141414;
+  --azul:#D6B266;--escuro:#FFFFFF;--ceu:#D6B266;--ouro:#D6B266;--ouro2:#F2DCA4;--ceu-claro:#141414;
   /* nomes usados em panfletos */
-  --az:#FFD400;--esc:#FFFFFF;--roxo:#FFD400;--roxo2:#FFD400;--roxo3:#141414;
+  --az:#D6B266;--esc:#FFFFFF;--roxo:#D6B266;--roxo2:#D6B266;--roxo3:#141414;
   /* nomes usados em imovel */
-  --azul-esc:#FFFFFF;--azul-ceu:#FFD400;
+  --azul-esc:#FFFFFF;--azul-ceu:#D6B266;
   /* comuns */
   --fundo:#0E0E0E;--texto:#FFFFFF;--sec:#A3A3A3;--borda:#262626;
-  --titulo:'Anton','Bebas Neue','Impact',sans-serif;
-  --sh:none;--sh2:0 18px 50px rgba(255,212,0,.08);
+  --titulo:'Fraunces',Georgia,serif;
+  --sh:none;--sh2:0 18px 50px rgba(214,178,102,.08);
 }
 body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 :focus-visible{outline:2px solid var(--amarelo);outline-offset:3px;}
@@ -195,9 +195,9 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 
 /* ── Abertura da página ── */
 .page-hero,.hero{background:#000;border-bottom:1px solid #1a1a1a;}
-.page-hero::before,.hero::before{background:radial-gradient(ellipse at 88% 8%,rgba(255,212,0,.16) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(255,212,0,.06) 0%,transparent 50%);}
+.page-hero::before,.hero::before{background:radial-gradient(ellipse at 88% 8%,rgba(214,178,102,.16) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(214,178,102,.06) 0%,transparent 50%);}
 .hero::after{opacity:.04;}
-.page-badge,.hero-badge{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.5);color:var(--amarelo);border-radius:4px;text-transform:uppercase;letter-spacing:2px;font-size:.62rem;font-weight:700;}
+.page-badge,.hero-badge{background:rgba(214,178,102,.08);border:1px solid rgba(214,178,102,.5);color:var(--amarelo);border-radius:4px;text-transform:uppercase;letter-spacing:2px;font-size:.62rem;font-weight:700;}
 .hero-badge span{background:var(--amarelo);}
 .page-h1,.hero-h1{font-family:var(--titulo);text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.7rem);line-height:1;letter-spacing:.4px;color:#fff;max-width:760px;}
 .page-h1 em,.hero-h1 em{color:var(--amarelo);}
@@ -209,7 +209,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .filtros-wrap{background:#000;border:none;box-shadow:none;}
 .filtros-inner{background:#0b0b0b;border:1px solid #262626;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.55);}
 .filtro-busca input,.f-busca input{background:#141414;border:1px solid #2a2a2a;color:#fff;border-radius:8px;}
-.filtro-busca input:focus,.f-busca input:focus{border-color:var(--amarelo);background:#141414;box-shadow:0 0 0 3px rgba(255,212,0,.15);}
+.filtro-busca input:focus,.f-busca input:focus{border-color:var(--amarelo);background:#141414;box-shadow:0 0 0 3px rgba(214,178,102,.15);}
 .filtro-busca input::placeholder,.f-busca input::placeholder{color:#6b6b6b;}
 .filtro-busca-ic,.f-busca-ic{color:#6b6b6b;}
 .filtro-sel,.f-sel{background:#141414;border:1px solid #2a2a2a;color:#fff;border-radius:8px;}
@@ -225,7 +225,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 
 /* ── Cartões de imóvel ── */
 .im-card{background:#0b0b0b;border:1px solid #262626;border-radius:12px;box-shadow:none;}
-.im-card:hover{transform:translateY(-6px);border-color:var(--amarelo);box-shadow:0 18px 50px rgba(255,212,0,.08);}
+.im-card:hover{transform:translateY(-6px);border-color:var(--amarelo);box-shadow:0 18px 50px rgba(214,178,102,.08);}
 .im-foto{background:#141414;}
 .im-foto img{background:#141414;}
 .im-fn{background:rgba(0,0,0,.7);color:#fff;box-shadow:none;}
@@ -252,7 +252,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 
 /* ── Cartões de panfleto ── */
 .pf-card{background:#0b0b0b;border:1px solid #262626;border-radius:10px;box-shadow:none;}
-.pf-card:hover{border-color:var(--amarelo);box-shadow:0 16px 48px rgba(255,212,0,.08);}
+.pf-card:hover{border-color:var(--amarelo);box-shadow:0 16px 48px rgba(214,178,102,.08);}
 .pf-thumb{background:#fff;}
 .pf-thumb-ph .ph-lbl{color:#555;}
 .pf-cod{background:rgba(0,0,0,.8);color:var(--amarelo);}
@@ -260,7 +260,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pf-body{background:#0b0b0b;border-top:1px solid #262626;}
 .pf-titulo{text-transform:uppercase;letter-spacing:.4px;color:#fff;font-size:1rem;}
 .pf-local{color:#a3a3a3;}
-.pf-tag{background:rgba(255,212,0,.1);color:var(--amarelo);border:1px solid rgba(255,212,0,.3);}
+.pf-tag{background:rgba(214,178,102,.1);color:var(--amarelo);border:1px solid rgba(214,178,102,.3);}
 .pf-btn-abrir{background:var(--amarelo);color:#000;border-radius:6px;text-transform:uppercase;letter-spacing:.6px;}
 .pf-btn-wa{background:transparent;border:1px solid #3a3a3a;color:#fff;border-radius:6px;}
 
@@ -311,7 +311,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .pg-imovel .seta:hover{background:var(--amarelo);color:#000;}
 .pg-imovel .galeria-strip img.ativa{border-color:var(--amarelo);}
 .pg-imovel .galeria-strip::-webkit-scrollbar-thumb{background:var(--amarelo);}
-.pg-imovel .fs-arr:hover{background:rgba(255,212,0,.5);}
+.pg-imovel .fs-arr:hover{background:rgba(214,178,102,.5);}
 .pg-imovel .codigo-badge{background:transparent;color:var(--amarelo);border:1px solid var(--amarelo);}
 .pg-imovel .sb-venda{background:var(--amarelo);color:#000;}
 .pg-imovel .sb-aluguel{background:#fff;color:#000;}
@@ -384,16 +384,16 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 </style>
 <style id="faixa-locacao">
 /* ══ FAIXA "SEM IMÓVEIS PARA LOCAÇÃO" ══ ligar/desligar: Firebase fcosta_config/faixa_locacao/ativo (ou botão do ADM nesta página) */
-.faixa-loc{background:var(--amarelo,#FFD400);color:#000;border-bottom:1px solid #000}
+.faixa-loc{background:var(--amarelo,#D6B266);color:#000;border-bottom:1px solid #000}
 .faixa-loc[hidden],.faixa-adm[hidden]{display:none}
 .faixa-loc-in{max-width:1180px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;text-align:center}
 .faixa-loc-ic{font-size:1.5rem;line-height:1}
-.faixa-loc p{font-family:var(--titulo,'Anton',sans-serif);font-weight:400;text-transform:uppercase;letter-spacing:.8px;font-size:clamp(1rem,2.4vw,1.45rem);line-height:1.15;margin:0}
-.faixa-loc-wa{background:#000;color:var(--amarelo,#FFD400);font-weight:800;font-size:.74rem;letter-spacing:.8px;text-transform:uppercase;padding:11px 18px;border-radius:6px;white-space:nowrap}
+.faixa-loc p{font-family:var(--titulo,'Fraunces',serif);font-weight:400;text-transform:uppercase;letter-spacing:.8px;font-size:clamp(1rem,2.4vw,1.45rem);line-height:1.15;margin:0}
+.faixa-loc-wa{background:#000;color:var(--amarelo,#D6B266);font-weight:800;font-size:.74rem;letter-spacing:.8px;text-transform:uppercase;padding:11px 18px;border-radius:6px;white-space:nowrap}
 .faixa-loc-wa:hover{opacity:.88}
-.faixa-adm{position:fixed;left:12px;bottom:12px;z-index:9990;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#0b0b0b;border:1px solid var(--amarelo,#FFD400);color:#fff;border-radius:10px;padding:8px 12px;font-size:.72rem;box-shadow:0 10px 30px rgba(0,0,0,.6)}
-.faixa-adm b{color:var(--amarelo,#FFD400)}
-.faixa-adm button{background:var(--amarelo,#FFD400);color:#000;border:0;border-radius:6px;font-weight:800;font-size:.68rem;padding:7px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.4px}
+.faixa-adm{position:fixed;left:12px;bottom:12px;z-index:9990;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#0b0b0b;border:1px solid var(--amarelo,#D6B266);color:#fff;border-radius:10px;padding:8px 12px;font-size:.72rem;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.faixa-adm b{color:var(--amarelo,#D6B266)}
+.faixa-adm button{background:var(--amarelo,#D6B266);color:#000;border:0;border-radius:6px;font-weight:800;font-size:.68rem;padding:7px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.4px}
 body.faixa-on .nenhum{display:none}
 </style>
 <style id="fmt-grande">
@@ -412,6 +412,7 @@ body.faixa-on .nenhum{display:none}
 #modal{max-width:min(600px,calc(94vh*.5625),100%)}
 @media(max-width:700px){.imoveis-grid{grid-template-columns:1fr;gap:22px}.im-nome{font-size:1.2rem}}
 </style>
+<link rel="stylesheet" href="/tema-ouro.css"/>
 </head>
 <body>
 

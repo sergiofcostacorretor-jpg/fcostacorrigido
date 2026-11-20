@@ -1,0 +1,42 @@
+/* ═══════════ FCosta — Tema Preto & Ouro (acabamento compartilhado) ═══════════
+   Carregado por último nas páginas do site: refina tipografia, fundo e botões
+   sem alterar a estrutura de cada página. */
+:root{--ink:#0A0B0F;--gold:#D6B266;--gold2:#F2DCA4;--gold3:#A78340;
+  --goldg:linear-gradient(135deg,#F2DCA4 0%,#D6B266 45%,#A78340 100%);
+  --titulo:'Fraunces',Georgia,serif;}
+body{background-color:#0A0B0F!important;-webkit-font-smoothing:antialiased;}
+::selection{background:rgba(214,178,102,.35);color:#0A0B0F;}
+
+/* Títulos: serifada elegante, sem caixa alta forçada */
+.page-h1,.hero-h1,.hero h1,.content h1,.content h2,.gal-topo h1,.card-titulo,.modal-titulo,.modal-h2,
+.fcg-titulo,.fcg-secao-titulo,.im-nome,.pf-titulo,.imovel-titulo,.secao-h3,.cta-bloco-txt h3,
+h2[style*="var(--preto)"]{font-family:var(--titulo)!important;font-weight:600!important;text-transform:none!important;letter-spacing:-.3px!important;}
+.page-h1,.hero-h1{line-height:1.05;}
+.logo-txt span:first-child,.logo-nome,.logo,.gal-topo-logo span{font-family:var(--titulo)!important;font-weight:600!important;text-transform:none!important;letter-spacing:0!important;}
+.im-preco,.modal-preco,.imovel-preco,.hstat-n{font-family:var(--titulo)!important;font-weight:600!important;
+  background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent!important;}
+
+/* Topo em vidro com filete dourado */
+#nav,header{background:rgba(10,11,15,.8)!important;backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom:1px solid rgba(214,178,102,.18)!important;}
+.logo img{box-shadow:0 0 0 2px #0A0B0F,0 0 0 3px #D6B266!important;}
+
+/* Abertura com brilho dourado */
+.page-hero,.hero{background:#0A0B0F!important;}
+.page-hero::before,.hero::before{background:radial-gradient(ellipse at 85% 0%,rgba(214,178,102,.2) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(167,131,64,.1) 0%,transparent 50%)!important;}
+.page-badge,.hero-badge{border-radius:999px!important;}
+
+/* Botões principais em degradê dourado */
+.nav-wa,.btn-wa-nav,.btn-ouro,.btn-primary,.btn-filtrar,.cta-btn{background:var(--goldg)!important;color:#0A0B0F!important;border-color:transparent!important;
+  border-radius:999px!important;box-shadow:0 8px 22px rgba(214,178,102,.22);transition:transform .2s,box-shadow .2s;}
+.nav-wa:hover,.btn-wa-nav:hover,.btn-ouro:hover,.btn-primary:hover,.btn-filtrar:hover,.cta-btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(214,178,102,.32);}
+.btn-home,.btn-voltar{border-radius:999px!important;border-color:rgba(214,178,102,.35)!important;}
+
+/* Cartões */
+.im-card,.pf-card,.card{border-radius:16px!important;transition:transform .25s,box-shadow .25s,border-color .25s;}
+.im-card:hover,.pf-card:hover,.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 0 1px rgba(214,178,102,.35)!important;}
+
+/* Rolagem */
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#0A0B0F}
+::-webkit-scrollbar-thumb{background:#2C2D35;border-radius:10px;border:2px solid #0A0B0F}::-webkit-scrollbar-thumb:hover{background:#A78340}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
