@@ -165,6 +165,10 @@ body.nav-aberto .dock{display:none}
 .hero-card h3{font-size:21px;margin:10px 0 6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .hero-card p{color:var(--mut);font-size:14px;display:flex;align-items:center;gap:6px}
 .hero-card p .ic{width:15px;height:15px}
+.hc-som{display:inline-flex;align-items:center;gap:8px;margin-top:12px;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(214,178,102,.35);background:rgba(10,11,15,.55);color:var(--gold2,#F2DCA4);font:600 13px/1 var(--sans);cursor:pointer;transition:transform .2s,background .2s}
+.hc-som:hover{transform:translateY(-1px);background:rgba(214,178,102,.12)}
+.hc-som[aria-pressed="true"]{background:linear-gradient(135deg,#F2DCA4 0%,#D6B266 45%,#A78340 100%);color:#0A0B0F;border-color:transparent}
+.hc-som[hidden]{display:none}
 .hero-card .hc-ft{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 .hero-card .hc-pr{font:500 24px/1 var(--serif);color:var(--gold2)}
 .hc-dots{display:flex;gap:6px;margin-top:14px}
@@ -257,7 +261,8 @@ body.nav-aberto .dock{display:none}
 /* explorar imóveis */
 .explorar{background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 30%,var(--ink2) 100%)}
 .ex-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
-.seg{display:flex;gap:4px;padding:5px;background:var(--ink3);border:1px solid var(--line);border-radius:999px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.ex-bar>*{min-width:0;max-width:100%}
+.seg{display:flex;gap:4px;padding:5px;background:var(--ink3);border:1px solid var(--line);border-radius:999px;overflow-x:auto;scrollbar-width:none;max-width:100%;min-width:0;flex:0 1 auto}
 .seg::-webkit-scrollbar{display:none}
 .seg button{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--mut);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;transition:.25s}
 .seg button .c{font:600 11.5px/1 var(--sans);padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--mut)}
@@ -574,6 +579,7 @@ body.cmp-aberto{overflow:hidden}
     <p><svg class="ic"><use href="#i-pin"/></svg><span id="hcLoc"></span></p>
     <div class="hc-ft"><span class="hc-pr" id="hcPr"></span><a class="link-arrow" id="hcLink" href="#imoveis">Ver <svg class="ic"><use href="#i-arrow"/></svg></a></div>
     <div class="hc-dots" id="hcDots"></div>
+    <button type="button" class="hc-som" id="hcSom" hidden aria-pressed="false"><span class="hc-som-ic" aria-hidden="true">🔇</span><span class="hc-som-tx">Ouvir o vídeo</span></button>
    </aside>
   </div>
 
@@ -967,7 +973,7 @@ body.cmp-aberto{overflow:hidden}
  function norm(u){return String(u||'').toLowerCase().replace(/^https?:\/\/(www\.)?fcostacorretor\.com/,'').replace(/[?#].*$/,'').replace(/\.html$/,'').replace(/\/+$/,'');}
  /* Cloudinary: entrega a foto já no tamanho certo (leve no celular, nítida no PC) */
  /* vídeo do Cloudinary mais leve para o fundo (sem áudio, largura limitada); vídeos do próprio site ficam como estão */
- function vidUrl(u,w){u=fixu(u);return /res\.cloudinary\.com\/[^\/]+\/video\/upload\/(?![^\/]*,)/.test(u)?u.replace('/video/upload/','/video/upload/w_'+Math.min(w,1600)+',q_auto,ac_none/'):u;}
+ function vidUrl(u,w){u=fixu(u);return /res\.cloudinary\.com\/[^\/]+\/video\/upload\/(?![^\/]*,)/.test(u)?u.replace('/video/upload/','/video/upload/w_'+Math.min(w,1600)+',q_auto/'):u;}
  function otim(u,w){return /res\.cloudinary\.com\/[^\/]+\/image\/upload\/(?![^\/]*,)/.test(u)?u.replace('/image/upload/','/image/upload/w_'+w+',q_auto,f_auto/'):u;}
  function precoTx(p){var s=String(p||'').replace(/^\s*R\$\s*/i,'').replace(/,00$/,'').trim();return s;}
  function precoNum(p){var s=String(p||'').replace(/[^\d,\.]/g,'');if(!s)return 0;s=s.replace(/\./g,'').replace(',','.');return parseFloat(s)||0;}
@@ -1043,7 +1049,10 @@ body.cmp-aberto{overflow:hidden}
    return s;
   }).filter(Boolean);
   if(!sl.length)return;
-  var at=0,tm=null;
+  var at=0,tm=null,som=false,bs=document.getElementById('hcSom');
+  /* botão de som: o navegador só deixa o vídeo tocar sozinho se estiver mudo; o visitante liga o som com um toque */
+  function somUi(){var v=vidDe(sl[at]);bs.hidden=!v;bs.setAttribute('aria-pressed',som?'true':'false');bs.querySelector('.hc-som-ic').textContent=som?'🔊':'🔇';bs.querySelector('.hc-som-tx').textContent=som?'Som ligado':'Ouvir o vídeo';}
+  bs.addEventListener('click',function(){som=!som;var v=vidDe(sl[at]);if(v){v.muted=!som;if(som){var p=v.play();if(p&&p.catch)p.catch(function(){});}}somUi();});
   function pontos(){
    dots.innerHTML='';dots.hidden=sl.length<2;
    sl.forEach(function(s,k){var dt=el('button');dt.type='button';dt.setAttribute('aria-label','Imóvel '+(k+1));if(k===at)dt.className='on';dt.addEventListener('click',function(){ir(k);agenda();});dots.appendChild(dt);});
@@ -1060,12 +1069,12 @@ body.cmp-aberto{overflow:hidden}
    at=k;sl.forEach(function(s,j){
     s.classList.toggle('on',j===k);
     var v=vidDe(s);if(!v)return;
-    if(j===k){v.preload='auto';try{v.currentTime=0;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(e){if(e&&e.name==='AbortError')return;v.remove();if(!s.firstChild)tira(s);else agenda();});}
-    else setTimeout(function(){if(sl[at]!==s)v.pause();},1700);
+    if(j===k){v.preload='auto';v.muted=!som;try{v.currentTime=0;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(e){if(e&&e.name==='AbortError')return;if(e&&e.name==='NotAllowedError'&&!v.muted){som=false;v.muted=true;somUi();var p2=v.play();if(p2&&p2.catch)p2.catch(function(){});return;}v.remove();if(!s.firstChild)tira(s);else agenda();});}
+    else{v.muted=true;setTimeout(function(){if(sl[at]!==s)v.pause();},1700);}
    });
    /* já começa a baixar o vídeo do próximo para entrar sem espera */
    var nv=vidDe(sl[(k+1)%sl.length]);if(nv&&nv.preload==='none')nv.preload='metadata';
-   [].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===k);});
+   [].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===k);});somUi();
    var i=sl[k]._i;
    document.getElementById('hcTit').textContent=titulo(i.titulo);
    document.getElementById('hcLoc').textContent=[i.bairro,cidadeTx(i.cidade)].filter(Boolean).join(', ')||ROT[i.status];
