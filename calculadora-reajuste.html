@@ -5,52 +5,52 @@
 <meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FCOSTA — Calculadora de Reajuste de Aluguel (IPCA / IGP-M)</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap'Fraunces':wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --azul:#3B9BD6;
-  --azul-escuro:#1E3A5F;
+  --azul:#A78340;
+  --azul-escuro:#16171D;
   --branco:#FFFFFF;
-  --cinza:#f4f7fa;
-  --texto:#1c2b3a;
+  --cinza:#FBF8F1;
+  --texto:#16171D;
   --verde:#1a8f4c;
   --laranja:#c97b1e;
-  --borda:#dbe6ef;
+  --borda:#F6F1E7;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',Arial,sans-serif;background:var(--cinza);color:var(--texto);line-height:1.6;padding-bottom:60px;}
 .topo{background:var(--azul-escuro);color:#fff;padding:22px 18px;text-align:center;}
-.topo h1{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:1px;font-weight:700;}
-.topo p{font-size:12.5px;color:#cfe3f2;margin-top:4px;}
+.topo h1{font-family:'Fraunces',sans-serif;font-size:20px;letter-spacing:1px;font-weight:700;}
+.topo p{font-size:12.5px;color:#F6F1E7;margin-top:4px;}
 .container{max-width:760px;margin:0 auto;padding:24px 16px;}
 .cards-indices{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;}
-.card-indice{flex:1;min-width:220px;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:16px 18px;box-shadow:0 2px 10px rgba(30,58,95,.06);}
-.card-indice .nome{font-family:'Oswald',sans-serif;font-size:13px;color:var(--azul-escuro);letter-spacing:.5px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
-.card-indice .valor{font-size:30px;font-weight:700;color:var(--azul);margin:8px 0 4px;font-family:'Oswald',sans-serif;}
+.card-indice{flex:1;min-width:220px;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:16px 18px;box-shadow:0 2px 10px rgba(22,23,29,.06);}
+.card-indice .nome{font-family:'Fraunces',sans-serif;font-size:13px;color:var(--azul-escuro);letter-spacing:.5px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+.card-indice .valor{font-size:30px;font-weight:700;color:var(--azul);margin:8px 0 4px;font-family:'Fraunces',sans-serif;}
 .card-indice .valor.loading{font-size:14px;color:#999;font-weight:400;}
 .card-indice .ref{font-size:11px;color:#777;}
-.badge-oficial{font-size:8.5px;background:#e8f4fd;color:var(--azul-escuro);padding:2px 7px;border-radius:10px;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.3px;}
-.bloco-calc{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:22px 22px 24px;box-shadow:0 2px 14px rgba(30,58,95,.06);}
-.bloco-calc h2{font-family:'Oswald',sans-serif;font-size:16px;color:var(--azul-escuro);margin-bottom:16px;letter-spacing:.3px;}
+.badge-oficial{font-size:8.5px;background:#FBF8F1;color:var(--azul-escuro);padding:2px 7px;border-radius:10px;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.3px;}
+.bloco-calc{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:22px 22px 24px;box-shadow:0 2px 14px rgba(22,23,29,.06);}
+.bloco-calc h2{font-family:'Fraunces',sans-serif;font-size:16px;color:var(--azul-escuro);margin-bottom:16px;letter-spacing:.3px;}
 .campo-grupo{margin-bottom:14px;}
 .campo-grupo label{display:block;font-size:12.5px;font-weight:600;color:var(--azul-escuro);margin-bottom:6px;}
 .campo-grupo input[type=number],.campo-grupo input[type=date]{width:100%;padding:11px 12px;border:1.5px solid var(--borda);border-radius:6px;font-size:15px;font-family:'Inter',sans-serif;}
 .campo-grupo input:focus{outline:none;border-color:var(--azul);}
 .opcoes-indice{display:flex;gap:10px;}
-.opt-indice{flex:1;border:1.5px solid var(--borda);border-radius:6px;padding:12px;text-align:center;cursor:pointer;font-weight:600;font-size:13.5px;color:#555;transition:all .15s;background:#fafcfe;}
-.opt-indice.ativo{border-color:var(--azul);background:#eaf5fc;color:var(--azul-escuro);}
+.opt-indice{flex:1;border:1.5px solid var(--borda);border-radius:6px;padding:12px;text-align:center;cursor:pointer;font-weight:600;font-size:13.5px;color:#555;transition:all .15s;background:#FBF8F1;}
+.opt-indice.ativo{border-color:var(--azul);background:#FBF8F1;color:var(--azul-escuro);}
 .opt-indice small{display:block;font-weight:400;font-size:10.5px;color:#888;margin-top:2px;}
-.btn-calcular{width:100%;background:var(--azul-escuro);color:#fff;border:none;padding:13px;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:6px;font-family:'Oswald',sans-serif;letter-spacing:.5px;transition:background .15s;}
-.btn-calcular:hover{background:#15293f;}
+.btn-calcular{width:100%;background:var(--azul-escuro);color:#fff;border:none;padding:13px;border-radius:6px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:6px;font-family:'Fraunces',sans-serif;letter-spacing:.5px;transition:background .15s;}
+.btn-calcular:hover{background:#16171D;}
 .resultado{display:none;margin-top:20px;border-top:2px solid var(--borda);padding-top:18px;}
 .resultado.show{display:block;}
-.resultado .linha{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px dashed #e3edf5;}
+.resultado .linha{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px dashed #F6F1E7;}
 .resultado .linha span:first-child{color:#666;}
 .resultado .linha span:last-child{font-weight:600;}
 .resultado .final{background:var(--azul-escuro);color:#fff;border-radius:8px;padding:14px 16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;}
-.resultado .final .lbl{font-size:12.5px;font-family:'Oswald',sans-serif;letter-spacing:.4px;}
-.resultado .final .val{font-size:22px;font-weight:700;font-family:'Oswald',sans-serif;}
-.fonte-oficial{margin-top:22px;background:#f0f7fc;border-left:3px solid var(--azul);border-radius:0 6px 6px 0;padding:12px 14px;font-size:11.5px;color:#445;line-height:1.5;}
+.resultado .final .lbl{font-size:12.5px;font-family:'Fraunces',sans-serif;letter-spacing:.4px;}
+.resultado .final .val{font-size:22px;font-weight:700;font-family:'Fraunces',sans-serif;}
+.fonte-oficial{margin-top:22px;background:#FBF8F1;border-left:3px solid var(--azul);border-radius:0 6px 6px 0;padding:12px 14px;font-size:11.5px;color:#445;line-height:1.5;}
 .fonte-oficial a{color:var(--azul-escuro);font-weight:600;text-decoration:none;border-bottom:1px solid var(--azul);}
 .aviso-manual{display:none;background:#fff8ec;border:1px solid #f0c87a;border-radius:6px;padding:10px 12px;font-size:11.5px;color:#7a5c1a;margin-bottom:12px;}
 .aviso-manual.show{display:block;}

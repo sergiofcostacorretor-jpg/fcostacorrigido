@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FCosta Shop | Loja Digital</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap'Fraunces':wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --azul: #3B9BD6;
-    --azul-escuro: #1E3A5F;
+    --azul: #A78340;
+    --azul-escuro: #16171D;
     --branco: #FFFFFF;
-    --cinza-claro: #F4F7FB;
-    --cinza-medio: #E2EAF4;
-    --texto: #1a2a3a;
-    --destaque: #3B9BD6;
+    --cinza-claro: #FBF8F1;
+    --cinza-medio: #F6F1E7;
+    --texto: #16171D;
+    --destaque: #A78340;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: var(--cinza-claro);
     color: var(--texto);
     min-height: 100vh;
@@ -49,7 +49,7 @@
     border-radius: 50%;
   }
   .nav-logo span {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-weight: 700;
     font-size: 1.15rem;
     color: var(--branco);
@@ -77,7 +77,7 @@
 
   /* HERO */
   .hero {
-    background: linear-gradient(135deg, var(--azul-escuro) 0%, #2a527a 60%, #3B9BD6 100%);
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, #7A5F2C 60%, #A78340 100%);
     padding: 4rem 2rem 5rem;
     text-align: center;
     position: relative;
@@ -89,7 +89,7 @@
     top: -80px; right: -80px;
     width: 320px; height: 320px;
     border-radius: 50%;
-    background: rgba(59,155,214,0.15);
+    background: rgba(167,131,64,0.15);
   }
   .hero::after {
     content: '';
@@ -101,9 +101,9 @@
   }
   .hero-badge {
     display: inline-block;
-    background: rgba(59,155,214,0.25);
-    border: 1px solid rgba(59,155,214,0.5);
-    color: #7dd3f8;
+    background: rgba(167,131,64,0.25);
+    border: 1px solid rgba(167,131,64,0.5);
+    color: #D6B266;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 2px;
@@ -113,7 +113,7 @@
     margin-bottom: 1.25rem;
   }
   .hero h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
     color: var(--branco);
@@ -147,7 +147,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
   .filtro-btn:hover,
   .filtro-btn.ativo {
@@ -163,7 +163,7 @@
     padding: 2.5rem 1.5rem 5rem;
   }
   .section-titulo {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--azul-escuro);
@@ -190,7 +190,7 @@
     background: var(--branco);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(30,58,95,0.08);
+    box-shadow: 0 2px 12px rgba(22,23,29,0.08);
     transition: transform 0.25s, box-shadow 0.25s;
     display: flex;
     flex-direction: column;
@@ -198,7 +198,7 @@
   }
   .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 32px rgba(30,58,95,0.15);
+    box-shadow: 0 12px 32px rgba(22,23,29,0.15);
   }
   .card-thumb {
     height: 160px;
@@ -208,7 +208,7 @@
     font-size: 3rem;
     position: relative;
   }
-  .card-thumb.curso   { background: linear-gradient(135deg, #1E3A5F, #3B9BD6); }
+  .card-thumb.curso   { background: linear-gradient(135deg, #16171D, #A78340); }
   .card-thumb.ebook   { background: linear-gradient(135deg, #0f5132, #198754); }
   .card-thumb.contrato{ background: linear-gradient(135deg, #4a1a5e, #9333ea); }
   .card-thumb.consult { background: linear-gradient(135deg, #7a3500, #e07b00); }
@@ -245,7 +245,7 @@
     color: var(--azul);
   }
   .card-nome {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--azul-escuro);
@@ -253,7 +253,7 @@
   }
   .card-desc {
     font-size: 0.85rem;
-    color: #5a6e84;
+    color: #8A877F;
     line-height: 1.5;
     flex: 1;
   }
@@ -265,7 +265,7 @@
     border-top: 1px solid var(--cinza-medio);
   }
   .card-preco {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-weight: 800;
     font-size: 1.3rem;
     color: var(--azul-escuro);
@@ -274,8 +274,8 @@
     display: block;
     font-size: 0.65rem;
     font-weight: 400;
-    color: #8a9db0;
-    font-family: 'DM Sans', sans-serif;
+    color: #B9AE98;
+    font-family: 'Inter', sans-serif;
   }
   .card-preco.gratis {
     color: #198754;
@@ -291,7 +291,7 @@
     cursor: pointer;
     text-decoration: none;
     transition: background 0.2s, transform 0.1s;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -302,7 +302,7 @@
   }
   .btn-comprar.em-breve {
     background: var(--cinza-medio);
-    color: #8a9db0;
+    color: #B9AE98;
     cursor: default;
   }
   .btn-comprar.em-breve:hover {
@@ -317,17 +317,17 @@
     grid-template-columns: 1fr 1fr;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(30,58,95,0.15);
+    box-shadow: 0 8px 32px rgba(22,23,29,0.15);
     border: 1px solid var(--cinza-medio);
     background: var(--branco);
     transition: transform 0.25s, box-shadow 0.25s;
   }
   .card-destaque:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(30,58,95,0.2);
+    box-shadow: 0 16px 48px rgba(22,23,29,0.2);
   }
   .destaque-visual {
-    background: linear-gradient(135deg, #1E3A5F 0%, #3B9BD6 100%);
+    background: linear-gradient(135deg, #16171D 0%, #A78340 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -378,7 +378,7 @@
     width: fit-content;
   }
   .destaque-info h2 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     color: var(--azul-escuro);
@@ -386,19 +386,19 @@
   }
   .destaque-info p {
     font-size: 0.9rem;
-    color: #5a6e84;
+    color: #8A877F;
     line-height: 1.6;
   }
   .destaque-info .preco-destaque {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--azul-escuro);
   }
   .destaque-info .preco-destaque small {
     font-size: 0.75rem;
-    color: #8a9db0;
-    font-family: 'DM Sans', sans-serif;
+    color: #B9AE98;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     display: block;
   }
@@ -406,7 +406,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #3B9BD6, #1E3A5F);
+    background: linear-gradient(135deg, #A78340, #16171D);
     color: #fff;
     padding: 0.8rem 1.75rem;
     border-radius: 10px;
@@ -415,7 +415,7 @@
     text-decoration: none;
     transition: opacity 0.2s, transform 0.1s;
     width: fit-content;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
   .btn-hotmart:hover {
     opacity: 0.9;
@@ -424,7 +424,7 @@
 
   /* BANNER EM BREVE */
   .banner-embreve {
-    background: linear-gradient(135deg, var(--azul-escuro), #2a527a);
+    background: linear-gradient(135deg, var(--azul-escuro), #7A5F2C);
     border-radius: 16px;
     padding: 2.5rem;
     text-align: center;
@@ -432,7 +432,7 @@
     color: var(--branco);
   }
   .banner-embreve h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Fraunces', sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
