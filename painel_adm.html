@@ -1487,7 +1487,7 @@ function paginaImovel(i,slug,todas){
   c('🛏️','Quartos',num(i.quartos));c('🚿','Banheiros',num(i.banheiros));c('🚗','Vagas',num(i.vagas));
   c('📍','Bairro',i.bairro);c('🏙️','Cidade',String(i.cidade||'').replace(/\s*[—–-]\s*SP\.?\s*$/i,'').replace(/\/SP\.?$/i,''));c('🔖','Código',cod);
   /* vídeo: arquivo mp4 do site ou YouTube */
-  var mp4=[i.tourMp4,i.videoMp4].filter(function(v){return /^https:\/\//i.test(String(v||''));})[0]||'';
+  var mp4=[i.tourMp4,i.videoMp4].filter(viva)[0]||'';
   var yt=String(i.video||'').match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{11})/),ytVert=/shorts\//.test(String(i.video||''));
   var video='';
   if(mp4)video='<video controls playsinline preload="metadata"'+(img?' poster="'+esc(cld(img,1280))+'"':'')+' src="'+esc(mp4)+'"></video>';
