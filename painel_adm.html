@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -247,8 +247,8 @@ img{max-width:100%;display:block;}
 .dest-b b{font-size:1rem;letter-spacing:.04em;}
 .dest-b span{font-size:.66rem;opacity:.85;}
 .dest-b em{font-style:normal;font-size:.6rem;font-weight:700;color:#69f0ae;margin-top:2px;}
-.dest-b.on{background:rgba(255,212,0,.2);border-color:#FFD400;box-shadow:0 0 0 3px rgba(255,212,0,.25);}
-.dest-b.on b{color:#FFD400;}
+.dest-b.on{background:rgba(214,178,102,.2);border-color:#D6B266;box-shadow:0 0 0 3px rgba(214,178,102,.25);}
+.dest-b.on b{color:#D6B266;}
 @media(max-width:560px){.fcard #dest-box{grid-template-columns:repeat(2,1fr);}}
 .foto-cap{position:absolute;top:-5px;left:-5px;width:20px;height:20px;border-radius:50%;background:#C9A84C;border:none;color:#1a1200;font-size:.7rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .foto-del{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:#A01515;border:none;color:#FFD5D5;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
@@ -483,28 +483,28 @@ img{max-width:100%;display:block;}
 /* ═══════════ TEMA FCOSTA — Painel ADM (preto + amarelo, igual às páginas do site) ═══════════ */
 :root{
   --bg:#000;--panel:#0b0b0b;--panel2:#141414;--field:#141414;--line:#262626;--line2:#2a2a2a;
-  --txt:#fff;--mut:#a3a3a3;--acc:#FFD400;--acc2:#FFD400;--ok:#FFD400;--dang:#E2727F;
-  --amarelo:#FFD400;--amarelo2:#FFE24D;
-  --ouro:#FFD400;--az:#FFD400;--ceu:#FFD400;--card:#0b0b0b;--borda:#262626;--sec:#a3a3a3;
-  --tit:'Anton','Bebas Neue','Impact',sans-serif;
+  --txt:#fff;--mut:#a3a3a3;--acc:#D6B266;--acc2:#D6B266;--ok:#D6B266;--dang:#E2727F;
+  --amarelo:#D6B266;--amarelo2:#F2DCA4;
+  --ouro:#D6B266;--az:#D6B266;--ceu:#D6B266;--card:#0b0b0b;--borda:#262626;--sec:#a3a3a3;
+  --tit:'Fraunces',Georgia,serif;
 }
 body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
-:focus-visible{outline:2px solid #FFD400;outline-offset:3px;}
-::selection{background:rgba(255,212,0,.35);color:#000;}
+:focus-visible{outline:2px solid #D6B266;outline-offset:3px;}
+::selection{background:rgba(214,178,102,.35);color:#000;}
 
 /* Entrada */
-#ls{background:radial-gradient(900px 500px at 85% 0%,rgba(255,212,0,.14) 0%,transparent 55%),#000;}
+#ls{background:radial-gradient(900px 500px at 85% 0%,rgba(214,178,102,.14) 0%,transparent 55%),#000;}
 .lbox{background:#0b0b0b;border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45);}
 .l-brand span{letter-spacing:.6px;text-transform:none;font-size:.76rem;color:var(--mut);}
 .l-field label{text-transform:none;letter-spacing:0;font-size:.76rem;color:var(--mut);}
 .l-field input{background:var(--field);border:1px solid var(--line2);}
-.l-field input:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.16);}
-.l-btn{background:#FFD400;color:#000;border-radius:6px;padding:15px;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;box-shadow:none;}
+.l-field input:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(214,178,102,.16);}
+.l-btn{background:#D6B266;color:#000;border-radius:6px;padding:15px;font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;box-shadow:none;}
 .l-btn::before{display:none;}
 .l-deco{display:none;}
 
 /* Barra do topo */
-#top{background:#000;backdrop-filter:none;border-bottom:1px solid #FFD400;height:64px;}
+#top{background:#000;backdrop-filter:none;border-bottom:1px solid #D6B266;height:64px;}
 .ttitle{font-size:1rem;}
 .ttitle small{letter-spacing:.3px;text-transform:none;font-size:.66rem;color:var(--mut);}
 .tbtn{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--txt);font-size:.76rem;padding:7px 14px;border-radius:9px;}
@@ -512,13 +512,13 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .tbtn.out{background:transparent;border-color:rgba(226,114,127,.45);color:#F1A0A9;}
 .tbtn.out:hover{background:rgba(226,114,127,.14);}
 .ubadge{background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.72rem;}
-.uav,.u-av{background:#FFD400;color:#000;}
+.uav,.u-av{background:#D6B266;color:#000;}
 
 /* Menu de abas (barra rolável no celular) */
 #tabs{background:#000;backdrop-filter:none;border-bottom:1px solid var(--line);padding:8px 14px;gap:6px;}
 .tab{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;padding:9px 14px;border-radius:10px;border-bottom:none;color:var(--mut);}
 .tab:hover{background:rgba(255,255,255,.05);color:var(--txt);}
-.tab.on{background:rgba(255,212,0,.12);color:#FFD400;box-shadow:inset 3px 0 0 var(--acc);}
+.tab.on{background:rgba(214,178,102,.12);color:#D6B266;box-shadow:inset 3px 0 0 var(--acc);}
 .tab::before{font-size:1rem;line-height:1;}
 .tab[data-p="imoveis"]::before{content:"🏠";}
 .tab[data-p="adicionar"]::before{content:"➕";}
@@ -537,13 +537,13 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 /* Botões */
 .btn{font-size:.78rem;font-weight:600;padding:9px 16px;border-radius:10px;border:1px solid transparent;}
 .btn:hover{filter:brightness(1.08);}
-.bok{background:#FFD400;color:#000;border-color:#FFD400;font-weight:800;}
-.baz{background:#FFD400;color:#000;border-color:#FFD400;font-weight:800;}
+.bok{background:#D6B266;color:#000;border-color:#D6B266;font-weight:800;}
+.baz{background:#D6B266;color:#000;border-color:#D6B266;font-weight:800;}
 .bdel,.breset{background:transparent;color:#F1A0A9;border:1px solid rgba(226,114,127,.5);}
 .bdel:hover,.breset:hover{background:rgba(226,114,127,.15);filter:none;}
 .bwarn{background:rgba(255,255,255,.14);color:#d4d4d4;border:1px solid rgba(255,255,255,.35);}
 .bgh{background:transparent;color:#fff;border:1px solid var(--line);}
-.bopen{background:rgba(255,212,0,.14);color:#FFD400;border:1px solid rgba(255,212,0,.4);}
+.bopen{background:rgba(214,178,102,.14);color:#D6B266;border:1px solid rgba(214,178,102,.4);}
 
 /* Cartões e blocos */
 .stat,.icard,.fcard,.pag-fcard,.cod-section,.ctrl-section,.auth-panel,.ref-gen,.pcard,.pagsite-search,.ref-tabela,.cod-item,.ctrl-grupo{background:var(--panel);border:1px solid var(--line);border-radius:14px;}
@@ -557,9 +557,9 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 /* Lista de imóveis */
 .toolbar{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;gap:10px;margin-bottom:20px;}
 .toolbar input[type=text],.toolbar select{background:var(--field);border:1px solid var(--line2);border-radius:10px;padding:10px 14px;font-size:.84rem;}
-.toolbar input[type=text]:focus,.toolbar select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.14);}
+.toolbar input[type=text]:focus,.toolbar select:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(214,178,102,.14);}
 .im-grid{gap:18px;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));}
-.icard:hover{border-color:rgba(255,212,0,.55);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.28);}
+.icard:hover{border-color:rgba(214,178,102,.55);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.28);}
 .icard-img{height:180px;background:#141414;}
 .icard-rbadge{background:linear-gradient(to bottom,rgba(0,0,0,.85),rgba(0,0,0,0));padding:9px 11px;}
 .icard-cod{font-size:1.05rem;letter-spacing:1.2px;background:rgba(0,0,0,.72);text-shadow:none;padding:3px 10px;}
@@ -579,62 +579,62 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .fg label,.seo-field label,.aform label{text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:600;color:#d4d4d4;}
 .fg input,.fg select,.fg textarea,.aform input,.seo-field input,.seo-field textarea,.outro-wrap input,.pagsite-search{background:var(--field);border:1px solid var(--line2);border-radius:10px;}
 .fg input,.fg select,.fg textarea,.aform input{padding:11px 14px;font-size:.86rem;}
-.fg input:focus,.fg select:focus,.fg textarea:focus,.aform input:focus,.seo-field input:focus,.seo-field textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(255,212,0,.14);}
+.fg input:focus,.fg select:focus,.fg textarea:focus,.aform input:focus,.seo-field input:focus,.seo-field textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(214,178,102,.14);}
 .fg select option,.toolbar select option{background:#141414;color:#fff;}
 .fg input::placeholder,.fg textarea::placeholder{color:#6b6b6b;}
 .outro-wrap input{border-color:var(--line2);}
 .pagsite-search{padding:11px 16px;}
 .upload-area{border:2px dashed var(--line2);border-radius:12px;padding:22px;background:rgba(255,255,255,.02);}
-.upload-area:hover{border-color:var(--acc);background:rgba(255,212,0,.06);}
+.upload-area:hover{border-color:var(--acc);background:rgba(214,178,102,.06);}
 .ftab{border:1px solid var(--line2);background:var(--field);border-radius:10px;}
-.ftab.on{border-color:var(--acc);background:rgba(255,212,0,.16);}
+.ftab.on{border-color:var(--acc);background:rgba(214,178,102,.16);}
 .foto-th{border:2px solid var(--line2);border-radius:9px;}
-.foto-w:first-child .foto-th{border-color:var(--acc);box-shadow:0 0 0 3px rgba(255,212,0,.3);}
-.foto-w:first-child::after{color:#FFD400;}
+.foto-w:first-child .foto-th{border-color:var(--acc);box-shadow:0 0 0 3px rgba(214,178,102,.3);}
+.foto-w:first-child::after{color:#D6B266;}
 #btn-salvar{min-width:160px;padding:11px 20px;font-size:.84rem;}
 #btn-salvar.saving{background:#177A5E;}
 
 /* Avisos */
-.info-box{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.28);border-radius:12px;}
+.info-box{background:rgba(214,178,102,.08);border:1px solid rgba(214,178,102,.28);border-radius:12px;}
 .sec-warn-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:#d4d4d4;border-radius:12px;}
 .sec-warn-box strong{color:#fff;}
 .salv-err,.reset-box{background:rgba(226,114,127,.1);border:1px solid rgba(226,114,127,.4);border-radius:12px;}
 .dup-box{background:rgba(226,114,127,.1);border:1px solid rgba(226,114,127,.6);animation:none;border-radius:12px;}
 
 /* Referência / códigos */
-.ref-master{background:var(--panel2);border:1px solid rgba(255,212,0,.35);border-radius:14px;}
-.ref-master::before{background:linear-gradient(90deg,#FFD400,transparent);}
+.ref-master{background:var(--panel2);border:1px solid rgba(214,178,102,.35);border-radius:14px;}
+.ref-master::before{background:linear-gradient(90deg,#D6B266,transparent);}
 .ref-master-tit{letter-spacing:.4px;text-transform:none;font-size:.78rem;}
 .ref-master-tit::after{background:var(--line);}
-.ref-destaque{background:rgba(0,0,0,.45);border:1px solid rgba(255,212,0,.35);}
-.ref-numgd{text-shadow:none;color:#FFD400;}
+.ref-destaque{background:rgba(0,0,0,.45);border:1px solid rgba(214,178,102,.35);}
+.ref-numgd{text-shadow:none;color:#D6B266;}
 .ref-gen-tit,.auth-stit,.abc-lbl{letter-spacing:.4px;text-transform:none;font-size:.78rem;}
 .ref-stat,.ref-sbtn,.tl-card,.ref-resultado,.abc-idx,.hcopy-panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;}
 .ref-stat:hover{border-color:var(--acc);}
-.ref-sbtn:hover{background:rgba(255,212,0,.12);border-color:var(--acc);}
-.ref-sbtn.on,.ref-chip.on{background:#FFD400;border-color:#FFD400;color:#000;}
+.ref-sbtn:hover{background:rgba(214,178,102,.12);border-color:var(--acc);}
+.ref-sbtn.on,.ref-chip.on{background:#D6B266;border-color:#D6B266;color:#000;}
 .ref-chip{border:1px solid var(--line2);}
 .ref-busca{background:var(--field);border:1px solid var(--line2);}
 .ref-thead{background:rgba(0,0,0,.5);}
 .ref-linha:hover{background:rgba(255,255,255,.03);}
-.ref-bed,.pbedit{background:rgba(255,212,0,.18);color:#FFD400;}
-.ref-bed:hover,.pbedit:hover{background:#FFD400;color:#000;}
+.ref-bed,.pbedit{background:rgba(214,178,102,.18);color:#D6B266;}
+.ref-bed:hover,.pbedit:hover{background:#D6B266;color:#000;}
 .pbdel{background:rgba(226,114,127,.16);color:#F1A0A9;}
 .pbdel:hover{background:rgba(226,114,127,.3);}
 .pbopen{background:rgba(255,255,255,.08);color:#d4d4d4;}
 .pbopen:hover{background:rgba(255,255,255,.16);}
-.abc-btn:hover,.abc-all{background:rgba(255,212,0,.16);border-color:rgba(255,212,0,.4);color:#FFD400;}
+.abc-btn:hover,.abc-all{background:rgba(214,178,102,.16);border-color:rgba(214,178,102,.4);color:#D6B266;}
 .pbadge-tp{background:rgba(255,255,255,.16);color:#d4d4d4;border:1px solid rgba(255,255,255,.3);}
-.ubadge-adm{background:rgba(255,212,0,.16);color:#FFD400;border:1px solid rgba(255,212,0,.35);}
-.fixa-card{background:rgba(255,212,0,.08);border:1px solid rgba(255,212,0,.25);}
+.ubadge-adm{background:rgba(214,178,102,.16);color:#D6B266;border:1px solid rgba(214,178,102,.35);}
+.fixa-card{background:rgba(214,178,102,.08);border:1px solid rgba(214,178,102,.25);}
 .fixa-nome{color:#fff;}
-.pw2,.pw3{background:#FFD400;}
+.pw2,.pw3{background:#D6B266;}
 
 /* Botões de páginas */
 .ctrl-mini{background:var(--field);border:1px solid var(--line);}
-.ctrl-mini.on{border-color:rgba(255,212,0,.5);background:rgba(255,212,0,.08);}
-.tg input:checked+.tg-sl{background:#FFD400;}
-.pcard:hover{border-color:rgba(255,212,0,.5);background:var(--panel2);transform:none;}
+.ctrl-mini.on{border-color:rgba(214,178,102,.5);background:rgba(214,178,102,.08);}
+.tg input:checked+.tg-sl{background:#D6B266;}
+.pcard:hover{border-color:rgba(214,178,102,.5);background:var(--panel2);transform:none;}
 .pub-bar{background:#000;backdrop-filter:none;border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(0,0,0,.25);}
 .pub-bar-txt strong{color:#fff;}
 
@@ -643,21 +643,21 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 .cdel-box::before{background:linear-gradient(90deg,transparent,var(--dang),transparent);}
 .cdel-ok{background:rgba(226,114,127,.2);border:1px solid var(--dang);color:#FFD5DA;}
 .cdel-cancel{border:1px solid var(--line);}
-#toast{background:#FFD400;color:#000;font-weight:700;border-radius:12px;font-size:.84rem;padding:12px 18px;}
+#toast{background:#D6B266;color:#000;font-weight:700;border-radius:12px;font-size:.84rem;padding:12px 18px;}
 #toast.err{background:#B84A57;}
 #toast.warn{background:#fff;color:#000;}
 
 /* Computador: menu lateral fixo à esquerda */
-/* Tipografia do site: títulos em Anton, maiúsculas, sem negrito falso */
+/* Tipografia: títulos em Fraunces (serifada elegante) */
 .l-brand strong,.ttitle,.stnum,.icard-cod,.icard-nome,.icard-preco,.ref-numgd,.tl-cod,.seo-tit,.cod-tit,.cod-sigla,.ctrl-tit,.pagsite-hdr h2,.pag-letra,.pag-ed-hdr h2,.ref-stat-sig,.ref-stat-tot,.ref-sbtn .rs,.ref-num,.ref-c,.auth-panel h3,.cdel-h3,#main h2{font-weight:400!important;}
 .l-brand strong,.ttitle,.icard-nome,#main h2,.pagsite-hdr h2,.pag-ed-hdr h2,.auth-panel h3{text-transform:uppercase;letter-spacing:.5px;}
 .ttitle small{font-family:var(--fonte);}
-.tl img{height:42px;width:42px;object-fit:cover;border-radius:50%;background:#000;box-shadow:0 0 0 2px #FFD400;}
+.tl img{height:42px;width:42px;object-fit:cover;border-radius:50%;background:#000;box-shadow:0 0 0 2px #D6B266;}
 .l-brand span{color:#8a8a8a;}
 .l-icon{filter:grayscale(1) brightness(1.4);}
-.icard-preco,.stnum{color:#FFD400;}
-.stic{background:rgba(255,212,0,.1)!important;}
-.sdot{background:#FFD400;}
+.icard-preco,.stnum{color:#D6B266;}
+.stic{background:rgba(214,178,102,.1)!important;}
+.sdot{background:#D6B266;}
 .tl img{flex-shrink:0;min-width:42px;}
 .l-field input[type=checkbox]{width:18px;padding:0;box-shadow:none;}
 @media(max-width:600px){
@@ -670,19 +670,19 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 }
 
 /* Selos de tipo (mesmo padrão dos cartões do site) */
-.rc-v{color:#FFD400}.rc-a{color:#fff}.rc-l{color:#FFE24D}.rc-p{color:#bdbdbd}
-.sb-v{background:#FFD400;color:#000;border:1px solid #FFD400;}
+.rc-v{color:#D6B266}.rc-a{color:#fff}.rc-l{color:#F2DCA4}.rc-p{color:#bdbdbd}
+.sb-v{background:#D6B266;color:#000;border:1px solid #D6B266;}
 .sb-a{background:#fff;color:#000;border:1px solid #fff;}
-.sb-l{background:#000;color:#FFD400;border:1px solid #FFD400;}
+.sb-l{background:#000;color:#D6B266;border:1px solid #D6B266;}
 .sb-p{background:#2a2a2a;color:#fff;border:1px solid #444;}
 .sb-vd{background:#444;color:#fff;border:1px solid #555;}
-.pub-sim{background:#FFD400;color:#000;}
+.pub-sim{background:#D6B266;color:#000;}
 .pub-nao{background:#2a2a2a;color:#bdbdbd;}
-.icard-link{background:rgba(255,212,0,.06);border:1px solid rgba(255,212,0,.25);color:#FFD400;}
-.icard-link:hover{background:rgba(255,212,0,.14);}
+.icard-link{background:rgba(214,178,102,.06);border:1px solid rgba(214,178,102,.25);color:#D6B266;}
+.icard-link:hover{background:rgba(214,178,102,.14);}
 .icard-img,.icard-img .ph{background:#141414;}
-.spin,.spinner{border-top-color:#FFD400;}
-.upload-area:hover{background:rgba(255,212,0,.05);}
+.spin,.spinner{border-top-color:#D6B266;}
+.upload-area:hover{background:rgba(214,178,102,.05);}
 
 @media(min-width:1024px){
   #tabs{position:fixed;top:64px;left:0;bottom:0;width:232px;z-index:900;flex-direction:column;flex-wrap:nowrap;gap:3px;padding:18px 12px;overflow-y:auto;overflow-x:hidden;border-right:1px solid var(--line);border-bottom:none;}
@@ -701,6 +701,44 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
   *,*::before,*::after{animation:none!important;transition:none!important;}
 }
 .icard-vendido{position:absolute;top:50%;left:50%;width:150%;transform:translate(-50%,-50%) rotate(-25deg);background:#D30000;color:#fff;text-align:center;font-weight:900;font-size:1.6rem;letter-spacing:5px;text-transform:uppercase;padding:8px 0;z-index:2;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.35);}
+
+/* ═══════════ CAMADA PREMIUM — Preto & Ouro (acabamento) ═══════════ */
+:root{--goldg:linear-gradient(135deg,#F2DCA4 0%,#D6B266 45%,#A78340 100%);--panel:#101116;--panel2:#16171D;--field:#0D0E12;--line:#23242B;--line2:#2C2D35;--bg:#0A0B0F;}
+body{background:radial-gradient(1200px 600px at 100% -10%,rgba(214,178,102,.07),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(214,178,102,.05),transparent 60%),#0A0B0F;background-attachment:fixed;}
+.l-brand strong,.ttitle,.stnum,.icard-nome,.icard-preco,.ref-numgd,.cod-tit,.ctrl-tit,.pagsite-hdr h2,.pag-ed-hdr h2,.auth-panel h3,.cdel-h3,#main h2{font-weight:600!important;}
+.l-brand strong,.ttitle,.icard-nome,#main h2,.pagsite-hdr h2,.pag-ed-hdr h2,.auth-panel h3{text-transform:none;letter-spacing:-.2px;}
+#main h2{font-size:1.65rem!important;}
+/* Entrada */
+#ls{background:radial-gradient(800px 480px at 80% -5%,rgba(214,178,102,.18),transparent 60%),radial-gradient(700px 420px at 0% 100%,rgba(167,131,64,.12),transparent 60%),#0A0B0F;}
+.lbox{background:linear-gradient(180deg,rgba(22,23,29,.92),rgba(13,14,18,.92));border:1px solid rgba(214,178,102,.22);border-radius:24px;box-shadow:0 40px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative;}
+.lbox::before{content:"";position:absolute;inset:0 18% auto;height:1px;background:linear-gradient(90deg,transparent,#D6B266,transparent);}
+.l-btn,.bok,.baz,#toast,.ref-sbtn.on,.ref-chip.on,.pub-sim,.sb-v{background:var(--goldg)!important;border-color:transparent!important;color:#0A0B0F!important;}
+.l-btn{border-radius:12px;letter-spacing:1.2px;box-shadow:0 12px 30px rgba(214,178,102,.25);transition:transform .2s,box-shadow .2s;}
+.l-btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(214,178,102,.35);}
+.bok,.baz{box-shadow:0 6px 18px rgba(214,178,102,.18);}
+.bok:hover,.baz:hover{filter:brightness(1.06);box-shadow:0 10px 26px rgba(214,178,102,.3);}
+/* Topo em vidro */
+#top{background:rgba(10,11,15,.78);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid rgba(214,178,102,.18);box-shadow:0 1px 0 rgba(214,178,102,.06),0 10px 30px rgba(0,0,0,.25);}
+.tl img{box-shadow:0 0 0 2px #0A0B0F,0 0 0 3px #D6B266;}
+.uav,.u-av{background:var(--goldg);}
+/* Menu */
+#tabs{background:rgba(10,11,15,.9);}
+.tab{transition:background .2s,color .2s;}
+.tab.on{background:linear-gradient(90deg,rgba(214,178,102,.18),rgba(214,178,102,.04));color:#F2DCA4;box-shadow:inset 3px 0 0 #D6B266;}
+/* Cartões */
+.stat,.icard,.fcard,.pag-fcard,.cod-section,.ctrl-section,.auth-panel,.ref-gen,.pcard,.ref-tabela,.ctrl-grupo{background:linear-gradient(180deg,#14151B,#0F1015);border-color:var(--line);box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 8px 24px rgba(0,0,0,.22);}
+.stat{position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
+.stat::after{content:"";position:absolute;inset:0 0 auto;height:2px;background:var(--goldg);opacity:.55;}
+.stat:hover{transform:translateY(-2px);border-color:rgba(214,178,102,.4);}
+.stic{background:rgba(214,178,102,.12)!important;border:1px solid rgba(214,178,102,.25);}
+.stnum,.icard-preco,.ref-numgd{background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent!important;}
+.icard{transition:transform .25s,border-color .25s,box-shadow .25s;}
+.icard:hover{box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 0 1px rgba(214,178,102,.35);}
+.icard-img img{transition:transform .5s;}
+.icard:hover .icard-img img{transform:scale(1.04);}
+.toolbar{background:linear-gradient(180deg,#14151B,#0F1015);}
+.pub-bar{background:rgba(10,11,15,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(214,178,102,.2);}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#0A0B0F}::-webkit-scrollbar-thumb{background:#2C2D35;border-radius:10px;border:2px solid #0A0B0F}::-webkit-scrollbar-thumb:hover{background:#A78340}
 </style>
 </head>
 <body>
@@ -713,7 +751,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
     <div class="l-err" id="l-err"></div>
     <div class="l-field"><label>E-mail</label><div class="l-iw"><span class="ic">✉️</span><input type="email" id="l-email" placeholder="seu@email.com" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('l-senha').focus()"/></div></div>
     <div class="l-field"><label>Senha</label><div class="l-iw"><span class="ic">🔒</span><input type="password" id="l-senha" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()"/></div>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><input type="checkbox" id="ver-cb" style="width:18px;height:18px;cursor:pointer;accent-color:#FFD400;" onchange="document.getElementById('l-senha').type=this.checked?'text':'password'"/><label for="ver-cb" style="font-size:.72rem;color:rgba(255,255,255,.6);cursor:pointer;user-select:none;">Mostrar senha</label></div></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><input type="checkbox" id="ver-cb" style="width:18px;height:18px;cursor:pointer;accent-color:#D6B266;" onchange="document.getElementById('l-senha').type=this.checked?'text':'password'"/><label for="ver-cb" style="font-size:.72rem;color:rgba(255,255,255,.6);cursor:pointer;user-select:none;">Mostrar senha</label></div></div>
     <button class="l-btn" id="l-btn" onclick="fazerLogin()"><span class="lt">Entrar no Painel</span><div class="sb"></div></button>
     <div class="l-meta">Acesso restrito a administradores autorizados.<br/><strong>FCosta Corretor e Avaliador Imobiliario</strong></div>
   </div>
@@ -747,7 +785,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 <div class="painel on" id="p-imoveis">
   <div class="stats">
     <div class="stat"><div class="stic">🏠</div><div><div class="stnum" id="st-total">-</div><div class="stlbl">Total</div></div></div>
-    <div class="stat"><div class="stic" style="background:rgba(255,212,0,.1)">🟡</div><div><div class="stnum" id="st-fcv">-</div><div class="stlbl">FCV Vendas</div></div></div>
+    <div class="stat"><div class="stic" style="background:rgba(214,178,102,.1)">🟡</div><div><div class="stnum" id="st-fcv">-</div><div class="stlbl">FCV Vendas</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(201,168,76,.15)">🔑</div><div><div class="stnum" id="st-fca">-</div><div class="stlbl">FCA Aluguel</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(46,125,50,.15)">🏗️</div><div><div class="stnum" id="st-fcl">-</div><div class="stlbl">FCL Lanc.</div></div></div>
     <div class="stat"><div class="stic" style="background:rgba(123,31,162,.15)">📄</div><div><div class="stnum" id="st-fcp">-</div><div class="stlbl">FCP Panfl.</div></div></div>
@@ -765,7 +803,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
         <div class="fcp-sec-tit">FCP - Panfletos</div>
         <div class="fcp-sec-sub">Upload de panfletos em PDF ou imagem</div>
       </div>
-      <button class="btn" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;font-size:.7rem;" onclick="novoFcp()">Novo Panfleto</button>
+      <button class="btn" style="background:transparent;color:#D6B266;border:1.5px solid #D6B266;font-size:.7rem;" onclick="novoFcp()">Novo Panfleto</button>
     </div>
     <div class="fcp-grid-cards" id="fcp-grid"></div>
   </div>
@@ -812,7 +850,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
       <div class="fg"><label>Cidade / UF</label><input type="text" id="f-cidade" value="Sao Paulo - SP"/></div>
       <div class="fg full"><label>Endereco Completo</label><input type="text" id="f-endereco" placeholder="Ex: Rua das Flores, 123"/></div>
       <div class="fg full"><label>Descricao</label><textarea id="f-descricao" placeholder="Descreva o imovel..." oninput="atuPrev()"></textarea></div>
-      <div class="fg full"><label>🎬 Vídeo do imóvel (MP4 do gerador de tour)</label><input type="hidden" id="f-tourmp4"/><div id="tour-area" class="upload-area" onclick="document.getElementById('inp-tour').click()"><input type="file" id="inp-tour" accept="video/mp4,video/*" onchange="onTourMp4(event)"/><div style="font-size:1.8rem;">🧭</div><p>Clique para subir o MP4 do tour</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Único vídeo do imóvel no site. Máximo 50 MB</p></div><div class="prog" id="tour-prog">Enviando tour...</div><div id="tour-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(255,212,0,.4);position:relative;background:#000;"><video id="tour-player" controls playsinline preload="metadata" style="width:100%;max-height:360px;display:block;"></video><button type="button" onclick="limparTourMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
+      <div class="fg full"><label>🎬 Vídeo do imóvel (MP4 do gerador de tour)</label><input type="hidden" id="f-tourmp4"/><div id="tour-area" class="upload-area" onclick="document.getElementById('inp-tour').click()"><input type="file" id="inp-tour" accept="video/mp4,video/*" onchange="onTourMp4(event)"/><div style="font-size:1.8rem;">🧭</div><p>Clique para subir o MP4 do tour</p><p style="font-size:.6rem;margin-top:3px;opacity:.55;">Único vídeo do imóvel no site. Máximo 50 MB</p></div><div class="prog" id="tour-prog">Enviando tour...</div><div id="tour-prev" style="display:none;margin-top:10px;border-radius:10px;overflow:hidden;border:2px solid rgba(214,178,102,.4);position:relative;background:#000;"><video id="tour-player" controls playsinline preload="metadata" style="width:100%;max-height:360px;display:block;"></video><button type="button" onclick="limparTourMp4()" style="position:absolute;top:6px;right:6px;background:rgba(160,21,21,.85);border:none;color:#fff;border-radius:6px;padding:4px 9px;font-size:.65rem;cursor:pointer;z-index:2;">Remover</button></div></div>
       <div class="fcp-info-box full" id="fcp-info-box">Modo Panfleto (FCP) - Preencha titulo, bairro e publicacao. Faca upload do arquivo abaixo.</div>
       <div class="fg full" id="fcp-upload-bloco" style="display:none;">
         <label>Arquivo do Panfleto (PDF ou Imagem)</label>
@@ -864,9 +902,9 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 <div class="painel" id="p-ctrl-pag">
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Links Rapidos</div><span style="font-size:.65rem;color:var(--sec);">Movidos do topo (nao cabiam no celular)</span></div><p class="ctrl-sub">Estes links ficavam no cabecalho e nao apareciam em telas pequenas. Agora estao aqui.</p><div class="fixas-grid">
     <a href="https://fcostacorretor.com/parceria" target="_blank" class="btn baz link-rapido">🤝 Ver Parceria</a>
-    <a href="https://fcostacorretor.com/contratos_principal.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📋 Contratos</a>
-    <a href="https://fcostacorretor.com/fcosta_secundario.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📄 Outros Docs</a>
-    <a href="https://fcostacorretor.com/contratos_particulares.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#FFD400;border:1.5px solid #FFD400;">📝 Contratos Particulares</a>
+    <a href="https://fcostacorretor.com/contratos_principal.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#D6B266;border:1.5px solid #D6B266;">📋 Contratos</a>
+    <a href="https://fcostacorretor.com/fcosta_secundario.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#D6B266;border:1.5px solid #D6B266;">📄 Outros Docs</a>
+    <a href="https://fcostacorretor.com/contratos_particulares.html" target="_blank" class="btn link-rapido" style="background:transparent;color:#D6B266;border:1.5px solid #D6B266;">📝 Contratos Particulares</a>
   </div></div>
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Paginas Fixas</div><span style="font-size:.65rem;color:var(--sec);">Sempre visiveis no site</span></div><div class="fixas-grid"><div class="fixa-card"><div class="fixa-ic">🏠</div><div class="fixa-nome">Comprar</div><div class="fixa-badge">FCV FIXO</div></div><div class="fixa-card"><div class="fixa-ic">🔑</div><div class="fixa-nome">Alugar</div><div class="fixa-badge">FCA FIXO</div></div><div class="fixa-card"><div class="fixa-ic">🏗️</div><div class="fixa-nome">Lancamentos</div><div class="fixa-badge">FCL FIXO</div></div><div class="fixa-card"><div class="fixa-ic">📄</div><div class="fixa-nome">Panfletos</div><div class="fixa-badge">FCP FIXO</div></div></div></div>
   <div class="ctrl-section"><div class="ctrl-hdr"><div class="ctrl-tit">Paginas Opcionais</div><div style="display:flex;gap:7px;flex-wrap:wrap;"><span class="ativos-b" id="badge-home">0 Home</span><span class="ativos-b az" id="badge-menu">0 Menu</span></div></div><p class="ctrl-sub">Cada card tem dois toggles: H = Home M = Menu</p><div class="reset-box"><div class="reset-txt"><strong>Aparecem todos selecionados?</strong>Clique em Zerar para resetar.</div><div style="display:flex;gap:7px;"><button class="btn breset" onclick="resetCtrl('home_botoes')">Zerar Home</button><button class="btn breset" onclick="resetCtrl('menu_hamburger')">Zerar Menu</button></div></div><div class="ctrl-grupos" id="ctrl-grupos"><div class="loading"><div class="spin"></div><p>Carregando paginas...</p></div></div></div>
@@ -957,7 +995,7 @@ var PAG_LINKS={venda:'https://fcostacorretor.com/comprar',aluguel:'https://fcost
 var PAG_LABELS={venda:'FCV - Comprar',aluguel:'FCA - Alugar',lancamento:'FCL - Lancamentos',panfleto:'FCP - Panfletos',vendido:'FCV - Comprar'};
 var ST_LABEL={venda:'A Venda',aluguel:'Aluguel',lancamento:'Lancamento',panfleto:'Panfleto',vendido:'Vendido'};
 var SLUG_PAG={venda:'comprar',aluguel:'alugar',lancamento:'lancamento',panfleto:'panfleto',vendido:'vendido'};
-var GRUPOS_COR={'Servicos':'rgba(255,212,0,.85)','Conteudo':'rgba(255,255,255,.75)','Outros':'rgba(163,163,163,.8)'};
+var GRUPOS_COR={'Servicos':'rgba(214,178,102,.85)','Conteudo':'rgba(255,255,255,.75)','Outros':'rgba(163,163,163,.8)'};
 
 auth.onAuthStateChanged(function(user){if(user){_usuarioAtual=user;document.getElementById('ls').classList.remove('on');document.getElementById('app').style.display='block';var em=user.email||'';document.getElementById('u-email').textContent=em;document.getElementById('u-av').textContent=(em.charAt(0)||'?').toUpperCase();iniciarFB();renderMinhaConta();}else{_usuarioAtual=null;document.getElementById('ls').classList.add('on');document.getElementById('app').style.display='none';}});
 var _imovelRef=null,_imovelListener=null,_pausarListener=false;
@@ -1057,7 +1095,7 @@ function limparTourMp4(){document.getElementById('f-tourmp4').value='';mostrarTo
 function onTipo(){var sel=document.getElementById('f-tipo'),wrap=document.getElementById('outro-wrap');if(sel.value==='__outro__'){wrap.style.display='block';document.getElementById('f-tipo-outro').focus();}else{wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}atuPrev();}
 function getTipoReal(){var sel=document.getElementById('f-tipo');if(sel.value==='__outro__')return document.getElementById('f-tipo-outro').value.trim();return sel.value;}
 function carregarTipo(t){var sel=document.getElementById('f-tipo'),wrap=document.getElementById('outro-wrap'),existe=false;for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===t&&sel.options[i].value!=='__outro__'){existe=true;break;}}if(existe){sel.value=t;wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}else if(t){sel.value='__outro__';wrap.style.display='block';document.getElementById('f-tipo-outro').value=t;}else{sel.value='';wrap.style.display='none';document.getElementById('f-tipo-outro').value='';}}
-function atuRefPainel(status,idAtual){var el=document.getElementById('ref-master');if(!status){el.style.display='none';return;}el.style.display='block';var sigla=SG[status]||'FCV',isNovo=!idAtual,numcod=document.getElementById('f-numcod').value.trim();var numFinal=numcod?numcod.padStart(3,'0'):(isNovo?proxNum(status):'001');var codAtual=sigla+numFinal;var corMap={FCV:'#FFD400',FCA:'#ffffff',FCL:'#FFE24D',FCP:'#bdbdbd'};var numEl=document.getElementById('rn-num');numEl.textContent=codAtual;numEl.style.color=corMap[sigla]||'var(--ouro)';document.getElementById('rn-st').textContent=(ST_LABEL[status]||status)+' '+sigla;document.getElementById('rn-tp').textContent=getTipoReal()||'';var bdg=document.getElementById('rn-badge');bdg.style.display='inline';if(isNovo){bdg.textContent='NOVO';bdg.className='ref-badge-novo';}else{bdg.textContent='EDITANDO';bdg.className='ref-badge-edit';}var mesma=_todos.filter(function(i){return(SG[i.status]||'FCV')===sigla&&i.id!==idAtual;}).sort(function(a,b){return(parseInt(b.numeroCodigo)||0)-(parseInt(a.numeroCodigo)||0);}).slice(0,8);var proxN=proxNum(status),proxC=sigla+proxN;var tl=document.getElementById('ref-tl'),html='';html+='<div class="tl-card tl-prox"><span class="tl-tag tag-prox">PROXIMO</span><span class="tl-cod">'+proxC+'</span><span class="tl-nome">Disponivel</span><span class="tl-bairro">Livre para uso</span></div>';if(idAtual){var atual=_todos.find(function(x){return x.id===idAtual;});if(atual)html+='<div class="tl-card tl-atual"><span class="tl-tag tag-edit">EDITANDO</span><span class="tl-cod">'+esc(getCod(atual))+'</span><span class="tl-nome">'+esc((atual.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(atual.bairro||'')+'</span></div>';}mesma.forEach(function(i){html+='<div class="tl-card"><span class="tl-tag tag-uso">USADO</span><span class="tl-cod" style="color:rgba(255,255,255,.6);">'+esc(getCod(i))+'</span><span class="tl-nome">'+esc((i.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(i.bairro||'')+'</span></div>';});tl.innerHTML=html;}
+function atuRefPainel(status,idAtual){var el=document.getElementById('ref-master');if(!status){el.style.display='none';return;}el.style.display='block';var sigla=SG[status]||'FCV',isNovo=!idAtual,numcod=document.getElementById('f-numcod').value.trim();var numFinal=numcod?numcod.padStart(3,'0'):(isNovo?proxNum(status):'001');var codAtual=sigla+numFinal;var corMap={FCV:'#D6B266',FCA:'#ffffff',FCL:'#F2DCA4',FCP:'#bdbdbd'};var numEl=document.getElementById('rn-num');numEl.textContent=codAtual;numEl.style.color=corMap[sigla]||'var(--ouro)';document.getElementById('rn-st').textContent=(ST_LABEL[status]||status)+' '+sigla;document.getElementById('rn-tp').textContent=getTipoReal()||'';var bdg=document.getElementById('rn-badge');bdg.style.display='inline';if(isNovo){bdg.textContent='NOVO';bdg.className='ref-badge-novo';}else{bdg.textContent='EDITANDO';bdg.className='ref-badge-edit';}var mesma=_todos.filter(function(i){return(SG[i.status]||'FCV')===sigla&&i.id!==idAtual;}).sort(function(a,b){return(parseInt(b.numeroCodigo)||0)-(parseInt(a.numeroCodigo)||0);}).slice(0,8);var proxN=proxNum(status),proxC=sigla+proxN;var tl=document.getElementById('ref-tl'),html='';html+='<div class="tl-card tl-prox"><span class="tl-tag tag-prox">PROXIMO</span><span class="tl-cod">'+proxC+'</span><span class="tl-nome">Disponivel</span><span class="tl-bairro">Livre para uso</span></div>';if(idAtual){var atual=_todos.find(function(x){return x.id===idAtual;});if(atual)html+='<div class="tl-card tl-atual"><span class="tl-tag tag-edit">EDITANDO</span><span class="tl-cod">'+esc(getCod(atual))+'</span><span class="tl-nome">'+esc((atual.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(atual.bairro||'')+'</span></div>';}mesma.forEach(function(i){html+='<div class="tl-card"><span class="tl-tag tag-uso">USADO</span><span class="tl-cod" style="color:rgba(255,255,255,.6);">'+esc(getCod(i))+'</span><span class="tl-nome">'+esc((i.titulo||'').slice(0,22))+'</span><span class="tl-bairro">'+esc(i.bairro||'')+'</span></div>';});tl.innerHTML=html;}
 function mostrarDup(codDup,nomeDup,proxDisp){document.getElementById('dup-tit').textContent='Codigo '+codDup+' ja existe!';document.getElementById('dup-msg').textContent='Ja usado por: "'+nomeDup+'". Escolha outro numero.';document.getElementById('dup-prox').textContent=proxDisp;var b=document.getElementById('dup-box');b.classList.add('on');b.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function esconderDup(){document.getElementById('dup-box').classList.remove('on');}
 function usarProximo(){var st=document.getElementById('f-status').value;if(!st)return;var p=proxNum(st);document.getElementById('f-numcod').value=p;esconderDup();atuPrev();toast('Numero '+p+' aplicado!');}
@@ -1139,7 +1177,7 @@ function onFcpArquivo(event){
   event.target.value='';
 }
 function removerFcpArq(){document.getElementById('fcp-url').value='';document.getElementById('fcp-tipo-arq').value='';document.getElementById('fcp-arq-prev').classList.remove('on');document.getElementById('fcp-arq-nome').textContent='-';toast('Panfleto removido.','warn');}
-function renderFcp(){var sec=document.getElementById('fcp-sec'),grid=document.getElementById('fcp-grid');if(!sec||!grid)return;var fcpList=_todos.filter(function(i){return i.status==='panfleto'&&i._del!==true&&i._excluido!==true;});fcpList.sort(function(a,b){return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(fcpList.length){sec.classList.add('on');}else{sec.classList.remove('on');}if(!fcpList.length){grid.innerHTML='<div class="fcp-empty"><span>📄</span>Nenhum panfleto.</div>';return;}grid.innerHTML=fcpList.map(function(i){var c=getCod(i),arqUrl=i.panfletoUrl||'',isPdf=(i.panfletoTipo||'imagem')==='pdf';var thumb=arqUrl&&!isPdf?'<img src="'+esc(arqUrl)+'" loading="lazy"/>':'<div style="font-size:2.5rem;opacity:.5;">📄</div>';var idEsc=esc(i.id),nomeEsc=(i.titulo||c).replace(/"/g,'&quot;');return'<div class="fcp-card"><div class="fcp-thumb">'+thumb+'<span class="fcp-cod-b">'+esc(c)+'</span><span class="fcp-pub-b '+(i.publicado===false?'fcp-pub-nao':'fcp-pub-sim')+'">'+(i.publicado===false?'Oculto':'Pub.')+'</span></div><div class="fcp-body"><div class="fcp-nome">'+esc(i.titulo||'Panfleto FCosta')+'</div><div class="fcp-local">'+esc([i.bairro,i.cidade].filter(Boolean).join(' - '))+'</div><span class="fcp-tipo-tag">'+(isPdf?'PDF':'Imagem')+'</span>'+(arqUrl?'<br/><a href="'+esc(arqUrl)+'" target="_blank" rel="noopener" style="font-size:.62rem;color:#FFD400;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;">'+(isPdf?'Abrir PDF':'Ver imagem')+'</a>':'')+'<div class="fcp-acts"><button class="btn bwarn" data-action="editar" data-id="'+idEsc+'">Editar</button><button class="btn bdel" data-action="excluir" data-id="'+idEsc+'" data-nome="'+nomeEsc+'">Excluir</button></div></div></div>';}).join('');}
+function renderFcp(){var sec=document.getElementById('fcp-sec'),grid=document.getElementById('fcp-grid');if(!sec||!grid)return;var fcpList=_todos.filter(function(i){return i.status==='panfleto'&&i._del!==true&&i._excluido!==true;});fcpList.sort(function(a,b){return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(fcpList.length){sec.classList.add('on');}else{sec.classList.remove('on');}if(!fcpList.length){grid.innerHTML='<div class="fcp-empty"><span>📄</span>Nenhum panfleto.</div>';return;}grid.innerHTML=fcpList.map(function(i){var c=getCod(i),arqUrl=i.panfletoUrl||'',isPdf=(i.panfletoTipo||'imagem')==='pdf';var thumb=arqUrl&&!isPdf?'<img src="'+esc(arqUrl)+'" loading="lazy"/>':'<div style="font-size:2.5rem;opacity:.5;">📄</div>';var idEsc=esc(i.id),nomeEsc=(i.titulo||c).replace(/"/g,'&quot;');return'<div class="fcp-card"><div class="fcp-thumb">'+thumb+'<span class="fcp-cod-b">'+esc(c)+'</span><span class="fcp-pub-b '+(i.publicado===false?'fcp-pub-nao':'fcp-pub-sim')+'">'+(i.publicado===false?'Oculto':'Pub.')+'</span></div><div class="fcp-body"><div class="fcp-nome">'+esc(i.titulo||'Panfleto FCosta')+'</div><div class="fcp-local">'+esc([i.bairro,i.cidade].filter(Boolean).join(' - '))+'</div><span class="fcp-tipo-tag">'+(isPdf?'PDF':'Imagem')+'</span>'+(arqUrl?'<br/><a href="'+esc(arqUrl)+'" target="_blank" rel="noopener" style="font-size:.62rem;color:#D6B266;margin-bottom:6px;display:inline-flex;align-items:center;gap:4px;">'+(isPdf?'Abrir PDF':'Ver imagem')+'</a>':'')+'<div class="fcp-acts"><button class="btn bwarn" data-action="editar" data-id="'+idEsc+'">Editar</button><button class="btn bdel" data-action="excluir" data-id="'+idEsc+'" data-nome="'+nomeEsc+'">Excluir</button></div></div></div>';}).join('');}
 document.getElementById('fcp-grid').addEventListener('click',function(e){var btn=e.target.closest('[data-action]');if(!btn)return;e.stopPropagation();var action=btn.dataset.action,id=btn.dataset.id,nome=btn.dataset.nome||id;if(action==='editar')editarImovel(id);else if(action==='excluir')pedirDelImovel(id,nome);});
 function novoFcp(){novoImovel();setTimeout(function(){var sel=document.getElementById('f-status');if(sel){sel.value='panfleto';onStatusChange();}},80);}
 /* ── Upload de fotos do imovel direto para o Supabase Storage ── */
@@ -1280,7 +1318,7 @@ function corrigirSlugs(){
   db.ref().update(batch).then(function(){toast('✅ '+Object.keys(batch).length+' slug(s) gerado(s) com sucesso!');}).catch(function(e){toast('Erro: '+msgErr(e),true);});
 }
 function renderCodigos(){var map={venda:'FCV',aluguel:'FCA',lancamento:'FCL',panfleto:'FCP'},nomes={venda:'Venda / Comprar',aluguel:'Aluguel / Locacao',lancamento:'Lancamentos',panfleto:'Panfletos'};var g=document.getElementById('cod-grid');if(!g)return;g.innerHTML=Object.entries(map).map(function(e){var st=e[0],sig=e[1],tot=_todos.filter(function(i){return(SG[i.status]||'FCV')===sig;}).length,prox=sig+proxNum(st);return'<div class="cod-item"><div class="cod-sigla">'+sig+'</div><div><div class="cod-info-nome">'+nomes[st]+'</div><div class="cod-info-total">'+tot+' imove'+(tot!==1?'is':'l')+'</div><div class="cod-info-prox">proximo: '+prox+'</div></div></div>';}).join('');filtrarCods();}
-function filtrarCods(){var b=(document.getElementById('cod-busca').value||'').toLowerCase(),s=document.getElementById('cod-filtro').value,tbody=document.getElementById('cod-tbody');if(!tbody)return;var lista=_todos.filter(function(i){if(s&&i.status!==s)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.tipo].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(!lista.length){tbody.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--sec);font-size:.75rem;">Nenhum imovel encontrado.</td></tr>';return;}tbody.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status),url='https://fcostacorretor.com/imovel?id='+i.id;return'<tr style="border-bottom:1px solid rgba(255,255,255,.06);"><td style="padding:8px 10px;"><span class="ref-c '+cl+'">'+esc(c)+'</span></td><td style="padding:8px 10px;font-size:.72rem;color:#fff;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(i.titulo||'-')+'</td><td style="padding:8px 10px;font-size:.68rem;color:var(--sec);">'+esc(i.bairro||'-')+'</td><td style="padding:8px 10px;font-size:.72rem;color:#FFD400;font-weight:700;">'+(i.preco?'R$ '+esc(i.preco):'-')+'</td><td style="padding:8px 10px;"><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'Nao':'Sim')+'</span></td><td style="padding:8px 10px;text-align:center;white-space:nowrap;"><a href="'+url+'" target="_blank" class="ref-bcp" title="Abrir" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Link</a> <button class="ref-bed" onclick="editarImovel(\''+i.id+'\')" title="Editar">Edit</button></td></tr>';}).join('');}
+function filtrarCods(){var b=(document.getElementById('cod-busca').value||'').toLowerCase(),s=document.getElementById('cod-filtro').value,tbody=document.getElementById('cod-tbody');if(!tbody)return;var lista=_todos.filter(function(i){if(s&&i.status!==s)return false;if(b){var t=[getCod(i),i.titulo,i.bairro,i.tipo].filter(Boolean).join(' ').toLowerCase();return t.includes(b);}return true;}).sort(function(a,b){var sa=SG[a.status]||'FCV',sb=SG[b.status]||'FCV';if(sa!==sb)return sa.localeCompare(sb);return(parseInt(a.numeroCodigo)||0)-(parseInt(b.numeroCodigo)||0);});if(!lista.length){tbody.innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--sec);font-size:.75rem;">Nenhum imovel encontrado.</td></tr>';return;}tbody.innerHTML=lista.map(function(i){var c=getCod(i),cl=codCls(i.status),url='https://fcostacorretor.com/imovel?id='+i.id;return'<tr style="border-bottom:1px solid rgba(255,255,255,.06);"><td style="padding:8px 10px;"><span class="ref-c '+cl+'">'+esc(c)+'</span></td><td style="padding:8px 10px;font-size:.72rem;color:#fff;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(i.titulo||'-')+'</td><td style="padding:8px 10px;font-size:.68rem;color:var(--sec);">'+esc(i.bairro||'-')+'</td><td style="padding:8px 10px;font-size:.72rem;color:#D6B266;font-weight:700;">'+(i.preco?'R$ '+esc(i.preco):'-')+'</td><td style="padding:8px 10px;"><span class="'+(i.publicado===false?'ref-pub-n':'ref-pub-s')+'">'+(i.publicado===false?'Nao':'Sim')+'</span></td><td style="padding:8px 10px;text-align:center;white-space:nowrap;"><a href="'+url+'" target="_blank" class="ref-bcp" title="Abrir" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Link</a> <button class="ref-bed" onclick="editarImovel(\''+i.id+'\')" title="Editar">Edit</button></td></tr>';}).join('');}
 var PAGS_DEFAULT=[{id:'pg-financiamento',ic:'💰',nome:'Financiamento',url:'https://fcostacorretor.com/financiamento',grupo:'Servicos'},{id:'pg-avaliacao',ic:'📊',nome:'Avaliacao Gratuita',url:'https://fcostacorretor.com/avaliacao',grupo:'Servicos'},{id:'pg-ptam',ic:'📋',nome:'PTAM - Laudo',url:'https://fcostacorretor.com/ptam',grupo:'Servicos'},{id:'pg-laudo-ia',ic:'✨',nome:'Laudo/Autorização com IA',url:'https://fcostacorretor.com/laudo-ia.html',grupo:'Servicos'},{id:'pg-judicial',ic:'⚖️',nome:'Consultoria Judicial',url:'https://fcostacorretor.com/judicial',grupo:'Servicos'},{id:'pg-blog',ic:'📝',nome:'Blog',url:'https://fcostacorretor.com/blog',grupo:'Conteudo'},{id:'pg-legislacao',ic:'📜',nome:'Legislacao',url:'https://fcostacorretor.com/legislacao',grupo:'Conteudo'},{id:'pg-documentacao',ic:'🗂️',nome:'Documentacao Imobiliaria',url:'https://fcostacorretor.com/documentacao-imoveis.html',grupo:'Conteudo'},{id:'pg-galeria',ic:'🖼️',nome:'Galeria',url:'https://fcostacorretor.com/galeria',grupo:'Conteudo'},{id:'pg-inquilinato',ic:'📑',nome:'Inquilinato',url:'https://fcostacorretor.com/inquilino',grupo:'Outros'},{id:'pg-parceiros',ic:'🤝',nome:'Parceiros',url:'https://fcostacorretor.com/parceria',grupo:'Outros'},{id:'pg-cartorio',ic:'🏛️',nome:'Cartorio',url:'https://fcostacorretor.com/cartorio',grupo:'Outros'},{id:'pg-contratos',ic:'✍️',nome:'Contratos',url:'https://fcostacorretor.com/contratos_principal.html',grupo:'Outros'},{id:'pg-privacidade',ic:'🔒',nome:'Politica de Privacidade',url:'https://fcostacorretor.com/politica',grupo:'Outros'},{id:'pg-reajuste',ic:'📈',nome:'Calculadora de Reajuste',url:'https://fcostacorretor.com/calculadora-reajuste.html',grupo:'Servicos'},{id:'pg-videos',ic:'▶️',nome:'Videos',url:'https://fcostacorretor.com/tv_costa.html',grupo:'Conteudo'},{id:'pg-sergioig',ic:'📸',nome:'Pagina Pessoal',url:'https://fcostacorretor.com/sergio_ig.html',grupo:'Outros'},{id:'pg-condicoes',ic:'📃',nome:'Condicoes de Uso',url:'https://fcostacorretor.com/certificado.html',grupo:'Outros'},{id:'cadastro',ic:'🔐',nome:'ADM / Cadastro',url:'https://fcostacorretor.com/painel_adm',grupo:'Outros'}];
 function carregarCtrl(){db.ref('fcosta_config/home_botoes').on('value',function(snap){_estadosHome=snap.val()||{};renderCtrl();});db.ref('fcosta_config/menu_hamburger').on('value',function(snap){_estadosHamb=snap.val()||{};renderCtrl();});renderCtrl();}
 function renderCtrl(){var wrap=document.getElementById('ctrl-grupos');if(!wrap)return;var grupos={};PAGS_DEFAULT.forEach(function(p){var g=p.grupo||'Outros';if(!grupos[g])grupos[g]=[];grupos[g].push(p);});_paginasSite.forEach(function(p){if(!PAGS_DEFAULT.find(function(x){return x.id===p.id;})){var g=p.grupo||'Outros';if(!grupos[g])grupos[g]=[];grupos[g].push(p);}});var html='';['Servicos','Conteudo','Outros'].forEach(function(gNome){var pages=grupos[gNome];if(!pages||!pages.length)return;var cor=GRUPOS_COR[gNome]||'rgba(255,255,255,.5)';html+='<div class="ctrl-grupo"><div class="ctrl-glbl" style="color:'+cor+'">'+gNome+'<span style="font-size:.5rem;margin-left:6px;color:rgba(255,255,255,.3);">'+pages.length+' pagina'+(pages.length!==1?'s':'')+'</span></div><div class="ctrl-minigrid">';pages.forEach(function(p){var hOn=_estadosHome[p.id]!==false,mOn=_estadosHamb[p.id]!==false;html+='<div class="ctrl-mini '+(hOn||mOn?'on':'')+'"><div class="ctrl-mini-ic">'+(p.ic||'📄')+'</div><div style="flex:1;min-width:0;"><div class="ctrl-mini-nome">'+esc(p.nome||p.id)+'</div><div class="ctrl-mini-toggles"><div style="display:flex;align-items:center;gap:3px;"><span class="ctrl-mini-tlbl">H</span><label class="tg"><input type="checkbox" '+(hOn?'checked':'')+' onchange="togCtrl(\'home_botoes\',\''+p.id+'\',this.checked)"/><span class="tg-sl"></span></label></div><div style="display:flex;align-items:center;gap:3px;"><span class="ctrl-mini-tlbl">M</span><label class="tg"><input type="checkbox" '+(mOn?'checked':'')+' onchange="togCtrl(\'menu_hamburger\',\''+p.id+'\',this.checked)"/><span class="tg-sl"></span></label></div></div></div></div>';});html+='</div></div>';});wrap.innerHTML=html;var hAt=Object.values(_estadosHome).filter(Boolean).length,mAt=Object.values(_estadosHamb).filter(Boolean).length;var bh=document.getElementById('badge-home');if(bh)bh.textContent=hAt+' Home';var bm=document.getElementById('badge-menu');if(bm)bm.textContent=mAt+' Menu';}
