@@ -70,17 +70,17 @@
     desc: 'Anote um imóvel pesquisado. Toque em "Guardar no banco" para usar depois nos PTAMs.',
     campos: [m('data', 'Data', 'date'), m('tipo', 'Situação', 'sel', { o: ['Oferta', 'Vendido', 'Alugado'] }), m('cat', 'Tipo', 'sel', { o: ['Casa', 'Sobrado', 'Apartamento', 'Terreno', 'Sala', 'Loja', 'Galpão', 'Chácara', 'Rural', 'Outro'] }), m('dorm', 'Dormitórios', 'num'),
       F('end', 'Endereço'), m('bairro', 'Bairro', 'text'), m('cidade', 'Cidade', 'text'), m('area', 'Área (m²)', 'num'), m('preco', 'Preço (R$)', 'money'), m('vagas', 'Vagas', 'num'), m('idade', 'Idade (anos)', 'num'),
-      m('fonte', 'Fonte (site, imobiliária)', 'text'), m('contato', 'Contato / link', 'text'), F('obs', 'Observações (estado, diferenciais)', 'area'),
+      m('fonte', 'Fonte (site, imobiliária)', 'text'), m('contato', 'Contato / link', 'text'), F('obs', 'Observações (estado, diferenciais)', 'area'), F('foto', 'Foto do imóvel', 'fotos', { aj: 'Print do anúncio ou foto da fachada' }),
       { t: 'acao', a: 'banco', l: '🗂️ Guardar no banco de comparáveis' }],
     inicio: function (d) { d.data = PP.hoje(); d.tipo = 'Oferta'; d.cat = 'Casa'; },
     acoes: { banco: function (d) {
       var b = PP.ls.get('d:calc-banco', null) || { itens: [] }; b.itens = b.itens || [];
-      b.itens.push({ data: d.data, tipo: d.tipo, cat: d.cat, dorm: d.dorm, end: d.end, bairro: d.bairro, cidade: d.cidade, area: d.area, preco: d.preco, fonte: d.fonte, contato: d.contato, obs: d.obs });
+      b.itens.push({ data: d.data, tipo: d.tipo, cat: d.cat, dorm: d.dorm, end: d.end, bairro: d.bairro, cidade: d.cidade, area: d.area, preco: d.preco, fonte: d.fonte, contato: d.contato, obs: d.obs, foto: d.foto || [] });
       PP.ls.set('d:calc-banco', b); PP.aviso('Guardado no banco ✔ (' + b.itens.length + ' imóveis)');
     } },
     render: function (d) {
       var a = num(d.area), p = num(d.preco);
-      return h.t('Ficha de Imóvel Comparável') + h.kv([['Data', PP.dt(d.data)], ['Situação', d.tipo], ['Tipo', d.cat], ['Endereço', d.end], ['Bairro / cidade', [d.bairro, d.cidade].filter(Boolean).join(' – ')], ['Área', a ? N(a, 2) + ' m²' : ''], ['Preço', p ? R(p) : ''], ['Valor por m²', a && p ? R(p / a) : ''], ['Dormitórios / vagas', [d.dorm, d.vagas].filter(Boolean).join(' / ')], ['Idade', d.idade ? d.idade + ' anos' : ''], ['Fonte', d.fonte], ['Contato / link', d.contato]], true) + h.p(d.obs);
+      return h.t('Ficha de Imóvel Comparável') + h.kv([['Data', PP.dt(d.data)], ['Situação', d.tipo], ['Tipo', d.cat], ['Endereço', d.end], ['Bairro / cidade', [d.bairro, d.cidade].filter(Boolean).join(' – ')], ['Área', a ? N(a, 2) + ' m²' : ''], ['Preço', p ? R(p) : ''], ['Valor por m²', a && p ? R(p / a) : ''], ['Dormitórios / vagas', [d.dorm, d.vagas].filter(Boolean).join(' / ')], ['Idade', d.idade ? d.idade + ' anos' : ''], ['Fonte', d.fonte], ['Contato / link', d.contato]], true) + h.p(d.obs) + h.fotos(d.foto);
     }
   });
   var PARTES = ['Estrutura (rachaduras, trincas)', 'Telhado / cobertura', 'Pisos', 'Paredes e revestimentos', 'Forro / teto', 'Portas e janelas', 'Instalação elétrica', 'Instalação hidráulica', 'Pintura', 'Umidade / infiltração', 'Banheiros', 'Cozinha'];

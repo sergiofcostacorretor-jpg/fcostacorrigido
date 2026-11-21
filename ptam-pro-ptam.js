@@ -231,7 +231,7 @@
       se: function (d) { return d.metodo === 'comparativo'; }, item: 'Comparável', acao: ['banco', '📥 Trazer do banco de comparáveis'],
       aj: 'Use de 3 a 6 imóveis parecidos. Fatores: 1,00 = igual; acima de 1 = o comparável é pior; abaixo de 1 = é melhor.',
       cols: [F('end', 'Endereço / descrição'), m('fonte', 'Fonte (site, imobiliária, telefone)', 'text'), m('area', 'Área (' + unid + ')', 'num'), m('preco', loc ? 'Aluguel pedido (R$/mês)' : 'Preço pedido (R$)', 'money'),
-        m('fo', 'Fator oferta', 'num', { v: loc ? '0,95' : '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' }), m('fp', 'Fator padrão', 'num', { v: '1,00' }), m('fc', 'Fator conservação', 'num', { v: '1,00' }), m('fx', 'Outros fatores', 'num', { v: '1,00' })]
+        m('fo', 'Fator oferta', 'num', { v: loc ? '0,95' : '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' }), m('fp', 'Fator padrão', 'num', { v: '1,00' }), m('fc', 'Fator conservação', 'num', { v: '1,00' }), m('fx', 'Outros fatores', 'num', { v: '1,00' }), F('foto', 'Foto do imóvel', 'fotos', { aj: 'Print do anúncio ou foto da fachada' })]
     }));
     var ev = function (d) { return d.metodo === 'evolutivo'; };
     L.push(m('ev_at', 'Área do terreno (m²)', 'num', { se: ev })); L.push(m('ev_vt', 'Valor do terreno (R$/m²)', 'money', { se: ev }));
@@ -370,6 +370,7 @@
       h.p('Nada mais havendo, encerra-se o presente parecer, assinado pelo avaliador.');
     o += h.ass(P, P.cidade, d.data_laudo);
     if ((d.fotos || []).length) o += '<div class="quebra"></div>' + h.s('Anexo – Registro fotográfico') + h.fotos(d.fotos);
+    if (r.metodo === 'comparativo') { var fc = PP.calc.fotosComps(d.comps); if (fc) o += '<div class="quebra"></div>' + h.s('Anexo – Imóveis comparáveis') + fc; }
     return o;
   }
 
@@ -421,7 +422,7 @@
     if (!lista.length) lista = banco;
     d.comps = (d.comps || []).filter(function (x) { return num(x.preco) && num(x.area); });
     lista.slice(0, 8).forEach(function (b) {
-      d.comps.push({ end: [b.end, b.bairro].filter(Boolean).join(' – '), fonte: b.fonte || '', area: b.area, preco: b.preco, fo: b.tipo === 'Vendido' ? '1,00' : '0,90', fl: '1,00', fp: '1,00', fc: '1,00', fx: '1,00' });
+      d.comps.push({ end: [b.end, b.bairro].filter(Boolean).join(' – '), fonte: b.fonte || '', area: b.area, preco: b.preco, foto: b.foto || [], fo: b.tipo === 'Vendido' ? '1,00' : '0,90', fl: '1,00', fp: '1,00', fc: '1,00', fx: '1,00' });
     });
     PP.aviso(lista.slice(0, 8).length + ' comparáveis trazidos ✔');
   };

@@ -53,6 +53,12 @@
     return h.tab(cab, lin, [2, 3, 4, 5]) + '<p style="font-size:8.5pt;color:#6b6457">Valores em R$. Homog. = valor por ' + un + ' depois dos ajustes.</p>' + (hm.nSan < hm.n ? h.nota('Valores riscados ficaram fora do intervalo de 30% em torno da média e foram descartados (amostra saneada).') : '') +
       (hm.nSan < 3 ? h.nota('Atenção: menos de 3 comparáveis válidos. Procure mais imóveis para dar segurança ao valor.') : '');
   };
+  C.fotosComps = function (rows, titulo) {
+    var f = [];
+    (rows || []).forEach(function (r, i) { (r.foto || []).forEach(function (x) { f.push({ src: x.src, leg: 'Comparável ' + (i + 1) + (r.end ? ' – ' + r.end : '') + (x.leg ? ' (' + x.leg + ')' : '') }); }); });
+    if (!f.length) return '';
+    return (titulo ? h.s(titulo) : '') + '<div class="fotos-doc">' + f.map(function (x) { return '<figure><img src="' + x.src + '" alt=""><figcaption>' + esc(x.leg) + '</figcaption></figure>'; }).join('') + '</div>';
+  };
   C.ross = function (idade, vida, estado) {
     var x = vida ? Math.min(1, idade / vida) : 0, kr = 0.5 * (x + x * x);
     var e = PP.HEID.filter(function (z) { return z[0] === estado; })[0], c = e ? e[2] / 100 : 0;
@@ -94,7 +100,7 @@
     desc: 'Compare com imóveis parecidos. Ajusta pelos fatores, tira os fora da curva e dá o valor.',
     campos: ident().concat([m('area', 'Área do imóvel avaliado', 'num'), m('un', 'Unidade', 'sel', { o: ['m²', 'ha'] }), F('farea', 'Ajustar pela diferença de área', 'sel', { o: [['sim', 'Sim'], ['nao', 'Não']] }),
       F('comps', 'Comparáveis', 'tab', { item: 'Comparável', acao: ['banco', '📥 Trazer do banco de comparáveis'], aj: 'Fatores: 1,00 = igual ao avaliado; maior que 1 = comparável pior; menor que 1 = comparável melhor.',
-        cols: [F('end', 'Endereço / descrição'), m('fonte', 'Fonte', 'text'), m('area', 'Área', 'num'), m('preco', 'Preço (R$)', 'money'), m('fo', 'Fator oferta', 'num', { v: '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' }), m('fp', 'Fator padrão', 'num', { v: '1,00' }), m('fc', 'Fator conservação', 'num', { v: '1,00' }), F('fx', 'Outros fatores', 'num', { v: '1,00' })] })]).concat(RES),
+        cols: [F('end', 'Endereço / descrição'), m('fonte', 'Fonte', 'text'), m('area', 'Área', 'num'), m('preco', 'Preço (R$)', 'money'), m('fo', 'Fator oferta', 'num', { v: '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' }), m('fp', 'Fator padrão', 'num', { v: '1,00' }), m('fc', 'Fator conservação', 'num', { v: '1,00' }), F('fx', 'Outros fatores', 'num', { v: '1,00' }), F('foto', 'Foto do imóvel', 'fotos', { aj: 'Print do anúncio ou foto da fachada' })] })]).concat(RES),
     inicio: function (d) { d.comps = [{}, {}, {}, {}].map(function () { return { fo: '0,90', fl: '1,00', fp: '1,00', fc: '1,00', fx: '1,00' }; }); },
     acoes: { banco: function (d) { PP.trazerBanco(d); } },
     resumo: function (d) { var hm = C.homog(d.comps, num(d.area), d.farea !== 'nao'); return hm.mediaSan ? 'Valor: <b class="v">' + R(PP.arred(hm.mediaSan * num(d.area))) + '</b><br>' + R(hm.mediaSan) + '/' + (d.un || 'm²') + ' · ' + hm.nSan + ' de ' + hm.n + ' usados' : 'Preencha área e comparáveis.'; },
@@ -102,7 +108,7 @@
       var un = d.un || 'm²', hm = C.homog(d.comps, num(d.area), d.farea !== 'nao');
       return topo(d, 'Método Comparativo Direto') + C.tabelaHomog(hm, un) +
         h.kv([['Elementos válidos', hm.nSan + ' de ' + hm.n], ['Média homogeneizada', R(hm.media) + '/' + un], ['Média saneada', R(hm.mediaSan) + '/' + un], ['Menor e maior (saneados)', R(hm.min) + ' a ' + R(hm.max) + '/' + un], ['Coeficiente de variação', N(hm.cv, 1) + '%'], ['Área avaliada', N(num(d.area), 2) + ' ' + un]]) +
-        resultado(d, hm.mediaSan * num(d.area)) + h.nota('Fator de área: (área do comparável ÷ área avaliada) elevado a 0,25 quando a diferença é de até 30%, e a 0,125 quando maior.');
+        resultado(d, hm.mediaSan * num(d.area)) + C.fotosComps(d.comps, 'Fotos dos comparáveis') + h.nota('Fator de área: (área do comparável ÷ área avaliada) elevado a 0,25 quando a diferença é de até 30%, e a 0,125 quando maior.');
     }
   });
 
@@ -206,7 +212,7 @@
     desc: 'Comparação de terrenos com fatores automáticos de frente, topografia e esquina.',
     campos: ident().concat([F('', 'Terreno avaliado', 'sec'), m('area', 'Área (m²)', 'num'), m('test', 'Frente (m)', 'num'), m('topo', 'Topografia', 'sel', { o: TOPO_O }), m('esq', 'Esquina', 'sel', { o: ['Não', 'Sim'] }),
       F('comps', 'Terrenos comparáveis', 'tab', { item: 'Terreno', acao: ['banco', '📥 Trazer do banco de comparáveis'],
-        cols: [F('end', 'Endereço'), m('area', 'Área (m²)', 'num'), m('preco', 'Preço (R$)', 'money'), m('test', 'Frente (m)', 'num'), m('topo', 'Topografia', 'sel', { o: TOPO_O }), m('esq', 'Esquina', 'sel', { o: ['Não', 'Sim'] }), m('fo', 'Fator oferta', 'num', { v: '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' })] })]).concat(RES),
+        cols: [F('end', 'Endereço'), m('area', 'Área (m²)', 'num'), m('preco', 'Preço (R$)', 'money'), m('test', 'Frente (m)', 'num'), m('topo', 'Topografia', 'sel', { o: TOPO_O }), m('esq', 'Esquina', 'sel', { o: ['Não', 'Sim'] }), m('fo', 'Fator oferta', 'num', { v: '0,90' }), m('fl', 'Fator localização', 'num', { v: '1,00' }), F('foto', 'Foto do imóvel', 'fotos', { aj: 'Print do anúncio ou foto da fachada' })] })]).concat(RES),
     inicio: function (d) { d.topo = 'Plano'; d.esq = 'Não'; d.comps = [{}, {}, {}].map(function () { return { topo: 'Plano', esq: 'Não', fo: '0,90', fl: '1,00' }; }); },
     acoes: { banco: function (d) { PP.trazerBanco(d); } },
     run: function (d) {
@@ -224,7 +230,7 @@
     render: function (d) {
       var hm = PP.itens['calc-terreno'].run(d);
       return topo(d, 'Valor do Terreno por m²') + h.kv([['Área avaliada', N(num(d.area), 2) + ' m²'], ['Frente', N(num(d.test), 2) + ' m'], ['Topografia', d.topo], ['Esquina', d.esq]]) + C.tabelaHomog(hm, 'm²') +
-        h.kv([['Média saneada', R(hm.mediaSan) + '/m²'], ['Elementos válidos', hm.nSan + ' de ' + hm.n]]) + resultado(d, hm.mediaSan * num(d.area)) +
+        h.kv([['Média saneada', R(hm.mediaSan) + '/m²'], ['Elementos válidos', hm.nSan + ' de ' + hm.n]]) + resultado(d, hm.mediaSan * num(d.area)) + C.fotosComps(d.comps, 'Fotos dos terrenos comparáveis') +
         h.nota('Frente: (frente avaliada ÷ frente comparável)^0,25, limitado entre 0,75 e 1,25. Topografia: plano 1,00; aclive leve 0,95; declive leve 0,90; aclive acentuado 0,85; declive acentuado 0,80; alagadiço 0,70. Esquina: 1,10.');
     }
   });
@@ -276,7 +282,7 @@
     desc: 'Guarde aqui os imóveis que você pesquisa. Depois é só trazer para o PTAM com um toque.',
     campos: [F('itens', 'Imóveis pesquisados', 'tab', { item: 'Imóvel', acao: ['csv', '⬇️ Baixar planilha (Excel)'],
       cols: [m('data', 'Data', 'date'), m('tipo', 'Situação', 'sel', { o: ['Oferta', 'Vendido', 'Alugado'] }), m('cat', 'Tipo', 'sel', { o: ['Casa', 'Sobrado', 'Apartamento', 'Terreno', 'Sala', 'Loja', 'Galpão', 'Chácara', 'Rural', 'Outro'] }), m('dorm', 'Dormitórios', 'num'),
-        F('end', 'Endereço'), m('bairro', 'Bairro', 'text'), m('cidade', 'Cidade', 'text'), m('area', 'Área (m²)', 'num'), m('preco', 'Preço / aluguel (R$)', 'money'), m('fonte', 'Fonte', 'text'), m('contato', 'Contato', 'text'), F('obs', 'Observação')] })],
+        F('end', 'Endereço'), m('bairro', 'Bairro', 'text'), m('cidade', 'Cidade', 'text'), m('area', 'Área (m²)', 'num'), m('preco', 'Preço / aluguel (R$)', 'money'), m('fonte', 'Fonte', 'text'), m('contato', 'Contato', 'text'), F('obs', 'Observação'), F('foto', 'Foto do imóvel', 'fotos', { aj: 'Print do anúncio ou foto da fachada' })] })],
     inicio: function (d) { d.itens = []; },
     acoes: {
       csv: function (d) {

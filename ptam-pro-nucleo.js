@@ -164,8 +164,42 @@
 
   /* ---------- peças do documento ---------- */
   var h = PP.h;
+  /* selo "FCosta Avaliador · CNAI": logo no centro, nome em volta */
+  PP.selo = null;
+  PP.fazSelo = function (cb) {
+    var img = new Image();
+    img.onload = function () {
+      try {
+        var P = PP.perfil(), S = 420, c = document.createElement('canvas'); c.width = c.height = S;
+        var g = c.getContext('2d'), cx = S / 2, cy = S / 2;
+        var grad = g.createLinearGradient(0, 0, S, S); grad.addColorStop(0, '#F2DCA4'); grad.addColorStop(0.45, '#D6B266'); grad.addColorStop(1, '#A78340');
+        g.beginPath(); g.arc(cx, cy, 206, 0, 2 * Math.PI); g.fillStyle = '#0A0B0F'; g.fill();
+        g.lineWidth = 9; g.strokeStyle = grad; g.stroke();
+        g.beginPath(); g.arc(cx, cy, 146, 0, 2 * Math.PI); g.lineWidth = 3; g.stroke();
+        g.save(); g.beginPath(); g.arc(cx, cy, 140, 0, 2 * Math.PI); g.clip(); g.drawImage(img, cx - 140, cy - 140, 280, 280); g.restore();
+        function curvo(txt, raio, centro, baixo) {
+          g.font = '700 34px Georgia, "Times New Roman", serif'; g.fillStyle = grad; g.textAlign = 'center'; g.textBaseline = 'middle';
+          var esp = 3, larg = txt.split('').map(function (ch) { return g.measureText(ch).width + esp; });
+          var total = larg.reduce(function (a, b) { return a + b; }, 0) / raio, ang = centro + (baixo ? total / 2 : -total / 2);
+          txt.split('').forEach(function (ch, i) {
+            var a = larg[i] / raio, meio = baixo ? ang - a / 2 : ang + a / 2;
+            g.save(); g.translate(cx + raio * Math.cos(meio), cy + raio * Math.sin(meio));
+            g.rotate(meio + (baixo ? -Math.PI / 2 : Math.PI / 2)); g.fillText(ch, 0, 0); g.restore();
+            ang = baixo ? ang - a : ang + a;
+          });
+        }
+        curvo('FCOSTA AVALIADOR', 176, -Math.PI / 2, false);
+        curvo((P.cnai || 'CNAI 52708').toUpperCase(), 176, Math.PI / 2, true);
+        g.fillStyle = grad; [Math.PI, 0].forEach(function (a) { g.beginPath(); g.arc(cx + 176 * Math.cos(a), cy + 176 * Math.sin(a), 6, 0, 2 * Math.PI); g.fill(); });
+        PP.selo = c.toDataURL('image/png');
+      } catch (e) { PP.selo = null; }
+      if (cb) cb();
+    };
+    img.onerror = function () { if (cb) cb(); };
+    img.src = '/logo-fcosta.png';
+  };
   h.cab = function (P) {
-    return '<div class="cab"><img src="/logo-fcosta.png" alt="" crossorigin="anonymous"><div><b>' + esc(P.nome) + '</b><small>' + esc(P.titulo) + ' · ' + esc(P.creci) + ' · ' + esc(P.cnai) +
+    return '<div class="cab"><img src="' + (PP.selo || '/logo-fcosta.png') + '" alt="FCosta Avaliador ' + esc(P.cnai) + '"><div><b>' + esc(P.nome) + '</b><small>' + esc(P.titulo) + ' · ' + esc(P.creci) + ' · ' + esc(P.cnai) +
       '<br>WhatsApp ' + esc(P.whats) + (P.email ? ' · ' + esc(P.email) : '') + ' · ' + esc(P.site) + '</small></div></div>';
   };
   h.t = function (t, s) { return '<h1>' + esc(t) + '</h1>' + (s ? '<div class="sub">' + s + '</div>' : ''); };
@@ -464,7 +498,8 @@
       var lista = getPath(estado.d, p) || []; setPath(estado.d, p, lista);
       PP.aviso('Preparando fotos…');
       var falta = files.length;
-      files.forEach(function (f) { PP.lerFoto(f, 1100, function (src) { lista.push({ src: src, leg: '' }); if (--falta === 0) { salvaRasc(); desenhaForm(); desenhaDoc(); } }); });
+      var tam = p.indexOf('.') > 0 ? 800 : 1100;
+      files.forEach(function (f) { PP.lerFoto(f, tam, function (src) { lista.push({ src: src, leg: '' }); if (--falta === 0) { salvaRasc(); desenhaForm(); desenhaDoc(); } }); });
       return;
     }
     if (t.type === 'checkbox') {
@@ -565,7 +600,7 @@
       if (e.target.id === 'grava') {
         var o = {}; for (var k in PP.perfilPadrao) o[k] = estado.d[k];
         o.assinatura = (estado.d.assinatura && estado.d.assinatura[0]) ? estado.d.assinatura[0].src : '';
-        LS.set('perfil', o); PP.aviso('Dados guardados ✔'); desenhaDoc();
+        LS.set('perfil', o); PP.aviso('Dados guardados ✔'); PP.fazSelo(desenhaDoc);
       }
     });
     // o rascunho do perfil não deve ser salvo como item
@@ -593,5 +628,6 @@
     app = document.getElementById('app');
     window.addEventListener('hashchange', rota);
     rota();
+    PP.fazSelo(function () { if (document.getElementById('folha')) desenhaDoc(); });
   };
 })();
