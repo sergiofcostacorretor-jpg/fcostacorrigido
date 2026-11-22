@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Estilo 3 · Revista | FCosta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,800;1,400;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F5F0E6;--paper2:#EBE3D3;--ink:#1C1A16;--mut:#6F6758;--green:#1F3A2E;--green2:#2C4D3E;--brass:#B48A45;--brass2:#D8B776;--line:rgba(28,26,22,.16);
+ --d:'Playfair Display',Georgia,serif;--s:'DM Sans',system-ui,sans-serif;--e:cubic-bezier(.2,.75,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+figure{margin:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--s);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.w{max-width:1440px;margin:0 auto;padding:0 clamp(20px,4vw,60px)}
+.k{font:700 11px/1 var(--s);letter-spacing:.22em;text-transform:uppercase}
+.rule{height:1px;background:var(--ink)}
+[data-rv]{opacity:0;transform:translateY(28px);transition:opacity 1.1s var(--e),transform 1.1s var(--e)}
+[data-rv].in{opacity:1;transform:none}
+.reveal-img{clip-path:inset(0 0 100% 0);transition:clip-path 1.4s var(--e)}
+.in .reveal-img,.reveal-img.in{clip-path:inset(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){[data-rv],.reveal-img{opacity:1;transform:none;clip-path:none}*{transition:none!important}}
+
+/* cabeçalho de revista */
+.bar{background:var(--green);color:var(--paper2);font:500 12px/1 var(--s);letter-spacing:.08em}
+.bar .w{display:flex;justify-content:space-between;align-items:center;height:38px;gap:12px}
+.bar a{color:var(--brass2)}
+.mast{padding:26px 0 0}
+.mast .row{display:flex;justify-content:space-between;align-items:end;gap:20px;padding-bottom:14px}
+.mast .ed{font:italic 400 15px var(--d);color:var(--mut)}
+@media(max-width:600px){.mast .row .btn{display:none}.mast nav{gap:14px 20px}}
+.mast h1{font:800 clamp(72px,15vw,250px)/.8 var(--d);letter-spacing:-.04em;text-align:center;padding:10px 0 18px}
+.mast h1 span{color:var(--brass)}
+.mast nav{display:flex;justify-content:center;gap:clamp(16px,3vw,44px);padding:16px 0;border-top:1px solid var(--ink);border-bottom:3px double var(--ink);flex-wrap:wrap}
+.mast nav a{font:700 11.5px/1 var(--s);letter-spacing:.2em;text-transform:uppercase}
+.mast nav a:hover{color:var(--brass)}
+.mini{position:fixed;inset:0 0 auto;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);transform:translateY(-100%);transition:transform .5s var(--e)}
+.mini.solid{transform:none}
+.mini .w{display:flex;align-items:center;justify-content:space-between;height:64px}
+.mini b{font:800 28px/1 var(--d);letter-spacing:-.03em}
+.mini b span{color:var(--brass)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 26px;background:var(--green);color:var(--paper);font:700 12px/1 var(--s);letter-spacing:.16em;text-transform:uppercase;transition:background .3s}
+.btn:hover{background:var(--ink)}
+.btn.br{background:var(--brass);color:var(--ink)}.btn.br:hover{background:var(--brass2)}
+.btn.o{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+
+/* capa */
+.capa{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(24px,4vw,60px);padding:clamp(30px,4vw,56px) 0 clamp(70px,9vw,120px)}
+.capa .ph{position:relative;aspect-ratio:5/4;overflow:hidden;background:var(--paper2)}
+.capa .sl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.8s ease,transform 9s linear;transform:scale(1.08)}
+.capa .sl.on{opacity:1;transform:scale(1)}
+.capa figcaption{font:italic 400 14px var(--d);color:var(--mut);margin-top:12px;display:flex;justify-content:space-between}
+.capa .tx{display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--line);padding-left:clamp(20px,3vw,44px)}
+.capa h2{font:500 clamp(44px,5.2vw,86px)/.98 var(--d);letter-spacing:-.02em;margin:22px 0 24px}
+.capa h2 i{color:var(--green2)}
+.capa p.lead{font:400 19px/1.6 var(--s);color:#3E3A32}
+.capa p.lead::first-letter{float:left;font:800 74px/.8 var(--d);color:var(--green);margin:8px 10px 0 0}
+.capa .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.capa .ins{border-top:1px solid var(--line);margin-top:34px;padding-top:20px;display:grid;gap:12px}
+.capa .ins div{display:flex;justify-content:space-between;font-size:14.5px}
+.capa .ins b{font:600 16px var(--d)}
+@media(max-width:960px){.capa{grid-template-columns:1fr}.capa .tx{border-left:0;padding-left:0}}
+
+/* busca */
+.busca{background:var(--green);color:var(--paper)}
+.busca .w{display:grid;grid-template-columns:auto repeat(3,1fr) auto;align-items:center;gap:0}
+.busca .t{font:italic 400 26px var(--d);padding-right:30px}
+.busca label{display:flex;flex-direction:column;gap:6px;padding:22px 24px;border-left:1px solid rgba(245,240,230,.18)}
+.busca span{font:700 10px/1 var(--s);letter-spacing:.2em;text-transform:uppercase;color:var(--brass2)}
+.busca select{background:none;border:0;color:var(--paper);font:500 17px var(--d);appearance:none;outline:0}
+.busca select option{color:var(--ink)}
+@media(max-width:960px){.busca .w{grid-template-columns:1fr 1fr}.busca .t{grid-column:1/-1;padding:24px 0 6px}.busca label{border-left:0;padding:14px 0}.busca .btn{grid-column:1/-1;margin:14px 0 24px;justify-content:center}}
+
+.sec{padding:clamp(90px,11vw,150px) 0}
+.sh{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;margin-bottom:clamp(40px,5vw,64px)}
+.sh .n{font:800 64px/1 var(--d);color:var(--brass)}
+.sh h3{font:500 clamp(38px,4.4vw,70px)/1 var(--d);letter-spacing:-.02em}
+.sh h3 i{color:var(--green2)}
+.sh a{font:700 11.5px var(--s);letter-spacing:.18em;text-transform:uppercase;border-bottom:2px solid var(--brass);padding-bottom:6px}
+@media(max-width:700px){.sh{grid-template-columns:1fr}.sh .n{font-size:44px}}
+
+/* grade editorial */
+.ed{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(18px,2.4vw,34px)}
+.it .ph{overflow:hidden;background:var(--paper2);position:relative}
+.it .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--e)}
+.it:hover .ph img{transform:scale(1.05)}
+.it .lbl{position:absolute;left:0;top:0;background:var(--paper);padding:9px 14px;font:700 10.5px var(--s);letter-spacing:.18em;text-transform:uppercase}
+.it .k{color:var(--brass);margin-top:18px;display:block}
+.it h4{font:500 clamp(24px,2.2vw,34px)/1.12 var(--d);margin:10px 0 8px}
+.it:hover h4{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.it .pr{font:600 22px var(--d);color:var(--green)}
+.it .loc{color:var(--mut);font-size:14.5px}
+.a1{grid-column:span 7}.a1 .ph{aspect-ratio:4/3}
+.a2{grid-column:span 5}.a2 .ph{aspect-ratio:4/5}
+.a3{grid-column:span 4}.a3 .ph{aspect-ratio:1}
+@media(max-width:900px){.a1,.a2{grid-column:span 12}.a3{grid-column:span 6}}
+@media(max-width:560px){.a3{grid-column:span 12}}
+
+/* perfil */
+.perfil{background:var(--green);color:var(--paper)}
+.perfil .w{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(40px,6vw,100px);align-items:center}
+.perfil .fr{aspect-ratio:3/4;background:var(--paper);display:grid;place-items:center;position:relative;outline:1px solid var(--brass2);outline-offset:-18px}
+.perfil .fr img{width:68%}
+.perfil .fr span{position:absolute;bottom:34px;font:italic 400 18px var(--d);color:var(--green)}
+.perfil .k{color:var(--brass2)}
+.perfil h3{font:500 clamp(42px,5vw,82px)/1 var(--d);letter-spacing:-.02em;margin:20px 0 28px}
+.perfil h3 i{color:var(--brass2)}
+.perfil p{font-size:18px;color:rgba(245,240,230,.82);margin-bottom:16px;max-width:34em}
+.perfil q{display:block;font:italic 400 clamp(26px,2.6vw,38px)/1.25 var(--d);margin:34px 0;color:var(--paper)}
+.perfil .cr{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(245,240,230,.25);margin-top:36px}
+.perfil .cr div{padding-top:20px}
+.perfil .cr b{display:block;font:500 28px var(--d);color:var(--brass2)}
+.perfil .cr span{font-size:13px;color:rgba(245,240,230,.65)}
+@media(max-width:900px){.perfil .w{grid-template-columns:1fr}}
+
+/* índice de serviços */
+.idx{columns:2 380px;column-gap:60px}
+.idx a{display:flex;align-items:baseline;gap:14px;padding:20px 0;border-bottom:1px solid var(--line);break-inside:avoid}
+.idx b{font:500 26px var(--d)}
+.idx i{flex:1;border-bottom:1px dotted var(--mut);transform:translateY(-6px)}
+.idx span{font:italic 400 16px var(--d);color:var(--mut)}
+.idx a:hover b{color:var(--green2)}
+
+.cta{border-top:3px double var(--ink);border-bottom:3px double var(--ink);text-align:center;padding:clamp(80px,10vw,140px) 0}
+.cta h3{font:500 clamp(48px,6.6vw,112px)/.98 var(--d);letter-spacing:-.02em;margin:20px 0 36px}
+.cta h3 i{color:var(--green2)}
+
+footer{padding:70px 0 40px}
+footer .big{font:800 clamp(60px,12vw,200px)/.8 var(--d);letter-spacing:-.04em;text-align:center}
+footer .big span{color:var(--brass)}
+footer .g{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;border-top:1px solid var(--ink);margin-top:40px;padding-top:24px;font-size:14px;color:var(--mut)}
+.zap{position:fixed;right:22px;bottom:22px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.zap svg{width:28px;height:28px;fill:#fff}
+.voltar{position:fixed;left:16px;bottom:16px;z-index:60;font:700 12px var(--s);letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:12px 16px}
+</style>
+</head>
+<body>
+<div class="bar"><div class="w"><span>CRECI-SP 294791-F · CNAI 52708</span><a href="https://wa.me/5511993509109">(11) 99350-9109</a></div></div>
+<header class="mast"><div class="w">
+ <div class="row"><span class="ed">Edição Zona Leste & Alto Tietê</span><a class="btn" href="#contato">Fale comigo</a></div>
+ <h1>F<span>C</span>osta</h1>
+ <nav><a href="/comprar">Comprar</a><a href="/alugar">Alugar</a><a href="/lancamentos">Lançamentos</a><a href="/avaliacao">Avaliação</a><a href="/financiamento">Financiamento</a><a href="#perfil">O corretor</a></nav>
+</div></header>
+<div class="mini" id="mini"><div class="w"><b>F<span>C</span>osta</b><a class="btn" href="#contato">Fale comigo</a></div></div>
+
+<section class="w capa">
+ <figure><div class="ph" id="cph"></div><figcaption><span id="ccap"></span><span>Foto do imóvel</span></figcaption></figure>
+ <div class="tx">
+  <div data-rv>
+   <span class="k" style="color:var(--brass)">Matéria de capa</span>
+   <h2>Seu próximo endereço começa <i>aqui.</i></h2>
+   <p class="lead">Comprar, alugar ou investir com um corretor que acompanha você do primeiro contato até a chave na mão, sem intermediários.</p>
+   <div class="acts"><a class="btn br" href="#imoveis">Ver imóveis</a><a class="btn o" href="https://wa.me/5511993509109">WhatsApp</a></div>
+  </div>
+  <div class="ins" data-rv id="ins"></div>
+ </div>
+</section>
+
+<form class="busca" onsubmit="location.href='/comprar';return false"><div class="w">
+ <span class="t">Encontre o seu imóvel</span>
+ <label><span>Tipo</span><select><option>Todos</option><option>Casa</option><option>Sobrado</option><option>Apartamento</option></select></label>
+ <label><span>Região</span><select><option>Toda a região</option><option>Itaim Paulista</option><option>Cidade Kemel</option></select></label>
+ <label><span>Valor até</span><select><option>Qualquer valor</option><option>R$ 350 mil</option><option>R$ 500 mil</option></select></label>
+ <button class="btn br" type="submit">Buscar</button>
+</div></form>
+
+<section class="sec" id="imoveis"><div class="w">
+ <div class="sh" data-rv><span class="n">01</span><h3>Imóveis <i>selecionados</i></h3><a href="/comprar">Ver todos</a></div>
+ <div class="ed" id="ed"></div>
+</div></section>
+
+<section class="sec perfil" id="perfil"><div class="w">
+ <div class="fr" data-rv><img src="/sen_fundo_logo.png" alt="FCosta Corretor de Imóveis"><span>Sergio F. da Costa</span></div>
+ <div data-rv>
+  <span class="k">02 · Perfil</span>
+  <h3>O corretor que <i>atende você.</i></h3>
+  <p>Sergio Fernandes da Costa é corretor e avaliador de imóveis na Zona Leste de São Paulo e no Alto Tietê. Com ele, você não passa por intermediários.</p>
+  <q>Explico cada etapa, os custos e os documentos, para você decidir com tranquilidade.</q>
+  <div class="cr"><div><b>294791-F</b><span>CRECI-SP</span></div><div><b>52708</b><span>CNAI</span></div><div><b>PTAM</b><span>Laudos técnicos</span></div></div>
+ </div>
+</div></section>
+
+<section class="sec"><div class="w">
+ <div class="sh" data-rv><span class="n">03</span><h3>Índice de <i>serviços</i></h3><span></span></div>
+ <div class="idx" data-rv>
+  <a href="/financiamento"><b>Financiamento</b><i></i><span>p. 04</span></a>
+  <a href="/avaliacao"><b>Avaliação gratuita</b><i></i><span>p. 06</span></a>
+  <a href="/ptam"><b>Laudo PTAM</b><i></i><span>p. 08</span></a>
+  <a href="/cartorio"><b>Cartório e documentos</b><i></i><span>p. 10</span></a>
+  <a href="/judicial"><b>Consultoria judicial</b><i></i><span>p. 12</span></a>
+  <a href="/inquilino"><b>Inquilinato</b><i></i><span>p. 14</span></a>
+ </div>
+</div></section>
+
+<section class="w cta" id="contato" data-rv>
+ <span class="k" style="color:var(--brass)">Carta ao leitor</span>
+ <h3>Vamos encontrar<br>o seu <i>imóvel?</i></h3>
+ <a class="btn" href="https://wa.me/5511993509109">Conversar no WhatsApp</a>
+</section>
+
+<footer><div class="w">
+ <div class="big">F<span>C</span>osta</div>
+ <div class="g"><span>Sergio Fernandes da Costa · CRECI-SP 294791-F · CNAI 52708</span><span>(11) 99350-9109</span><span>© 2026 FCosta Corretor</span></div>
+</div></footer>
+<a class="zap" href="https://wa.me/5511993509109" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2Z"/></svg></a>
+<a class="voltar" href="/prototipos/">← Ver os 3 estilos</a>
+<script src="dados.js"></script><script src="proto.js"></script>
+<script>
+(function(){var L=P.lista;
+ var mini=document.getElementById('mini');addEventListener('scroll',function(){mini.classList.toggle('solid',scrollY>420)},{passive:true});
+ P.slides(document.getElementById('cph'),L.map(function(i){return P.foto(i,0);}).slice(0,5),6500);
+ document.getElementById('ccap').textContent=P.tipo(L[0])+' em '+P.bairro(L[0])+', '+L[0].preco;
+ document.getElementById('ins').innerHTML='<span class="k">Nesta edição</span>'+L.slice(0,4).map(function(i){return '<div><b>'+P.tipo(i)+' · '+P.bairro(i)+'</b><span>'+i.preco+'</span></div>';}).join('');
+ var ed=document.getElementById('ed'),cls=['a1','a2','a3','a3','a3'];
+ L.slice(0,5).forEach(function(i,n){ed.appendChild(P.el('<a class="it '+cls[n]+'" data-rv href="'+i.url+'"><div class="ph"><span class="lbl">'+P.esc(i.status)+'</span><img class="reveal-img" src="'+i.fotos[n%2]+'" alt="" loading="lazy"></div><span class="k">'+P.esc(i.cod)+' · '+P.bairro(i)+'</span><h4>'+P.tipo(i)+' em '+P.bairro(i)+'</h4><span class="pr">'+i.preco+'</span> <span class="loc">· '+P.cidade(i)+'</span></a>'));});
+ P.revelar();})();
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Estilo 2 · Galeria Branca | FCosta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--stone:#F2EFEA;--tx:#0F0F0F;--mut:#6E6A62;--line:#E4E0D8;--accent:#B08D4C;
+ --d:'Instrument Serif',Georgia,serif;--s:'Inter',system-ui,sans-serif;--e:cubic-bezier(.22,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.65 var(--s);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.w{max-width:1520px;margin:0 auto;padding:0 clamp(20px,4vw,64px)}
+.k{font:500 12px/1 var(--s);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+[data-rv]{opacity:0;transform:translateY(24px);transition:opacity 1s var(--e),transform 1s var(--e)}
+[data-rv].in{opacity:1;transform:none}
+.mask{overflow:hidden}.mask>*{display:block;transform:translateY(105%);transition:transform 1.2s var(--e)}
+.in .mask>*,.mask.in>*{transform:none}
+@media(prefers-reduced-motion:reduce){[data-rv],.mask>*{opacity:1;transform:none}*{transition:none!important}}
+
+.top{position:fixed;inset:0 0 auto;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .4s}
+.top.solid{border-color:var(--line)}
+.top .w{display:flex;align-items:center;gap:40px;height:80px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:40px;height:40px;border-radius:50%}
+.brand b{font:400 30px/1 var(--d);letter-spacing:-.01em}
+.brand small{display:block;font:500 9.5px/1 var(--s);letter-spacing:.18em;text-transform:uppercase;color:var(--mut);margin-top:3px}
+.top nav{display:flex;gap:30px;margin-left:auto}
+.top nav a{font-weight:500;font-size:14.5px;position:relative}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--tx);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--e)}
+.top nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 26px;border-radius:999px;background:var(--tx);color:#fff;font:500 14.5px/1 var(--s);transition:background .3s,transform .3s}
+.btn:hover{background:#333}
+.btn.o{background:transparent;color:var(--tx);border:1px solid var(--tx)}.btn.o:hover{background:var(--tx);color:#fff}
+.btn .ar{transition:transform .3s}.btn:hover .ar{transform:translateX(4px)}
+@media(max-width:980px){.top nav{display:none}.top .btn{margin-left:auto;height:44px;padding:0 18px}}
+
+/* abertura dividida */
+.hero{padding-top:80px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:100svh}
+.hero .tx{display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(40px,6vw,90px) clamp(20px,4vw,64px) clamp(40px,5vw,72px)}
+.hero h1{font:400 clamp(60px,8.6vw,152px)/.88 var(--d);letter-spacing:-.035em;margin:26px 0 32px}
+.hero h1 i{color:var(--accent)}
+.hero p{font-size:18px;color:var(--mut);max-width:30em}
+.hero .acts{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.hero .ph{position:relative;overflow:hidden;background:var(--stone);min-height:60vh}
+.hero .sl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease,transform 8s linear;transform:scale(1.08)}
+.hero .sl.on{opacity:1;transform:scale(1)}
+.hero .cap{position:absolute;left:24px;bottom:24px;z-index:2;background:#fff;padding:16px 20px;border-radius:14px;max-width:300px;box-shadow:0 20px 40px -20px rgba(0,0,0,.4)}
+.hero .cap b{display:block;font:400 26px/1.05 var(--d)}
+.hero .cap span{font-size:13px;color:var(--mut)}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero .ph{order:-1;min-height:56vh}.hero .tx{padding-top:36px}}
+
+/* busca */
+.busca{margin-top:-1px;background:var(--stone)}
+.busca .w{display:flex;align-items:center;gap:10px;padding-top:22px;padding-bottom:22px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;background:#fff;border-radius:999px;padding:5px}
+.chips button{border:0;background:none;padding:11px 18px;border-radius:999px;font:500 14px var(--s);cursor:pointer;color:var(--mut)}
+.chips button.on{background:var(--tx);color:#fff}
+.busca select{height:50px;border-radius:999px;border:1px solid var(--line);background:#fff;padding:0 22px;font:500 14.5px var(--s);color:var(--tx);appearance:none;min-width:180px}
+.busca .btn{margin-left:auto}
+@media(max-width:760px){.busca select{flex:1 1 100%}.busca .btn{flex:1 1 100%;margin:0}}
+
+.sec{padding:clamp(90px,12vw,170px) 0}
+.hd{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;margin-bottom:clamp(40px,5vw,72px)}
+.hd h2{font:400 clamp(48px,6.4vw,110px)/.9 var(--d);letter-spacing:-.03em;margin-top:18px}
+.hd h2 i{color:var(--accent)}
+
+/* imóveis: carrossel largo */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,32%);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:20px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.card{scroll-snap-align:start}
+.card .ph{position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:var(--stone)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.3s var(--e)}
+.card:hover .ph img{transform:scale(1.05)}
+.card .st{position:absolute;top:16px;left:16px;background:#fff;border-radius:999px;padding:8px 13px;font:600 12px var(--s)}
+.card .go{position:absolute;right:16px;bottom:16px;width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;transform:scale(.6);opacity:0;transition:.5s var(--e)}
+.card:hover .go{transform:none;opacity:1}
+.card .pr{font:400 36px/1 var(--d);margin-top:20px;letter-spacing:-.01em}
+.card .ln{display:flex;gap:10px;color:var(--mut);font-size:14px;margin-top:8px;flex-wrap:wrap}
+.card .ln span+span::before{content:"·";margin-right:10px}
+.nav2{display:flex;gap:8px}
+.nav2 button{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:20px}
+.nav2 button:hover{border-color:var(--tx)}
+@media(max-width:760px){.rail{grid-auto-columns:84%}.hd{grid-template-columns:1fr}}
+
+/* números */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.nums div{padding:36px 24px 0 0}
+.nums b{display:block;font:400 clamp(48px,5vw,84px)/1 var(--d);letter-spacing:-.03em}
+.nums span{color:var(--mut);font-size:14.5px}
+@media(max-width:760px){.nums{grid-template-columns:1fr 1fr;gap:20px}}
+
+/* sobre */
+.sobre{background:var(--stone)}
+.sobre .w{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:center}
+.retr{aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;max-width:520px;width:100%;margin:auto;position:relative}
+.retr img{width:66%}
+.retr::after{content:"Sergio F. da Costa · Corretor e avaliador ·";position:absolute;inset:-6%;border-radius:50%;font:500 12px var(--s);letter-spacing:.3em;text-transform:uppercase;color:var(--mut);display:none}
+.sobre h2{font:400 clamp(46px,5.4vw,92px)/.92 var(--d);letter-spacing:-.03em;margin:18px 0 26px}
+.sobre h2 i{color:var(--accent)}
+.sobre p{font-size:18px;color:#4C4942;margin-bottom:16px;max-width:32em}
+.q{font:italic 400 clamp(28px,2.8vw,40px)/1.2 var(--d);margin:34px 0}
+.creds{display:flex;gap:8px;flex-wrap:wrap}
+.creds span{background:#fff;border-radius:999px;padding:10px 16px;font-weight:500;font-size:14px}
+@media(max-width:900px){.sobre .w{grid-template-columns:1fr}}
+
+/* serviços em lista grande */
+.lst a{display:grid;grid-template-columns:80px 1fr 1fr 60px;gap:20px;align-items:center;padding:34px 0;border-top:1px solid var(--line);transition:padding .5s var(--e),background .5s}
+.lst a:last-child{border-bottom:1px solid var(--line)}
+.lst a:hover{padding-left:20px;padding-right:20px;background:var(--stone)}
+.lst em{font:italic 400 22px var(--d);color:var(--mut)}
+.lst h4{font:400 clamp(32px,3.6vw,54px)/1 var(--d);letter-spacing:-.02em}
+.lst p{color:var(--mut)}
+.lst .ar{font-size:26px;justify-self:end;transition:transform .4s}
+.lst a:hover .ar{transform:translateX(6px)}
+@media(max-width:760px){.lst a{grid-template-columns:40px 1fr 30px}.lst p{display:none}}
+
+.cta{background:var(--tx);color:#fff;border-radius:28px;margin:0 clamp(12px,2vw,24px);padding:clamp(70px,10vw,140px) clamp(24px,6vw,90px);display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
+.cta h2{font:400 clamp(52px,7vw,124px)/.88 var(--d);letter-spacing:-.035em}
+.cta h2 i{color:#D9BC82}
+.cta p{color:rgba(255,255,255,.7);font-size:18px;margin-bottom:28px}
+.cta .btn{background:#fff;color:var(--tx)}
+@media(max-width:900px){.cta{grid-template-columns:1fr}}
+
+footer{padding:100px 0 40px}
+footer .big{font:400 clamp(90px,20vw,340px)/.8 var(--d);letter-spacing:-.05em;color:var(--tx)}
+footer .g{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-top:50px;padding-top:30px;border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.zap{position:fixed;right:22px;bottom:22px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.zap svg{width:28px;height:28px;fill:#fff}
+.voltar{position:fixed;left:16px;bottom:16px;z-index:60;font:500 13px var(--s);background:#0F0F0F;color:#fff;padding:12px 16px;border-radius:999px}
+</style>
+</head>
+<body>
+<header class="top" id="top"><div class="w">
+ <a class="brand" href="/"><img src="/sen_fundo_logo.png" alt="FCosta"><span><b>FCosta</b><small>Corretor de imóveis</small></span></a>
+ <nav><a href="/comprar">Comprar</a><a href="/alugar">Alugar</a><a href="/lancamentos">Lançamentos</a><a href="/avaliacao">Avaliar meu imóvel</a><a href="#sobre">O corretor</a></nav>
+ <a class="btn" href="#contato">Fale comigo <span class="ar">→</span></a>
+</div></header>
+
+<section class="hero">
+ <div class="tx">
+  <span class="k" data-rv>Zona Leste de SP & Alto Tietê</span>
+  <h1 data-rv><span class="mask"><span>Seu próximo</span></span><span class="mask"><span>endereço</span></span><span class="mask"><span>começa <i>aqui.</i></span></span></h1>
+  <p data-rv>Casas, sobrados, apartamentos e lançamentos, com um corretor que acompanha você do primeiro contato até a chave na mão.</p>
+  <div class="acts" data-rv><a class="btn" href="#imoveis">Ver imóveis <span class="ar">→</span></a><a class="btn o" href="https://wa.me/5511993509109">WhatsApp</a></div>
+ </div>
+ <div class="ph" id="hph"><div class="cap" id="hcap"></div></div>
+</section>
+
+<form class="busca" onsubmit="location.href='/comprar';return false"><div class="w">
+ <div class="chips"><button type="button" class="on">Comprar</button><button type="button">Alugar</button><button type="button">Lançamentos</button></div>
+ <select><option>Tipo de imóvel</option><option>Casa</option><option>Sobrado</option><option>Apartamento</option></select>
+ <select><option>Região</option><option>Itaim Paulista</option><option>Cidade Kemel</option><option>São Mateus</option></select>
+ <select><option>Valor até</option><option>R$ 350 mil</option><option>R$ 500 mil</option><option>R$ 800 mil</option></select>
+ <button class="btn" type="submit">Buscar <span class="ar">→</span></button>
+</div></form>
+
+<section class="sec" id="imoveis"><div class="w">
+ <div class="hd" data-rv><div><span class="k">Selecionados pelo corretor</span><h2>Imóveis com <i>assinatura.</i></h2></div><div class="nav2"><button type="button" id="pv" aria-label="Anterior">←</button><button type="button" id="nx" aria-label="Próximo">→</button></div></div>
+ <div class="rail" id="rail"></div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="w">
+ <div class="nums" data-rv><div><b>294791-F</b><span>CRECI-SP</span></div><div><b>52708</b><span>CNAI · Avaliador</span></div><div><b>1 a 1</b><span>Você fala direto comigo</span></div><div><b>PTAM</b><span>Laudos de avaliação</span></div></div>
+</div></section>
+
+<section class="sec sobre" id="sobre"><div class="w">
+ <div class="retr" data-rv><img src="/sen_fundo_logo.png" alt="FCosta Corretor de Imóveis"></div>
+ <div data-rv>
+  <span class="k">Quem atende você</span>
+  <h2>Atendimento <i>direto,</i> do começo ao fim.</h2>
+  <p>Sou Sergio Fernandes da Costa, corretor e avaliador de imóveis. Sem intermediários: cada visita, cada proposta e cada documento passam por mim.</p>
+  <p class="q">“Explico cada etapa, para você decidir com tranquilidade.”</p>
+  <div class="creds"><span>CRECI-SP 294791-F</span><span>CNAI 52708</span><span>Laudos PTAM</span></div>
+ </div>
+</div></section>
+
+<section class="sec"><div class="w">
+ <div class="hd" data-rv><div><span class="k">Serviços</span><h2>Para cada <i>etapa.</i></h2></div></div>
+ <div class="lst" data-rv>
+  <a href="/financiamento"><em>01</em><h4>Financiamento</h4><p>Simulação e acompanhamento até a aprovação.</p><span class="ar">→</span></a>
+  <a href="/avaliacao"><em>02</em><h4>Avaliação gratuita</h4><p>Saiba quanto vale o seu imóvel.</p><span class="ar">→</span></a>
+  <a href="/ptam"><em>03</em><h4>Laudo PTAM</h4><p>Parecer técnico para banco, inventário ou Justiça.</p><span class="ar">→</span></a>
+  <a href="/cartorio"><em>04</em><h4>Documentação</h4><p>Escritura, registro e certidões.</p><span class="ar">→</span></a>
+ </div>
+</div></section>
+
+<section class="cta" id="contato" data-rv>
+ <h2>Vamos encontrar o seu <i>imóvel?</i></h2>
+ <div><p>Conte o que você procura. Eu busco para você e aviso quando surgir uma boa oportunidade.</p><a class="btn" href="https://wa.me/5511993509109">Conversar no WhatsApp <span class="ar">→</span></a></div>
+</section>
+
+<footer><div class="w">
+ <div class="big">FCosta</div>
+ <div class="g"><span>Sergio Fernandes da Costa · CRECI-SP 294791-F · CNAI 52708</span><span>(11) 99350-9109 · @f.cost.a_corretor</span><span>© 2026 FCosta Corretor</span></div>
+</div></footer>
+<a class="zap" href="https://wa.me/5511993509109" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2Z"/></svg></a>
+<a class="voltar" href="/prototipos/">← Ver os 3 estilos</a>
+<script src="dados.js"></script><script src="proto.js"></script>
+<script>
+(function(){var L=P.lista;P.topo(document.getElementById('top'));
+ P.slides(document.getElementById('hph'),L.map(function(i){return P.foto(i,0);}).slice(0,5),6500);
+ var c=document.getElementById('hcap'),f=L[0];c.innerHTML='<span>Em destaque</span><b>'+P.tipo(f)+' em '+P.bairro(f)+'</b><span>'+f.preco+'</span>';
+ var r=document.getElementById('rail');L.forEach(function(i){r.appendChild(P.el('<a class="card" href="'+i.url+'"><div class="ph"><span class="st">'+P.esc(i.status)+'</span><img src="'+i.fotos[0]+'" alt="" loading="lazy"><span class="go">→</span></div><div class="pr">'+i.preco+'</div><div class="ln"><span>'+P.tipo(i)+'</span><span>'+P.bairro(i)+'</span>'+(P.area(i)?'<span>'+P.area(i)+'</span>':'')+'</div></a>'));});
+ function pas(d){r.scrollBy({left:d*(r.firstChild.offsetWidth+24),behavior:'smooth'});}
+ document.getElementById('pv').onclick=function(){pas(-1)};document.getElementById('nx').onclick=function(){pas(1)};
+ document.querySelectorAll('.chips button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.chips button').forEach(function(x){x.classList.toggle('on',x===b)})}});
+ P.revelar();})();
+</script>
+</body>
+</html>

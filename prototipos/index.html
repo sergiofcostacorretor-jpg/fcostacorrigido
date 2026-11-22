@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Escolha o estilo | FCosta</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Instrument+Serif:ital@0;1&family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F3F1EC;color:#111;font:400 17px/1.6 Inter,system-ui,sans-serif;padding:40px 20px 80px}
+.w{max-width:1200px;margin:0 auto}
+h1{font:700 clamp(30px,4vw,48px)/1.1 Inter,sans-serif;letter-spacing:-.03em}
+.sub{color:#5F5B53;margin:12px 0 40px;font-size:19px}
+.g{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.g{grid-template-columns:1fr}}
+a.c{display:block;border-radius:22px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 20px 50px -30px rgba(0,0,0,.4);transition:transform .3s}
+a.c:hover{transform:translateY(-4px)}
+.pv{height:260px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;text-align:center;padding:20px}
+.n{font:700 13px Inter;letter-spacing:.2em;text-transform:uppercase}
+.b{padding:22px 24px 26px}
+.b h2{font:700 24px/1.2 Inter;letter-spacing:-.02em}
+.b p{color:#5F5B53;margin:8px 0 16px;font-size:16px}
+.b span{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:12px 20px;font-weight:600;font-size:15px}
+.p1{background:#0C0C0C;color:#E3CFA4}.p1 .t{font:400 54px/1 'Cormorant Garamond',serif;letter-spacing:.25em;color:#EDE8DF}.p1 .t i{color:#C9A96E}
+.p2{background:#fff;color:#0F0F0F;border-bottom:1px solid #eee}.p2 .t{font:400 64px/1 'Instrument Serif',serif}.p2 .t i{color:#B08D4C}
+.p3{background:#F5F0E6;color:#1F3A2E}.p3 .t{font:800 64px/1 'Playfair Display',serif;color:#1C1A16}.p3 .t span{color:#B48A45}
+.dots{display:flex;gap:6px}.dots i{width:22px;height:22px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.1)}
+</style>
+</head>
+<body><div class="w">
+<h1>Sérgio, escolha o estilo do seu site</h1>
+<p class="sub">São 3 estilos diferentes, inspirados nas maiores imobiliárias de luxo dos Estados Unidos. Toque em cada um para ver a página inicial completa, com os seus imóveis de verdade.</p>
+<div class="g">
+ <a class="c" href="1-noir.html"><div class="pv p1"><span class="n">Estilo 1</span><div class="t">FCOSTA</div><div class="dots"><i style="background:#0C0C0C"></i><i style="background:#C9A96E"></i><i style="background:#F4EFE6"></i></div></div>
+  <div class="b"><h2>Preto e Champanhe</h2><p>Luxo clássico e discreto, como a Sotheby's. Fotos em tela cheia e letras elegantes.</p><span>Ver o estilo 1 →</span></div></a>
+ <a class="c" href="2-galeria.html"><div class="pv p2"><span class="n">Estilo 2</span><div class="t">FCosta <i>&</i></div><div class="dots"><i style="background:#fff"></i><i style="background:#0F0F0F"></i><i style="background:#B08D4C"></i></div></div>
+  <div class="b"><h2>Galeria Branca</h2><p>Moderno e limpo, como a Compass e a The Agency. Muito branco e fotos grandes.</p><span>Ver o estilo 2 →</span></div></a>
+ <a class="c" href="3-revista.html"><div class="pv p3"><span class="n">Estilo 3</span><div class="t">F<span>C</span>osta</div><div class="dots"><i style="background:#F5F0E6"></i><i style="background:#1F3A2E"></i><i style="background:#B48A45"></i></div></div>
+  <div class="b"><h2>Revista de Luxo</h2><p>Parece uma revista de arquitetura, como a Douglas Elliman. Verde, creme e dourado.</p><span>Ver o estilo 3 →</span></div></a>
+</div>
+</div></body>
+</html>
