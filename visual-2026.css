@@ -1,0 +1,233 @@
+/* ═══════════ FCosta — Visual 2026 (estilo imobiliária americana de alto padrão) ═══════════
+   Camada SOMENTE visual da página inicial. Não altera textos, links nem scripts.
+   Para voltar ao visual anterior, basta remover o <link> deste arquivo do index.html. */
+:root{
+ --hd:76px;--r:20px;--rs:14px;
+ --paper:#FBF8F2;--paper2:#F3EDE1;--ink-tx:#14130F;--ink-mut:#6B6458;--ink-line:rgba(20,19,15,.10);
+ --sh-soft:0 1px 2px rgba(20,19,15,.05),0 12px 32px -14px rgba(20,19,15,.22);
+}
+body{font-size:16px;letter-spacing:-.003em}
+.wrap{max-width:1320px;padding:0 clamp(20px,4vw,40px)}
+h1,h2,h3{font-weight:500;letter-spacing:-.025em}
+h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
+.eyebrow{font-size:11.5px;letter-spacing:.24em}
+.eyebrow::before{width:22px}
+.sec{padding:clamp(80px,11vw,140px) 0}
+.sec-hd{margin-bottom:clamp(34px,4.5vw,56px)}
+.btn{min-height:54px;padding:0 28px;font-weight:600;letter-spacing:.01em}
+.btn-sm{min-height:44px;padding:0 20px}
+
+/* ═══ topo: barra fina e elegante ═══ */
+.hdr .wrap{gap:28px}
+.hdr.solid{background:rgba(10,11,15,.86);border-color:rgba(214,178,102,.16)}
+.logo img{width:44px;height:44px}
+.logo b{font-size:22px;letter-spacing:-.01em}
+@media(min-width:1081px){
+ #menuLista{gap:2px}
+ #menuLista>li>a,.mais summary{height:40px;padding:0 12px;font-size:12px;font-weight:600;letter-spacing:.11em;white-space:nowrap;text-transform:uppercase;color:#CFCAC0;background:none!important;position:relative}
+ #menuLista>li>a::after,.mais summary::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+ #menuLista>li>a:hover,.mais summary:hover,.mais[open] summary{color:#fff}
+ #menuLista>li>a:hover::after,.mais summary:hover::after,.mais[open] summary::after{transform:scaleX(1)}
+ .mais summary .ic{width:14px;height:14px}
+ .mais-box{border-radius:20px;padding:16px;top:54px}
+}
+
+/* ═══ abertura: foto em tela cheia, título central e busca em destaque ═══ */
+.hero{min-height:min(100svh,980px);align-items:center;padding:calc(var(--hd) + 56px) 0 clamp(56px,8vw,96px)}
+.hero-bg::after{opacity:.55}
+.hero-ov{background:
+  radial-gradient(1200px 640px at 50% 42%,rgba(10,11,15,.30) 0%,rgba(10,11,15,.72) 70%),
+  linear-gradient(180deg,rgba(10,11,15,.72) 0%,rgba(10,11,15,.30) 30%,rgba(10,11,15,.55) 70%,var(--ink) 100%)}
+.hero-grid{grid-template-columns:1fr;justify-items:center;text-align:center;gap:0}
+.hero-grid>div:first-child{max-width:980px;display:flex;flex-direction:column;align-items:center}
+.hero h1{font-size:clamp(46px,8.2vw,118px);font-weight:400;line-height:.95;letter-spacing:-.045em;margin:24px 0 24px;text-wrap:balance}
+.hero .lead{max-width:40em;margin:0 auto;color:#E2DDD3}
+.hero-acoes{justify-content:center;margin-top:34px}
+.hero-trust{justify-content:center;gap:0;margin-top:30px;font-size:13px;letter-spacing:.02em}
+.hero-trust span{padding:0 20px;border-left:1px solid rgba(255,255,255,.16)}
+.hero-trust span:first-child{border-left:0}
+/* ordem na abertura: título, busca e, por último, o imóvel em destaque */
+.hero>.wrap{display:flex;flex-direction:column;align-items:center}
+.hero-grid{display:contents}
+.hero .busca{order:1;width:100%}
+.hero-card{order:2;justify-self:auto;margin:30px auto 0;max-width:460px;width:100%;padding:16px 20px;border-radius:18px;text-align:left;background:rgba(12,13,18,.55);border-color:rgba(255,255,255,.14)}
+.hero-card h3{font-size:18px}
+.hero-card .hc-pr{font-size:22px}
+.scroll-cue{display:none!important}
+@media(max-width:900px){
+ .hero{align-items:flex-end;padding-top:calc(var(--hd) + 48px)}
+ .hero-ov{background:linear-gradient(180deg,rgba(10,11,15,.55) 0%,rgba(10,11,15,.62) 45%,rgba(10,11,15,.92) 78%,var(--ink) 100%)}
+ .hero-trust span{padding:4px 12px}
+}
+@media(max-width:520px){
+ .hero-grid>div:first-child{text-align:left;align-items:flex-start;width:100%}
+ .hero-acoes{justify-content:flex-start}
+ .hero-acoes .btn{flex:1 1 100%}
+ .hero-trust{justify-content:flex-start;gap:8px 0}
+ .hero-trust span{padding:0 12px 0 0;border:0}
+}
+
+/* busca: barra clara e única, como nos grandes portais americanos */
+.busca{max-width:1040px;margin:clamp(34px,4.5vw,52px) auto 0}
+.bx{background:transparent;border:0;box-shadow:none;padding:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+.bx-tabs{justify-content:center;gap:6px;margin-bottom:14px;padding:0}
+.bx-tabs button{color:#D9D4CA;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;border-radius:999px}
+.bx-tabs button:hover{color:#fff}
+.bx-tabs button.on{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 0 0 1px rgba(214,178,102,.5)}
+.bx-row{background:var(--paper);border-radius:999px;padding:8px;gap:0;box-shadow:0 30px 70px -20px rgba(0,0,0,.75),0 0 0 1px rgba(214,178,102,.25)}
+.bx-row .fld{background:none;border:0;border-radius:999px;padding:12px 26px 10px;position:relative}
+.bx-row .fld+.fld::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--ink-line)}
+.bx-row .fld:hover{background:rgba(20,19,15,.04)}
+.bx-row .fld:focus-within{background:#fff;box-shadow:0 6px 20px -8px rgba(20,19,15,.25)}
+.bx-row .fld label{color:var(--ink-mut);font-size:10.5px;letter-spacing:.16em}
+.bx-row .fld select{color:var(--ink-tx);font-weight:600;font-size:15.5px}
+.bx-row .fld select option{background:#fff;color:var(--ink-tx)}
+.bx-row .fld .chev{color:var(--ink-mut);right:22px;bottom:15px}
+.bx-row .btn{border-radius:999px;padding:0 34px;min-height:60px;background:var(--ink);color:var(--gold2);box-shadow:none}
+.bx-row .btn:hover{background:#000;transform:none;box-shadow:0 0 0 1px var(--gold)}
+@media(max-width:900px){
+ .bx-row{border-radius:24px;padding:8px;gap:0}
+ .bx-row .fld{border-radius:16px}
+ .bx-row .fld+.fld::before{display:none}
+ .bx-row .fld:nth-child(n+2){border-top:0}
+ .bx-row .btn{border-radius:16px;margin-top:6px}
+ .bx-tabs{justify-content:flex-start}
+}
+
+/* ═══ caminhos: blocos limpos com número grande ═══ */
+.paths{gap:0;border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.path{background:none;border:0;border-radius:0;padding:36px 28px 32px;border-left:1px solid var(--line);gap:12px}
+.path:first-child{border-left:0}
+.path:hover{transform:none;background:linear-gradient(180deg,rgba(214,178,102,.07),transparent)}
+.path::before{display:none}
+.path .pi{width:auto;height:auto;background:none;border:0;border-radius:0;justify-content:start}
+.path .pi .ic{width:30px;height:30px;stroke-width:1.3}
+.path h3{font-size:30px;margin-top:6px}
+.path .n{font:400 13px/1 var(--sans);letter-spacing:.2em;color:var(--gold)}
+@media(max-width:980px){.path:nth-child(odd){border-left:0}.path:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:520px){.path{border-left:0!important}.path+.path{border-top:1px solid var(--line)}.path{padding:28px 4px}}
+
+/* ═══ catálogo em seção clara: cartões no estilo dos portais americanos ═══ */
+.explorar{background:var(--paper);color:var(--ink-tx)}
+.explorar .lead,.explorar .ex-info{color:var(--ink-mut)}
+.explorar .eyebrow{color:var(--gold3)}
+.explorar .eyebrow::before{background:var(--gold3)}
+.explorar .gold{background:linear-gradient(135deg,#B8923F 0%,#8A6A2C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.explorar .seg{background:#fff;border-color:var(--ink-line);box-shadow:var(--sh-soft)}
+.explorar .seg button{color:var(--ink-mut)}
+.explorar .seg button .c{background:rgba(20,19,15,.06);color:var(--ink-mut)}
+.explorar .seg button.on{background:var(--ink);color:var(--gold2)}
+.explorar .seg button.on .c{background:rgba(214,178,102,.2);color:var(--gold2)}
+.explorar .ex-tools .fld{background:#fff;border-color:var(--ink-line)}
+.explorar .ex-tools .fld label{color:var(--ink-mut)}
+.explorar .ex-tools .fld select{color:var(--ink-tx)}
+.explorar .ex-tools .fld select option{background:#fff;color:var(--ink-tx)}
+.explorar .chip{border-color:var(--ink-line);color:var(--ink-tx);background:#fff}
+.explorar .chip:hover{border-color:var(--gold3)}
+.explorar .chip.on{background:var(--ink);border-color:var(--ink);color:var(--gold2)}
+.explorar .btn-ghost{background:#fff;border-color:var(--ink-line);color:var(--ink-tx)}
+.explorar .btn-ghost:hover{border-color:var(--ink);color:var(--ink-tx)}
+.explorar .skel{background:linear-gradient(100deg,#EEE7D9 30%,#F7F2E8 50%,#EEE7D9 70%);background-size:300% 100%}
+.explorar .vazio{background:#fff;border-color:rgba(167,131,64,.35);box-shadow:var(--sh-soft)}
+.explorar .vazio p{color:var(--ink-mut)}
+.grid{gap:clamp(18px,2.2vw,30px)}
+
+/* cartão do imóvel: foto grande, preço em primeiro lugar, ações sobre a foto */
+.card{border-radius:var(--r)}
+.card-media{aspect-ratio:3/2}
+.card-media::after{height:38%}
+.card-body{padding:18px 20px 20px;gap:8px}
+.card-ft{display:contents}
+.card-body .price{order:-2}
+.card-body .card-loc{order:1}
+.card-body h3{order:0}
+.card-body .feats{order:-1}
+.card-body .ver-im{order:3}
+.price small{display:none}
+.price b{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.price b.cons{font-size:20px}
+.card h3{font-family:var(--sans);font-size:15px;font-weight:500;line-height:1.4;letter-spacing:0;color:inherit;opacity:.85;-webkit-line-clamp:1}
+.feats{gap:2px 0;font-size:14px}
+.feats span{gap:5px}
+.feats span+span::before{content:"";width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.45;margin:0 10px}
+.feats .ic{display:none}
+.card-loc{font-size:13.5px}
+.card-acts{position:absolute;top:14px;right:14px;z-index:3;gap:8px}
+.card-acts .ibtn{width:38px;height:38px;background:rgba(255,255,255,.92);border:0;color:#14130F;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.card-acts .ibtn:hover{background:#fff;color:#14130F;transform:scale(1.06)}
+.card-acts .ibtn.wa:hover{color:#128C47}
+.card-acts .ibtn .ic{width:17px;height:17px}
+.tag{color:#fff}
+.tour-b{top:auto;bottom:12px;left:14px;right:auto}
+.ver-im{margin-top:10px;padding:13px 18px;background:none;box-shadow:none;border:1px solid var(--line2);color:var(--tx);font-weight:600;letter-spacing:.01em}
+.ver-im:hover{background:var(--ink);color:var(--gold2);border-color:var(--ink)}
+/* cartões sobre fundo claro */
+.explorar .card{background:#fff;border:0;box-shadow:var(--sh-soft)}
+.explorar .card:hover{box-shadow:0 2px 4px rgba(20,19,15,.06),0 30px 60px -24px rgba(20,19,15,.38);border-color:transparent}
+.explorar .card-loc{color:var(--ink-mut)}
+.explorar .card-loc .ic{color:var(--gold3)}
+.explorar .card h3 a:hover{color:var(--gold3)}
+.explorar .feats{color:var(--ink-tx)}
+.explorar .price b{background:none;color:var(--ink-tx);-webkit-text-fill-color:var(--ink-tx)}
+.explorar .ver-im{border-color:var(--ink-line);color:var(--ink-tx)}
+.explorar .ver-im:hover{background:var(--ink);color:var(--gold2);border-color:var(--ink)}
+.explorar .card-media{background:var(--paper2)}
+
+/* destaques (carrossel escuro) */
+.carr{gap:24px}
+.carr-nav button{width:52px;height:52px}
+
+/* galeria: grade mais limpa */
+.mos{column-gap:14px}
+.mos a{border-radius:16px;margin-bottom:14px}
+
+/* faixa: luxo escuro com filete dourado, em vez de bloco amarelo */
+.faixa{background:radial-gradient(700px 300px at 100% 0%,rgba(214,178,102,.22),transparent 65%),linear-gradient(135deg,#15161C 0%,#0E0F14 100%);color:var(--tx);border:1px solid rgba(214,178,102,.28);border-radius:28px}
+.faixa::before{border-color:rgba(214,178,102,.18);box-shadow:0 0 0 60px rgba(214,178,102,.035),0 0 0 120px rgba(214,178,102,.02)}
+.faixa p{color:#BDB8AE}
+.faixa .btn-dark{background:var(--goldg);color:#0A0B0F;border-color:transparent;box-shadow:0 10px 30px -10px rgba(214,178,102,.7)}
+.faixa .btn-dark:hover{background:var(--goldg)}
+
+/* seções claras */
+.claro{background:var(--paper)}
+.passos{gap:0;border-top:1px solid var(--ink-line)}
+.passo{background:none;border:0;border-radius:0;box-shadow:none;padding:34px 28px 10px 0}
+.passo+.passo{padding-left:28px;border-left:1px solid var(--ink-line)}
+.passo::before{font-size:15px;font-family:var(--sans);font-weight:600;letter-spacing:.2em;color:var(--gold3);-webkit-text-stroke:0;margin-bottom:22px}
+.passo h3{font-size:26px}
+@media(max-width:980px){.passo:nth-child(3){padding-left:0;border-left:0}.passo:nth-child(n+3){border-top:1px solid var(--ink-line);margin-top:20px}}
+@media(max-width:560px){.passo,.passo+.passo{padding:28px 0 6px;border-left:0}.passo+.passo{border-top:1px solid var(--ink-line);margin-top:0}}
+.creds span{background:#fff;box-shadow:var(--sh-soft);border-color:transparent}
+
+/* serviços: lista editorial com divisórias */
+.svc{gap:0;border-top:1px solid var(--line2)}
+.item{background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:26px 22px 26px 0}
+.item:hover{background:none;transform:none}
+.item:hover h3{color:var(--gold2)}
+.item .si{background:none;border:1px solid rgba(214,178,102,.3);border-radius:50%;width:46px;height:46px}
+.item h3{font-size:21px;transition:color .25s}
+@media(min-width:981px){.svc .item:not(:nth-child(3n+1)){padding-left:22px;border-left:1px solid var(--line)}}
+@media(min-width:601px) and (max-width:980px){.svc .item:nth-child(even){padding-left:22px;border-left:1px solid var(--line)}}
+
+/* contato */
+.canal{border-radius:16px;background:transparent}
+.canal:hover{background:var(--ink2)}
+.form{border-radius:28px;background:var(--ink2)}
+
+/* rodapé */
+footer{padding-top:90px}
+footer h4{letter-spacing:.22em}
+.legal{margin-top:60px}
+
+/* barra inferior do celular mais leve */
+@media(max-width:820px){.dock{border-radius:20px;background:rgba(12,13,18,.9)}}
+
+/* celular */
+html{overflow-x:clip}
+@media(max-width:600px){
+ .bx-tabs button{letter-spacing:.04em;padding:9px 11px;font-size:12px}
+ .path h3{font-size:26px}
+ .price b{font-size:26px}
+ .feats{font-size:13px}
+ .feats span+span::before{margin:0 7px}
+}
