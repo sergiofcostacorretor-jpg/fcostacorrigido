@@ -1,0 +1,133 @@
+/* ═══════════ FCosta — Estilo "Preto e Champanhe" · páginas internas ═══════════
+   Comprar, Alugar, Lançamentos, página do imóvel e páginas geradas pelo painel.
+   Somente aparência. Para voltar ao visual anterior, remova o link deste arquivo. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+:root{--n-bg:#0C0C0C;--n-bg2:#121211;--n-bg3:#1B1A18;--n-tx:#EDE8DF;--n-mut:#A39D91;--n-line:rgba(237,232,223,.12);--n-line2:rgba(237,232,223,.22);
+ --n-ch:#C9A96E;--n-ch2:#E3CFA4;--n-iv:#F4EFE6;
+ --n-d:'Cormorant Garamond',Georgia,serif;--n-s:'Jost',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+html{overflow-x:clip}
+html body :where(*:not(svg):not(svg *)){font-family:var(--n-s)!important}
+html body{background:var(--n-bg)!important;color:var(--n-tx)!important;font-weight:300}
+::selection{background:var(--n-ch)!important;color:#0C0C0C!important}
+::-webkit-scrollbar-track{background:#0C0C0C!important}::-webkit-scrollbar-thumb{background:#2A2925!important;border-color:#0C0C0C!important}
+::-webkit-scrollbar-thumb:hover{background:var(--n-ch)!important}
+
+/* botões e etiquetas: retos, finos, caixa alta espaçada */
+.nav-wa,.btn-wa-nav,.btn-home,.btn-voltar,body>header .vt,.im-wa,.im-ver,.btn-cta-wa,.btn-compartilhar,.page-badge,.im-badge,.im-cod,.faixa-loc-wa,.faixa-adm button{border-radius:0!important;font-family:var(--n-s)!important;font-weight:400!important;letter-spacing:.2em!important;text-transform:uppercase!important;font-size:11px!important;box-shadow:none!important}
+
+/* topo */
+#nav,body>header{background:rgba(12,12,12,.92)!important;border-bottom:1px solid var(--n-line)!important;box-shadow:none!important}
+.logo img,body>header .lg img{box-shadow:none!important}
+.logo-txt span:first-child,.logo-nome,body>header .lg b{font-family:var(--n-d)!important;font-weight:400!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:var(--n-tx)!important}
+body>header .lg b span{color:inherit!important}
+.logo-txt span+span,.logo-creci,body>header .lg small{color:var(--n-ch)!important;letter-spacing:.24em!important}
+.bread a{color:var(--n-ch2)!important}
+.btn-home,.btn-voltar,body>header .vt{background:transparent!important;color:var(--n-ch2)!important;border:1px solid var(--n-line2)!important}
+.btn-home:hover,.btn-voltar:hover,body>header .vt:hover{border-color:var(--n-ch)!important}
+.nav-wa,.btn-wa-nav{background:var(--n-ch)!important;color:#0C0C0C!important}
+.nav-wa:hover,.btn-wa-nav:hover{background:var(--n-ch2)!important;transform:none!important}
+
+/* abertura das listas */
+.page-hero{background:var(--n-bg)!important;border-bottom:1px solid var(--n-line)!important;text-align:center}
+.page-hero::before,.page-hero::after{display:none!important}
+.page-hero-inner{text-align:center}
+.page-badge{background:transparent!important;color:var(--n-ch)!important;border:0!important;letter-spacing:.32em!important}
+.page-h1{font-family:var(--n-d)!important;font-weight:300!important;letter-spacing:-.005em!important;color:var(--n-tx)!important;font-size:clamp(50px,8vw,120px)!important;line-height:.95!important}
+.page-h1 em{font-style:italic!important;color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important}
+.page-sub{color:var(--n-mut)!important;margin-left:auto!important;margin-right:auto!important}
+.faixa-loc{background:var(--n-iv)!important;color:#1A1815!important}
+.faixa-loc *{color:#1A1815!important}
+.faixa-loc-wa{background:#0C0C0C!important;color:var(--n-ch2)!important}
+.faixa-adm{background:var(--n-bg2)!important;border-color:var(--n-line)!important}
+.faixa-adm button{background:var(--n-ch)!important;color:#0C0C0C!important}
+
+/* filtros */
+.filtros-wrap{background:var(--n-bg)!important;border-bottom:1px solid var(--n-line)!important}
+.filtros-inner{background:transparent!important;border:0!important;box-shadow:none!important}
+#busca,.filtro-sel{background:transparent!important;color:var(--n-tx)!important;border:0!important;border-bottom:1px solid var(--n-line2)!important;border-radius:0!important;font-family:var(--n-d)!important;font-size:19px!important}
+#busca:focus,.filtro-sel:focus{border-bottom-color:var(--n-ch)!important;outline:0}
+.filtro-sel option{background:#121211!important}
+.filtro-cnt strong,#cnt{color:var(--n-ch2)!important;font-family:var(--n-d)!important;font-size:22px!important}
+.aviso-in,div.aviso:not(:has(>.aviso-in)){background:var(--n-bg2)!important;border:0!important;border-left:1px solid var(--n-ch)!important;border-radius:0!important;color:var(--n-mut)!important}
+div.aviso:has(>.aviso-in){background:transparent!important;border:0!important}
+.aviso b,.aviso strong,.aviso-in b{color:var(--n-ch2)!important}
+div[style*="255,248,231"],div[style*="FFF8E7"]{background:var(--n-bg2)!important;border-radius:0!important;border-color:var(--n-ch)!important}
+
+/* cartões */
+.imoveis-grid{gap:70px 34px!important}
+.im-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+.im-card:hover{transform:none!important;box-shadow:none!important}
+.im-foto{border-radius:0!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:4/5!important;background:var(--n-bg3)!important}
+.im-foto img{object-fit:cover!important;background:var(--n-bg3)!important;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)!important}
+.im-card:hover .im-foto img{transform:scale(1.05)!important}
+.im-badge,.im-badge.bv,.im-badge.ba,.im-badge.bl{background:rgba(12,12,12,.7)!important;color:#fff!important;border:0!important}
+.im-cod{background:rgba(12,12,12,.7)!important;color:var(--n-ch2)!important}
+.im-body{padding:22px 0 0!important}
+.im-tipo{color:var(--n-ch)!important;letter-spacing:.28em!important}
+.im-nome{font-family:var(--n-d)!important;font-weight:400!important;font-size:28px!important;line-height:1.1!important;color:var(--n-tx)!important;letter-spacing:0!important}
+.im-local{color:var(--n-mut)!important}
+.im-preco,.im-preco *{font-family:var(--n-d)!important;font-weight:300!important;color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important;font-size:28px!important}
+.im-preco small{display:none!important}
+.im-tags{border-top:1px solid var(--n-line)!important;padding-top:14px!important}
+.im-tag{background:transparent!important;border:0!important;color:#C9C3B8!important;padding-left:0!important}
+.im-wa{background:var(--n-ch)!important;color:#0C0C0C!important}
+.im-wa:hover{background:var(--n-ch2)!important;transform:none!important}
+.im-ver{background:transparent!important;color:var(--n-ch2)!important;border:1px solid var(--n-ch)!important}
+.im-ver:hover{background:var(--n-ch)!important;color:#0C0C0C!important}
+#modal{background:var(--n-bg2)!important;border-radius:0!important}
+.modal-titulo,.modal-h2,#modal h2,#modal h3{font-family:var(--n-d)!important;font-weight:400!important;color:var(--n-tx)!important}
+.modal-preco{color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important;font-family:var(--n-d)!important}
+
+/* rodapés */
+footer.foot-mini,body>footer{background:#080808!important;border-top:1px solid var(--n-line)!important}
+footer.foot-mini a,body>footer a{color:var(--n-ch2)!important}
+
+/* página do imóvel */
+.galeria,.galeria-strip{background:var(--n-bg)!important}
+.galeria-wrap{border-radius:0!important;background:#000!important}
+.galeria-strip img{border-radius:0!important}
+.galeria-strip img.ativa{outline:1px solid var(--n-ch)!important;border-color:var(--n-ch)!important}
+.seta{border-radius:0!important;background:rgba(12,12,12,.7)!important;color:var(--n-ch2)!important}
+.codigo-badge,.status-badge,.destaque-badge{border-radius:0!important;font-family:var(--n-s)!important;font-weight:400!important;letter-spacing:.24em!important;text-transform:uppercase;font-size:10.5px!important;background:transparent!important;color:var(--n-ch)!important;border:1px solid var(--n-line2)!important}
+.imovel-titulo{font-family:var(--n-d)!important;font-weight:300!important;font-size:clamp(38px,5vw,66px)!important;line-height:1!important;color:var(--n-tx)!important;letter-spacing:0!important}
+.imovel-local,#det-local-txt{color:var(--n-mut)!important}
+.chips .chip,#det-chips .chip{border-radius:0!important;background:transparent!important;border:1px solid var(--n-line)!important;color:#D6D0C5!important}
+.cta-bloco{background:var(--n-bg2)!important;border:1px solid var(--n-line2)!important;border-radius:0!important;box-shadow:none!important}
+.cta-bloco h3,.cta-bloco-txt h3,.secao-h3{font-family:var(--n-d)!important;font-weight:400!important;color:var(--n-tx)!important;letter-spacing:0!important}
+.secao-h3{font-size:clamp(30px,3vw,42px)!important}
+.secao-h3 span,.secao-h3 em{color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important;font-style:italic!important}
+.imovel-preco{font-family:var(--n-d)!important;font-weight:300!important;color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important}
+.btn-cta-wa{background:var(--n-ch)!important;color:#0C0C0C!important}
+.btn-cta-wa *{color:#0C0C0C!important}
+.btn-compartilhar{background:transparent!important;color:var(--n-ch2)!important;border:1px solid var(--n-line2)!important}
+.secao-p,#det-desc{color:#CFC9BE!important}
+.comods span,.comods div,.comods li{border-radius:0!important;background:transparent!important;border-color:var(--n-line)!important}
+.video-wrap{border-radius:0!important}
+#toast-share{background:var(--n-ch)!important;color:#0C0C0C!important;border-radius:0!important}
+
+/* páginas geradas pelo painel */
+body:has(>header>a.lg) main{background:none!important}
+body:has(>header>a.lg) main .cod{color:var(--n-ch)!important;letter-spacing:.3em!important;border-radius:0!important;border-color:var(--n-line2)!important;font-weight:400!important}
+body:has(>header>a.lg) main h1{font-family:var(--n-d)!important;font-weight:300!important;font-size:clamp(38px,5.6vw,72px)!important;line-height:1!important;letter-spacing:0!important}
+body:has(>header>a.lg) main h2{font-family:var(--n-d)!important;font-weight:400!important;font-size:clamp(30px,3vw,42px)!important;letter-spacing:0!important}
+body:has(>header>a.lg) main h2 span{font-style:italic;color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important}
+body:has(>header>a.lg) main .preco{font-family:var(--n-d)!important;font-weight:300!important;color:var(--n-ch2)!important;-webkit-text-fill-color:var(--n-ch2)!important;background:none!important}
+body:has(>header>a.lg) main .chips span{border-radius:0!important;background:transparent!important;border:1px solid var(--n-line)!important}
+body:has(>header>a.lg) main .gal,body:has(>header>a.lg) main video,body:has(>header>a.lg) main .mini button,body:has(>header>a.lg) main .ca,body:has(>header>a.lg) main .desc,body:has(>header>a.lg) main .ou,body:has(>header>a.lg) main .ouf,body:has(>header>a.lg) main .nav,body:has(>header>a.lg) main .cnt,body:has(>header>a.lg) main .todas{border-radius:0!important}
+body:has(>header>a.lg) main .ca,body:has(>header>a.lg) main .desc{background:var(--n-bg2)!important;border-color:var(--n-line)!important}
+body:has(>header>a.lg) main .cta{border-radius:0!important;background:var(--n-iv)!important;border:0!important;color:#1A1815!important}
+body:has(>header>a.lg) main .cta h2,body:has(>header>a.lg) main .cta h3{color:#1A1815!important}
+body:has(>header>a.lg) main .cta p{color:#5A554C!important}
+body:has(>header>a.lg) main .cta a.wa{background:#0C0C0C!important;color:var(--n-ch2)!important;border-radius:0!important;box-shadow:none!important}
+body:has(>header>a.lg) main .cta a.sec{background:transparent!important;color:#1A1815!important;border:1px solid #1A1815!important;border-radius:0!important}
+body:has(>header>a.lg) main .ou{background:transparent!important;border:0!important}
+body:has(>header>a.lg) main .oub b,body:has(>header>a.lg) main .oub i{font-family:var(--n-d)!important;font-weight:400!important}
+body:has(>header>a.lg) .barra{background:rgba(12,12,12,.95)!important;border-top:1px solid var(--n-line2)!important}
+body:has(>header>a.lg) .barra a{border-radius:0!important}
+body:has(>header>a.lg) .barra a.wa{background:var(--n-ch)!important;color:#0C0C0C!important;box-shadow:none!important}
+.page-h1 *,.secao-h3 *,.imovel-titulo *,.im-nome *,body:has(>header>a.lg) main h1 *,body:has(>header>a.lg) main h2 *{font-family:var(--n-d)!important}
+div[style*="255,248,231"],div[style*="255, 248, 231"],div[style*="FFF8E7"],div[style*="fff8e7"]{color:#CFC9BE!important}
+div[style*="255,248,231"] *,div[style*="255, 248, 231"] *,div[style*="FFF8E7"] *,div[style*="fff8e7"] *{color:#CFC9BE!important}
+p[style*="5a4000"],p[style*="5a4000"] b{color:#CFC9BE!important}
+p[style*="5a4000"] b{color:var(--n-ch2)!important}
