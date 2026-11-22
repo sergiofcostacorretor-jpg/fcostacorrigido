@@ -1,0 +1,78 @@
+/* ═══════════ FCosta: padrão "portal americano" (Comprar, Alugar, Lançamentos e página do imóvel) ═══════════
+   Cartões com foto grande e preço em destaque; galeria em mosaico no computador.
+   Somente aparência. Para voltar, remova o link deste arquivo. */
+:root{--pt-r:14px;--pt-card:#141412;--pt-line:rgba(237,232,223,.10)}
+
+/* botões e etiquetas: cantos suaves, texto normal */
+.nav-wa,.btn-wa-nav,.btn-home,.btn-voltar,body>header .vt,.im-wa,.im-ver,.btn-cta-wa,.btn-compartilhar,.page-badge,.im-badge,.im-cod,.faixa-loc-wa,.codigo-badge,.status-badge,.destaque-badge,.im-tipo,body:has(>header>a.lg) main .cod,body:has(>header>a.lg) .barra a,body:has(>header>a.lg) main .cta a{text-transform:none!important;letter-spacing:0!important;border-radius:10px!important;font-size:14px!important}
+.page-badge,.im-tipo{border-radius:0!important;font-size:13px!important}
+.im-badge,.im-cod,.codigo-badge,.status-badge,.destaque-badge,body:has(>header>a.lg) main .cod{border-radius:999px!important;font-size:12px!important}
+
+/* abertura das listas: alinhada à esquerda, compacta */
+.page-hero{text-align:left!important}
+.page-hero-inner{text-align:left!important}
+.page-h1{font-size:clamp(34px,5vw,60px)!important}
+.page-sub{margin-left:0!important}
+
+/* filtros em caixa clara, como nos portais */
+#busca,.filtro-sel{background:#fff!important;color:#0C0C0C!important;border:0!important;border-radius:10px!important;padding-left:14px!important}
+.filtro-sel option{background:#fff!important;color:#0C0C0C!important}
+
+/* cartões */
+.imoveis-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))!important;gap:28px!important}
+.im-card{background:var(--pt-card)!important;border:1px solid var(--pt-line)!important;border-radius:var(--pt-r)!important;overflow:hidden!important;transition:transform .3s,border-color .3s!important}
+.im-card:hover{transform:translateY(-3px)!important;border-color:rgba(201,169,110,.45)!important}
+.im-foto{aspect-ratio:4/3!important}
+.im-badge,.im-badge.bv,.im-badge.ba,.im-badge.bl{background:#fff!important;color:#0C0C0C!important}
+.im-body{padding:16px 18px 18px!important;display:flex;flex-direction:column}
+.im-preco{order:-1;margin:0 0 4px!important}
+.im-preco,.im-preco *{color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:26px!important}
+.im-tipo{order:-2;margin-bottom:6px!important}
+.im-nome{font-size:16px!important;font-weight:600!important;color:#CFC9BE!important;letter-spacing:0!important;line-height:1.35!important}
+.im-tags{border-top:0!important;padding-top:6px!important}
+.im-tag{font-weight:700!important;color:#EDE8DF!important}
+.im-wa{background:#25D366!important;color:#fff!important}
+.im-ver{background:#fff!important;color:#0C0C0C!important;border:0!important}
+@media(max-width:700px){.imoveis-grid{grid-template-columns:1fr!important;gap:18px!important;padding-left:0!important;padding-right:0!important}.im-foto{aspect-ratio:4/3.4!important}}
+
+/* página do imóvel gerada pelo painel */
+body:has(>header>a.lg) main .chips span,body:has(>header>a.lg) main .ca,body:has(>header>a.lg) main .desc,body:has(>header>a.lg) main .ou,body:has(>header>a.lg) main video{border-radius:var(--pt-r)!important}
+body:has(>header>a.lg) main .ca,body:has(>header>a.lg) main .desc{background:var(--pt-card)!important}
+body:has(>header>a.lg) main .ou{background:var(--pt-card)!important;border:1px solid var(--pt-line)!important;overflow:hidden}
+body:has(>header>a.lg) main .oub{padding:12px 14px 16px!important}
+body:has(>header>a.lg) main .cta{border-radius:18px!important}
+body:has(>header>a.lg) main .preco{color:#fff!important;-webkit-text-fill-color:#fff!important}
+body:has(>header>a.lg) .barra a.wa{background:#25D366!important;color:#fff!important}
+/* computador: galeria em mosaico (1 foto grande + 4 menores), clique abre todas */
+@media(min-width:900px){
+ body:has(>header>a.lg) main .gal{display:grid!important;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:min(70vh,600px);overflow:hidden!important;border-radius:var(--pt-r);background:transparent!important}
+ body:has(>header>a.lg) main .gal img{width:100%!important;height:100%!important;aspect-ratio:auto!important;max-height:none!important;object-fit:cover!important}
+ body:has(>header>a.lg) main .gal img:first-child{grid-row:1/3}
+ body:has(>header>a.lg) main .gal img:nth-child(n+6){display:none}
+ body:has(>header>a.lg) main .fotos .nav,body:has(>header>a.lg) main .mini{display:none!important}
+ body:has(>header>a.lg) main .gal img{transition:filter .3s}
+ body:has(>header>a.lg) main .gal img:hover{filter:brightness(1.1)}
+}
+/* imovel.html */
+.galeria{border-radius:0!important}
+@media(min-width:900px){.galeria{border-radius:var(--pt-r)!important;overflow:hidden}}
+.cta-bloco,.chips .chip,#det-chips .chip,.comods span,.comods div,.comods li,.video-wrap{border-radius:12px!important}
+.imovel-preco{color:#fff!important;-webkit-text-fill-color:#fff!important}
+/* celular: a foto vem primeiro, logo abaixo do topo (como nos apps americanos) */
+@media(max-width:899px){
+ body:has(>header>a.lg) main{display:flex;flex-direction:column}
+ body:has(>header>a.lg) main>.fotos,body:has(>header>a.lg) main>.mini,body:has(>header>a.lg) main>.todas{order:-1}
+ body:has(>header>a.lg) main>.fotos{margin:-22px -18px 0!important}
+ body:has(>header>a.lg) main>.todas{align-self:flex-start;margin-bottom:18px!important}
+ body:has(>header>a.lg) main>.cod{align-self:flex-start}
+}
+
+/* setas das fotos: grandes e fáceis de tocar */
+body:has(>header>a.lg) .fotos .nav,body:has(>header>a.lg) .lb .nav{width:60px!important;height:60px!important;font-size:34px!important;line-height:1!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important;border-radius:50%!important}
+body:has(>header>a.lg) .fotos .nav.p,body:has(>header>a.lg) .lb .nav.p{left:10px!important}
+body:has(>header>a.lg) .fotos .nav.n,body:has(>header>a.lg) .lb .nav.n{right:10px!important}
+body:has(>header>a.lg) .lb .x{width:56px!important;height:56px!important;font-size:26px!important}
+.seta{width:60px!important;height:60px!important;font-size:2.2rem!important;border-radius:50%!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important;display:grid!important;place-items:center!important}
+.seta-esq{left:10px!important}.seta-dir{right:10px!important}
+.im-fn{width:52px!important;height:52px!important;font-size:1.7rem!important;opacity:1!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important}
+.im-fp{left:8px!important}.im-fx{right:8px!important}
