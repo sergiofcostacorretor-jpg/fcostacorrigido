@@ -1,11 +1,11 @@
 /* ═══════════ FCosta — Estilo "Preto e Champanhe" · páginas internas ═══════════
    Comprar, Alugar, Lançamentos, página do imóvel e páginas geradas pelo painel.
    Somente aparência. Para voltar ao visual anterior, remova o link deste arquivo. */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root{--n-bg:#0C0C0C;--n-bg2:#121211;--n-bg3:#1B1A18;--n-tx:#EDE8DF;--n-mut:#A39D91;--n-line:rgba(237,232,223,.12);--n-line2:rgba(237,232,223,.22);
  --n-ch:#C9A96E;--n-ch2:#E3CFA4;--n-iv:#F4EFE6;
- --n-d:'Cormorant Garamond',Georgia,serif;--n-s:'Jost',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+ --n-d:'Plus Jakarta Sans',system-ui,sans-serif;--n-s:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
 html{overflow-x:clip}
 html body :where(*:not(svg):not(svg *)){font-family:var(--n-s)!important}
 html body{background:var(--n-bg)!important;color:var(--n-tx)!important;font-weight:300}
@@ -131,3 +131,50 @@ div[style*="255,248,231"],div[style*="255, 248, 231"],div[style*="FFF8E7"],div[s
 div[style*="255,248,231"] *,div[style*="255, 248, 231"] *,div[style*="FFF8E7"] *,div[style*="fff8e7"] *{color:#CFC9BE!important}
 p[style*="5a4000"],p[style*="5a4000"] b{color:#CFC9BE!important}
 p[style*="5a4000"] b{color:var(--n-ch2)!important}
+
+/* ═══ Ajuste 2: fonte moderna e firme + fotos grandes ═══ */
+html body{font-weight:400}
+.page-h1,.imovel-titulo,.im-nome,.secao-h3,.cta-bloco h3,.cta-bloco-txt h3,.modal-titulo,.modal-h2,#modal h2,#modal h3,body:has(>header>a.lg) main h1,body:has(>header>a.lg) main h2,body:has(>header>a.lg) main .oub b{font-weight:800!important;letter-spacing:-.018em!important;font-style:normal!important}
+.page-h1{font-size:clamp(40px,7vw,96px)!important;line-height:1!important}
+.page-h1 em,.secao-h3 span,.secao-h3 em,body:has(>header>a.lg) main h2 span{font-style:normal!important;color:var(--n-ch)!important;-webkit-text-fill-color:var(--n-ch)!important}
+.nav-wa,.btn-wa-nav,.btn-home,.btn-voltar,body>header .vt,.im-wa,.im-ver,.btn-cta-wa,.btn-compartilhar,.page-badge,.im-badge,.im-cod,.faixa-loc-wa,.faixa-adm button,.codigo-badge,.status-badge,.destaque-badge,.im-tipo,body:has(>header>a.lg) main .cod{font-weight:700!important;letter-spacing:.07em!important;font-size:12px!important}
+.logo-txt span:first-child,.logo-nome,body>header .lg b{font-weight:800!important;letter-spacing:-.02em!important;text-transform:none!important}
+.logo-txt span+span,.logo-creci,body>header .lg small{letter-spacing:.12em!important;font-weight:600!important}
+body>header .lg b span{color:var(--n-ch)!important}
+#busca,.filtro-sel{font-size:16px!important;font-weight:600!important}
+.filtro-cnt strong,#cnt{font-weight:800!important;font-size:20px!important}
+.im-nome{font-size:22px!important;line-height:1.2!important}
+.im-preco,.im-preco *,.imovel-preco,body:has(>header>a.lg) main .preco{font-weight:800!important;letter-spacing:-.015em!important}
+.im-preco,.im-preco *{font-size:26px!important}
+.imovel-titulo,body:has(>header>a.lg) main h1{font-size:clamp(26px,4.4vw,48px)!important;line-height:1.12!important}
+body:has(>header>a.lg) main h2,.secao-h3{font-size:clamp(24px,3vw,36px)!important}
+/* cartões das listas: foto grande */
+@media(max-width:700px){
+ .imoveis-grid{grid-template-columns:1fr!important;gap:48px!important;padding-left:0!important;padding-right:0!important}
+ .im-foto{aspect-ratio:4/5!important}
+}
+
+/* página do imóvel gerada: galeria grande em tela cheia */
+body:has(>header>a.lg) main .fotos{margin:18px -18px 0!important}
+body:has(>header>a.lg) main .gal{background:#000!important}
+body:has(>header>a.lg) main .gal img{object-fit:cover!important;height:auto!important;aspect-ratio:4/5;max-height:82svh}
+body:has(>header>a.lg) main .nav{border-radius:50%!important;background:rgba(12,12,12,.55)!important;border:0!important;width:46px!important;height:46px!important}
+body:has(>header>a.lg) main .cnt{border-radius:999px!important;border:0!important;background:rgba(12,12,12,.7)!important;font-weight:700!important}
+body:has(>header>a.lg) main .mini{display:flex!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;margin:10px 0 0!important}
+body:has(>header>a.lg) main .mini::-webkit-scrollbar{display:none}
+body:has(>header>a.lg) main .mini button{flex:0 0 92px;aspect-ratio:1!important;border-radius:6px!important}
+body:has(>header>a.lg) main .todas{border-radius:999px!important;font-weight:700!important}
+@media(min-width:900px){
+ body:has(>header>a.lg) main{max-width:1240px!important}
+ body:has(>header>a.lg) main .fotos{margin:22px 0 0!important}
+ body:has(>header>a.lg) main .gal img{aspect-ratio:16/10;max-height:78vh}
+}
+
+/* página imovel.html: foto principal grande */
+.galeria{width:100%!important;max-width:1240px!important;border-radius:0!important;box-shadow:none!important;margin-top:0!important}
+.galeria-principal{object-fit:cover!important;width:100%!important;height:auto!important;aspect-ratio:4/5;max-height:82svh!important}
+.galeria-hint{border-radius:999px!important;background:rgba(12,12,12,.7)!important;color:#fff!important}
+.galeria-count{border-radius:999px!important}
+.galeria-strip img{width:92px!important;height:92px!important;border-radius:6px!important;opacity:.6}
+@media(min-width:900px){.galeria{margin:24px auto 0!important}.galeria-principal{aspect-ratio:16/10}}
+.imovel-titulo,body:has(>header>a.lg) main h1{font-weight:700!important;word-spacing:.04em}
