@@ -1,0 +1,171 @@
+/* ═══════════ FCosta — Visual 2026 · páginas internas ═══════════
+   Comprar, Alugar, Lançamentos, página do imóvel (imovel.html) e páginas
+   geradas pelo painel (pastas comprar-xxx e lancamento-xxx).
+   Somente aparência. Para voltar ao visual anterior, remova o <link> deste arquivo. */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{--v-tx:#111;--v-mut:#5F5B53;--v-line:#E8E5DE;--v-line2:#D9D5CC;--v-sand:#F3EFE7;--v-soft:#F6F5F2;--v-gold:#A8832F;--v-gold-l:#E0C27E;
+ --v-h:'Inter Tight','Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--v-b:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+html{overflow-x:clip}
+html body :where(*:not(svg):not(svg *)){font-family:var(--v-b)!important}
+html body{background:#fff!important;background-color:#fff!important;color:var(--v-tx)!important;font-family:var(--v-b)!important}
+::selection{background:#111!important;color:#fff!important}
+::-webkit-scrollbar-track{background:#fff!important}::-webkit-scrollbar-thumb{background:#D9D5CC!important;border-color:#fff!important}
+::-webkit-scrollbar-thumb:hover{background:#111!important}
+
+/* ── topo (todas) ── */
+#nav,body>header{background:rgba(255,255,255,.96)!important;color:#111!important;border-bottom:1px solid var(--v-line)!important;box-shadow:none!important}
+#nav *,body>header *{color:inherit}
+.logo img,body>header .lg img{box-shadow:none!important}
+.logo-txt span:first-child,.logo-nome,body>header .lg b{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.03em!important;color:#111!important}
+.logo-txt span+span,.logo-creci,body>header .lg small{color:var(--v-mut)!important}
+body>header .lg b span{color:var(--v-gold)!important}
+.bread,.bread span{color:var(--v-mut)!important}
+.bread a{color:#111!important;text-decoration:underline;text-underline-offset:4px}
+.bread span:last-child{color:#111!important}
+.btn-home,.btn-voltar,body>header .vt{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important;border-radius:999px!important;font-family:var(--v-b)!important;font-weight:600!important;letter-spacing:0!important;text-transform:none!important}
+.btn-home:hover,.btn-voltar:hover,body>header .vt:hover{border-color:#111!important}
+.nav-wa,.btn-wa-nav{background:#111!important;color:#fff!important;box-shadow:none!important;text-transform:none!important;letter-spacing:0!important}
+.nav-wa:hover,.btn-wa-nav:hover{background:#2A2A2C!important;transform:none!important;box-shadow:none!important}
+.nav-wa *,.btn-wa-nav *{color:#fff!important}
+
+/* ── abertura das listas ── */
+.page-hero{background:var(--v-sand)!important;color:#111!important;border:0!important}
+.page-hero::before,.page-hero::after{display:none!important}
+.page-badge{background:#fff!important;color:#111!important;border:0!important;font-family:var(--v-b)!important;letter-spacing:.12em!important}
+.page-h1{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.045em!important;color:#111!important;font-size:clamp(44px,7vw,96px)!important;line-height:.95!important}
+.page-h1 em{font-style:normal!important;color:var(--v-gold)!important;-webkit-text-fill-color:var(--v-gold)!important;background:none!important}
+.page-sub{color:var(--v-mut)!important;font-size:18px!important}
+
+/* faixas de aviso (alugar) */
+.faixa-loc{background:#111!important;color:#fff!important}
+.faixa-loc *{color:#fff!important}
+.faixa-loc-wa{background:#fff!important;color:#111!important;border-radius:999px!important}
+.faixa-adm{background:var(--v-soft)!important;color:#111!important;border-color:var(--v-line)!important}
+.faixa-adm b{color:var(--v-gold)!important}
+.faixa-adm button{background:#111!important;color:#fff!important;border-radius:999px!important}
+
+/* ── filtros ── */
+.filtros-wrap{background:#fff!important;border-bottom:1px solid var(--v-line)!important;box-shadow:none!important}
+.filtros-inner{background:#fff!important;border:0!important;box-shadow:none!important}
+#busca,.filtro-sel{background:var(--v-soft)!important;color:#111!important;border:1px solid transparent!important;border-radius:999px!important;font-family:var(--v-b)!important}
+#busca:focus,.filtro-sel:focus{border-color:#111!important;background:#fff!important;outline:0}
+#busca::placeholder{color:#8A857B!important}
+.filtro-sel option{background:#fff!important;color:#111!important}
+.filtro-busca-ic{color:var(--v-mut)!important}
+.filtro-cnt{color:var(--v-mut)!important}
+.filtro-cnt strong,#cnt{color:#111!important}
+.aviso-in,.aviso{background:var(--v-soft)!important;color:var(--v-mut)!important;border:0!important;border-left:3px solid #111!important;border-radius:12px!important}
+.aviso>div.aviso-in{border-left:3px solid #111!important}
+div.aviso:has(>.aviso-in){background:transparent!important;border:0!important}
+.aviso p,.aviso-in p{color:var(--v-mut)!important}
+.aviso b,.aviso-in b{color:#111!important}
+
+/* ── cartões das listas ── */
+.imoveis-grid{gap:40px 24px!important}
+.im-card{background:#fff!important;border:0!important;border-radius:16px!important;box-shadow:none!important;overflow:visible!important}
+.im-card:hover{transform:none!important;box-shadow:none!important}
+.im-foto{border-radius:16px!important;overflow:hidden!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:4/3!important;background:#ECEAE4!important}
+.im-foto img{object-fit:cover!important;background:#ECEAE4!important}
+.im-card:hover .im-foto img{transform:scale(1.04)!important}
+.im-badge{background:#fff!important;color:#111!important;border:0!important;border-radius:999px!important;box-shadow:0 2px 8px rgba(0,0,0,.15)!important;font-family:var(--v-b)!important;letter-spacing:.02em!important}
+.im-badge.bl{background:#111!important;color:#fff!important}
+.im-cod{background:rgba(0,0,0,.6)!important;color:#fff!important;border-radius:999px!important}
+.im-body{padding:16px 2px 4px!important;display:flex;flex-direction:column}
+.im-preco{order:-2;margin:0 0 4px!important}
+.im-preco,.im-preco *{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.035em!important;color:#111!important;-webkit-text-fill-color:#111!important;background:none!important;font-size:28px!important;line-height:1.05!important}
+.im-preco small{display:none!important}
+.im-tipo{order:-1;color:var(--v-gold)!important;font-family:var(--v-b)!important}
+.im-nome{font-family:var(--v-b)!important;font-weight:500!important;font-size:15px!important;letter-spacing:0!important;color:var(--v-mut)!important;line-height:1.4!important;margin:2px 0!important}
+.im-local{color:var(--v-mut)!important;font-size:14px!important}
+.im-tags{gap:6px!important;margin:10px 0 0!important;border:0!important;padding:0!important}
+.im-tag{background:var(--v-soft)!important;color:#111!important;border:0!important;border-radius:999px!important}
+.im-acoes{margin-top:14px!important;border:0!important;padding:0!important;gap:8px!important}
+.im-wa{background:#111!important;color:#fff!important;border-radius:999px!important;box-shadow:none!important;text-transform:none!important;letter-spacing:0!important}
+.im-wa:hover{background:#2A2A2C!important;transform:none!important}
+.im-ver{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important;border-radius:999px!important;text-transform:none!important;letter-spacing:0!important}
+.im-ver:hover{border-color:#111!important}
+.im-loading,.im-loading p{color:var(--v-mut)!important}
+
+/* janela do imóvel (listas) */
+#modal-bg{background:rgba(0,0,0,.55)!important}
+#modal{background:#fff!important;color:#111!important;border:0!important}
+#modal h2,#modal h3,.modal-titulo,.modal-h2{color:#111!important;font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.03em!important}
+.modal-preco{color:#111!important;-webkit-text-fill-color:#111!important;background:none!important;font-family:var(--v-h)!important;font-weight:800!important}
+.modal-close{background:#fff!important;color:#111!important;box-shadow:0 2px 8px rgba(0,0,0,.2)!important}
+
+/* rodapés */
+footer.foot-mini,body>footer{background:#0B0B0C!important;color:rgba(255,255,255,.6)!important;border:0!important}
+footer.foot-mini a,body>footer a{color:#fff!important}
+.foot-inner,.foot-inner *{color:rgba(255,255,255,.65)}
+.foot-inner a{color:#fff!important}
+
+/* ── página do imóvel (imovel.html) ── */
+#estado,.estado-msg{color:var(--v-mut)!important}
+.galeria,.galeria-wrap,.galeria-strip{background:#F3F1EC!important;border-color:var(--v-line)!important}
+.galeria-wrap{border-radius:20px!important}
+.galeria-principal{background:#F3F1EC!important}
+.galeria-strip img.ativa{outline:2px solid #111!important;border-color:#111!important}
+.seta{background:#fff!important;color:#111!important;box-shadow:0 2px 10px rgba(0,0,0,.2)!important;border:0!important}
+.codigo-badge{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important}
+.status-badge,.destaque-badge{background:#111!important;color:#fff!important;border:0!important}
+.imovel-titulo{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.04em!important;color:#111!important;font-size:clamp(32px,4.6vw,54px)!important;line-height:1!important}
+.imovel-local,#det-local-txt{color:var(--v-mut)!important}
+.chips .chip,#det-chips .chip{background:var(--v-soft)!important;color:#111!important;border:0!important;border-radius:999px!important}
+.cta-bloco{background:#fff!important;color:#111!important;border:1px solid var(--v-line)!important;border-radius:20px!important;box-shadow:0 1px 2px rgba(0,0,0,.04),0 20px 50px -24px rgba(0,0,0,.25)!important}
+.cta-bloco h3,.cta-bloco-txt h3{color:#111!important;font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.03em!important}
+.cta-bloco p,.cta-bloco-txt p{color:var(--v-mut)!important}
+.imovel-preco{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.04em!important;color:#111!important;-webkit-text-fill-color:#111!important;background:none!important}
+.imovel-preco-label{color:var(--v-mut)!important}
+.preco-box{border-color:var(--v-line)!important}
+.btn-cta-wa{background:#111!important;color:#fff!important;border-radius:999px!important;box-shadow:none!important;text-transform:none!important;letter-spacing:0!important}
+.btn-cta-wa *{color:#fff!important}
+.btn-compartilhar{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important;border-radius:999px!important}
+.secao-h3{color:#111!important;font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.03em!important}
+.secao-h3 span,.secao-h3 em{color:var(--v-gold)!important;-webkit-text-fill-color:var(--v-gold)!important;background:none!important;font-style:normal!important}
+.secao-p,#det-desc{color:#333!important}
+.comods span,.comods div,.comods li{background:var(--v-soft)!important;color:#111!important;border-color:transparent!important}
+.video-wrap{border-radius:20px!important;overflow:hidden}
+.share-menu,.share-opt{background:#fff!important;color:#111!important;border-color:var(--v-line)!important}
+#toast-share{background:#111!important;color:#fff!important}
+
+/* ── páginas geradas pelo painel (pastas comprar-xxx e lancamento-xxx) ── */
+body:has(>header>a.lg){background:#fff!important;color:#111!important}
+body:has(>header>a.lg)::before,body:has(>header>a.lg)::after,body:has(>header>a.lg) main::before,body:has(>header>a.lg) main::after{display:none!important}
+body:has(>header>a.lg) main{background:none!important}
+body:has(>header>a.lg) main .cod{color:var(--v-gold)!important;font-family:var(--v-b)!important;letter-spacing:.14em}
+body:has(>header>a.lg) main h1{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.045em!important;color:#111!important;line-height:1!important;font-size:clamp(34px,5.2vw,60px)!important}
+body:has(>header>a.lg) main h2{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.035em!important;color:#111!important}
+body:has(>header>a.lg) main h2 span{color:var(--v-gold)!important;-webkit-text-fill-color:var(--v-gold)!important;background:none!important}
+body:has(>header>a.lg) main .preco{font-family:var(--v-h)!important;font-weight:800!important;letter-spacing:-.04em!important;color:#111!important;-webkit-text-fill-color:#111!important;background:none!important}
+body:has(>header>a.lg) main .loc{color:var(--v-mut)!important}
+body:has(>header>a.lg) main .chips span{background:var(--v-soft)!important;color:#111!important;border:0!important}
+body:has(>header>a.lg) main .gal{background:#F3F1EC!important;border-radius:20px!important}
+body:has(>header>a.lg) main .nav{background:#fff!important;color:#111!important;border:0!important;box-shadow:0 2px 10px rgba(0,0,0,.2)!important}
+body:has(>header>a.lg) main .cnt{background:rgba(0,0,0,.6)!important;color:#fff!important}
+body:has(>header>a.lg) main .mini button{background:#ECEAE4!important;border-color:transparent!important}
+body:has(>header>a.lg) main .mini button.on{border-color:#111!important;outline:2px solid #111}
+body:has(>header>a.lg) main .todas{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important}
+body:has(>header>a.lg) main video{border-radius:20px!important}
+body:has(>header>a.lg) main .ca{background:var(--v-soft)!important;color:#111!important;border:0!important}
+body:has(>header>a.lg) main .ca *{color:#111}
+body:has(>header>a.lg) main .ca small{color:var(--v-mut)!important}
+body:has(>header>a.lg) main .desc{background:var(--v-soft)!important;color:#333!important;border:0!important}
+body:has(>header>a.lg) main .cta{background:#0B0B0C!important;color:#fff!important;border:0!important;border-radius:24px!important}
+body:has(>header>a.lg) main .cta h2,body:has(>header>a.lg) main .cta h3{color:#fff!important}
+body:has(>header>a.lg) main .cta p{color:rgba(255,255,255,.72)!important}
+body:has(>header>a.lg) main .cta a.wa{background:#fff!important;color:#111!important;box-shadow:none!important}
+body:has(>header>a.lg) main .cta a.sec{background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.4)!important}
+body:has(>header>a.lg) main .ou{background:#fff!important;color:#111!important;border:0!important;box-shadow:none!important}
+body:has(>header>a.lg) main .ouf{background:#ECEAE4!important;border-radius:16px!important}
+body:has(>header>a.lg) main .ouf em{background:#fff!important;color:#111!important}
+body:has(>header>a.lg) main .oub,body:has(>header>a.lg) main .oub *{color:#111!important}
+body:has(>header>a.lg) main .oub i,body:has(>header>a.lg) main .oub b{font-family:var(--v-h)!important;font-weight:800!important;color:#111!important;-webkit-text-fill-color:#111!important;background:none!important}
+body:has(>header>a.lg) main .vend{background:#111!important;color:#fff!important}
+body:has(>header>a.lg)>footer{background:#0B0B0C!important}
+body:has(>header>a.lg) .barra{background:rgba(255,255,255,.96)!important;color:#111!important;border-top:1px solid var(--v-line)!important}
+body:has(>header>a.lg) .barra a:not([href*="wa.me"]){color:#111!important;border-color:var(--v-line2)!important}
+body:has(>header>a.lg) .barra a.wa{background:#111!important;color:#fff!important;box-shadow:none!important}
+body:has(>header>a.lg) .barra a.sec{background:#fff!important;color:#111!important;border:1px solid var(--v-line2)!important}
+body:has(>header>a.lg) main .bts a.wa:not(.cta a){background:#111!important;color:#fff!important;box-shadow:none!important}
+.aviso strong,.aviso b{color:#111!important;-webkit-text-fill-color:#111!important;background:none!important}
