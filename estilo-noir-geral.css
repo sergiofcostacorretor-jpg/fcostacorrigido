@@ -20,3 +20,4 @@ html body :where(button,.btn,a[class*="btn"]){font-weight:700!important;letter-s
 @media print{.fc-home{display:none!important}}
 html body :where(h1,h2,h3),html body :where(h1,h2,h3) :not(i):not([class*="fa"]):not(svg):not(svg *){font-family:'Playfair Display',Georgia,serif!important;font-weight:700!important;letter-spacing:-.01em!important;word-spacing:0}
 html body,html body *{font-variant-numeric:lining-nums}
+html body :where(h1,h2,h3){font-weight:600!important;letter-spacing:-.005em!important}

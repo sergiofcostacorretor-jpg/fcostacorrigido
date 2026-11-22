@@ -260,3 +260,10 @@ h1,h2,h3,.hero h1,.path h3,.card h3,.passo h3,.item h3,.form h3,.svc-sub,.hero-c
 .price b{font-weight:700}
 .logo b{letter-spacing:0}
 html body,html body *{font-variant-numeric:lining-nums}
+/* refinamento de letra: títulos Playfair 600, texto Inter 400 com leitura confortável */
+body{font-weight:400;letter-spacing:0}
+h1,h2,.hero h1,.path h3,.item h3,.passo h3,.form h3,.logo b{font-weight:600;letter-spacing:-.005em}
+.hero h1{line-height:1.04}
+.lead,p{line-height:1.7}
+.price b{font-weight:600}
+.eyebrow{font-weight:600}
