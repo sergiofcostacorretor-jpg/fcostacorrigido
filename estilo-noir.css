@@ -1,7 +1,7 @@
 /* ═══════════ FCosta — Estilo "Preto e Champanhe" · página inicial ═══════════
    Luxo clássico (referência: imobiliárias de alto padrão americanas).
    Somente aparência: não altera textos, links nem scripts. */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root{
  --ink:#0C0C0C;--ink2:#121211;--ink3:#181816;--ink4:#22211E;
@@ -10,7 +10,7 @@
  --gold:#C9A96E;--gold2:#E3CFA4;--gold3:#A88A52;
  --goldg:linear-gradient(135deg,#E3CFA4 0%,#C9A96E 55%,#A88A52 100%);
  --ivory:#F4EFE6;--ivory2:#E6DED0;--brown:#1A1815;--brown2:#5A554C;
- --serif:'Plus Jakarta Sans',system-ui,sans-serif;--sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+ --serif:'Inter',system-ui,sans-serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
  --r:2px;--rs:2px;--hd:88px;--ease:cubic-bezier(.2,.7,.2,1);
  --sh:0 30px 60px -30px rgba(0,0,0,.8);
 }
@@ -252,3 +252,11 @@ em.gold,.gold,.hero h1 em{font-style:normal;color:var(--gold)}
 .mos a{margin-bottom:10px}
 @media(max-width:700px){.mos{columns:1}}
 h1,h2,h3{word-spacing:.03em}
+
+/* ═══ Fonte escolhida: títulos Playfair Display (serifa forte) + texto Inter ═══ */
+:root{--pf:'Playfair Display',Georgia,serif}
+h1,h2,h3,.hero h1,.path h3,.card h3,.passo h3,.item h3,.form h3,.svc-sub,.hero-card h3,.price b,.hero-card .hc-pr,.logo b,.quote,.retrato .selo b,.passo::before,.path .n{font-family:var(--pf);font-weight:700;letter-spacing:-.01em;word-spacing:0}
+.card h3{font-family:var(--sans);font-weight:600;letter-spacing:0}
+.price b{font-weight:700}
+.logo b{letter-spacing:0}
+html body,html body *{font-variant-numeric:lining-nums}

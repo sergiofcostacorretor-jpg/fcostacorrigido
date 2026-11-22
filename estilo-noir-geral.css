@@ -1,8 +1,8 @@
 /* ═══════════ FCosta: mesmo padrão da página inicial nas demais páginas públicas ═══════════
    Somente aparência: letra moderna e firme (Plus Jakarta Sans) e o dourado champanhe da home.
    Para voltar, remova o link deste arquivo. */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-:root{--fc-sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--fc-ch:#C9A96E;--fc-ch2:#E3CFA4;--titulo:var(--fc-sans)}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+:root{--fc-sans:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--fc-ch:#C9A96E;--fc-ch2:#E3CFA4;--titulo:var(--fc-sans)}
 html{overflow-x:clip}
 html body :where(*:not(svg):not(svg *):not(i):not([class*="fa-"]):not(.fa):not(.fas):not(.far):not(.fab):not(.material-icons)){font-family:var(--fc-sans)!important}
 html body{-webkit-font-smoothing:antialiased}
@@ -18,3 +18,5 @@ html body :where(button,.btn,a[class*="btn"]){font-weight:700!important;letter-s
 .fc-home img{width:26px;height:26px;border-radius:50%}
 .fc-home:hover{border-color:#C9A96E;color:#fff!important}
 @media print{.fc-home{display:none!important}}
+html body :where(h1,h2,h3),html body :where(h1,h2,h3) :not(i):not([class*="fa"]):not(svg):not(svg *){font-family:'Playfair Display',Georgia,serif!important;font-weight:700!important;letter-spacing:-.01em!important;word-spacing:0}
+html body,html body *{font-variant-numeric:lining-nums}

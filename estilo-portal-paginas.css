@@ -66,3 +66,13 @@ body:has(>header>a.lg) .barra a.wa{background:#25D366!important;color:#fff!impor
  body:has(>header>a.lg) main>.todas{align-self:flex-start;margin-bottom:18px!important}
  body:has(>header>a.lg) main>.cod{align-self:flex-start}
 }
+
+/* setas das fotos: grandes e fáceis de tocar */
+body:has(>header>a.lg) .fotos .nav,body:has(>header>a.lg) .lb .nav{width:60px!important;height:60px!important;font-size:34px!important;line-height:1!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important;border-radius:50%!important}
+body:has(>header>a.lg) .fotos .nav.p,body:has(>header>a.lg) .lb .nav.p{left:10px!important}
+body:has(>header>a.lg) .fotos .nav.n,body:has(>header>a.lg) .lb .nav.n{right:10px!important}
+body:has(>header>a.lg) .lb .x{width:56px!important;height:56px!important;font-size:26px!important}
+.seta{width:60px!important;height:60px!important;font-size:2.2rem!important;border-radius:50%!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important;display:grid!important;place-items:center!important}
+.seta-esq{left:10px!important}.seta-dir{right:10px!important}
+.im-fn{width:52px!important;height:52px!important;font-size:1.7rem!important;opacity:1!important;background:rgba(12,12,12,.7)!important;color:#fff!important;border:2px solid rgba(255,255,255,.5)!important}
+.im-fp{left:8px!important}.im-fx{right:8px!important}
