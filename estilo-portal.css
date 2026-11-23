@@ -97,15 +97,17 @@ h2{font-size:clamp(28px,3.6vw,46px);line-height:1.08}
 .creds span,.soc a{border-radius:999px}
 .mos a{border-radius:12px}
 
-/* abertura legível sobre qualquer foto ou vídeo: camada escura forte + sombra no texto */
-.hero-ov{background:linear-gradient(180deg,rgba(8,8,8,.92) 0%,rgba(8,8,8,.72) 30%,rgba(8,8,8,.70) 65%,#0C0C0C 100%)!important}
-.hero h1,.hero .lead,.hero-trust,.hero .eyebrow{text-shadow:0 2px 14px rgba(0,0,0,.85),0 1px 3px rgba(0,0,0,.9)}
+/* abertura: vídeo nítido (camada leve) e texto legível (sombra forte e leve escurecido só no centro) */
+.hero-ov{background:radial-gradient(ellipse 65% 48% at 50% 48%,rgba(8,8,8,.55) 0%,rgba(8,8,8,.22) 55%,rgba(8,8,8,0) 100%),linear-gradient(180deg,rgba(8,8,8,.50) 0%,rgba(8,8,8,.10) 20%,rgba(8,8,8,.10) 62%,rgba(8,8,8,.55) 86%,#0C0C0C 100%)!important}
+.hero h1,.hero .lead,.hero-trust,.hero .eyebrow{text-shadow:0 0 2px rgba(0,0,0,.9),0 1px 4px rgba(0,0,0,.95),0 3px 22px rgba(0,0,0,.9)}
 .hero h1{color:#fff}
 .hero h1 em,.hero h1 .gold{color:#E8D3A2}
 .hero .eyebrow{color:#E8D3A2}
-.hero .lead{color:#F1ECE3}
+.hero .lead{color:#fff;font-weight:500}
 .hero-trust,.hero-trust b{color:#fff}
 .hero-trust .ic{color:#E8D3A2}
 /* topo sempre escuro: esconde a marca d'água do vídeo atrás do logo */
 .hdr{background:rgba(10,10,10,.94)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(237,232,223,.10)}
 @media(max-width:700px){.hero .lead{font-size:16px}}
+/* logo do topo: F na mesma cor champanhe de Costa */
+.logo b,.logo b span{color:var(--gold)}
