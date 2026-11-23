@@ -109,3 +109,5 @@ h2{font-size:clamp(28px,3.6vw,46px);line-height:1.08}
 /* topo sempre escuro: esconde a marca d'água do vídeo atrás do logo */
 .hdr{background:rgba(10,10,10,.94)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(237,232,223,.10)}
 @media(max-width:700px){.hero .lead{font-size:16px}}
+/* logo do topo: F na mesma cor champanhe de Costa */
+.logo b,.logo b span{color:var(--gold)}
