@@ -1015,6 +1015,7 @@ body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;}
 <div class="share-menu" id="share-menu">
   <button class="share-opt" onclick="shareWa()">💬 WhatsApp</button>
   <button class="share-opt" onclick="shareFacebook()">📘 Facebook</button>
+  <button class="share-opt" onclick="shareMessenger()">📤 Messenger</button>
   <button class="share-opt" onclick="shareTelegram()">✈️ Telegram</button>
   <button class="share-opt" onclick="shareCopiar()">🔗 Copiar link</button>
 </div>
@@ -1284,6 +1285,22 @@ function shareFacebook(){
   var url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(_shareData.url);
   try{ window.top.open(url,'_blank','width=620,height=400'); }catch(e){ window.open(url,'_blank'); }
   toastShare('Abrindo Facebook...');
+}
+
+/* Messenger — celular abre o app com o link; computador copia o link e abre o messenger.com */
+function shareMessenger(){
+  fecharShareMenu();
+  if(!_shareData){ toastShare('Aguarde...'); return; }
+  var url = _shareData.url;
+  if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    try{ window.top.location.href = 'fb-messenger://share/?link=' + encodeURIComponent(url); }catch(e){ location.href = 'fb-messenger://share/?link=' + encodeURIComponent(url); }
+    toastShare('Abrindo Messenger...');
+    return;
+  }
+  var abre = function(){ try{ window.top.open('https://www.messenger.com/','_blank'); }catch(e){ window.open('https://www.messenger.com/','_blank'); } };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(function(){ toastShare('Link copiado! Cole no Messenger.'); abre(); }).catch(function(){ _copiarFallback(url); abre(); });
+  } else { _copiarFallback(url); abre(); }
 }
 
 /* Telegram — link + texto */
