@@ -434,7 +434,7 @@ body.cmp-aberto{overflow:hidden}
 .cmp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cmp-g a,.cmp-g button{display:flex;align-items:center;justify-content:center;min-height:52px;padding:8px;border-radius:14px;border:1px solid transparent;font:600 14px/1.2 var(--sans);color:#fff;cursor:pointer;text-align:center;transition:transform .2s}
 .cmp-g a:hover,.cmp-g button:hover{transform:translateY(-2px)}
-.cmp-g .wa{background:#25D366;color:#05290f}.cmp-g .fb{background:#1877F2}.cmp-g .tg{background:#229ED9}
+.cmp-g .wa{background:#25D366;color:#05290f}.cmp-g .fb{background:#1877F2}.cmp-g .ms{background:linear-gradient(45deg,#0099FF,#A033FF 60%,#FF5280)}.cmp-g .tg{background:#229ED9}
 .cmp-g .x{background:#000;border-color:#444}.cmp-g .li{background:#0A66C2}.cmp-g .em{background:var(--goldg);color:#1A1406}
 .cmp-g .sm{background:#3A3D46}.cmp-g .pi{background:#E60023}.cmp-g .th{background:#000;border-color:#555}.cmp-g .ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)}.cmp-g .tt{background:#000;border-color:#25F4EE}
 @media(max-width:380px){.cmp-g{grid-template-columns:repeat(2,1fr)}.cmp-g>:last-child:nth-child(odd){grid-column:1/-1}}
@@ -1249,6 +1249,7 @@ body.cmp-aberto{overflow:hidden}
  var CANAIS=[
   {n:'WhatsApp',c:'wa',u:'https://wa.me/?text='+e(MSG+' '+SITE)},
   {n:'Facebook',c:'fb',u:'https://www.facebook.com/sharer/sharer.php?u='+e(SITE)},
+  {n:'Messenger',c:'ms',ms:1},
   {n:'Telegram',c:'tg',u:'https://t.me/share/url?url='+e(SITE)+'&text='+e(MSG)},
   {n:'X (Twitter)',c:'x',u:'https://x.com/intent/post?text='+e(MSG)+'&url='+e(SITE)},
   {n:'LinkedIn',c:'li',u:'https://www.linkedin.com/sharing/share-offsite/?url='+e(SITE)},
@@ -1290,7 +1291,13 @@ body.cmp-aberto{overflow:hidden}
   if(montou)return;montou=true;
   CANAIS.forEach(function(c){
    var x;
-   if(c.cp){x=document.createElement('button');x.type='button';x.addEventListener('click',function(){
+   if(c.ms){x=document.createElement('button');x.type='button';x.addEventListener('click',function(){
+     /* Messenger: no celular abre o app já com o link; no computador copia o link e abre o messenger.com */
+     if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){location.href='fb-messenger://share/?link='+e(SITE);msg('Abrindo Messenger...');return;}
+     copiarLink('Link copiado ✓ No Messenger, escolha a pessoa e cole o link.');
+     window.open('https://www.messenger.com/','_blank','noopener');
+    });}
+   else if(c.cp){x=document.createElement('button');x.type='button';x.addEventListener('click',function(){
      copiarLink(c.cp);
      /* celular: abre o menu de compartilhar já com a imagem vertical; computador: baixa a imagem */
      if(!enviaImg(c.img))baixa(c.img);
