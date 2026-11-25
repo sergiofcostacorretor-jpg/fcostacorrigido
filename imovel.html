@@ -1122,7 +1122,7 @@ function ytEmbed(url){
   if(!id){ var m = url.match(/(?:v=|youtu\.be\/)([\w-]{6,15})/); if(m) id = m[1]; }
   if(!id) return '';
   if(isShorts) document.getElementById('det-video').classList.add('shorts');
-  return '<iframe src="https://www.youtube.com/embed/' + id + '?rel=0&modestbranding=1" frameborder="0" allowfullscreen loading="lazy"></iframe>';
+  return '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&modestbranding=1" frameborder="0" allowfullscreen loading="lazy"></iframe>';
 }
 
 /* ── Galeria ── */
