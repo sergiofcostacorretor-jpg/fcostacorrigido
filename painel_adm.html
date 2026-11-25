@@ -1660,5 +1660,63 @@ window.addEventListener('message',function(e){
   if(e.source)e.source.postMessage({t:'fc-imoveis',lista:lista},location.origin);
 });
 </script>
+<!-- Aviso de dados faltando: aparece de vez em quando com o que falta preencher em cada imóvel -->
+<style>
+#fc-falta{position:fixed;right:16px;bottom:16px;z-index:99998;width:min(380px,calc(100vw - 32px));max-height:70vh;display:none;flex-direction:column;background:#101116;color:#EDE8DF;border:1px solid rgba(214,178,102,.45);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.55);font-family:'Inter',sans-serif;}
+#fc-falta.on{display:flex;}
+#fc-falta h4{margin:0;padding:14px 16px 6px;font-family:'Playfair Display',serif;font-weight:600;font-size:1.05rem;color:#E3CFA4;}
+#fc-falta p.sub{margin:0;padding:0 16px 8px;font-size:.78rem;color:#A39D91;}
+#fc-falta ul{list-style:none;margin:0;padding:0 16px;overflow:auto;font-size:.82rem;line-height:1.45;}
+#fc-falta li{padding:7px 0;border-top:1px solid rgba(237,232,223,.10);}
+#fc-falta li b{color:#E3CFA4;font-weight:600;}
+#fc-falta .acoes{display:flex;gap:8px;padding:12px 16px 14px;}
+#fc-falta button{flex:1;border:0;border-radius:10px;padding:10px;font:600 .82rem 'Inter',sans-serif;cursor:pointer;}
+#fc-falta .b1{background:linear-gradient(135deg,#F2DCA4,#D6B266 45%,#A78340);color:#0A0B0F;}
+#fc-falta .b2{background:#1c1d24;color:#EDE8DF;border:1px solid #2C2D35;}
+</style>
+<div id="fc-falta" role="dialog" aria-label="Dados que faltam nos imóveis"><h4>Faltam dados nos imóveis</h4><p class="sub">Me envie o que souber. Pode responder só o que tiver.</p><ul id="fc-falta-lista"></ul><div class="acoes"><button type="button" class="b1" onclick="fcFaltaCopiar()">Copiar lista</button><button type="button" class="b2" onclick="fcFaltaFechar()">Depois</button></div></div>
+<script>
+(function(){
+  var INTERVALO=20*60*1000,PRIMEIRO=15000,timer=null;
+  function viva(u){return /^https:\/\//i.test(String(u||''))&&!/supabase\.co\//i.test(String(u));}
+  function fotos(i){var f=i.fotos;f=!f?[]:Array.isArray(f)?f:Object.values(f);return f.filter(viva);}
+  function falta(i){
+    var t=String(i.tipo||'').toLowerCase(),semCasa=/terreno|sala|comercial|galp/.test(t),lanc=i.status==='lancamento',m=[];
+    if(!String(i.preco||'').trim()&&!lanc)m.push('preço');
+    if(!String(i.area||'').trim())m.push('área (m²)');
+    if(!semCasa){if(!(+i.quartos))m.push('quartos');if(!(+i.banheiros))m.push('banheiros');if(!(+i.vagas))m.push('vagas');}
+    if(!String(i.bairro||'').trim())m.push('bairro');
+    if(!String(i.cidade||'').trim())m.push('cidade');
+    if(!String(i.tipo||'').trim())m.push('tipo');
+    var temTour=viva(i.tourMp4)||viva(i.videoMp4);
+    if(!fotos(i).length&&!temTour)m.push('fotos');
+    if(!temTour)m.push('tour (vídeo)');
+    return m;
+  }
+  function lista(){
+    var t=(typeof _todos!=='undefined'&&_todos)||[];
+    return t.filter(function(i){return i.publicado!==false&&i.status!=='vendido'&&i.status!=='panfleto';})
+      .map(function(i){return{c:i.codigo||'(sem código)',t:i.titulo||'',m:falta(i)};})
+      .filter(function(x){return x.m.length;})
+      .sort(function(a,b){return String(a.c).localeCompare(String(b.c));});
+  }
+  function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function mostrar(){
+    var l=lista(),box=document.getElementById('fc-falta');
+    if(!l.length||!box){agenda();return;}
+    document.getElementById('fc-falta-lista').innerHTML=l.map(function(x){return '<li><b>'+esc2(x.c)+'</b> · '+esc2(x.m.join(', '))+'</li>';}).join('');
+    box.classList.add('on');
+  }
+  function agenda(){clearTimeout(timer);timer=setTimeout(mostrar,INTERVALO);}
+  window.fcFaltaFechar=function(){document.getElementById('fc-falta').classList.remove('on');agenda();};
+  window.fcFaltaCopiar=function(){
+    var txt='Dados que faltam no painel:\n'+lista().map(function(x){return x.c+': '+x.m.join(', ');}).join('\n');
+    var ok=function(){if(typeof toast==='function')toast('Lista copiada. Cole no WhatsApp ou na conversa.');};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){prompt('Copie a lista:',txt);});}else{prompt('Copie a lista:',txt);}
+  };
+  /* espera o painel carregar os imóveis (depois do login) */
+  var n=0,esp=setInterval(function(){n++;if(typeof _todos!=='undefined'&&_todos.length){clearInterval(esp);timer=setTimeout(mostrar,PRIMEIRO);}else if(n>600)clearInterval(esp);},1000);
+})();
+</script>
 </body>
 </html>
