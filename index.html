@@ -455,6 +455,18 @@ body.cmp-aberto{overflow:hidden}
  *,*::before,*::after{animation:none!important;transition:none!important}
  .js .rv{opacity:1;transform:none}
 }
+/* TV FCosta: playlist e ao vivo do YouTube */
+.tv-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.tv-tab{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--tx);font:600 15px/1 var(--sans);cursor:pointer}
+.tv-tab .ic{width:18px;height:18px}
+.tv-tab[aria-selected="true"]{background:var(--goldg);color:#1A1406;border-color:transparent}
+.tv-dot{width:9px;height:9px;border-radius:50%;background:#E5484D;box-shadow:0 0 0 0 rgba(229,72,77,.6);animation:tvPulse 1.6s infinite}
+@keyframes tvPulse{70%{box-shadow:0 0 0 8px rgba(229,72,77,0)}100%{box-shadow:0 0 0 0 rgba(229,72,77,0)}}
+@media (prefers-reduced-motion:reduce){.tv-dot{animation:none}}
+.tv-box{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line2)}
+.tv-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tv-nota{margin:12px 0 0;color:var(--tx2,#A39D91);font-size:14.5px;line-height:1.5}
+.tv-nota a{color:var(--gold2);text-decoration:underline}
 </style>
 <link rel="stylesheet" href="/estilo-noir.css?v=4">
 <link rel="stylesheet" href="/estilo-portal.css?v=4">
@@ -672,6 +684,38 @@ body.cmp-aberto{overflow:hidden}
   <div class="mos" id="gFotos"></div>
  </div>
 </section>
+
+<!-- TV FCOSTA: YOUTUBE AO VIVO E PLAYLIST -->
+<section class="sec" id="tv-fcosta">
+ <div class="wrap">
+  <div class="sec-hd rv">
+   <div><span class="eyebrow">Canal no YouTube</span><h2>TV <em class="gold">FCosta</em></h2></div>
+   <a class="btn btn-ghost" href="https://youtube.com/@fcostacorretor?sub_confirmation=1" target="_blank" rel="noopener"><svg class="ic"><use href="#i-yt"/></svg> Inscrever-se no canal</a>
+  </div>
+  <div class="tv-tabs" role="tablist">
+   <button class="tv-tab" type="button" role="tab" aria-selected="true" data-tv="lista"><svg class="ic"><use href="#i-play"/></svg> Playlist de vídeos</button>
+   <button class="tv-tab" type="button" role="tab" aria-selected="false" data-tv="live"><span class="tv-dot"></span> Ao vivo</button>
+  </div>
+  <div class="tv-box"><iframe id="tvFrame" loading="lazy" title="TV FCosta no YouTube" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+  <p class="tv-nota" id="tvNota">Tours dos imóveis e dicas para comprar, vender e alugar. Em dia de transmissão, toque em <b>Ao vivo</b>.</p>
+ </div>
+</section>
+<script>
+(function(){
+ var f=document.getElementById('tvFrame'),n=document.getElementById('tvNota');
+ var src={lista:'https://www.youtube-nocookie.com/embed/videoseries?list=PLdp-2xOUACEYX6KQWKVvwi_M0Vkdo3Ac1&rel=0',
+          live:'https://www.youtube.com/embed/live_stream?channel=UCUgKAFFlPTX9u9T2jKD7VdQ&autoplay=1&mute=1'};
+ var txt={lista:n.innerHTML,
+          live:'Se a transmissão não começou, o vídeo mostra o aviso do YouTube. Veja a <a href="https://www.youtube.com/@fcostacorretor/streams" target="_blank" rel="noopener">agenda de lives no canal</a> ou volte para a playlist.'};
+ [].forEach.call(document.querySelectorAll('.tv-tab'),function(b){
+  b.addEventListener('click',function(){
+   var k=b.getAttribute('data-tv');
+   [].forEach.call(document.querySelectorAll('.tv-tab'),function(o){o.setAttribute('aria-selected',o===b?'true':'false');});
+   f.src=src[k];n.innerHTML=txt[k];
+  });
+ });
+})();
+</script>
 
 <!-- FAIXA -->
 <section class="sec" style="padding-top:clamp(40px,6vw,70px)">
