@@ -541,7 +541,7 @@ body.cmp-aberto{overflow:hidden}
       <a href="/politica" data-alt="https://fcostacorretor.com/politica-de-privacidade" data-m="pg-privacidade"><span class="mi"><svg class="ic"><use href="#i-lock"/></svg></span>Política de privacidade</a>
       <a href="/certificado.html" data-alt="https://fcostacorretor.com/condicoes-de-uso" data-m="pg-condicoes"><span class="mi"><svg class="ic"><use href="#i-shield"/></svg></span>Condições de uso</a>
     </div></details></li>
-    <li><a href="/anuncie">Anuncie seu imóvel</a></li>
+    <li><a href="/anuncie">Anunciar</a></li>
     <li><a href="#contato">Contato</a></li>
    </ul>
    <div class="nav-ft">
@@ -625,11 +625,14 @@ body.cmp-aberto{overflow:hidden}
 .tv-row::-webkit-scrollbar{display:none}
 @media(max-width:980px){.tv-row{grid-auto-columns:calc((100% - 2*14px)/3);gap:14px}}
 @media(max-width:640px){.tv-row{grid-auto-columns:68%;gap:12px}}
-.tv-c{position:relative;display:block;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#141412;border:1px solid rgba(237,232,223,.10);scroll-snap-align:start;cursor:pointer;color:#fff;text-align:left;padding:0;font:inherit}
-.tv-c:hover,.tv-c:focus-visible{border-color:#C9A96E;outline:0}
+.tv-c{position:relative;display:block;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#141412;border:1.5px solid #C9A96E;box-shadow:0 0 0 1px rgba(201,169,110,.18),0 10px 30px rgba(0,0,0,.45);scroll-snap-align:start;cursor:pointer;color:#fff;text-align:left;padding:0;font:inherit}
+.tv-c:hover,.tv-c:focus-visible{border-color:#E8D3A2;box-shadow:0 0 0 1px #E8D3A2,0 14px 36px rgba(0,0,0,.5);outline:0}
+.tv-c video.tv-pv{z-index:1;opacity:0;transition:opacity .6s}
+.tv-c video.tv-pv.on{opacity:1}
+.tv-c::after{z-index:1}
 .tv-c img,.tv-c video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
 .tv-c:hover img{transform:scale(1.04)}
-.tv-c::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 62%)}
+.tv-c::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.97) 0%,rgba(0,0,0,.88) 26%,rgba(0,0,0,.4) 46%,rgba(0,0,0,0) 64%)}
 .tv-play{position:absolute;left:50%;top:42%;z-index:2;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:rgba(12,12,12,.55);border:1.5px solid #C9A96E;color:#E3CFA4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .3s}
 .tv-play .ic{width:24px;height:24px;margin-left:3px}
 .tv-c:hover .tv-play{background:#C9A96E;color:#0C0C0C}
@@ -1417,6 +1420,10 @@ body.cmp-aberto{overflow:hidden}
  var sec=document.getElementById('tour'),row=document.getElementById('tvRow'),md=document.getElementById('tvMd');
  if(!sec||!row||!md)return;
  var imv=null,ext=null,porId={},aberto=null;
+ /* prévia do vídeo tocando sem som dentro do card (só os que estão na tela); com economia de dados ou movimento reduzido fica só a foto */
+ var cx=navigator.connection||{},calmo=!!cx.saveData||/(^|-)2g$/.test(cx.effectiveType||'')||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+ function vid(u){return /res\.cloudinary\.com\/[^\/]+\/video\/upload\/(?![^\/]*,)/.test(u)?u.replace('/video/upload/','/video/upload/w_540,q_auto/'):u;}
+ var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting&&!aberto){if(!v.getAttribute('src'))v.src=v._src;var p=v.play();if(p&&p.catch)p.catch(function(){});}else{try{v.pause();}catch(_){}}});},{threshold:.55}):null;
  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
  function ico(id){var s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('class','ic');s.setAttribute('aria-hidden','true');var u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href','#i-'+id);s.appendChild(u);return s;}
  function https(u){return typeof u==='string'&&/^https:\/\//i.test(u.trim());}
@@ -1452,6 +1459,7 @@ body.cmp-aberto{overflow:hidden}
    var p=el('span','tv-play');p.innerHTML='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/></svg>';c.appendChild(p);
    var t=el('span','tv-tx');t.appendChild(el('small',null,x.cod?x.cod+' · Tour em vídeo':'Tour em vídeo'));t.appendChild(el('h3',null,x.titulo));if(x.preco)t.appendChild(el('b',null,x.preco));c.appendChild(t);
    c.addEventListener('click',function(){abrir(x.id);});
+   if(!calmo){var pv=el('video','tv-pv');pv.muted=true;pv.defaultMuted=true;pv.loop=true;pv.playsInline=true;pv.setAttribute('playsinline','');pv.setAttribute('muted','');pv.setAttribute('aria-hidden','true');pv.preload='none';pv._src=vid(x.url);pv.addEventListener('playing',function(){pv.classList.add('on');});pv.addEventListener('error',function(){pv.remove();});c.insertBefore(pv,c.querySelector('.tv-play'));if(io)io.observe(pv);}
    row.appendChild(c);
   });
   sec.hidden=false;
@@ -1463,6 +1471,7 @@ body.cmp-aberto{overflow:hidden}
  function linkTour(x){return x.link||SITE+'/#tour-'+encodeURIComponent(x.id);}
  function abrir(id){
   var x=porId[id];if(!x)return;aberto=id;
+  row.querySelectorAll('.tv-pv').forEach(function(v){try{v.pause();}catch(_){}});
   md.innerHTML='';
   var b=el('div','tv-mb'+(x.h?' h':''));
   var fx=el('button','tv-x');fx.type='button';fx.setAttribute('aria-label','Fechar');fx.appendChild(ico('x'));fx.addEventListener('click',fechar);b.appendChild(fx);
@@ -1484,6 +1493,7 @@ body.cmp-aberto{overflow:hidden}
  function fechar(){
   var v=md.querySelector('video');if(v){try{v.pause();v.removeAttribute('src');v.load();}catch(e){}}
   md.hidden=true;md.innerHTML='';document.body.style.overflow='';aberto=null;
+  if(io)row.querySelectorAll('.tv-pv').forEach(function(v){io.unobserve(v);io.observe(v);});
   try{history.replaceState(null,'','#tour');}catch(e){}
  }
  md.addEventListener('click',function(e){if(e.target===md)fechar();});
