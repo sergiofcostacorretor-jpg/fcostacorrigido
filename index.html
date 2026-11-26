@@ -778,7 +778,7 @@ body.cmp-aberto{overflow:hidden}
  </div>
 </section>
 
-<section class="sec" id="h-blog" hidden>
+<section class="sec" id="h-blog" data-h="pg-blog" hidden>
  <div class="wrap">
   <div class="sec-hd rv">
    <div><span class="eyebrow">Blog FCosta</span><h2>Dicas e <em class="gold">novidades</em></h2></div>
@@ -1424,7 +1424,8 @@ body.cmp-aberto{overflow:hidden}
  }).catch(function(){catalogo([]);});
 
  /* blog e dicas do painel (fcosta_dicas e fcosta_curiosidades), carregados à parte para não atrasar os imóveis */
- Promise.all([get('fcosta_dicas').catch(nulo),get('fcosta_curiosidades').catch(nulo)]).then(function(r){
+ Promise.all([get('fcosta_dicas').catch(nulo),get('fcosta_curiosidades').catch(nulo),get('fcosta_config/home_botoes').catch(nulo)]).then(function(r){
+  if((r[2]||{})['pg-blog']===false)return;
   var l=[];[[r[0],'Blog'],[r[1],'Dica']].forEach(function(x){lista(x[0]).forEach(function(d){if(d&&typeof d==='object'&&d.titulo){d._t=x[1];l.push(d);}});});
   l.sort(function(a,b){return String(b.data||'').localeCompare(String(a.data||''));});
   var g=document.getElementById('hBlogGrade');if(!g||!l.length)return;
