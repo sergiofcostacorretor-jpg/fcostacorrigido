@@ -1,4 +1,5 @@
 [build]
+  command = "sh versao.sh || true"
   functions = "netlify/functions"
   publish = "."
 
