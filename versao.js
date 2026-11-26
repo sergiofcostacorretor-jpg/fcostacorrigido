@@ -1,12 +1,12 @@
-/* Mostra o numero da versao do site, discreto, ao lado do logo */
+/* Mostra o numero da versao do site em destaque, ao lado do nome FCosta */
 (function(){
   function por(){
     var v=window.FC_VERSAO;if(!v||!v.n)return;
-    var alvo=document.querySelectorAll('.hdr .logo small');
+    var alvo=document.querySelectorAll('.hdr .logo b');
     for(var i=0;i<alvo.length;i++){
       if(alvo[i].querySelector('.fc-ver'))continue;
       var s=document.createElement('span');
-      s.className='fc-ver';s.textContent=' · v'+v.n;
+      s.className='fc-ver';s.textContent='v'+v.n;
       if(v.d)s.title='Versão '+v.n+' publicada em '+v.d;
       alvo[i].appendChild(s);
     }
