@@ -608,6 +608,52 @@ body.cmp-aberto{overflow:hidden}
  <span class="scroll-cue" aria-hidden="true"></span>
 </section>
 
+<!-- TOURS EM VÍDEO: tours dos imóveis (Painel ADM: tourMp4) + tours publicados pela Central FCosta (Firebase: fcosta_tour) -->
+<section class="sec" id="tour" hidden>
+ <div class="wrap">
+  <div class="sec-hd rv">
+   <div><span class="eyebrow">Por dentro dos imóveis</span><h2>Tours em <em class="gold">vídeo</em></h2><p class="lead">Conheça cada imóvel em vídeo antes da visita. Toque para assistir com som.</p></div>
+   <div class="carr-nav"><button type="button" id="tvPrev" aria-label="Anterior"><svg class="ic"><use href="#i-left"/></svg></button><button type="button" id="tvNext" aria-label="Próximo"><svg class="ic"><use href="#i-right"/></svg></button></div>
+  </div>
+  <div class="tv-row" id="tvRow"></div>
+ </div>
+</section>
+<div class="tv-md" id="tvMd" role="dialog" aria-modal="true" aria-label="Tour em vídeo" hidden></div>
+<style>
+#tour{scroll-margin-top:84px}
+.tv-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.tv-row::-webkit-scrollbar{display:none}
+@media(max-width:980px){.tv-row{grid-auto-columns:calc((100% - 2*14px)/3);gap:14px}}
+@media(max-width:640px){.tv-row{grid-auto-columns:68%;gap:12px}}
+.tv-c{position:relative;display:block;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#141412;border:1px solid rgba(237,232,223,.10);scroll-snap-align:start;cursor:pointer;color:#fff;text-align:left;padding:0;font:inherit}
+.tv-c:hover,.tv-c:focus-visible{border-color:#C9A96E;outline:0}
+.tv-c img,.tv-c video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.tv-c:hover img{transform:scale(1.04)}
+.tv-c::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 62%)}
+.tv-play{position:absolute;left:50%;top:42%;z-index:2;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:rgba(12,12,12,.55);border:1.5px solid #C9A96E;color:#E3CFA4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .3s}
+.tv-play .ic{width:24px;height:24px;margin-left:3px}
+.tv-c:hover .tv-play{background:#C9A96E;color:#0C0C0C}
+.tv-tx{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px}
+.tv-tx small{display:block;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;color:#E3CFA4;margin-bottom:8px}
+.tv-tx h3{font:600 19px/1.2 "Playfair Display",Georgia,serif;letter-spacing:-.005em;margin:0 0 6px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tv-tx b{font:600 18px/1 "Playfair Display",Georgia,serif;font-variant-numeric:lining-nums;color:#E8D3A2}
+.tv-md{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:16px}
+.tv-md[hidden]{display:none}
+.tv-mb{position:relative;width:min(420px,100%);max-height:100%;overflow:auto;background:#121211;border:1px solid rgba(237,232,223,.10);border-radius:14px}
+.tv-mb.h{width:min(860px,100%)}
+.tv-mb video{display:block;width:100%;max-height:72vh;background:#000}
+.tv-mi{padding:16px}
+.tv-mi h3{font:600 21px/1.2 "Playfair Display",Georgia,serif;margin:0 0 4px;color:#EDE8DF}
+.tv-mi p{margin:0 0 4px;color:#A39D91;font-size:14px}
+.tv-mi .pr{font:600 20px/1.2 "Playfair Display",Georgia,serif;color:#E8D3A2;font-variant-numeric:lining-nums}
+.tv-ac{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tv-ac .btn{flex:1 1 auto;justify-content:center;border-radius:10px;min-height:46px;text-transform:none;letter-spacing:0;font:600 14px/1 Inter,system-ui,sans-serif}
+.tv-ac .btn-wa{background:#25D366;color:#0C0C0C;border-color:#25D366}
+.tv-x{position:absolute;right:10px;top:10px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(237,232,223,.25);background:rgba(12,12,12,.7);color:#EDE8DF;display:grid;place-items:center;cursor:pointer}
+.tv-x .ic{width:20px;height:20px}
+@media(prefers-reduced-motion:reduce){.tv-c img{transition:none}}
+</style>
+
 <!-- CAMINHOS -->
 <section class="sec" id="caminhos" style="padding-bottom:0">
  <div class="wrap">
@@ -662,52 +708,6 @@ body.cmp-aberto{overflow:hidden}
   <div class="ex-more" id="exMaisBox" hidden><button class="btn btn-ghost" type="button" id="exMais">Mostrar mais imóveis</button></div>
  </div>
 </section>
-
-<!-- TOURS EM VÍDEO: tours dos imóveis (Painel ADM: tourMp4) + tours publicados pela Central FCosta (Firebase: fcosta_tour) -->
-<section class="sec" id="tour" hidden>
- <div class="wrap">
-  <div class="sec-hd rv">
-   <div><span class="eyebrow">Por dentro dos imóveis</span><h2>Tours em <em class="gold">vídeo</em></h2><p class="lead">Conheça cada imóvel em vídeo antes da visita. Toque para assistir com som.</p></div>
-   <div class="carr-nav"><button type="button" id="tvPrev" aria-label="Anterior"><svg class="ic"><use href="#i-left"/></svg></button><button type="button" id="tvNext" aria-label="Próximo"><svg class="ic"><use href="#i-right"/></svg></button></div>
-  </div>
-  <div class="tv-row" id="tvRow"></div>
- </div>
-</section>
-<div class="tv-md" id="tvMd" role="dialog" aria-modal="true" aria-label="Tour em vídeo" hidden></div>
-<style>
-#tour{scroll-margin-top:84px}
-.tv-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
-.tv-row::-webkit-scrollbar{display:none}
-@media(max-width:980px){.tv-row{grid-auto-columns:calc((100% - 2*14px)/3);gap:14px}}
-@media(max-width:640px){.tv-row{grid-auto-columns:68%;gap:12px}}
-.tv-c{position:relative;display:block;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#141412;border:1px solid rgba(237,232,223,.10);scroll-snap-align:start;cursor:pointer;color:#fff;text-align:left;padding:0;font:inherit}
-.tv-c:hover,.tv-c:focus-visible{border-color:#C9A96E;outline:0}
-.tv-c img,.tv-c video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
-.tv-c:hover img{transform:scale(1.04)}
-.tv-c::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,0) 62%)}
-.tv-play{position:absolute;left:50%;top:42%;z-index:2;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:rgba(12,12,12,.55);border:1.5px solid #C9A96E;color:#E3CFA4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:background .3s}
-.tv-play .ic{width:24px;height:24px;margin-left:3px}
-.tv-c:hover .tv-play{background:#C9A96E;color:#0C0C0C}
-.tv-tx{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px}
-.tv-tx small{display:block;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;color:#E3CFA4;margin-bottom:8px}
-.tv-tx h3{font:600 19px/1.2 "Playfair Display",Georgia,serif;letter-spacing:-.005em;margin:0 0 6px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tv-tx b{font:600 18px/1 "Playfair Display",Georgia,serif;font-variant-numeric:lining-nums;color:#E8D3A2}
-.tv-md{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:16px}
-.tv-md[hidden]{display:none}
-.tv-mb{position:relative;width:min(420px,100%);max-height:100%;overflow:auto;background:#121211;border:1px solid rgba(237,232,223,.10);border-radius:14px}
-.tv-mb.h{width:min(860px,100%)}
-.tv-mb video{display:block;width:100%;max-height:72vh;background:#000}
-.tv-mi{padding:16px}
-.tv-mi h3{font:600 21px/1.2 "Playfair Display",Georgia,serif;margin:0 0 4px;color:#EDE8DF}
-.tv-mi p{margin:0 0 4px;color:#A39D91;font-size:14px}
-.tv-mi .pr{font:600 20px/1.2 "Playfair Display",Georgia,serif;color:#E8D3A2;font-variant-numeric:lining-nums}
-.tv-ac{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.tv-ac .btn{flex:1 1 auto;justify-content:center;border-radius:10px;min-height:46px;text-transform:none;letter-spacing:0;font:600 14px/1 Inter,system-ui,sans-serif}
-.tv-ac .btn-wa{background:#25D366;color:#0C0C0C;border-color:#25D366}
-.tv-x{position:absolute;right:10px;top:10px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(237,232,223,.25);background:rgba(12,12,12,.7);color:#EDE8DF;display:grid;place-items:center;cursor:pointer}
-.tv-x .ic{width:20px;height:20px}
-@media(prefers-reduced-motion:reduce){.tv-c img{transition:none}}
-</style>
 
 <!-- GALERIA -->
 <section class="sec" id="galeria" data-h="pg-galeria" hidden>
